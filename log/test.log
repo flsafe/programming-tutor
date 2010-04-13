@@ -1,0 +1,228 @@
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+ERROR: compiling _run_erb_app47views47school47index46html46erb RAISED /Users/flicea/Projects/blueberryrow/app/views/school/index.html.erb:6: syntax error, unexpected ')', expecting keyword_end
+...xercise_set_path(@set)) ).to_s); @output_buffer.concat "</li...
+...                               ^
+Function body:           def _run_erb_app47views47school47index46html46erb(local_assigns)
+            old_output_buffer = output_buffer;;@output_buffer = '';  __in_erb_template=true ; @output_buffer.concat "Here there "; @output_buffer.concat(( @user.username ).to_s); @output_buffer.concat "!\nTo start things off here are some sample exercise sets you can try out!\n<div id=\"recommended_exercise_sets\">\n\t<ul>\n\t\t"
+
+
+
+;  @exercise_sets.each do |set| ; @output_buffer.concat "\n\t\t\t<li class=\"exercise_set\">"
+; @output_buffer.concat(( link_to es.title, exercise_set_path(@set)) ).to_s); @output_buffer.concat "</li>\n\t\t"
+;  end ; @output_buffer.concat "\n\t</ul>\n\t\n</div>"
+
+
+; @output_buffer.force_encoding(__ENCODING__)
+          ensure
+            self.output_buffer = old_output_buffer
+          end
+Backtrace: /Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/renderable.rb:77:in `module_eval'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/renderable.rb:77:in `compile!'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/renderable.rb:61:in `compile'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/renderable.rb:28:in `render'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/test_case.rb:20:in `render'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/template.rb:205:in `render_template'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/base.rb:265:in `render'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render_with_mock_proxy'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_controller/base.rb:1250:in `render_for_file'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_controller/base.rb:945:in `render'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_controller/benchmarking.rb:51:in `block in render_with_benchmark'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/activesupport-2.3.5/lib/active_support/core_ext/benchmark.rb:17:in `block in ms'
+/Users/flicea/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/benchmark.rb:309:in `realtime'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/activesupport-2.3.5/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_controller/benchmarking.rb:51:in `render_with_benchmark'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-rails-1.3.2/lib/spec/rails/example/view_example_group.rb:170:in `render'
+/Users/flicea/Projects/blueberryrow/spec/views/school/index.html.erb_spec.rb:15:in `block (3 levels) in <top (required)>'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:40:in `instance_eval'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:40:in `block in execute'
+/Users/flicea/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/timeout.rb:44:in `timeout'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:37:in `execute'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:214:in `block in run_examples'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:212:in `each'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:212:in `run_examples'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:103:in `run'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:23:in `block in run'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:22:in `each'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:22:in `run'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/runner/options.rb:152:in `run_examples'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/runner/command_line.rb:9:in `run'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/bin/spec:5:in `<main>'
+Rendering school/index.html.erb
+ERROR: compiling _run_erb_app47views47school47index46html46erb RAISED /Users/flicea/Projects/blueberryrow/app/views/school/index.html.erb:6: syntax error, unexpected ')', expecting keyword_end
+...xercise_set_path(@set)) ).to_s); @output_buffer.concat "</li...
+...                               ^
+Function body:           def _run_erb_app47views47school47index46html46erb(local_assigns)
+            old_output_buffer = output_buffer;;@output_buffer = '';  __in_erb_template=true ; @output_buffer.concat "Here there "; @output_buffer.concat(( @user.username ).to_s); @output_buffer.concat "!\nTo start things off here are some sample exercise sets you can try out!\n<div id=\"recommended_exercise_sets\">\n\t<ul>\n\t\t"
+
+
+
+;  @exercise_sets.each do |set| ; @output_buffer.concat "\n\t\t\t<li class=\"exercise_set\">"
+; @output_buffer.concat(( link_to es.title, exercise_set_path(@set)) ).to_s); @output_buffer.concat "</li>\n\t\t"
+;  end ; @output_buffer.concat "\n\t</ul>\n\t\n</div>"
+
+
+; @output_buffer.force_encoding(__ENCODING__)
+          ensure
+            self.output_buffer = old_output_buffer
+          end
+Backtrace: /Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/renderable.rb:77:in `module_eval'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/renderable.rb:77:in `compile!'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/renderable.rb:61:in `compile'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/renderable.rb:28:in `render'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/test_case.rb:20:in `render'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/template.rb:205:in `render_template'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_view/base.rb:265:in `render'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-rails-1.3.2/lib/spec/rails/extensions/action_view/base.rb:27:in `render_with_mock_proxy'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_controller/base.rb:1250:in `render_for_file'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_controller/base.rb:945:in `render'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_controller/benchmarking.rb:51:in `block in render_with_benchmark'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/activesupport-2.3.5/lib/active_support/core_ext/benchmark.rb:17:in `block in ms'
+/Users/flicea/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/benchmark.rb:309:in `realtime'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/activesupport-2.3.5/lib/active_support/core_ext/benchmark.rb:17:in `ms'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/actionpack-2.3.5/lib/action_controller/benchmarking.rb:51:in `render_with_benchmark'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-rails-1.3.2/lib/spec/rails/example/view_example_group.rb:170:in `render'
+/Users/flicea/Projects/blueberryrow/spec/views/school/index.html.erb_spec.rb:24:in `block (3 levels) in <top (required)>'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:40:in `instance_eval'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:40:in `block in execute'
+/Users/flicea/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/timeout.rb:44:in `timeout'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_methods.rb:37:in `execute'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:214:in `block in run_examples'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:212:in `each'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:212:in `run_examples'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/example/example_group_methods.rb:103:in `run'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:23:in `block in run'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:22:in `each'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/runner/example_group_runner.rb:22:in `run'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/runner/options.rb:152:in `run_examples'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/lib/spec/runner/command_line.rb:9:in `run'
+/Users/flicea/.rvm/gems/ruby-1.9.1-p378@rails2.3.5/gems/rspec-1.3.0/bin/spec:5:in `<main>'
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+#[ExerciseSet:0x3eadea @name="ExerciseSet_1003"]
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+1003
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+#[ExerciseSet:0x3e9f26 @name="ExerciseSet_1003"]
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+#[ExerciseSet:0x3e749a @name="ExerciseSet_1003"]
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+#[ExerciseSet:0x3eb00c @name="ExerciseSet_1003"]
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+#[ExerciseSet:0x3eaf9c @name="ExerciseSet_1003"]
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+1003
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+1003
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+1003
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+#[ExerciseSet:0x3eab66 @name="ExerciseSet_1003"]
+Rendering school/index.html.erb
+Rendering school/index.html.erb
+1003
