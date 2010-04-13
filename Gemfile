@@ -1,0 +1,12 @@
+source "http://rubygems.org"
+gem 'rails'
+gem 'bundler'
+gem 'rspec'
+gem 'rspec-rails'
+gem 'cucumber'
+gem 'cucumber-rails'
+gem 'database_cleaner'
+gem 'webrat'
+gem 'selenium-client'
+gem 'rack'
+gem 'test-unit', '1.2.3'
