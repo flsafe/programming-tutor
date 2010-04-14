@@ -5,12 +5,13 @@ class ExerciseSet;end
 class Exercise;end
 
 describe 'school/index.html.erb' do
+  
+  before(:each) do
+    assigns[:user]          = mock_model(User, :username=>'Frank')
+    assigns[:exercise_sets] = []
+  end
+  
   context 'a newly registered user visits their home page' do
-    before(:each) do
-      assigns[:user]          = mock_model(User, :username=>'Frank')
-      assigns[:exercise_sets] = []
-    end
-    
     it "displays a welcome message" do
       render
       response.should contain('Frank')
@@ -23,7 +24,10 @@ describe 'school/index.html.erb' do
       assigns[:exercise_sets] = exercise_sets
       render
       response.should have_selector('#recommended_exercise_sets') do |recommended|
-        recommended.should have_selector(".exercise_set", :content=>'Linked List Basics')
+        recommended.should have_selector(".exercise_set", 
+          :content=>'Linked List Basics')
+        recommended.should have_selector('.exercise_set'), 
+          :content=>'Hash Table Basics'
       end
     end
     
