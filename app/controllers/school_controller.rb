@@ -1,6 +1,7 @@
 class SchoolController < ApplicationController
   def index
-    logger.info "user id: #{session[:user_id]}"
-    @exercise_sets = ExerciseSet.recommend(session[:user_id])
+    user = session[:current_user]
+    @exercise_sets = ExerciseSet.recommend(user.id)
+    @welcome_message = "Hey there #{user.username}! To start things off"
   end
 end

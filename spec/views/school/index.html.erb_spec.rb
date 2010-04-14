@@ -15,6 +15,7 @@ describe 'school/index.html.erb' do
     it "displays a welcome message" do
       render
       response.should contain('Frank')
+      response.should contain('To start things off')
     end
     
     it "recomends exercise sets" do
