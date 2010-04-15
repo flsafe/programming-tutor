@@ -6,7 +6,7 @@ Feature: Exercise Set Recomendation
 	
 	@new-user
 	Scenario: A newly registered user gets recommended four random exercise sets
-		Given I am logged in as the user named "Frank"
+		Given I am logged in as the user "frank"
 		And I have not done any exercises
 		And I am on MyHomePage
 		Then I should see a list of randomly recommended exercise sets
