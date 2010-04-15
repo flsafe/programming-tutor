@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-class User;end
-
 describe ExerciseSet do
   before(:each) do
     @exercise_set = ExerciseSet.new :title=>'LinkedList', :description=>'Implement'
@@ -23,7 +21,7 @@ describe ExerciseSet do
 
   describe '#recommend' do
     before(:each) do
-      @new_user = mock_model(User)
+      @new_user = stub_model(User)
       ExerciseSet.create :title=>'LinkedList', :description=>'Implement'
       ExerciseSet.create :title=>'HashTable', :description=>'Implement'
       ExerciseSet.create :title=>'PrimeNumbers', :description=>'Detect Primes'
@@ -40,7 +38,7 @@ describe ExerciseSet do
           have_seen = Hash.new(0)
           exercise_sets.each do |set|
             have_seen[set] += 1
-            have_seen[set].should_not >= n
+            have_seen[set].should <= 1
           end
         end
       end

@@ -7,6 +7,4 @@ describe User do
       :password => "value for password"
     }
   end
-
-  it "should create a new instance given valid attributes"
 end

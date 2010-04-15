@@ -2,10 +2,10 @@ class ExerciseSet < ActiveRecord::Base
   validates_presence_of :title, :description
   
   def self.recommend(user_id, how_many)
-    sets = ExerciseSet.find :all
-    how_many = [how_many, sets.size].min
+    sets     = ExerciseSet.find :all
+    how_many = clamp(how_many, 0, sets.size)
 
-    indices = random_indices(how_many, sets.size)
+    indices  = random_indices(how_many, sets.size)
     
     result = []
     indices.each {|i| result << sets[i]}
@@ -21,5 +21,9 @@ class ExerciseSet < ActiveRecord::Base
       indices << index if not indices.include?(index)
     end
     indices
+  end
+  
+  def self.clamp(v, min, max)
+    [[v, max].min, min].max
   end
 end

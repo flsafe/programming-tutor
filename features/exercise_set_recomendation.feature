@@ -8,9 +8,9 @@ Feature: Exercise Set Recomendation
 	Scenario: A newly registered user gets recommended four random exercise sets
 		Given I am logged in as the user "frank"
 		And I have not done any exercises
-		And I am on MyHomePage
+		And I am on my home page
 		Then I should see a list of randomly recommended exercise sets
-		And I should see a message that reads "Hey there Frank! To start things off here is are some exercise sets you can try out." 
+		And I should see "Hey there frank! To start things off here are some sample exercise sets you can try out!" 
 
 		
 		
