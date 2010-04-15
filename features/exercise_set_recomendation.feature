@@ -1,10 +1,10 @@
 Feature: Exercise Set Recomendation
 	
 	So I can be challenged and increase my programming interview skills
-	As a student
+	As a user
 	I want to know what exercises will fairly challenge me
 	
-	@new-student
+	@new-user
 	Scenario: A newly registered user gets recommended four random exercise sets
 		Given I am logged in as the user named "Frank"
 		And I have not done any exercises

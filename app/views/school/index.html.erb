@@ -1,11 +1,9 @@
-Here there <%= @user.username %>!
+Here there <%= current_user.username %>!
 To start things off here are some sample exercise sets you can try out!
 <div id="recommended_exercise_sets">
 	<ul>
 		<% @exercise_sets.each do |set| %>
-			<%= logger.info set.to_param%>
 			<li class="exercise_set"><%= link_to set.title, @set %></li>
 		<% end %>
 	</ul>
-	
 </div>
