@@ -1,8 +1,16 @@
-Hey there <%= current_user.username %>! To start things off here are some sample exercise sets you can try out!
+Hey there <%=h current_user.username %>! To start things off here are some sample exercise sets you can try out!
 <div id="recommended_exercise_sets">
 	<ul>
 		<% @exercise_sets.each do |set| %>
-			<li class="exercise_set"><%= link_to set.title, @set %></li>
+			<li class="exercise_set">
+				<%= link_to set.title, set %>
+				<span class="exercise_set_statistics">
+					<%=h "#{set.users_completed} users, #{set.average_grade} avg grade"%>
+				</span>
+				<span class="<%=h set.completed?(current_user.id) ? 'complete' : 'incomplete' %>">
+					<%= set.completed?(current_user) ? "done" : "in progress"%>
+				</span>
+			</li>
 		<% end %>
 	</ul>
 </div>
