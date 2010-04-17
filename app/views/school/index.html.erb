@@ -7,8 +7,8 @@ Hey there <%=h current_user.username %>! To start things off here are some sampl
 				<span class="exercise_set_statistics">
 					<%=h "#{set.users_completed} users, #{set.average_grade} avg grade"%>
 				</span>
-				<span class="<%=h set.completed?(current_user.id) ? 'complete' : 'incomplete' %>">
-					<%= set.completed?(current_user) ? "done" : "in progress"%>
+				<span class="<%=h current_user.completed?(set) ? 'complete' : 'incomplete' %>">
+					<%= 'done' if current_user.completed?(set)%>
 				</span>
 			</li>
 		<% end %>

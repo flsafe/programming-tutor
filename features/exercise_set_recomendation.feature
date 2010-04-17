@@ -1,4 +1,4 @@
-Feature: Exercise Set Recomendation
+Feature: Exercise Set Recommendation
 	
 	So I can be challenged and increase my programming interview skills
 	As a user

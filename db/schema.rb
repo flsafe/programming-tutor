@@ -9,16 +9,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100415203216) do
+ActiveRecord::Schema.define(:version => 20100416174526) do
 
   create_table "exercise_sets", :force => true do |t|
     t.string   "title"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "average_grade"
+    t.integer  "users_completed"
   end
 
   create_table "exercises", :force => true do |t|
+    t.integer  "exercise_set_id"
     t.string   "title"
     t.string   "description"
     t.datetime "created_at"

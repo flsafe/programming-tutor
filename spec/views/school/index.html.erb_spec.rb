@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'school/index.html.erb' do
   before(:each) do
-    @current_user = stub_model(User, :username=>'frank')
+    @current_user = stub_model(User, :username=>'frank', 'completed?'=>true)
     @controller.stub(:current_user).and_return(@current_user)
     assigns[:exercise_sets] = []
   end
@@ -14,32 +14,59 @@ describe 'school/index.html.erb' do
       response.should contain('To start things off')
     end
     
-    it "recomends exercise sets" do
+     it "displays a list of recomended exercise sets" do
       exercise_sets = []
-      
-      p = {'completed?'=>true, :title=>'Linked List Basics', :users_completed=>'90', :average_grade=>'91.01'}
-      ll_set = stub_model(ExerciseSet, p)
-      exercise_sets << ll_set
-      p = {'completed?'=>false, :title=>'Hash Table Basics', :users_completed=>'92', :average_grade=>'93.01'}
-      h_set = stub_model(ExerciseSet, p)
-      exercise_sets << h_set
+      exercise_sets << stub_model(ExerciseSet, :title=>'Linked List')
+      exercise_sets << stub_model(ExerciseSet, :title=>'Hash Table')
       assigns[:exercise_sets] = exercise_sets
       
       render
       
-      verify_recommended_exercise_sets(response, true, ll_set.title, ll_set.users_completed, ll_set.average_grade)
-      verify_recommended_exercise_sets(response, false, h_set.title, h_set.users_completed, h_set.average_grade)
+      response.should have_selector('#recommended_exercise_sets') do |exercise_sets|
+        exercise_sets.should have_selector(".exercise_set", :content=>'Linked List')
+        exercise_sets.should have_selector('.exercise_set', :content=>'Hash Table')
+      end
     end
+   end
+    
+    it 'marks completed exercise sets' do
+      set = stub_model(ExerciseSet)
+      @current_user.stub('completed?').and_return(true)
+      assigns[:exercise_sets] = [set]
+      
+      render
+      
+      response.should have_selector('.complete')
+    end
+    
+    it 'marks incomplete exercise sets' do
+      set = stub_model(ExerciseSet)
+      @current_user.stub('completed?').and_return(false)
+      assigns[:exercise_sets] = [set]
+      
+      render
+      
+      response.should have_selector('.incomplete')
+    end
+  
+  it 'displays the number of users who completed the set and the average grade' do
+    exercise_sets = []
+    exercise_sets << stub_model(ExerciseSet, :title=>'Linked List', :users_completed=>'100', :average_grade=>'91.55')
+    exercise_sets << stub_model(ExerciseSet, :title=>'Hash Table', :users_completed=>'1', :average_grade=>'81.77')
+    assigns[:exercise_sets] = exercise_sets
+    
+    render
+    
+    verify_stats(response, 'Linked List', '100', '91.55')
+    verify_stats(response, 'Hash Table', '1', '81.77')
   end
   
-  def verify_recommended_exercise_sets(response, user_completed, exercise_set_content, *statistics)
-    response.should have_selector('#recommended_exercise_sets') do |exercise_sets|
-      exercise_sets.should have_selector(".exercise_set", :content=>exercise_set_content) do |exercise_set|
-        exercise_set.should have_selector(".exercise_set_statistics")
-        status = user_completed ? '.complete' : '.incomplete'
-        exercise_set.should have_selector(status)
-        statistics.each {|statistic| exercise_set.should contain(statistic)}
+  def verify_stats(response, title, *stat)
+    response.should have_selector('.exercise_set', :content=>title) do |exercise|
+      stat.each do |s|
+        exercise.should contain(s)
       end
     end
   end
+  
 end

@@ -1,9 +1,11 @@
 class CreateExercises < ActiveRecord::Migration
   def self.up
     create_table :exercises do |t|
+      t.integer :exercise_set_id
+      
       t.string :title
       t.string :description
-
+      
       t.timestamps
     end
   end

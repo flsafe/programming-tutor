@@ -5,6 +5,6 @@
 #   
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
-
+User.create! :username=>'Frank',:email=>'user@mail.com', :password=>'password', :password_confirmation=>'password'
 ExerciseSet.create! :title=>"Linked List Levity", :description=>"Learn how to implement a basic linked list"
 ExerciseSet.create! :title=>"Hash Table Hotness", :description=>"Learn how to implement a hash table"

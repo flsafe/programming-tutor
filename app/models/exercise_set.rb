@@ -1,5 +1,7 @@
 class ExerciseSet < ActiveRecord::Base
   validates_presence_of :title, :description
+
+  has_many :exercises
   
   def self.recommend(user_id, how_many)
     sets     = ExerciseSet.find :all
