@@ -16,6 +16,9 @@ module NavigationHelpers
       
     when /login\s?page/
         '/login'
+        
+    when /exercise set page/
+      exercise_sets_path
       
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
