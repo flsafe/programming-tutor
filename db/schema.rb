@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(:version => 20100416174526) do
   end
 
   create_table "exercises", :force => true do |t|
-    t.integer  "exercise_set_id"
     t.string   "title"
     t.string   "description"
     t.datetime "created_at"
