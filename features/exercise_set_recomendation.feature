@@ -15,8 +15,7 @@ Feature: Exercise Set Recommendation
 		Given I am logged in as the user "frank"
 		And I am on my home page
 		When I follow "Linked List Basics"
-		Then I should see "Linked List Basics"
-		And I should see ""
+		Then I should see "Implementing A Linked List"
 		
 		
 		

@@ -1,12 +1,14 @@
 require 'spec_helper'
 
-class TeachersAid;end
-
 describe ExerciseSet do
   before(:each) do
-    @exercise_set = ExerciseSet.new :title=>'LinkedList', :description=>'Implement'
+    @valid_attributes = {
+      :title=>'LinkedList', :description=>'Implement'
+    }
+    @exercise_set = ExerciseSet.create! @valid_attributes
   end
 
+  
   it 'is valid with valid attributes' do
     @exercise_set.should be_valid
   end
@@ -29,7 +31,6 @@ describe ExerciseSet do
       ExerciseSet.create! :title=>'PrimeNumbers', :description=>'Detect Primes'
       ExerciseSet.create! :title=>'Graphic', :description=>'Draw circle'
     end
-    
 
     it "recommends (n) random exercise sets, no duplicates" do
       n = 3
