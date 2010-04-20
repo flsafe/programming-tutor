@@ -5,7 +5,7 @@ Hey there <%=h current_user.username %>! To start things off here are some sampl
 			<li class="exercise_set">
 				<%= link_to set.title, set %>
 				<span class="exercise_set_statistics">
-					<%=h "#{set.users_completed} users, #{set.average_grade} avg grade"%>
+					<%=h "#{set.completed_users.count} users, #{set.average_grade} avg grade"%>
 				</span>
 				<span class="<%=h current_user.grade_for?(set) ? 'complete' : 'incomplete' %>">
 					<%= "My Grade #{current_user.grade_for? set}" if current_user.grade_for?(set)%>
