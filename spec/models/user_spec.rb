@@ -17,15 +17,15 @@ describe User do
     end
     
     it "returns the grade for the associated exercise set" do
-      GradeSheet.create! :grade=>92.1, :user=>@current_user, :resource=>@set
+      @set.grade_sheets.create! :grade=>92.1, :user=>@current_user, :gradeable=>@set
       @current_user.grade_for?(@set).should == 92.1
     end
     
     it "returns the most recent grade" do
-     GradeSheet.create! :grade=>60, :user=>@current_user, :resource=>@set
-     GradeSheet.create! :grade=>90, :user=>@current_user, :resource=>@set
+     GradeSheet.create! :grade=>60, :user=>@current_user, :gradeable=>@set
+     GradeSheet.create! :grade=>90, :user=>@current_user, :gradeable=>@set
      sleep(1) #Make sure one is inserted at a later time
-     GradeSheet.create! :grade=>100, :user=>@current_user, :resource=>@set
+     GradeSheet.create! :grade=>100, :user=>@current_user, :gradeable=>@set
      
      @current_user.grade_for?(@set).should == 100
     end

@@ -8,7 +8,7 @@ Given /^"([^\"]*)" users have done "([^\"]*)"$/ do |n_users, title|
   exercise_set = ExerciseSet.find_by_title title
   1.upto(n_users.to_i) do |n|
     user = User.create! :username=>"user#{n}", :password=>"password", :password_confirmation=>'password', :email=>"user#{n}@mail.com"
-    GradeSheet.create! :grade=>100, :user=>user, :resource=>exercise_set
+    GradeSheet.create! :grade=>100, :user=>user, :gradeable=>exercise_set
   end
 end
 
@@ -22,7 +22,7 @@ Given /^I have finished "([^\"]*)" with an average of "([^\"]*)"$/ do |title, av
   exercise_set = ExerciseSet.find_by_title title
   grade_sheet = GradeSheet.new
   grade_sheet.user = @current_user
-  grade_sheet.resource = exercise_set
+  grade_sheet.gradeable = exercise_set
   grade_sheet.grade = avg_grade
   grade_sheet.save
 end

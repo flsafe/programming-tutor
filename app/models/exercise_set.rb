@@ -1,9 +1,5 @@
-class ExerciseSet < ActiveRecord::Base
-  has_many :exercises
-  has_many :grade_sheets, :as=>:resource
-  has_many :completed_users, :through=>:grade_sheets, :source=>:user
-  
-  validates_presence_of :title, :description
+class ExerciseSet < Gradeable
+  has_many :exercises, :foreign_key=>'belongs_to'
   
   def self.recommend(user_id, how_many)
     sets     = ExerciseSet.find :all

@@ -1,7 +1,3 @@
-class Exercise < ActiveRecord::Base
-  has_many :grade_sheets, :as=>:resource
-  has_many :completed_users, :through=>:grade_sheets, :source=>:user
-  belongs_to :exercise_set
-  
-  validates_presence_of :title, :description
+class Exercise < Gradeable
+  belongs_to :exercise_set, :class_name=>'ExerciseSet', :foreign_key=>'belongs_to'
 end
