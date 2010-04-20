@@ -27,6 +27,11 @@ Given /^I have finished "([^\"]*)" with an average of "([^\"]*)"$/ do |title, av
   grade_sheet.save
 end
 
+Given /^I have finished "([^\"]*)" with a "([^\"]*)"$/ do |title, grade|
+  exercise = Exercise.find_by_title title
+  exercise.grade_sheets.create! :grade=>grade.to_f, :user=>@current_user, :gradeable=>exercise
+end
+
 When /^I view "([^\"]*)"$/ do |title|
   exercise_set = ExerciseSet.find_by_title title
   visit exercise_set_url(exercise_set)
