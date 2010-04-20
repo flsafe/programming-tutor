@@ -17,7 +17,10 @@ Given /^"([^\"]*)" has an average grade of "([^\"]*)"$/ do |title, avg_grade|
 end
 
 Given /^I have finished "([^\"]*)" with an average of "([^\"]*)"$/ do |title, avg_grade|
-  pending
   exercise_set = ExerciseSet.find_by_title title
-  @current_user.completed_exercise_sets.create! :grade=>avg_grade
+  grade_sheet = GradeSheet.new
+  grade_sheet.user = @current_user
+  grade_sheet.resource = exercise_set
+  grade_sheet.grade = avg_grade
+  grade_sheet.save
 end

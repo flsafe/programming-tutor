@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'school/index.html.erb' do
   before(:each) do
-    @current_user = stub_model(User, :username=>'frank', 'completed?'=>true)
+    @current_user = stub_model(User, :username=>'frank')
     @controller.stub(:current_user).and_return(@current_user)
     assigns[:exercise_sets] = []
   end
@@ -31,7 +31,7 @@ describe 'school/index.html.erb' do
     
     it 'marks completed exercise sets' do
       set = stub_model(ExerciseSet)
-      @current_user.stub('completed?').and_return(true)
+      @current_user.stub('grade_for?').and_return(true)
       assigns[:exercise_sets] = [set]
       
       render
@@ -39,9 +39,19 @@ describe 'school/index.html.erb' do
       response.should have_selector('.complete')
     end
     
+    it 'displays my grade for completed exercise sets' do
+      set = stub_model(ExerciseSet, :title=>"Linked List Basics")
+      @current_user.stub('grade_for?').and_return('91.1')
+      assigns[:exercise_sets] = [set]
+      
+      render
+      
+      response.should contain '91.1'
+    end
+    
     it 'marks incomplete exercise sets' do
       set = stub_model(ExerciseSet)
-      @current_user.stub('completed?').and_return(false)
+      @current_user.stub('grade_for?').and_return(nil)
       assigns[:exercise_sets] = [set]
       
       render
