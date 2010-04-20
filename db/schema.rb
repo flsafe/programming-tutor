@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100419233225) do
+ActiveRecord::Schema.define(:version => 20100420143809) do
 
   create_table "exercise_sets", :force => true do |t|
     t.string   "title"
@@ -17,7 +17,6 @@ ActiveRecord::Schema.define(:version => 20100419233225) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "average_grade"
-    t.integer  "users_completed"
   end
 
   create_table "exercises", :force => true do |t|
@@ -26,15 +25,7 @@ ActiveRecord::Schema.define(:version => 20100419233225) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "users_completed"
     t.float    "average_grade"
-  end
-
-  create_table "exercises_users", :id => false, :force => true do |t|
-    t.integer  "exercise_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "grade_sheets", :force => true do |t|

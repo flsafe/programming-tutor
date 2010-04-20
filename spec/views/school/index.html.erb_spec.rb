@@ -61,13 +61,13 @@ describe 'school/index.html.erb' do
   
   it 'displays the number of users who completed the set and the average grade' do
     exercise_sets = []
-    exercise_sets << stub_model(ExerciseSet, :title=>'Linked List', :users_completed=>'100', :average_grade=>'91.55')
-    exercise_sets << stub_model(ExerciseSet, :title=>'Hash Table', :users_completed=>'1', :average_grade=>'81.77')
+    exercise_sets << stub_model(ExerciseSet, :title=>'Linked List', :completed_users=>[1,2,3], :average_grade=>'91.55')
+    exercise_sets << stub_model(ExerciseSet, :title=>'Hash Table', :completed_users=>[1], :average_grade=>'81.77')
     assigns[:exercise_sets] = exercise_sets
     
     render
     
-    verify_stats(response, 'Linked List', '100', '91.55')
+    verify_stats(response, 'Linked List', '3', '91.55')
     verify_stats(response, 'Hash Table', '1', '81.77')
   end
   

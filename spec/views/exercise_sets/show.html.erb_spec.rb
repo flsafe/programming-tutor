@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "/exercise_sets/show.html.erb" do
   
   before(:each) do
-    @ex1 = stub_model(Exercise, :title=>"ex 1", :description=>"ex1 description", :users_completed=>6, :average_grade=>66.1)
-    @ex2 = stub_model(Exercise, :title=>"ex 2", :description=>"ex2 description", :users_completed=>10, :average_grade=>77.2)
+    @ex1 = stub_model(Exercise, :title=>"ex 1", :description=>"ex1 description", :completed_users=>[1,2,3], :average_grade=>66.1)
+    @ex2 = stub_model(Exercise, :title=>"ex 2", :description=>"ex2 description", :completed_users=>[1], :average_grade=>77.2)
     assigns[:exercise_set] = @exercise_set = stub_model(ExerciseSet, :title=>'Linked List Basics', :description=>"Implement a linked list", :users_completed=>99, :average_grade=>88, :exercises=>[@ex1, @ex2])
   end
 
@@ -21,7 +21,7 @@ describe "/exercise_sets/show.html.erb" do
   
     it "displays the number of users who completed the exercise set" do
       render
-      response.should contain "#{@exercise_set.users_completed}"
+      response.should contain "#{@exercise_set.completed_users.count}"
     end
   
     it "displays the average grade for the exercise set" do
@@ -54,7 +54,7 @@ describe "/exercise_sets/show.html.erb" do
       exercises.each do |exercise|
         response.should have_selector(".exercise"), :content=>exercise.description do |exercise_elem|
           exercise_elem.should have_selector(".exercise_statistics") do |stats|
-            stats.should contain("#{exercise.users_completed}")
+            stats.should contain("#{exercise.completed_users.count}")
             stats.should contain("#{exercise.average_grade}")
           end
         end

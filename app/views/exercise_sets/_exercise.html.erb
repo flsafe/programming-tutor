@@ -4,7 +4,7 @@
 			<%= link_to exercise.title, {:controller=>:tutor, :action=>:confirm, :id=>exercise}, :class=>"exercise_title"%><br/>
 			<span class="exercise_description"><%=exercise.description%></span><br/>
 			<span class="exercise_statistics">
-				 <%=h exercise.users_completed%> users, <%=h exercise.average_grade %> avg grade
+				 <%=h exercise.completed_users.count%> users, <%=h exercise.average_grade %> avg grade
 			</span>
 		</li>
 	</ul>

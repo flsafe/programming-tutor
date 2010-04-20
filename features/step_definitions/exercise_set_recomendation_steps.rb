@@ -6,5 +6,3 @@ Then /^I should see a list of randomly recommended exercise sets$/ do
     end
   end
 end
-
-

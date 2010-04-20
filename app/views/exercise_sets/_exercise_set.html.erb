@@ -1,6 +1,6 @@
 <h4><%= @exercise_set.title %></h4>
 <%= @exercise_set.description %><br/>
 
-users completed: <%= @exercise_set.users_completed %><br/>
+users completed: <%= @exercise_set.completed_users ? @exercise_set.completed_users.count : '' %><br/>
 average grade: <%= @exercise_set.average_grade %><br/>
 <%=  render :partial=>'exercise', :collection=>@exercise_set.exercises%>
