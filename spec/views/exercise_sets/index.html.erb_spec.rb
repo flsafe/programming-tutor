@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "/exercise_sets/index.html.erb" do
-  include ExerciseSetsHelper
 
   before(:each) do
     assigns[:exercise_sets] = [

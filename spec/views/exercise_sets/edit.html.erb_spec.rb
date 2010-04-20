@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe "/exercise_sets/edit.html.erb" do
-  include ExerciseSetsHelper
-
   before(:each) do
     assigns[:exercise_set] = @exercise_set = stub_model(ExerciseSet,
       :new_record? => false

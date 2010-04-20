@@ -3,6 +3,9 @@ require 'spec_helper'
 describe "/exercise_sets/show.html.erb" do
   
   before(:each) do
+    @current_user = stub_model(User, :username=>'frank', 'grade_for?'=>1000)
+    @controller.stub(:current_user).and_return(@current_user)
+    
     @ex1 = stub_model(Exercise, :title=>"ex 1", :description=>"ex1 description", :completed_users=>[1,2,3], :average_grade=>66.1)
     @ex2 = stub_model(Exercise, :title=>"ex 2", :description=>"ex2 description", :completed_users=>[1], :average_grade=>77.2)
     assigns[:exercise_set] = @exercise_set = stub_model(ExerciseSet, :title=>'Linked List Basics', :description=>"Implement a linked list", :users_completed=>99, :average_grade=>88, :exercises=>[@ex1, @ex2])
@@ -60,5 +63,23 @@ describe "/exercise_sets/show.html.erb" do
         end
       end
     end
+    
+   it "displays the current users grade for each exercise and a completed indicator" do
+     @current_user.stub(:grade_for?).and_return 91.1
+     
+     render
+     
+     response.should have_selector '.exercise.complete', :content=>@ex1.title do |exercise|
+       exercise.should contain "91.1"
+     end
+   end
+   
+   it "does not display a grade or a completed indicator if the user has does not have a grade" do
+     @current_user.stub(:grade_for?).and_return nil
+     
+     render
+     
+     response.should have_selector '.exercise.incomplete', :content=>@ex1.title
+   end
   end
 end

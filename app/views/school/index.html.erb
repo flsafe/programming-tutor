@@ -2,14 +2,12 @@ Hey there <%=h current_user.username %>! To start things off here are some sampl
 <div id="recommended_exercise_sets">
 	<ul>
 		<% @exercise_sets.each do |set| %>
-			<li class="exercise_set">
+			<li class=<%= to_class(set) %>>
 				<%= link_to set.title, set %>
 				<span class="exercise_set_statistics">
 					<%=h "#{set.completed_users.count} users, #{set.average_grade} avg grade"%>
 				</span>
-				<span class="<%=h current_user.grade_for?(set) ? 'complete' : 'incomplete' %>">
 					<%= "My Grade #{current_user.grade_for? set}" if current_user.grade_for?(set)%>
-				</span>
 			</li>
 		<% end %>
 	</ul>

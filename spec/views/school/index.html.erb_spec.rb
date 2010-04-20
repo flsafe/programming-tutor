@@ -36,7 +36,7 @@ describe 'school/index.html.erb' do
       
       render
       
-      response.should have_selector('.complete')
+      response.should have_selector('.exercise_set.complete')
     end
     
     it 'displays my grade for completed exercise sets' do
@@ -56,7 +56,7 @@ describe 'school/index.html.erb' do
       
       render
       
-      response.should have_selector('.incomplete')
+      response.should have_selector('.exercise_set.incomplete')
     end
   
   it 'displays the number of users who completed the set and the average grade' do
