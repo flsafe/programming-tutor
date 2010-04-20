@@ -1,6 +1,6 @@
 class CreateUserSessions < ActiveRecord::Migration
   def self.up
-    create_table :user_sessions do |t|
+    create_table :user_sessions, :force=>true do |t|
       t.string :username
       t.string :password
       t.timestamps
