@@ -1,4 +1,4 @@
-class ExerciseSet < Gradeable
+class ExerciseSet < GradeableExercise #TEST
   has_many :exercises, :foreign_key=>'belongs_to'
   
   def self.recommend(user_id, how_many)
