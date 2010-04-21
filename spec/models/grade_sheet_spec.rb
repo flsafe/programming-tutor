@@ -42,4 +42,13 @@ describe GradeSheet do
       gs.complete_set?.should == false
     end
   end
+  
+  describe "#grades_in_set" do
+    it "returns the grades associated with the exercise set" do
+      gs = @ex1.grade_sheets.create! :grade=>90.0, :user=>@user, :gradeable=>@ex1
+      gs.grades_in_set.should == [90.0]
+      gs = @ex1.grade_sheets.create! :grade=>100.0, :user=>@user, :gradeable=>@ex2
+      gs.grades_in_set.should == [90.0, 100.0]
+    end
+  end
 end

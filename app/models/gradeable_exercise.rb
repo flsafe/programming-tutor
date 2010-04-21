@@ -7,15 +7,18 @@ class GradeableExercise < Gradeable
     update_exercise_set_average_grade grade_sheet
     self.save
   end
-  
+
   private
-  
+
   def update_exercise_average_grade(grade_sheet)
     self.average_grade = new_average(average_grade, grade_sheet.grade, completed_users.count)
   end
   
   def update_exercise_set_average_grade(grade_sheet)
-    
+    return unless grade_sheet.complete_set?
+    grades = grade_sheet.grades_in_set
+    avg = grades.inject {|sum, g| sum + g} / grades.count
+    exercise_set.average_grade = new_average(exercise_set.average_grade, avg, exercise_set.completed_users.count)
   end
   
   def new_average(old_average, new_grade, n_new_users)
