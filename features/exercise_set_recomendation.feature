@@ -17,15 +17,15 @@ Feature: Exercise Set Recommendation
 		And "10" users have done "Linked List Basics"
 		And "Linked List Basics" has an average grade of "91.1"
 		And I am on my home page
-		Then I should see "Linked List Basics" with "10"
-		And I should see "Linked List Basics" with "91.1"
+		Then I should see exercise set "Linked List Basics" with "10"
+		And I should see exercise set "Linked List Basics" with "91.1"
 		
 	Scenario: Exercise sets indicate when I've completed them
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "ex1" and "ex2"
 		And I have finished "Linked List Basics" with an average of "75.1"
 		And I am on my home page
-		Then I should see "Linked List Basics" with "75.1"
+		Then I should see exercise set "Linked List Basics" with "75.1"
 		
 	Scenario: A user follows a recommended exercise set
 		Given I am logged in as the user "frank"
