@@ -9,6 +9,8 @@ class Gradeable < ActiveRecord::Base
     self.save
   end
   
+  private
+  
   def update_average_grade(grade_sheet)
     return if grade_sheet.retake?
     self.average_grade = new_average(average_grade, grade_sheet.grade, completed_users.count)
