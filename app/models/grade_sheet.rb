@@ -1,7 +1,11 @@
 class GradeSheet < ActiveRecord::Base
   belongs_to :user
   belongs_to :gradeable
-  #belongs_to :resource, :polymorphic=>true
   
   validates_presence_of :user, :grade, :gradeable
+  
+  def retake?
+    n = GradeSheet.count :conditions=>["user_id=? AND gradeable_id=?", user.id, gradeable_id]
+    n >= 2
+  end
 end

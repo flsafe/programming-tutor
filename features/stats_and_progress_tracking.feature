@@ -9,3 +9,8 @@ Feature: Stats And Progress Tracking
 		And I have finished "basics 1" with a "91.1"
 		When I view "Basics"
 		Then I should see "basics 1" with my grade "91.1"
+		
+	Scenario: Exercises show their average grade
+		Given there exists an exercise set "Basics" with "basics 1" and "basics 2"
+		And "basics 1" has the grades "30 31 32"
+		Then the average grade for "basics 1" should be "31"

@@ -1,3 +1,5 @@
+#----------------Exercise Set Givens--------------
+
 Given /^there exists an exercise set "([^\"]*)" with "([^\"]*)" and "([^\"]*)"$/ do |set_title, ex1_title, ex2_title|
   @ex1 = Exercise.create! :title=>ex1_title, :description=>"#{@ex1} description"
   @ex2 = Exercise.create :title=>ex2_title, :description=>"#{@ex2} description"
@@ -27,10 +29,27 @@ Given /^I have finished "([^\"]*)" with an average of "([^\"]*)"$/ do |title, av
   grade_sheet.save
 end
 
+#------------------Exercise Givens--------------------
+
 Given /^I have finished "([^\"]*)" with a "([^\"]*)"$/ do |title, grade|
   exercise = Exercise.find_by_title title
   exercise.grade_sheets.create! :grade=>grade.to_f, :user=>@current_user, :gradeable=>exercise
 end
+
+Given /^"([^\"]*)" has the grades "([^\"]*)"$/ do |exercise_title, grades|
+  exercise = Exercise.find_by_title exercise_title
+  grades = grades.split.collect {|g| g.to_f}
+  0.upto(grades.count - 1) do |n|
+    user = User.create! :username=>"user#{n}", :password=>"password", :password_confirmation=>'password', :email=>"user#{n}@mail.com"
+    exercise.grade_sheets.create! :grade=>grades[n], :user=>user, :gradeable=>exercise
+  end
+end
+
+#------------------Exercise Set Whens----------------
+
+#--none--
+
+#------------------Exercise Whens-------------------
 
 When /^I view "([^\"]*)"$/ do |title|
   exercise_set = ExerciseSet.find_by_title title
