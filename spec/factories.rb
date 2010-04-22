@@ -18,6 +18,12 @@ Factory.define :user do |u|
   u.email Factory.next :email
 end
 
+Factory.define :grade_sheet do |gs|
+  gs.association :user
+  gs.association :gradeable, :factory=>:exercise
+  gs.grade 100.0
+end
+
 Factory.define :exercise_set do |set|
   set.title Factory.next :exercise_set_title
   set.description "Basics description"

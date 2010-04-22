@@ -9,22 +9,37 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100420164804) do
+ActiveRecord::Schema.define(:version => 20100422030432) do
+
+  create_table "exercise_sets", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.float    "average_grade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "exercises", :force => true do |t|
+    t.integer  "exercise_set_id"
+    t.string   "title"
+    t.string   "description"
+    t.float    "average_grade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "grade_sheets", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "gradeable_id"
+    t.integer  "exercise_id"
     t.float    "grade"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "gradeables", :force => true do |t|
-    t.string   "type"
-    t.integer  "belongs_to"
-    t.string   "title"
-    t.string   "description"
-    t.float    "average_grade"
+  create_table "set_grade_sheets", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "exercise_set_id"
+    t.float    "grade"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
