@@ -1,11 +1,5 @@
 
 
-
-
-#------------------Exercise Givens--------------------
-
-
-
 #------------------Exercise Set Whens----------------
 When /^I view exercise set "([^\"]*)"$/ do |title|
   exercise_set = ExerciseSet.find_by_title title
