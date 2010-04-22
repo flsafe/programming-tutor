@@ -10,7 +10,7 @@ Given /^"([^\"]*)" users have done "([^\"]*)"$/ do |n_users, title|
   exercise_set = ExerciseSet.find_by_title title
   1.upto(n_users.to_i) do |n|
     user = User.create! :username=>"user#{n}", :password=>"password", :password_confirmation=>'password', :email=>"user#{n}@mail.com"
-    GradeSheet.create! :grade=>100, :user=>user, :gradeable=>exercise_set
+    SetGradeSheet.create! :grade=>100, :user=>user, :exercise_set=>exercise_set
   end
 end
 
@@ -22,18 +22,21 @@ end
 
 Given /^I have finished "([^\"]*)" with an average of "([^\"]*)"$/ do |title, avg_grade|
   exercise_set = ExerciseSet.find_by_title title
-  grade_sheet = GradeSheet.new
+  
+  grade_sheet = SetGradeSheet.new
   grade_sheet.user = @current_user
-  grade_sheet.gradeable = exercise_set
+  grade_sheet.exercise_set = exercise_set
   grade_sheet.grade = avg_grade
   grade_sheet.save
+  
+  exercise_set.set_grade_sheets << grade_sheet
 end
 
 #------------------Exercise Givens--------------------
 
 Given /^I have finished "([^\"]*)" with a "([^\"]*)"$/ do |title, grade|
   exercise = Exercise.find_by_title title
-  exercise.grade_sheets.create! :grade=>grade.to_f, :user=>@current_user, :gradeable=>exercise
+  exercise.grade_sheets.create! :grade=>grade.to_f, :user=>@current_user, :exercise=>exercise
 end
 
 Given /^"([^\"]*)" has the grades "([^\"]*)"$/ do |exercise_title, grades|
@@ -41,7 +44,7 @@ Given /^"([^\"]*)" has the grades "([^\"]*)"$/ do |exercise_title, grades|
   grades = grades.split.collect {|g| g.to_f}
   0.upto(grades.count - 1) do |n|
     user = User.create! :username=>"user#{n}", :password=>"password", :password_confirmation=>'password', :email=>"user#{n}@mail.com"
-    exercise.grade_sheets.create! :grade=>grades[n], :user=>user, :gradeable=>exercise
+    exercise.grade_sheets.create! :grade=>grades[n], :user=>user, :exercise=>exercise
   end
 end
 

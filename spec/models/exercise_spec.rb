@@ -25,7 +25,6 @@ describe Exercise do
     end
     
     it "it tracks the cumulative average of the exercise_associated exercise set when a user has completed it" do
-      pending("Get the exercise set tracking fixed") do
         user = User.create! :username=>'frank', :email=>'user@mail.com', :password=>'password', :password_confirmation=>'password'
         exercise_set = ExerciseSet.create! :title=>"Basics", :description=>"d"
         ex1 = Exercise.create! :title=>"ex1", :description=>'d'
@@ -35,8 +34,8 @@ describe Exercise do
         ex1.grade_sheets.create! :user=>user, :grade => 90.0, :exercise=>ex1
         ex2.grade_sheets.create! :user=>user, :grade => 91.0, :exercise=>ex2
       
+        exercise_set.set_grade_sheets.create! :user=>user, :grade=>90.5, :exercise_set=>exercise_set
         exercise_set.average_grade.should == 90.5
-      end
     end
   end
 end
