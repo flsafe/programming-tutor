@@ -29,3 +29,14 @@ Given /^I have finished "([^\"]*)" with an average of "([^\"]*)"$/ do |title, av
   
   exercise_set.set_grade_sheets << grade_sheet
 end
+
+When /^I view exercise set "([^\"]*)"$/ do |title|
+  exercise_set = ExerciseSet.find_by_title title
+  visit exercise_set_url(exercise_set)
+end
+
+Then /^I should see exercise set "([^\"]*)" with "([^\"]*)"$/ do |title, text|
+  response.should have_selector ".exercise_set", :content=>title do |exercise_set|
+    exercise_set.should contain text
+  end
+end
