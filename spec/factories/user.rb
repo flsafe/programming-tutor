@@ -7,8 +7,8 @@ Factory.sequence :username do |n|
 end
 
 Factory.define :user do |u|
-  u.username Factory.next :username
+  u.username {Factory.next :username}
   u.password 'password'
   u.password_confirmation 'password'
-  u.email Factory.next :email
+  u.email {Factory.next :email}
 end
