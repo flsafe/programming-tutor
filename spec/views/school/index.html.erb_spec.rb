@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'school/index.html.erb' do
   before(:each) do
-    @current_user = stub_model(User, :username=>'frank')
+    @current_user = Factory.stub :user
     @controller.stub(:current_user).and_return(@current_user)
     assigns[:exercise_sets] = []
   end
@@ -10,7 +10,7 @@ describe 'school/index.html.erb' do
   context 'a newly registered user visits their home page' do
     it "displays a welcome message" do
       render
-      response.should contain('frank')
+      response.should contain(@current_user.username)
       response.should contain('To start things off')
     end
     
