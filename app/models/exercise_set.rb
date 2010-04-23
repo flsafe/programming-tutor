@@ -1,6 +1,6 @@
 class ExerciseSet < ActiveRecord::Base
   has_many :exercises
-  has_many :set_grade_sheets
+  has_many :set_grade_sheets, :after_add=>:update_stats
   has_many :completed_users, :source=>:user, :through=>:set_grade_sheets
   
   validates_presence_of :title, :description
@@ -14,6 +14,11 @@ class ExerciseSet < ActiveRecord::Base
     result = []
     indices.each {|i| result << sets[i]}
     result
+  end
+  
+  def update_stats(gs)
+    stats = ExerciseSetStatsTracker.new
+    stats.update(gs)
   end
   
   private 
