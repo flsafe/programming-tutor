@@ -7,6 +7,7 @@ class ExerciseSetStatsTracker < StatsTracker
   end
   
   def update_set_average
+    return if @grade_sheet.retake?
     cumulative_average(@exercise_set, :average_grade, @grade_sheet.grade, @exercise_set.completed_users.count)
   end
 end

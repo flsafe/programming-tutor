@@ -16,12 +16,12 @@ class ExerciseSet < ActiveRecord::Base
     result
   end
   
-  def update_stats(gs)
+  private 
+  
+   def update_stats(gs)
     stats = ExerciseSetStatsTracker.new
     stats.update(gs)
   end
-  
-  private 
   
   def self.random_indices(how_many, size_of_array)
     indices = []

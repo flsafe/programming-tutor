@@ -50,7 +50,6 @@ describe 'school/index.html.erb' do
     end
   
   it 'displays the number of users who completed the set and the average grade' do
-
     set1 = stub_model(ExerciseSet, :title=>'Linked List', :completed_users=>[1,2,3], :average_grade=>'91.55')
     set2 = stub_model(ExerciseSet, :title=>'Hash Table', :completed_users=>[1], :average_grade=>'81.77')
     assigns[:exercise_sets] = [set1, set2]

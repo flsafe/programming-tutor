@@ -5,9 +5,9 @@ class StatsTracker
     object[field] = new_average(object[field], new_value, new_count)
   end
   
-  def new_average(old_average, new_grade, n_new_users)
-    return if n_new_users == 0
+  def new_average(old_average, new_value, new_count)
+    return if new_count == 0
     old_average ||= 0
-    old_average + (new_grade - old_average) / n_new_users
+    old_average + (new_value - old_average) / new_count
   end
 end

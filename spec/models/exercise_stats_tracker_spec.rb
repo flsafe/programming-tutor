@@ -18,7 +18,7 @@ describe ExerciseStatsTracker do
       @exercise1.average_grade.should == average(grades)
     end
     
-    it "doesn't count retakes by the same user" do
+    it "doesn't count retakes by the same user in the cumulative average for an exercise" do
       grades = [50, 51]
       grades.each do |g|
         gs = Factory.build :grade_sheet, :grade=>g, :user=>@user, :exercise=>@exercise1

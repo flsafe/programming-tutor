@@ -9,17 +9,19 @@ describe GradeSheet do
   end
   
   describe "#retake?" do
-    it "returns true if the @user has other grade sheets for the associated exercise" do
-      @ex1.grade_sheets.create! :grade=>50, :user=>@user, :exercise=>@ex1
-      gs = @ex1.grade_sheets.create! :grade=>51, :user=>@user, :exercise=>@ex1
+    it "returns true if the user has other grade sheets for the associated exercise" do
+      gs = nil
+      [50, 51].each do | g |
+        gs = @ex1.grade_sheets.create! :grade=>g, :user=>@user, :exercise=>@ex1
+      end
       gs.retake?.should == true
     end
     
-    it "returns false if the @user has only one grade sheet for the associated exercise" do
+    it "returns false if the user has only one grade sheet for the associated exercise" do
       gs = @ex1.grade_sheets.create! :grade=>50, :user=>@user, :exercise=>@ex1
       gs.retake?.should == false
       
-      @user = User.create! :username=>'jim', :email=>'jim@mail.com', :password=>'password', :password_confirmation=>'password'
+      @user = Factory.create :user
       gs = @ex1.grade_sheets.create! :grade=>50, :user=>@user, :exercise=>@ex1
       gs.retake?.should == false
     end
@@ -38,7 +40,7 @@ describe GradeSheet do
       gs = @ex1.grade_sheets.create! :grade=>90.0, :user=>@user, :exercise=>@ex1
       gs.complete_set?.should == false
       
-      jim = User.create! :username=>'jim', :email=>'jim@mail.com', :password=>'password', :password_confirmation=>'password'
+      jim = Factory.create :user
       gs = @ex1.grade_sheets.create! :grade=>90.0, :user=>jim, :exercise=>@ex1
       gs.complete_set?.should == false
     end
@@ -48,8 +50,17 @@ describe GradeSheet do
     it "returns the grades associated with the exercise set" do
       gs = @ex1.grade_sheets.create! :grade=>90.0, :user=>@user, :exercise=>@ex1
       gs.grades_in_set.should == [90.0]
+      
       gs = @ex1.grade_sheets.create! :grade=>100.0, :user=>@user, :exercise=>@ex2
       gs.grades_in_set.should == [90.0, 100.0]
+    end
+    
+    it "returns the first recorded grade, no retakes" do
+      gs = nil
+      [90.0, 100.0, 12].each do |g|
+         gs = @ex1.grade_sheets.create! :grade=>g, :user=>@user, :exercise=>@ex1
+      end
+      gs.grades_in_set.should == [90.0]
     end
   end
 end

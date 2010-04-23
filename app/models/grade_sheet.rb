@@ -5,35 +5,60 @@ class GradeSheet < ActiveRecord::Base
   validates_presence_of :user, :grade, :exercise
   
   def retake?
-    n = GradeSheet.count :conditions=>["user_id=? AND exercise_id=?", user.id, exercise.id]
-    n >= 2
+    completed = GradeSheet.count_grade_sheets(user, exercise)
+    completed >= 2
   end
   
   def complete_set?
-    finished_exercises = GradeSheet.count :conditions=>["user_id=? AND exercise_id IN (?)", user.id, ids_in_set], :select=>"distinct grade_sheets.exercise_id"
-    finished_exercises == exercises_in_set.count
+    completed_exercises = GradeSheet.count_distinct_grade_sheets(user, exercise)
+    exercises_in_set    = GradeSheet.siblings(exercise).count
+    completed_exercises == exercises_in_set
   end
   
   def grades_in_set
-    grade_sheets = GradeSheet.find :all, :conditions=>["user_id=? AND exercise_id IN (?)", user.id, ids_in_set]
+    grade_sheets = GradeSheet.grade_sheets(user, exercise)
     return [] unless grade_sheets
-    
-    grade_sheets = grade_sheets.group_by(&:exercise_id)
-    grades_list = []
-    grade_sheets.each_pair do |id, grades|
-      grades.sort! {|a,b| a.created_at <=> b.created_at}
-      grades_list << grades[0].grade
-    end
-    grades_list
+    filter_retakes(grade_sheets)
   end
   
   private
   
-  def exercises_in_set
+  def filter_retakes(grade_sheets)
+    gs_no_retakes = get_oldest_grade_sheets(grade_sheets)
+    gs_no_retakes.collect(&:grade)
+  end
+  
+  def get_oldest_grade_sheets(grade_sheets)
+    gs_by_exercise_id = grade_sheets.group_by(&:exercise_id)
+    oldest = []
+    gs_by_exercise_id.each_pair do |exercise_id, grade_sheets_in_ex|
+      oldest << oldest_grade_sheet_for(grade_sheets_in_ex)
+    end
+    oldest
+  end
+  
+  def oldest_grade_sheet_for(grade_sheets_in_ex)
+    grade_sheets_in_ex.sort! {|a,b| a.created_at <=> b.created_at}
+    grade_sheets_in_ex[0]
+  end
+  
+  def self.siblings(exercise)
     exercise.exercise_set.exercises
   end
   
-  def ids_in_set
-    exercises_in_set.collect {|e| e.id}
+  def self.sibling_ids(exercise)
+    GradeSheet.siblings(exercise).collect {|e| e.id}
+  end
+  
+  def self.count_grade_sheets(user, exercise)
+    GradeSheet.count :conditions=>["user_id=? AND exercise_id=?", user.id, exercise.id]
+  end
+  
+  def self.count_distinct_grade_sheets(user, exercise)
+    GradeSheet.count :conditions=>["user_id=? AND exercise_id IN (?)", user.id, GradeSheet.sibling_ids(exercise)], :select=>"distinct grade_sheets.exercise_id"
+  end
+  
+  def self.grade_sheets(user, exercise)
+    GradeSheet.find :all, :conditions=>["user_id=? AND exercise_id IN (?)", user.id, GradeSheet.sibling_ids(exercise)]
   end
 end

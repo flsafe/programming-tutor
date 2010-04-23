@@ -6,8 +6,4 @@ describe  'tutor/confirm.html.erb' do
     render
     response.should have_selector "a", :content=>"Back"
   end
-  
-  it "gives the option to take the exercise" do
-    
-  end
 end

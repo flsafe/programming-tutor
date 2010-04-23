@@ -5,6 +5,8 @@ class Exercise < ActiveRecord::Base
   
   validates_presence_of :title, :description
   
+  private
+  
   def update_stats(gs)
     stats = ExerciseStatsTracker.new
     stats.update(gs)
