@@ -23,7 +23,6 @@ describe TeachersAid do
       @ta.record_grade Factory.create :grade_sheet, :user=>u, :exercise=>set.exercises[0]
       @ta.record_grade Factory.create :grade_sheet, :user=>u, :exercise=>set.exercises[1]
       set.reload
-      set.average_grade.should == 100
       set.set_grade_sheets.count.should == 1
     end
     
@@ -32,7 +31,6 @@ describe TeachersAid do
       u   = Factory.create :user
       @ta.record_grade Factory.create :grade_sheet, :user=>u, :exercise=>set.exercises[0]
       set.reload
-      set.average_grade.should == nil
       set.set_grade_sheets.count.should == 0
     end
   end

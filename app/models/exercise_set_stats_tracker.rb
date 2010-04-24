@@ -1,5 +1,7 @@
+#TODO ExerciseSetTracker and ExerciseTracker violate DRY
 class ExerciseSetStatsTracker < StatsTracker
   def update(set_grade_sheet)
+    return if set_grade_sheet.retake?
     @grade_sheet  = set_grade_sheet
     @exercise_set = set_grade_sheet.exercise_set
     update_set_average
@@ -7,7 +9,6 @@ class ExerciseSetStatsTracker < StatsTracker
   end
   
   def update_set_average
-    return if @grade_sheet.retake?
-    cumulative_average(@exercise_set, :average_grade, @grade_sheet.grade, @exercise_set.completed_users.count)
+    cumulative_average!(@exercise_set, :average_grade, @grade_sheet.grade, @exercise_set.completed_users.count)
   end
 end

@@ -1,12 +1,4 @@
 Given /^I am the registered user "([^\"]*)"$/ do |username|
-  params = {
-    :username=>username,
-    :email=>'user@mail.com',
-    :password=>'password',
-    :password_confirmation=>'password'
-  }
-
-  #@current_user = User.create!(params)
   @current_user = Factory.create :user, :username=>username
 end
 

@@ -10,14 +10,14 @@ Feature: Stats And Progress Tracking
 		When I view exercise set "Basics"
 		Then I should see exercise "basics 1" with "91.1"
 		
-	Scenario: Exercises show their average grade
+	Scenario: Exercises show the user average grade
 	  Given I am logged in as the user "frank"
 		And there exists an exercise set "Basics" with "basics 1" and "basics 2"
 		And "basics 1" has the grades "30 31"
 		When I view exercise set "Basics"
 		Then I should see exercise "basics 1" with "30.5"
 
-	Scenario: Exercise sets show my average grade
+	Scenario: Exercise sets show my grade on the set (average of my exercise sets)
 			Given I am logged in as the user "frank"
 			And there exists an exercise set "Basics" with "basics 1" and "basics 2"
 			And I have finished "basics 1" with a "90"

@@ -1,7 +1,7 @@
 class StatsTracker
   def update;end
 
-  def cumulative_average(object, field, new_value, new_count)
+  def cumulative_average!(object, field, new_value, new_count)
     object[field] = new_average(object[field], new_value, new_count)
   end
   
