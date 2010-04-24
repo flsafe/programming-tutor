@@ -26,10 +26,9 @@ describe ExerciseSet do
   describe '#recommend' do
     before(:each) do
       @new_user = stub_model(User)
-      ExerciseSet.create! :title=>'LinkedList', :description=>'Implement'
-      ExerciseSet.create! :title=>'HashTable', :description=>'Implement'
-      ExerciseSet.create! :title=>'PrimeNumbers', :description=>'Detect Primes'
-      ExerciseSet.create! :title=>'Graphic', :description=>'Draw circle'
+      1.upto(4) do |n|
+        Factory.create :exercise_set
+      end
     end
 
     it "recommends (n) random exercise sets, no duplicates" do

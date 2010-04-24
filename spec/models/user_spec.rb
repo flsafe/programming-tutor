@@ -1,19 +1,10 @@
 require 'spec_helper'
 
 describe User do
-  before(:each) do
-    @valid_attributes = {
-      :username => "frank",
-      :password => "password",
-      :password_confirmation => "password",
-      :email => "user@mail.com"
-    }
-    @current_user = User.create! @valid_attributes
-  end
-  
   describe  "#grade_for" do
     before(:each) do
-      @exercise = Exercise.create! :title=>"Linked List Basics", :description=>"description"
+      @current_user = Factory.create :user
+      @exercise = Factory.create(:complete_exercise_set).exercises[0]
     end
     
     it "returns the grade for the associated exercise" do
@@ -26,7 +17,6 @@ describe User do
      GradeSheet.create! :grade=>90, :user=>@current_user, :exercise=>@exercise
      sleep(1) #Make sure one is inserted at a later time
      GradeSheet.create! :grade=>100, :user=>@current_user, :exercise=>@exercise
-     
      @current_user.grade_for?(@exercise).should == 100
     end
     

@@ -51,9 +51,7 @@ describe "/exercise_sets/show.html.erb" do
     
     it "displays the statistics for each exercise" do
       exercises = @exercise_set.exercises
-      
       render
-      
       exercises.each do |exercise|
         response.should have_selector(".exercise"), :content=>exercise.description do |exercise_elem|
           exercise_elem.should have_selector(".exercise_statistics") do |stats|
@@ -66,9 +64,7 @@ describe "/exercise_sets/show.html.erb" do
     
    it "displays the current users grade for each exercise and a completed indicator" do
      @current_user.stub(:grade_for?).and_return 91.1
-     
      render
-     
      response.should have_selector '.exercise.complete', :content=>@ex1.title do |exercise|
        exercise.should contain "91.1"
      end
@@ -76,9 +72,7 @@ describe "/exercise_sets/show.html.erb" do
    
    it "does not display a grade or a completed indicator if the user has does not have a grade" do
      @current_user.stub(:grade_for?).and_return nil
-     
      render
-     
      response.should have_selector '.exercise.incomplete', :content=>@ex1.title
    end
   end
