@@ -19,6 +19,7 @@ class TeachersAid
   end
   
   def average(grades)
+    #Violation of DRY with average(). This function shows up in several places. Put it somewhere!
     grades.inject {|sum, g| sum+g} / grades.count
   end
 end
