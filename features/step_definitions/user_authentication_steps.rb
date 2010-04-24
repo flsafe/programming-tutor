@@ -5,7 +5,9 @@ Given /^I am the registered user "([^\"]*)"$/ do |username|
     :password=>'password',
     :password_confirmation=>'password'
   }
-  @current_user = User.create!(params)
+
+  #@current_user = User.create!(params)
+  @current_user = Factory.create :user, :username=>username
 end
 
 Given /^I am logged in as the user "([^\"]*)"$/ do |username|
