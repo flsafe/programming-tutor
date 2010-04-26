@@ -30,6 +30,13 @@ describe "exercises/new.html.erb" do
     end
   end
   
+  it "renders a text field for the tags" do
+    render
+    response.should have_selector 'input',
+      :type=>'text',
+      :name=>'tags'
+  end
+  
   it "renders a text area for the problem text" do
     render
     response.should have_selector 'form' do |f|
@@ -37,4 +44,13 @@ describe "exercises/new.html.erb" do
         :name=>'exercise[problem]'
     end
   end
+  
+  it "renders a text area for the tutorial" do
+    render
+    response.should have_selector 'form' do |f|
+      f.should have_selector'textarea',
+        :name=>'exercise[tutorial]'
+    end
+  end
+    
 end

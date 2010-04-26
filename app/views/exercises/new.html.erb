@@ -14,8 +14,18 @@
   </p>
 
 	<p>
+		<%= label_tag 'tags', 'Tags' %>
+		<%= text_field_tag 'tags', '', :size=>110,:max_length=>255 %>
+	</p>
+
+	<p>
 		<%= f.label :problem %><br/>
 		<%= f.text_area :problem, :cols=>80, :rows=>24 %>
+	</p>
+	
+	<p>
+		<%= f.label :tutorial %><br/>
+		<%= f.text_area :tutorial, :cols=>80, :rows=>30%>
 	</p>
 
   <p>
