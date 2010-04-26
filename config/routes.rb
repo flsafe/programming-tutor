@@ -1,6 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :exercises
-
   map.login 'login', :controller=>'user_sessions', :action=>'new'
   map.logout 'logout', :controller=>'user_sessions', :action=>'destroy'
   
@@ -9,6 +7,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
 
   map.resources :exercise_sets
+  
+  map.resources :exercises
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

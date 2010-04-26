@@ -2,6 +2,10 @@ Given /^I am the registered user "([^\"]*)"$/ do |username|
   @current_user = Factory.create :user, :username=>username
 end
 
+Given /^I have admin privileges$/ do
+  @current_user.add_role 'admin'
+end
+
 Given /^I am logged in as the user "([^\"]*)"$/ do |username|
   steps %Q{
     Given I am the registered user "#{username}"

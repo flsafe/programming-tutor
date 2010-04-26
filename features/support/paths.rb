@@ -20,6 +20,9 @@ module NavigationHelpers
     when /exercise set page/
       exercise_sets_path
       
+    when /create exercise page/
+      new_exercise_url
+      
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

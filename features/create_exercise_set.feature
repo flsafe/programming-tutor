@@ -22,4 +22,3 @@ Feature: Create Exercise Set
 		And when I go to the exercise set index page
 		Then I should see a new exercise set "Basics" in the exercise set index view
 		
-		
