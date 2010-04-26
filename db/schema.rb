@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(:version => 20100422030432) do
     t.integer  "exercise_set_id"
     t.string   "title"
     t.string   "description"
+    t.text     "problem"
+    t.text     "tutorial"
     t.float    "average_grade"
     t.datetime "created_at"
     t.datetime "updated_at"

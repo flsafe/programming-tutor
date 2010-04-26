@@ -5,7 +5,10 @@ class CreateExercises < ActiveRecord::Migration
       
       t.string :title
       t.string :description
-      t.float :average_grade
+      t.text   :problem
+      t.text   :tutorial
+      
+      t.float  :average_grade
       
       t.timestamps
     end

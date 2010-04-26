@@ -5,12 +5,19 @@
 
   <p>
     <%= f.label :title %><br />
-    <%= f.text_field :title%>
+    <%= f.text_field :title, :size=>110%>
   </p>
+
   <p>
     <%= f.label :description %><br />
-    <%= f.text_field :description %>
+    <%= f.text_field :description, :size=>110%>
   </p>
+
+	<p>
+		<%= f.label :problem %><br/>
+		<%= f.text_area :problem, :cols=>80, :rows=>24 %>
+	</p>
+
   <p>
     <%= f.submit 'Create' %>
   </p>
