@@ -6,6 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :crypted_password
       t.string :password_salt
       t.string :persistence_token
+      t.integer :roles_mask, :default=>0
       
       t.timestamps
     end

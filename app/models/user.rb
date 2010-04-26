@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  ROLES_MASK = %w[admin user]
+  easy_roles :roles_mask, :method=>:bitmask
+  
   acts_as_authentic
   
   has_many :grade_sheets

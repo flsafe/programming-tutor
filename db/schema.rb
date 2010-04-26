@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20100422030432) do
     t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "persistence_token"
+    t.integer  "roles_mask",        :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
