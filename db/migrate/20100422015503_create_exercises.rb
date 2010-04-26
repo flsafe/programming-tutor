@@ -3,12 +3,13 @@ class CreateExercises < ActiveRecord::Migration
     create_table :exercises, :force=>true do |t|
       t.integer :exercise_set_id
       
-      t.string :title
-      t.string :description
-      t.text   :problem
-      t.text   :tutorial
-      
-      t.float  :average_grade
+      t.string  :title
+      t.string  :description
+      t.text    :problem
+      t.text    :tutorial
+      t.integer :minutes
+    
+      t.float   :average_grade
       
       t.timestamps
     end

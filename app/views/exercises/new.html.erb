@@ -27,6 +27,11 @@
 		<%= f.label :tutorial %><br/>
 		<%= f.text_area :tutorial, :cols=>80, :rows=>30%>
 	</p>
+	
+	<p>
+		<%= f.label :minutes %>
+		<%= f.select :minutes, %w{15 30 45 60 90 120} %>
+	</p>
 
   <p>
     <%= f.submit 'Create' %>

@@ -12,8 +12,8 @@ Feature: Create Exercise Set
 		And I fill in "Problem" with "Implementing the add function given a linked list pointer"
 		And I fill in "Tutorial" with "There are several ways to implement"
 		And I fill in "Tags" with "Linked List, Pointers"
-		And I select "1 hour" from "minutes"
-		And I upload 2 images
+		And I select "60" from "minutes"
+		And I attach the file "linkedlist.png" to "image"
 		And I upload the unit test for "Implementing as singly linked list"
 		And I add 3 hints "Hint 1, Hint 2, Hint 3"
 		And I create a new exercise set named "Basics" with tags "Linked lists"

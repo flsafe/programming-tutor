@@ -52,5 +52,13 @@ describe "exercises/new.html.erb" do
         :name=>'exercise[tutorial]'
     end
   end
+  
+  it "renders a select option for the time allowed for this exercise" do
+    render
+    response.should have_selector 'form' do |f|
+      f.should have_selector 'select',
+        :name=>'exercise[minutes]'
+    end
+  end
     
 end
