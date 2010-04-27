@@ -78,7 +78,7 @@ describe "exercises/new.html.erb" do
   it "renders a file selector to upload the unit test for the problem" do
     render
     response.should have_selector 'form' do |f|
-      f.should have_selector 'input', :type=>'file', :name=>'upload unit test'
+      f.should have_selector 'input', :type=>'file', :name=>'exercise[unit_test]'
     end
   end
 end

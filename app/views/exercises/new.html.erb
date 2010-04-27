@@ -30,13 +30,19 @@
 	</p>
 	
 	<p>
-		<%= f.label :minutes %>
+		<%= f.label :minutes %><br/>
 		<%= f.select :minutes, %w{15 30 45 60 90 120} %>
 	</p>
 	
 	<p>
+		Image<br/>
 		<%= file_field_tag "Upload new image" %>
 		<%= submit_tag "Attach Another Image", :name=>'attach_image' %>
+	</p>
+	
+	<p>
+		<%= f.label :unit_test %><br/>
+		<%= f.file_field :unit_test %>
 	</p>
 	
   <p>

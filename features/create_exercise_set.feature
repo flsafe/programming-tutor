@@ -15,7 +15,7 @@ Feature: Create Exercise Set
 		And I select "60" from "minutes"
 		And I attach the file "linkedlist.png" to "Upload new image"
 		And I attach the file "pointer.png" to "Upload new image"
-		And I upload the unit test for "Implementing as singly linked list"
+		And I attach the file "unittest.c" to "Unit test"
 		And I add 3 hints "Hint 1, Hint 2, Hint 3"
 		And I create a new exercise set named "Basics" with tags "Linked lists"
 		And I insert "Implementing a singly linked list" into the exercise set "Basics"
