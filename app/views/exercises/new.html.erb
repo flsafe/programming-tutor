@@ -30,6 +30,12 @@
 	</p>
 	
 	<p>
+		<%= label_tag "hint" %>
+		<%= text_area_tag 'hint', '', :cols=>80, :rows=>15 %>
+		<%= submit_tag 'Attach Another Hint', :name=>'attach_hint' %>
+	</p>
+	
+	<p>
 		<%= f.label :minutes %><br/>
 		<%= f.select :minutes, %w{15 30 45 60 90 120} %>
 	</p>

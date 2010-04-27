@@ -7,6 +7,7 @@ class CreateExercises < ActiveRecord::Migration
       t.string  :description
       t.text    :problem
       t.text    :tutorial
+      t.text    :hints
       t.integer :minutes
     
       t.float   :average_grade

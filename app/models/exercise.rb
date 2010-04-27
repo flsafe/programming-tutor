@@ -4,9 +4,16 @@ class Exercise < ActiveRecord::Base
   
   has_many :completed_users, :through=>:grade_sheets, :source=>:user, :select=>'distinct users.*'
   has_many :grade_sheets, :after_add=>:update_stats
-  belongs_to :exercise_set
+  belongs_to :exercise_set  
+
+  attr_accessor :hints
+  serialize :hints
   
-  validates_presence_of :title, :description
+  validates_presence_of :title, :description, :problem, :tutorial, :minutes
+  
+  def <<(hint_text)
+    hints << hint_text
+  end
   
   private
   

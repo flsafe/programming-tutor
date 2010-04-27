@@ -81,4 +81,11 @@ describe "exercises/new.html.erb" do
       f.should have_selector 'input', :type=>'file', :name=>'exercise[unit_test]'
     end
   end
+  
+  it "renders a hint input" do
+    render
+    response.should have_selector 'form' do |f|
+      f.should have_selector 'textarea', :name=>'hint'
+    end
+  end
 end
