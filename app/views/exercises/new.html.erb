@@ -1,6 +1,7 @@
 <h1>New exercise</h1>
 
-<% form_for(@exercise) do |f| %>
+<% form_for(@exercise,
+			:html=>{:multipart=>true}) do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -14,7 +15,7 @@
   </p>
 
 	<p>
-		<%= label_tag 'tags', 'Tags' %>
+		<%= label_tag 'tags', 'Tags' %><br/>
 		<%= text_field_tag 'tags', '', :size=>110,:max_length=>255 %>
 	</p>
 
@@ -32,7 +33,12 @@
 		<%= f.label :minutes %>
 		<%= f.select :minutes, %w{15 30 45 60 90 120} %>
 	</p>
-
+	
+	<p>
+		<%= file_field_tag "Upload new image" %>
+		<%= submit_tag "Attach Another Image", :name=>'attach_image' %>
+	</p>
+	
   <p>
     <%= f.submit 'Create' %>
   </p>

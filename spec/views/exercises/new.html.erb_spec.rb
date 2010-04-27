@@ -60,5 +60,11 @@ describe "exercises/new.html.erb" do
         :name=>'exercise[minutes]'
     end
   end
-    
+  
+  it "renders a link to add a new image" do
+    render
+    response.should have_selector 'form' do |f|
+      f.should have_selector 'input', :name=>'attach_image'
+    end
+  end
 end
