@@ -61,10 +61,24 @@ describe "exercises/new.html.erb" do
     end
   end
   
-  it "renders a link to add a new image" do
+  it "renders a input to attach another image" do
     render
     response.should have_selector 'form' do |f|
       f.should have_selector 'input', :name=>'attach_image'
+    end
+  end
+  
+  it "renders a file selector to upload a new image" do
+    render
+    response.should have_selector 'form' do |f|
+      f.should have_selector 'input', :type=>'file', :name=>'Upload new image'
+    end
+  end
+  
+  it "renders a file selector to upload the unit test for the problem" do
+    render
+    response.should have_selector 'form' do |f|
+      f.should have_selector 'input', :type=>'file', :name=>'upload unit test'
     end
   end
 end
