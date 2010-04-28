@@ -44,8 +44,11 @@
 	</p>
 	
 	<p>
-		<%= label_tag 'file1', "Upload Image" %><br/>
-		<%= file_field_tag "file1" %>
+		<% if @images %>
+			<%= render :partial=>'image', :collection=>@images %>
+		<%else %>
+			<%= render :partial=>'image', :object=>"" %>
+		<% end %>
 		<%= submit_tag "Attach Another Image", :name=>'attach_image' %>
 	</p>
 	

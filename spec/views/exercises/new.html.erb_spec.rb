@@ -73,7 +73,7 @@ describe "exercises/new.html.erb" do
     it "renders a file selector to upload a new image" do
       render
       response.should have_selector 'form' do |f|
-        f.should have_selector 'input', :type=>'file', :name=>'file1'
+        f.should have_selector 'input', :type=>'file', :name=>'image1'
       end
     end
   
@@ -86,7 +86,8 @@ describe "exercises/new.html.erb" do
   end
   
   describe "display hints" do
-    it "displays any hints that have been attached" do
+    
+    it "displays new empty hint fields as the user attaches them" do
       assigns[:hints] = ["hint1", "hint2", "hint3"]
       render
       response.should have_selector 'form' do |f|
@@ -97,4 +98,15 @@ describe "exercises/new.html.erb" do
     end
   end
   
+  describe "display image file uploads" do
+    
+    it "displays new empty image file fields as the user attaches them" do
+      assigns[:images] = ['/Users/frank licea/main.c', 'Users/nacho libre/main.c']
+      render
+      response.should have_selector 'form' do |f|
+        f.should have_selector 'input', :type=>'file', :name=>'image1'
+        f.should have_selector 'input', :type=>'file', :name=>'image2'
+      end
+    end
+  end
 end

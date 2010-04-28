@@ -1,0 +1,4 @@
+<% @image_count ||= 0 %>
+<% @image_count += 1 %>
+<%= label_tag "image#{@image_count}", "Upload Image" %><br/>
+<%= file_field_tag "image#{@image_count}", :value=>image %>

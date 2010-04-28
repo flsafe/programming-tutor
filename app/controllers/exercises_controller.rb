@@ -47,6 +47,12 @@ class ExercisesController < ApplicationController
         format.html { render :action => "new" }
         format.xml  { render :xml => @exercise.errors, :status => :unprocessable_entity }
       end
+    elsif attach_image_field? then
+      attach_new_image_field
+      respond_to do |format|
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @exercise.errors, :status => :unprocessable_entity }
+      end
     else
       respond_to do |format|
         if @exercise.save
@@ -97,6 +103,11 @@ class ExercisesController < ApplicationController
     @hints << ""
   end
   
+  def attach_new_image_field
+    @images = unpack_images
+    @images << ""
+  end
+  
   def unpack_exercise
     return unless params[:exercise]
     ex_params             = params[:exercise]
@@ -114,16 +125,32 @@ class ExercisesController < ApplicationController
     hints
   end
   
+  def unpack_images
+    images = []
+    params.sort.each do |pair|
+      key, image =  pair[0], pair[1]
+      images << image if image_field?(key)
+    end
+    images
+  end
+  
   def unpack_unit_test
     UnitTest.from_file_field(params[:unit_test])
   end
   
   def hint_field?(str)
-    
     str.downcase.include? 'hint' and not str.include?('attach_hint')
+  end
+  
+  def image_field?(str)
+    str.downcase.include? 'image' and not str == 'attach_image'
   end
   
   def attach_hint_field?
     params[:attach_hint] and not params[:attach_hint].empty?
+  end
+  
+  def attach_image_field?
+    params[:attach_image] and not params[:attach_image].empty?
   end
 end
