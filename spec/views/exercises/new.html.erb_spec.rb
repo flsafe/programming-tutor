@@ -90,9 +90,9 @@ describe "exercises/new.html.erb" do
       assigns[:hints] = ["hint1", "hint2", "hint3"]
       render
       response.should have_selector 'form' do |f|
-        f.should have_selector 'textarea', :content=>'hint1'
-        f.should have_selector 'textarea', :content=>'hint2'
-        f.should have_selector 'textarea', :content=>'hint3'
+        f.should have_selector 'textarea', :name=>'hint 1'
+        f.should have_selector 'textarea', :name=>'hint 2'
+        f.should have_selector 'textarea', :name=>'hint 3'
       end
     end
   end

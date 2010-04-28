@@ -1,5 +1,7 @@
-<%= label_tag "hint" %><br/>
-<%= text_area_tag 'hint', hint, :cols=>80, :rows=>15%>
+<% @count ||= 0 %>
+<% @count += 1 %>
+<%= label_tag "hint #{@count}" %><br/>
+<%= text_area_tag "hint #{@count}", hint, :cols=>80, :rows=>15%><br/>
 
 
 

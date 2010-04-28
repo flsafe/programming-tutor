@@ -27,9 +27,9 @@ describe ExercisesController do
       end
     end
     
-     describe "with 'attach_hint' set" do
+    describe "with 'attach_hint' set" do
       it "attaches another hint" do
-        post :create, :attach_hint=>"anything", :hint=>"This is hint 1"
+        post :create, :attach_hint=>"anything", :hint_1=>"This is hint 1"
         assigns[:hints].should == ["This is hint 1", ""]
       end
     end

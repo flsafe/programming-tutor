@@ -12,7 +12,7 @@ Feature: Create Exercise Set
 		And I fill in "Tags" with "Linked List, Pointers"
 		And I fill in "Problem" with "Implementing the add function given a linked list pointer"
 		And I fill in "Tutorial" with "There are several ways to implement"
-		And I fill in "Hint" with "This is hint 1"
+		And I fill in "Hint 1" with "This is hint 1"
 		And I press "Attach Another Hint"
 		And I fill in "Hint 2" with "This is hint 2"
 		And I select "60" from "minutes"

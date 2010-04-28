@@ -92,6 +92,11 @@ class ExercisesController < ApplicationController
   
   private
   
+  def attach_new_hint_field
+    @hints = unpack_hints
+    @hints << ""
+  end
+  
   def unpack_exercise
     return unless params[:exercise]
     ex_params             = params[:exercise]
@@ -114,15 +119,11 @@ class ExercisesController < ApplicationController
   end
   
   def hint_field?(str)
-     str.include? 'hint' and not str.include? 'attach'
+    
+    str.downcase.include? 'hint' and not str.include?('attach_hint')
   end
   
   def attach_hint_field?
     params[:attach_hint] and not params[:attach_hint].empty?
-  end
-  
-  def attach_new_hint_field
-    @hints = unpack_hints
-    @hints << ""
   end
 end
