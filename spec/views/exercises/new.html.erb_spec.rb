@@ -6,6 +6,7 @@ describe "exercises/new.html.erb" do
   end
   
   describe "new exercise form" do
+    
     it "renders a form to create a new exercise" do
       render
       response.should have_selector('form',
@@ -83,4 +84,17 @@ describe "exercises/new.html.erb" do
       end
     end
   end
+  
+  describe "display hints" do
+    it "displays any hints that have been attached" do
+      assigns[:hints] = ["hint1", "hint2", "hint3"]
+      render
+      response.should have_selector 'form' do |f|
+        f.should have_selector 'textarea', :content=>'hint1'
+        f.should have_selector 'textarea', :content=>'hint2'
+        f.should have_selector 'textarea', :content=>'hint3'
+      end
+    end
+  end
+  
 end

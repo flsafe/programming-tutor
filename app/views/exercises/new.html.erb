@@ -30,8 +30,11 @@
 	</p>
 	
 	<p>
-		<%= label_tag "hint" %><br/>
-		<%= text_area_tag 'hint', '', :cols=>80, :rows=>15 %>
+		<% if @hints %>
+			<%= render :partial=>'hint', :collection=>@hints %>
+		<% else %>
+			<%= render :partial=>'hint', :object=>"" %>
+		<% end %>
 		<%= submit_tag 'Attach Another Hint', :name=>'attach_hint' %>
 	</p>
 	

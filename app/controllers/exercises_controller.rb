@@ -40,16 +40,23 @@ class ExercisesController < ApplicationController
   # POST /exercises
   # POST /exercises.xml
   def create
-    @exercise = Exercise.new(params[:exercise])
-
-    respond_to do |format|
-      if @exercise.save
-        flash[:notice] = 'Exercise was successfully created.'
-        format.html { redirect_to(@exercise) }
-        format.xml  { render :xml => @exercise, :status => :created, :location => @exercise }
-      else
+    @exercise = Exercise.new(unpack_exercise)
+    if attach_hint_field? then
+      attach_new_hint_field
+      respond_to do |format|
         format.html { render :action => "new" }
         format.xml  { render :xml => @exercise.errors, :status => :unprocessable_entity }
+      end
+    else
+      respond_to do |format|
+        if @exercise.save
+          flash[:notice] = 'Exercise was successfully created.'
+          format.html { redirect_to(@exercise) }
+          format.xml  { render :xml => @exercise, :status => :created, :location => @exercise }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @exercise.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -81,5 +88,41 @@ class ExercisesController < ApplicationController
       format.html { redirect_to(exercises_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def unpack_exercise
+    return unless params[:exercise]
+    ex_params             = params[:exercise]
+    ex_params[:hints]     = unpack_hints
+    ex_params[:unit_test] = unpack_unit_test
+    ex_params
+  end
+  
+  def unpack_hints
+    hints = []
+    params.sort.each do |pair|
+      key, hint = pair[0], pair[1]
+      hints << hint if hint_field?(key)
+    end
+    hints
+  end
+  
+  def unpack_unit_test
+    UnitTest.from_file_field(params[:unit_test])
+  end
+  
+  def hint_field?(str)
+     str.include? 'hint' and not str.include? 'attach'
+  end
+  
+  def attach_hint_field?
+    params[:attach_hint] and not params[:attach_hint].empty?
+  end
+  
+  def attach_new_hint_field
+    @hints = unpack_hints
+    @hints << ""
   end
 end

@@ -10,7 +10,7 @@ class Exercise < ActiveRecord::Base
   attr_accessor :hints
   serialize :hints
   
-  validates_presence_of :title, :description, :problem, :tutorial, :minutes
+  validates_presence_of :title, :description, :problem, :tutorial, :minutes, :unit_test
   
   def <<(hint_text)
     hints << hint_text
