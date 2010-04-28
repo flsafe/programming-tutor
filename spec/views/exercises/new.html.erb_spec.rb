@@ -73,7 +73,7 @@ describe "exercises/new.html.erb" do
     it "renders a file selector to upload a new image" do
       render
       response.should have_selector 'form' do |f|
-        f.should have_selector 'input', :type=>'file', :name=>'Upload new image'
+        f.should have_selector 'input', :type=>'file', :name=>'file1'
       end
     end
   
@@ -90,9 +90,9 @@ describe "exercises/new.html.erb" do
       assigns[:hints] = ["hint1", "hint2", "hint3"]
       render
       response.should have_selector 'form' do |f|
-        f.should have_selector 'textarea', :name=>'hint 1'
-        f.should have_selector 'textarea', :name=>'hint 2'
-        f.should have_selector 'textarea', :name=>'hint 3'
+        f.should have_selector 'textarea', :name=>'hint1'
+        f.should have_selector 'textarea', :name=>'hint2'
+        f.should have_selector 'textarea', :name=>'hint3'
       end
     end
   end

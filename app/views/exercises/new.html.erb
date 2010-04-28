@@ -44,8 +44,8 @@
 	</p>
 	
 	<p>
-		Image<br/>
-		<%= file_field_tag "Upload new image" %>
+		<%= label_tag 'file1', "Upload Image" %><br/>
+		<%= file_field_tag "file1" %>
 		<%= submit_tag "Attach Another Image", :name=>'attach_image' %>
 	</p>
 	

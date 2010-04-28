@@ -14,8 +14,8 @@ describe ExercisesController do
     describe "with valid params" do
       it "creates a unit test from the uploaded file" do
         src = 'int main(){return 0;}'
-        
         Exercise.stub(:new).and_return(mock_exercise(:save => true))
+        
         mock_c_unit.should_receive(:src_language=).with('c')
         mock_c_unit.should_receive(:src_code=).with(src)
         UnitTest.stub(:new).and_return(mock_c_unit)
@@ -24,13 +24,20 @@ describe ExercisesController do
         post(:create, 
           :exercise => {:these => 'params'}, 
           :unit_test=>file_field)
+        @mock_exercise_set.unit_test.should == @mock_exercise_set
       end
     end
     
     describe "with 'attach_hint' set" do
-      it "attaches another hint" do
+      it "attaches another hint field" do
         post :create, :attach_hint=>"anything", :hint_1=>"This is hint 1"
         assigns[:hints].should == ["This is hint 1", ""]
+      end
+    end
+    
+    describe "with 'attach_image' set" do
+      it "attaches another image upload field" do
+        post :create, :attach_image=>'anything'
       end
     end
   end

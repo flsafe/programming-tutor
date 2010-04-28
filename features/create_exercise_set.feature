@@ -16,7 +16,7 @@ Feature: Create Exercise Set
 		And I press "Attach Another Hint"
 		And I fill in "Hint 2" with "This is hint 2"
 		And I select "60" from "minutes"
-		And I attach the file "linkedlist.png" to "Upload new image"
+		And I attach the file "linkedlist.png" to "Upload Image"
 		And I press "Attach Another Image"
 		And I attach the file "pointer.png" to "Upload new image"
 		And I attach the file "unittest.c" to "Unit test"
