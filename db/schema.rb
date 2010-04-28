@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20100427183850) do
     t.string   "description"
     t.text     "problem"
     t.text     "tutorial"
+    t.text     "hints"
     t.integer  "minutes"
     t.float    "average_grade"
     t.datetime "created_at"

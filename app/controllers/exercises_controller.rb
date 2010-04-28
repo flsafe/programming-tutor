@@ -40,15 +40,9 @@ class ExercisesController < ApplicationController
   # POST /exercises
   # POST /exercises.xml
   def create
-    @exercise = Exercise.new(unpack_exercise)
-    if attach_hint_field? then
-      attach_new_hint_field
-      respond_to do |format|
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @exercise.errors, :status => :unprocessable_entity }
-      end
-    elsif attach_image_field? then
-      attach_new_image_field
+    @exercise = Exercise.new(extract_exercise(params))
+    if modify_form? then
+      modify_form
       respond_to do |format|
         format.html { render :action => "new" }
         format.xml  { render :xml => @exercise.errors, :status => :unprocessable_entity }
@@ -97,53 +91,48 @@ class ExercisesController < ApplicationController
   end
   
   private
+  #TODO: Viloation of SRP. Controller currently modifies form, and extracts form data to exercse
+  def modify_form
+    if attach_hint_field? then
+      attach_new_hint_field
+    elsif attach_image_field? then
+      attach_new_image_field
+    end
+  end
   
   def attach_new_hint_field
-    @hints = unpack_hints
+    @hints = vals_for_keys_like(/^hint[1-9]+$/, params)
     @hints << ""
   end
   
   def attach_new_image_field
-    @images = unpack_images
+    @images = vals_for_keys_like(/^image[1-9]+$/, params)
     @images << ""
   end
   
-  def unpack_exercise
-    return unless params[:exercise]
+  def extract_exercise(params)
+    return {} unless params[:exercise]
     ex_params             = params[:exercise]
-    ex_params[:hints]     = unpack_hints
-    ex_params[:unit_test] = unpack_unit_test
+    ex_params[:hints]     = extract_hints(params)
+    ex_params[:unit_test] = UnitTest.from_file_field(params[:unit_test])
     ex_params
   end
   
-  def unpack_hints
-    hints = []
+   def vals_for_keys_like(like, params)
+    field_vals = []
     params.sort.each do |pair|
-      key, hint = pair[0], pair[1]
-      hints << hint if hint_field?(key)
+      key, val = pair[0], pair[1]
+      field_vals << val if key =~ like
     end
-    hints
+    field_vals
   end
   
-  def unpack_images
-    images = []
-    params.sort.each do |pair|
-      key, image =  pair[0], pair[1]
-      images << image if image_field?(key)
-    end
-    images
+  def extract_hints(params)
+    vals_for_keys_like(/^hint[1-9]+$/, params)
   end
   
-  def unpack_unit_test
-    UnitTest.from_file_field(params[:unit_test])
-  end
-  
-  def hint_field?(str)
-    str.downcase.include? 'hint' and not str.include?('attach_hint')
-  end
-  
-  def image_field?(str)
-    str.downcase.include? 'image' and not str == 'attach_image'
+  def modify_form?
+    attach_hint_field? || attach_image_field?
   end
   
   def attach_hint_field?
