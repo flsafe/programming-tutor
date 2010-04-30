@@ -45,11 +45,9 @@ class ExercisesController < ApplicationController
     respond_to do |format|
       if @exercise.save
         flash[:notice] = 'Exercise was successfully created.'
-        format.html { redirect_to(@exercise) }
-        format.xml  { render :xml => @exercise, :status => :created, :location => @exercise }
+        format.html { redirect_to exercises_path }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @exercise.errors, :status => :unprocessable_entity }
       end
     end
   end
