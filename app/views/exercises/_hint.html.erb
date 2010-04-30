@@ -1,9 +1,9 @@
-<% @hint_count ||= 0 %>
-<% @hint_count += 1 %>
-<%= label_tag "hint#{@hint_count}", "Hint #{@hint_count}" %><br/>
-<%= text_area_tag "hint#{@hint_count}", hint%><br/>
+<div class='hint'>
+<% new_or_existing = hint.new_record? ? 'new' : 'existing' %>
+<% prefix = "exercise[#{new_or_existing}_hint_attributes][]" %>
 
-
-
-
-
+<% fields_for prefix, hint  do |hf| %>
+		<%= hf.label :text, "Hint" %>	<%= link_to_function 'Remove Hint', "this.up('.hint').remove()" %><br/>
+		<%= hf.text_area :text %><br/>
+<% end %>
+</div>

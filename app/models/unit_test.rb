@@ -5,10 +5,10 @@ class UnitTest < ActiveRecord::Base
   
   def self.from_file_field(unit_test_field)
     return unless unit_test_field
-    ut = UnitTest.new
-    ut.src_language = UnitTest.language(unit_test_field)
-    ut.src_code     = unit_test_field.data
-    ut
+    src_language = UnitTest.language(unit_test_field)
+    src_code     = unit_test_field.read
+    
+    {:src_language=>src_language, :src_code=>src_code}
   end
   
   private

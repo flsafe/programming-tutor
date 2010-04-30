@@ -1,0 +1,53 @@
+<% form_for(exercise, :html=>{:multipart=>true}) do |f| %>
+			
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title%>
+  </p>
+
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description%>
+  </p>
+
+	<p>
+		<%= f.label :algorithm_list %><br/>
+		<%= f.text_field :algorithm_list %><br/>
+	</p>
+	
+	<p>
+		<%= f.label :data_structure_list %><br/>
+		<%= f.text_field :data_structure_list %><br/>
+	</p>
+
+	<p>
+		<%= f.label :problem %><br/>
+		<%= f.text_area :problem %>
+	</p>
+	
+	<p>
+		<%= f.label :tutorial %><br/>
+		<%= f.text_area :tutorial%>
+	</p>
+	
+	<div id="hints">
+		<%= render :partial => 'hint', :collection=>@exercise.hints %>
+	</div>
+	<%= add_hint_link %>
+	
+	<p>
+		<%= f.label :minutes %><br/>
+		<%= f.select :minutes, %w{15 30 45 60 90 120} %>
+	</p>
+	
+	<p>	
+		<%= render :partial => 'unit_test', :collection=>@exercise.unit_tests %>
+	</p>
+	<%= add_unit_test_link %>
+	
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

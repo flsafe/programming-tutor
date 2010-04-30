@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "exercises/new.html.erb" do
   before(:each) do
-    assigns[:exercise] = Factory.build :exercise
+    assigns[:exercise] = stub_model(Exercise)
   end
   
   describe "new exercise form" do
@@ -10,8 +10,7 @@ describe "exercises/new.html.erb" do
     it "renders a form to create a new exercise" do
       render
       response.should have_selector('form',
-        :method=>'post',
-        :action=>exercises_path)
+        :method=>'post')
     end
   
     it "renders a text field for the title" do
@@ -32,11 +31,18 @@ describe "exercises/new.html.erb" do
       end
     end
   
-    it "renders a text field for the tags" do
+    it "renders a text field for the data structure tags" do
       render
       response.should have_selector 'input',
         :type=>'text',
-        :name=>'tags'
+        :name=>'exercise[tags_attribute][data_structures]'
+    end
+    
+    it "renders a text field for the algorithms tags" do
+      render
+      response.should have_selector 'input',
+        :type=>'text',
+        :name=>'exercise[tags_attribute][algorithms]'
     end
   
     it "renders a text area for the problem text" do
@@ -50,9 +56,37 @@ describe "exercises/new.html.erb" do
     it "renders a text area for the tutorial" do
       render
       response.should have_selector 'form' do |f|
-        f.should have_selector'textarea',
+        f.should have_selector 'textarea',
           :name=>'exercise[tutorial]'
       end
+    end
+    
+    it "renders a hint text area" do
+      assigns[:exercise].stub(:hints).and_return([stub_model(Hint).as_new_record])
+      render
+      response.should have_selector 'form' do |f|
+        f.should have_selector 'textarea',
+        :name=>'exercise[hint_attributes][]'
+      end
+    end
+    
+    it "renders an add hint link" do
+      render
+      response.should have_selector 'form' do |f|
+          f.should have_selector 'a', :content=>'Add Hint'
+      end
+    end
+    
+    it 'renders a remove hint link' do
+      assigns[:exercise].stub(:hints).and_return([Factory.create(:hint)])
+      render
+        response.should have_selector 'form' do |f|
+          f.should have_selector '#hints' do |hs|
+            hs.should have_selector '.hint' do |h|
+              h.should have_selector 'a', :content=>'Remove Hint'
+            end
+          end
+        end
     end
   
     it "renders a select option for the time allowed for this exercise" do
@@ -62,50 +96,12 @@ describe "exercises/new.html.erb" do
           :name=>'exercise[minutes]'
       end
     end
-  
-    it "renders a input to attach another image" do
-      render
-      response.should have_selector 'form' do |f|
-        f.should have_selector 'input', :name=>'attach_image'
-      end
-    end
-  
-    it "renders a file selector to upload a new image" do
-      render
-      response.should have_selector 'form' do |f|
-        f.should have_selector 'input', :type=>'file', :name=>'image1'
-      end
-    end
-  
-    it "renders a file selector to upload the unit test for the problem" do
-      render
-      response.should have_selector 'form' do |f|
-        f.should have_selector 'input', :type=>'file', :name=>'exercise[unit_test]'
-      end
-    end
-  end
-  
-  describe "display hints" do
     
-    it "displays new empty hint fields as the user attaches them" do
-      assigns[:hints] = ["hint1", "hint2", "hint3"]
+    it "renders a file field to upload a unit test file" do
+      assigns[:exercise].stub(:unit_tests).and_return([stub_model(UnitTest).as_new_record])
       render
       response.should have_selector 'form' do |f|
-        f.should have_selector 'textarea', :name=>'hint1'
-        f.should have_selector 'textarea', :name=>'hint2'
-        f.should have_selector 'textarea', :name=>'hint3'
-      end
-    end
-  end
-  
-  describe "display image file uploads" do
-    
-    it "displays new empty image file fields as the user attaches them" do
-      assigns[:images] = ['/Users/frank licea/main.c', 'Users/nacho libre/main.c']
-      render
-      response.should have_selector 'form' do |f|
-        f.should have_selector 'input', :type=>'file', :name=>'image1'
-        f.should have_selector 'input', :type=>'file', :name=>'image2'
+        f.should have_selector 'input', :type=>'file', :name=>'exercise[unit_test_attributes]'
       end
     end
   end

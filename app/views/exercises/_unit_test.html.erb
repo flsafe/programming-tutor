@@ -1,0 +1,17 @@
+<div id="unit_tests">
+<% new_or_existing = unit_test.new_record? ? 'new' : 'existing' %>
+<% prefix = "exercise[#{new_or_existing}_unit_test_attributes][]" %>
+
+<% fields_for prefix, unit_test do |f|%>
+	<% if unit_test.src_code.blank? then %>
+		<%= f.label :unit_test_file, "Upload Unit Test" %><br/>
+		<%=  f.file_field :unit_test_file%>
+	<% else %>
+		<%= f.label :src_language %><br/>
+		<%= f.text_field :src_language%><br/>
+	
+		<%= f.label :src_code %><br/>
+		<%= f.text_area :src_code %><br/>
+	<% end %>
+<% end %>
+</div>
