@@ -51,5 +51,13 @@ describe ExercisesController do
         response.should redirect_to exercises_path
       end
     end
+    
+    describe "with invalid attributes" do
+      it 'it redirects to the new exercise page' do
+        Exercise.stub(:new).and_return(mock_exercise :save=>false)
+        post :create
+        response.should render_template 'new'
+      end
+    end
   end
 end
