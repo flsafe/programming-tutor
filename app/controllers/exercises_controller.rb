@@ -57,8 +57,10 @@ class ExercisesController < ApplicationController
   # PUT /exercises/1
   # PUT /exercises/1.xml
   def update
+    params[:exercise][:existing_hint_attributes] ||= {}
+    params[:exercise][:existing_unit_test_attributes] ||= {}
+    
     @exercise = Exercise.find(params[:id])
-
     respond_to do |format|
       if @exercise.update_attributes(params[:exercise])
         flash[:notice] = 'Exercise was successfully updated.'

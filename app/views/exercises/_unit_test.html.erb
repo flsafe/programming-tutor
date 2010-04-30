@@ -1,13 +1,13 @@
-<div id="unit_tests">
 <% new_or_existing = unit_test.new_record? ? 'new' : 'existing' %>
 <% prefix = "exercise[#{new_or_existing}_unit_test_attributes][]" %>
 
+<div class="unit_test">
 <% fields_for prefix, unit_test do |f|%>
 	<% if unit_test.src_code.blank? then %>
 		<%= f.label :unit_test_file, "Upload Unit Test" %><br/>
-		<%=  f.file_field :unit_test_file%>
+		<%=  f.file_field :unit_test_file%> <%= link_to_function 'Remove Unit Test', "this.up('.unit_test').remove()" %>
 	<% else %>
-		<%= f.label :src_language %><br/>
+		<%= f.label :src_language %> 	 <%= link_to_function 'Remove Unit Test', "this.up('.unit_test').remove()" %><br/>
 		<%= f.text_field :src_language%><br/>
 	
 		<%= f.label :src_code %><br/>
