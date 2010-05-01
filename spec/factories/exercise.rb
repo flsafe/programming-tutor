@@ -7,7 +7,6 @@ Factory.define :exercise do |e|
   e.description 'description'
   e.problem 'problem text'
   e.tutorial 'tutorial text'
-  e.hints {|e| [e.association(:hint) ]}
   e.minutes '60'
   e.unit_tests {|e| [e.association(:unit_test)]}
   #todo: tags need to be included?
