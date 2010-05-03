@@ -76,14 +76,14 @@ describe "exercises/new.html.erb" do
       end
     end
     
-    context "with associated new hints and unit tests" do
-      
+    context "with associated new hints, unit_tests and figures" do
       before(:each) do
         assigns[:exercise].stub(:unit_tests).and_return([stub_model(UnitTest).as_new_record])
         assigns[:exercise].stub(:hints).and_return([stub_model(Hint).as_new_record])
+        assigns[:exercise].stub(:figures).and_return([stub_model(Figure).as_new_record])
       end
       
-       it "renders a file field to upload a unit test file" do
+      it "renders a file field to upload a unit test file" do
         render
         response.should have_selector 'form' do |f|
           f.should have_selector 'input', :type=>'file', :name=>'exercise[new_unit_test_attributes][][unit_test_file]'
@@ -107,11 +107,18 @@ describe "exercises/new.html.erb" do
         render
         response.should have_selector 'a', :content=>'Remove Hint'
       end
-    end
+      
+      it 'renders a add unit test link' do
+        render
+        response.should have_selector 'a', :content=>'Add Unit Test'
+      end
     
-    it 'renders a add unit test link' do
-      render
-      response.should have_selector 'a', :content=>'Add Unit Test'
+      it "renders a file field to upload a figure" do
+        render
+        response.should have_selector 'form' do |f|
+          f.should have_selector 'input', :type=>'file', :name=>'exercise[new_figure_attributes][][figure_img_file]'
+        end
+      end
     end
   end
 end

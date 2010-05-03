@@ -43,11 +43,18 @@
 	</p>
 	
 	<div id="unit_tests">	
-	<p>	
+		<p>	
 		<%= render :partial => 'unit_test', :collection=>@exercise.unit_tests %>
-	</p>
+		</p>
 	</div>	
 	<%= add_unit_test_link %>
+	
+	<div id="figures">
+		<p>
+			<%= render :partial=>'figure', :collection=>@exercise.figures %>
+		</p>	
+	</div>
+	<%= add_figure_link %>
 	
   <p>
     <%= f.submit %>

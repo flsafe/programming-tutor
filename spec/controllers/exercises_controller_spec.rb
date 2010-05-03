@@ -17,13 +17,19 @@ describe ExercisesController do
     
     it 'assigns a new hint list containing one new hint' do
       mock_exercise.stub_chain(:hints, :build)
-      mock_exercise.should_revceive(:build).once
+      mock_exercise.hints.should_receive(:build).once
       get 'new'
     end
     
     it 'assigns a new unit test list containing one new unit test' do
       mock_exercise.stub_chain(:unit_tests, :build)
-      mock_exercise.should_receive(:build).once
+      mock_exercise.unit_tests.should_receive(:build).once
+      get 'new'
+    end
+    
+    it 'assigns a new figure to the exercise' do
+      mock_exercise.stub_chain(:figures, :build)
+      mock_exercise.figures.should_receive(:build).once
       get 'new'
     end
   end

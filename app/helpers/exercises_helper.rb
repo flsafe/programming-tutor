@@ -10,4 +10,10 @@ module ExercisesHelper
       page.insert_html :bottom, :unit_tests, :partial=>'unit_test', :object=>UnitTest.new
     end
   end
+  
+  def add_figure_link
+    link_to_function "Add Figure Test" do |page|
+      page.insert_html :bottom, :figures, :partial=>'figure', :object=>Figure.new
+    end
+  end
 end

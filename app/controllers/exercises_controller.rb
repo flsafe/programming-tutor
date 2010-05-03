@@ -27,6 +27,7 @@ class ExercisesController < ApplicationController
     @exercise = Exercise.new
     @exercise.hints.build
     @exercise.unit_tests.build
+    @exercise.figures.build
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @exercise }
