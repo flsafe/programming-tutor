@@ -119,6 +119,16 @@ describe "exercises/new.html.erb" do
           f.should have_selector 'input', :type=>'file', :name=>'exercise[new_figure_attributes][][figure_img_file]'
         end
       end
+      
+      it "renders a add figure link" do
+        render
+        response.should have_selector 'a', :content=>'Add Figure'
+      end
+      
+      it "renders a remove figure link" do
+        render
+        response.should have_selector 'a', :content=>'Remove Figure'
+      end
     end
   end
 end
