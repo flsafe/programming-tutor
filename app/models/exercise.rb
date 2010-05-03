@@ -1,11 +1,13 @@
 class Exercise < ActiveRecord::Base
   acts_as_taggable
   acts_as_taggable_on :algorithms, :data_structures
-  
+
+  has_many :figures
+  has_many :hints  
   has_many :unit_tests
   has_many :completed_users, :through=>:grade_sheets, :source=>:user, :select=>'distinct users.*'
   has_many :grade_sheets, :after_add=>:update_stats
-  has_many :hints
+
   belongs_to :exercise_set  
   
   after_update :save_associates

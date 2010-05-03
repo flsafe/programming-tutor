@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100430172342) do
+ActiveRecord::Schema.define(:version => 20100503204934) do
 
   create_table "exercise_sets", :force => true do |t|
     t.string   "title"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(:version => 20100430172342) do
     t.float    "average_grade"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "figures", :force => true do |t|
+    t.integer  "exercise_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "grade_sheets", :force => true do |t|
