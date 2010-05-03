@@ -18,15 +18,20 @@ class Exercise < ActiveRecord::Base
   validates_uniqueness_of :title
   
   def new_hint_attributes=(attributes)
+    p attributes
     new_attributes_for(:hints, attributes)
+  end
+  
+  def new_unit_test_attributes=(unit_test_attributes)
+    new_attributes_for(:unit_tests, unit_test_attributes)
+  end
+  
+  def new_figure_attributes=(figure_attributes)
+    new_attributes_for(:figures, figure_attributes)
   end
   
   def existing_hint_attributes=(hint_attributes)
    existing_attributes_for(:hints, hint_attributes)
-  end
-  
-  def  new_unit_test_attributes=(unit_test_attributes)
-    new_attributes_for(:unit_tests, unit_test_attributes)
   end
   
   def existing_unit_test_attributes=(unit_test_attributes)

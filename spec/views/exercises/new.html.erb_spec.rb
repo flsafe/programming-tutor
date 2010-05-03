@@ -116,7 +116,7 @@ describe "exercises/new.html.erb" do
       it "renders a file field to upload a figure" do
         render
         response.should have_selector 'form' do |f|
-          f.should have_selector 'input', :type=>'file', :name=>'exercise[new_figure_attributes][][figure_img_file]'
+          f.should have_selector 'input', :type=>'file', :name=>'exercise[new_figure_attributes][][image]'
         end
       end
       

@@ -3,6 +3,10 @@ class UnitTest < ActiveRecord::Base
   
   validates_presence_of :src_language, :src_code
   
+  def unit_test_file=(unit_test_file)
+    self.attributes = UnitTest.from_file_field(unit_test_file)
+  end
+  
   def self.from_file_field(unit_test_field)
     return unless unit_test_field
     src_language = UnitTest.language(unit_test_field)
