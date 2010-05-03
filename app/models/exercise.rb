@@ -16,39 +16,38 @@ class Exercise < ActiveRecord::Base
   validates_uniqueness_of :title
   
   def new_hint_attributes=(attributes)
-    attributes.each do |att|
-      hints.build att
-    end
+    new_attributes_for(:hints, attributes)
   end
   
   def existing_hint_attributes=(hint_attributes)
-    hints.reject(&:new_record?).each do |hint|
-      attributes = hint_attributes[hint.id.to_s]
-      if attributes
-        hint.attributes = attributes
-      else
-        hints.delete(hint)
-      end
-    end
+   existing_attributes_for(:hints, hint_attributes)
   end
   
   def  new_unit_test_attributes=(unit_test_attributes)
-    unit_test_attributes.each do |attributes|
-      if attributes[:unit_test_file] then
-        unit_tests.build UnitTest.from_file_field(attributes[:unit_test_file])
-      else
-        unit_tests.build attributes
-      end
-    end
+    new_attributes_for(:unit_tests, unit_test_attributes)
   end
   
   def existing_unit_test_attributes=(unit_test_attributes)
-    unit_tests.reject(&:new_record?).each do |unit_test|
-      attributes = unit_test_attributes[unit_test.id.to_s]
+    existing_attributes_for(:unit_tests, unit_test_attributes)
+  end
+  
+  private
+  
+  def new_attributes_for(association, attributes)
+    associates = self.send(association)
+    attributes.each do |atts|
+      associates.build atts
+    end
+  end
+  
+  def existing_attributes_for(association, associated_attributes)
+    associates = self.send(association)
+    associates.reject(&:new_record?).each do |associate|
+      attributes = associated_attributes[associate.id.to_s]
       if attributes
-        unit_test.attributes = attributes
+        associate.attributes = attributes
       else
-        unit_tests.delete(unit_test)
+        associates.delete(associate)
       end
     end
   end
@@ -57,9 +56,7 @@ class Exercise < ActiveRecord::Base
     hints.each {|h| h.save(false)}
     unit_tests.each {|u| u.save(false)}
   end
-  
-  private
-  
+
   def update_stats(gs)
     stats = ExerciseStatsTracker.new
     stats.update(gs)
