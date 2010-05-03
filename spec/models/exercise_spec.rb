@@ -11,50 +11,72 @@ describe Exercise do
       hint = Factory.build :hint, :text=>'Hello!'
       
       @exercise.new_hint_attributes = [hint.attributes]
-      (@exercise.hints.any? {|h| h.text == hint.text }).should == true
+      (@exercise.hints.select {|h| h.id == hint.id and h.text == hint.text }).should have(1).items
     end
   end
   
   describe "#existing_hint_attributes=" do
+    
     before(:each) do
-      @exercise.hints = existing_hints(4)
+      @exercise.hints = existing(:hint, 4)
+      @hint           = @exercise.hints[2]
     end
     
     it "updates the hint objects specified in the attributes array" do
-      hint = existing_hints[2]
-      @exercise.existing_hint_attributes = update_hint_attributes(hint.id, "New Style Text Fool!")
-      (@exercise.hints.select {|h| h.id == hint.id and h.text == hint.text}).should have(1).items
+      @exercise.existing_hint_attributes = update_existing(@hint.id, {:text=>"New Style"})
+      (@exercise.hints.select {|h| h.id == @hint.id and h.text == @hint.text}).should have(1).items
     end
     
     it "destroys hint objects that are removed from the attributes array" do
-      hint = existing_hints[2]
-      @exercise.existing_hint_attributes = update_hint_attributes(hint.id, "", :del=>true)
-      (@exercise.hints.select {|h| h.id == hint.id}).should have(0).items
+      @exercise.existing_hint_attributes = update_existing(@hint.id, {}, {:delete=>true})
+      (@exercise.hints.select {|h| h == @hint}).should have(0).items
     end
   end
   
   describe "#new_unit_test_attributes=" do
     
-    it "does something" do
+    it "adds a new unit test object" do
+      unit_test = Factory.build :unit_test, :src_language=>'monkeypoop', :src_code=>'for(;;;) poop()'
+      
+      @exercise.new_unit_test_attributes = [unit_test.attributes]
+      (@exercise.unit_tests.select {|ut| ut.src_language == unit_test.src_language and 
+        ut.src_code == unit_test.src_code}).should have(1).items
+    end
+  end
+  
+  describe "#existing_unit_test_attributes" do
+    
+    before(:each) do
+      @exercise.unit_tests = existing(:unit_test, 4)
+      @unit_test           = @exercise.unit_tests[2]
+    end
+    
+    it "updates unit_test_objects specified in the attributes array" do
+      @exercise.existing_hint_attributes = update_existing(@unit_test.id, {:src_code=>"cool code()"})
+      (@exercise.unit_tests.select {|ut| ut.src_code == @unit_test.src_code}).should have(1).items
+    end
+    
+    it "removes existing unit tests not specifed in the unit test attributes" do
+      @exercise.existing_unit_test_attributes = update_existing(@unit_test.id, {}, {:delete=>true})
+      (@exercise.unit_tests.select {|ut| ut == @unit_test}).should have(0).items
     end
   end
 
-  
-  def existing_hints(n = 0) 
-    return @hints if @hints
-    @hints = []
-    n.times {@hints << Factory.create(:hint)}
-    @hints
+  def existing(object_sym, n)
+    return @existing if @existing
+    @existing = []
+    n.times {@existing << Factory.create(object_sym)}
+    @existing
   end
   
-  def update_hint_attributes(id, text = nil, options = {:del=>false})
-    if options[:del]
-      @hints = existing_hints.reject {|h| h.id == id}
+  def update_existing(id = nil, attributes = nil, options = {:delete=>false})
+    if options[:delete]
+      @existing = @existing.reject {|obj| obj.id == id }
     else
-      hint       = @hints.detect {|h| h.id == id}
-      hint.text  = text
+      obj = @existing.detect {|obj| obj.id == id}
+      obj.attributes  = attributes
     end
-    to_attributes(existing_hints)
+    to_attributes(@existing)
   end
   
   def to_attributes(hints)

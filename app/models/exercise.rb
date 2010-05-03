@@ -33,7 +33,6 @@ class Exercise < ActiveRecord::Base
   end
   
   def  new_unit_test_attributes=(unit_test_attributes)
-    p unit_test_attributes
     unit_test_attributes.each do |attributes|
       if attributes[:unit_test_file] then
         unit_tests.build UnitTest.from_file_field(attributes[:unit_test_file])
