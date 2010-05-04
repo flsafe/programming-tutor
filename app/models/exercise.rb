@@ -18,7 +18,6 @@ class Exercise < ActiveRecord::Base
   validates_uniqueness_of :title
   
   def new_hint_attributes=(attributes)
-    p attributes
     new_attributes_for(:hints, attributes)
   end
   

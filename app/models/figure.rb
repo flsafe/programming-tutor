@@ -5,5 +5,5 @@ class Figure < ActiveRecord::Base
   
   validates_attachment_presence :image
   validates_attachment_content_type :image, 
-  :content_type => ['image/jpeg', 'image/pjpeg', 'image/jpg', 'image/png']
+    :content_type => ['image/jpeg', 'image/pjpeg', 'image/jpg', 'image/png']
 end
