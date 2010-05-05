@@ -6,14 +6,14 @@ Feature: Exercise Set Recommendation
 	
 	Scenario: A newly registered user gets recommended exercise sets
 		Given I am logged in as the user "frank"
-		And there exists an exercise set "Linked List Basics" with "ex1" and "ex2"
+		And there exists an exercise set "Linked List Basics2" with "ex1" and "ex2"
 		And I am on my home page
 		Then I should see a list of randomly recommended exercise sets
 		And I should see "Hey there frank! To start things off here are some sample exercise sets you can try out!" 
 		
 	Scenario: Exercise sets display their statistics
 		Given I am logged in as the user "frank"
-		And there exists an exercise set "Linked List Basics" with "ex1" and "ex1"
+		And there exists an exercise set "Linked List Basics" with "ex1" and "ex2"
 		And "10" users have done "Linked List Basics"
 		And "Linked List Basics" has an average grade of "91.1"
 		And I am on my home page
