@@ -9,6 +9,10 @@ describe ExercisesController do
     @mock_unit_test ||= mock_model(UnitTest, stubs).as_null_object
   end
   
+  def mock_exercise_set(stubs = {})
+    @mock_exercise_set ||= mock_model(ExerciseSet, stubs).as_null_object
+  end
+  
   describe 'get new' do
     
     before(:each) do
@@ -31,6 +35,12 @@ describe ExercisesController do
       mock_exercise.stub_chain(:figures, :build)
       mock_exercise.figures.should_receive(:build).once
       get 'new'
+    end
+    
+    it "assigns a list of existing exercise sets" do
+      ExerciseSet.stub(:find).and_return([mock_exercise_set])
+      get :new
+      assigns[:exercise_sets].should ==([mock_exercise_set])
     end
   end
   

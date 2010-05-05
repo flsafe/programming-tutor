@@ -55,6 +55,18 @@
 		</p>	
 	</div>
 	<%= add_figure_link %>
+
+	<p>
+		<%= f.label :exercise_set_id, "Exercise Set" %>
+		<%= f.collection_select :exercise_set_id, ExerciseSet.find(:all), :id, :title, :prompt=>'Select Exercise Set' %>
+	</p>
+	
+	<p>
+		<% #todo: Write cucumber and spec tests for these %>
+		<%= render :partial => 'exercise_set', :object=>@exercise.exercise_set, :locals=>{:exercise_sets=>@exercise_sets} %>
+
+	</p>
+			
 	
   <p>
     <%= f.submit %>

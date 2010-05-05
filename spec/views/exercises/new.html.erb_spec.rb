@@ -3,6 +3,7 @@ require "spec_helper"
 describe "exercises/new.html.erb" do
   before(:each) do
     assigns[:exercise] = stub_model(Exercise)
+    assigns[:exercise_sets] = {'1'=>"Linked List Basics"}
   end
   
   describe "new exercise form" do
@@ -129,6 +130,31 @@ describe "exercises/new.html.erb" do
         render
         response.should have_selector 'a', :content=>'Remove Figure'
       end
+    end
+    
+    it "renders a text field to enter a new exercise title" do
+      render
+      response.should have_selector 'input', :type=>'text', :name=>'exercise[new_exercise_set_attributes][title]'
+    end
+    
+    it "renders a text field to enter a new exercise set description" do
+      render
+      response.should have_selector 'input', :type=>'text', :name=>'exercise[new_exercise_set_attributes][description]'
+    end
+    
+    it "renders a text field for the new exercise set algorithm tags" do
+      render
+      response.should have_selector 'input', :type=>'text', :name=>'exercise[new_exercise_set_attributes][algorithm_list]'
+    end
+    
+    it 'redners a text field for the new exercise set datastrutures tags' do
+      render
+      response.should have_selector 'input', :type=>'text', :name=>'exercise[new_exercise_set_attributes][data_structure_list]'
+    end
+    
+    it 'renders a select input that lists the existing exercise sets' do
+      render
+      response.should have_selector 'select', :name=>'exercise[exercise_set_id]'
     end
   end
 end

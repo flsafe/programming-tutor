@@ -28,6 +28,7 @@ class ExercisesController < ApplicationController
     @exercise.hints.build
     @exercise.unit_tests.build
     @exercise.figures.build
+    @exercise_sets = ExerciseSet.find(:all, :select=>"id, title")
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @exercise }

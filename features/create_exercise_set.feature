@@ -16,11 +16,13 @@ Feature: Create Exercise Set
 		And I fill in "Tutorial" with "There are several ways to implement"
 		And I fill in "Hint" with "This is hint 1"
 		And I select "60" from "minutes"
-		And I attach the file "linkedlist.png" to "Figure"
-		And I attach the file "main.c" to "Upload unit test"
-		And I create a new exercise set named "Basics" with tags "Linked lists"
-		And I insert "Implementing a singly linked list" into the exercise set "Basics"
+		And I attach the file "test.png" to "Figure"
+		And I attach the file "unittest.c" to "Upload unit test"
+		And I fill in "Set Title" with "Linked List Basics"
+		And I fill in "Set Description" with "Implement linked lists"
+		And I fill in "Set Algorithm Tags" with "Traverse Linked List"
+		And I fill in "Set Data Structure Tags" with "Linked Lists"
 		And I press "Save"
 		And when I go to the exercise set index page
-		Then I should see a new exercise set "Basics" in the exercise set index view
+		Then I should see a new exercise set "Linked List Basics" in the exercise set index view
 		

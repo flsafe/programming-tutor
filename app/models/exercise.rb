@@ -13,7 +13,7 @@ class Exercise < ActiveRecord::Base
   after_update :save_associates
   
   validates_presence_of :title, :description, :problem, :tutorial, :minutes, :unit_tests
-  validates_associated  :hints, :unit_tests
+  validates_associated  :hints, :unit_tests, :figures, :exercise_set
   
   validates_uniqueness_of :title
   
@@ -27,6 +27,11 @@ class Exercise < ActiveRecord::Base
   
   def new_figure_attributes=(figure_attributes)
     new_attributes_for(:figures, figure_attributes)
+  end
+
+  def new_exercise_set_attributes=(new_exercise_set_attributes)
+    #A new exercise set hash is not always returned from the client, sometimes one is chosen from the select dropdown.
+    self.exercise_set = build_exercise_set new_exercise_set_attributes unless new_exercise_set_attributes['title'].blank?
   end
   
   def existing_hint_attributes=(hint_attributes)
@@ -61,6 +66,7 @@ class Exercise < ActiveRecord::Base
   def save_associates
     hints.each {|h| h.save(false)}
     unit_tests.each {|u| u.save(false)}
+    exercise_set.save(false)
   end
 
   def update_stats(gs)
