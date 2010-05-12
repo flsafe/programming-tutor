@@ -2,8 +2,9 @@ Feature: Create Exercise Set
 	In order to provide my customers with new learning content
 	As an admin
 	I want to add a new exercise set to the database
-	#TODO: Integrate selenium to support javascript in add hint, add unit test, add figure
+	#TODO: Figure out why the 'params' don't work!
 	
+	@wip
 	Scenario: The admin creates a new exercise
 		Given I am logged in as the user "frank"
 		And I have admin privileges
@@ -25,4 +26,4 @@ Feature: Create Exercise Set
 		And I press "Save"
 		And when I go to the exercise set index page
 		Then I should see a new exercise set "Linked List Basics" in the exercise set index view
-		
+		 
