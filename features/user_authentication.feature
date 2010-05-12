@@ -20,6 +20,7 @@ Feature: User Authentication
 		And I fill in "Email" with "frank@mail.com"
 		And I fill in "Password" with "password"
 		And I fill in "Password confirmation" with "password"
+		And I press "Create"
 		Then I should be on my home page
 
 
