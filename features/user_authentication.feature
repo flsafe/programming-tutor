@@ -12,6 +12,15 @@ Feature: User Authentication
 		And I fill in "password" with "password"
 		And I press "submit"
 		Then I should be on my home page
+		
+	Scenario: The user creates an account
+		Given I am on the home page
+		When I follow "Register"
+		And I fill in "Username" with "frank"
+		And I fill in "Email" with "frank@mail.com"
+		And I fill in "Password" with "password"
+		And I fill in "Password confirmation" with "password"
+		Then I should be on my home page
 
 
 
