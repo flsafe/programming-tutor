@@ -28,7 +28,7 @@ When /^I view exercise set "([^\"]*)"$/ do |title|
 end
 
 Then /^I should see exercise set "([^\"]*)" with "([^\"]*)"$/ do |title, text|
-  response.should have_selector ".exercise_set", :content=>title do |exercise_set|
+  page.should have_css ".exercise_set", :content=>title do |exercise_set|
     exercise_set.should contain text
   end
 end

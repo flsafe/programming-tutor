@@ -8,9 +8,9 @@ Feature: User Authentication
 	Scenario: The user provides the proper credentials
 		Given I am the registered user "frank"
 		And I am on the login page
-		When I fill in "username" with "frank"
-		And I fill in "password" with "password"
-		And I press "submit"
+		When I fill in "Username" with "frank"
+		And I fill in "Password" with "password"
+		And I press "Submit"
 		Then I should be on my home page
 		
 	Scenario: The user creates an account

@@ -10,9 +10,9 @@ Given /^I am logged in as the user "([^\"]*)"$/ do |username|
   steps %Q{
     Given I am the registered user "#{username}"
     And I am on the login page
-		When I fill in "username" with "frank"
-		And I fill in "password" with "password"
-		And I press "submit"
+		When I fill in "Username" with "frank"
+		And I fill in "Password" with "password"
+		And I press "Submit"
   }
 end
 

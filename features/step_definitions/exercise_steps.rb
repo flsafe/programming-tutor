@@ -14,7 +14,7 @@ Given /^"([^\"]*)" has the grades "([^\"]*)"$/ do |exercise_title, grades|
 end
 
 Then /^I should see exercise "([^\"]*)" with "([^\"]*)"$/ do |title, text|
-  response.should have_selector ".exercise", :content=>title do |exercise_set|
+  page.should have_css ".exercise", :content=>title do |exercise_set|
     exercise_set.should contain text
   end
 end
