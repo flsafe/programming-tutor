@@ -1,5 +1,9 @@
 module MenuHelper
+  def black_list
+    @black_list ||= [/\/$/, /\/login/, /\logout/, /\/users\/new/]
+  end
+
   def show_menu?
-    true unless request.request_uri =~ /\/$/
+    not black_list.detect {|no_show| request.request_uri =~ no_show }
   end
 end
