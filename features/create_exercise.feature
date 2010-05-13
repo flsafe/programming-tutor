@@ -1,8 +1,7 @@
-Feature: Create Exercise Set
+Feature: Create Exercise
 	In order to provide my customers with new learning content
 	As an admin
-	I want to add a new exercise set to the database
-	#TODO: Figure out why the 'params' don't work!
+	I want to add a new exercise to the database
 	
 	Scenario: The admin creates a new exercise
 		Given I am logged in as the user "frank"
