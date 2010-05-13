@@ -9,3 +9,10 @@ Feature: Navigation
 		And I should see "Overview"
 		Then I should see "Exercises"
 		And I should see "Trends"
+		
+	Scenario: The home page should not show the navigation menu
+		Given I am logged in as the user "frank"
+		And I am on my home page
+		Then I should not see "Overview"
+		And I should not see "Exercises"
+		And I should not see "Trends"
