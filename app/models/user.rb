@@ -12,8 +12,8 @@ class User < ActiveRecord::Base
   
   attr_protected :roles_mask
   
-  def grade_for?(exercise_set)
-    if gs = grade_sheets.find(:first, :conditions=>['exercise_id=?', exercise_set.id], :order=>'created_at DESC') then
+  def grade_for?(exercise)
+    if gs = grade_sheets.find(:first, :conditions=>['exercise_id=?', exercise.id], :order=>'created_at DESC') then
       gs.grade
     end
   end
