@@ -16,6 +16,13 @@ Feature: Browse Exercise Sets
 		And "40" users have done "Linked List Basics"
 		And I am on the exercise sets page
 		Then I should see "40"
+		
+	Scenario: The user sees the average grade for the exercise set
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "Linked List Basics" with "Ex1" and "Ex2"
+		And "Linked List Basics" has an average grade of "61.34"
+		And I am on the exercise sets page
+		Then I should see "61.34"
 
 		
 		
