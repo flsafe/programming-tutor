@@ -26,9 +26,10 @@ Feature: Browse Exercise Sets
 		Then I should see <should_see>
 		
 	Examples:
-		| given                                                | should_see |
-		| "40" users have done "Linked List Basics"            | "40"       |
-		| "Linked List Basics" has an average grade of "61.34" | "61.34"    |
+		| given                                                          | should_see |
+		| "40" users have done "Linked List Basics"                      | "40"       |
+		| "Linked List Basics" has an average grade of "61.34"           | "61.34"    |
+		| I have finished "Linked List Basics" with an average of "91.1" | "91.1"     |
 		
 
 
