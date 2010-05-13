@@ -8,8 +8,4 @@ describe "/exercise_sets/index.html.erb" do
       stub_model(ExerciseSet)
     ]
   end
-
-  it "renders a list of exercise_sets" do
-    render
-  end
 end
