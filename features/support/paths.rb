@@ -17,7 +17,7 @@ module NavigationHelpers
     when /login\s?page/
         '/login'
         
-    when /exercise set page/
+    when /exercise sets page/
       exercise_sets_path
       
     when /create exercise page/

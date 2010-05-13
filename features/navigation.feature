@@ -10,7 +10,6 @@ Feature: Navigation
 		
 	Examples:
 		| page              | may        |
-		| my home page      | should     |
 		| the home page     | should not |
 		| the register page | should not |
 		| the login page    | should not |
