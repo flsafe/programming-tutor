@@ -4,11 +4,19 @@ Feature: Browse Exercise Sets
 	As a user
 	I want to browse exercise sets
 
-	Scenario: The users sees the exercise set titles
+	Scenario: The user sees the exercise set titles
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "Ex1" and "Ex2"
 		And I am on the exercise sets page
 		Then I should see "Linked List Basics"
+		
+	Scenario: The user clicks on an exercise set to see more info
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "Linked List Basics" with "Ex1" and "Ex2"
+		And I am on the exercise sets page
+		When I follow "Linked List Basics"
+		Then I should see "Ex1"
+		And I should see "Ex2"
 
 	Scenario Outline: The user sees exercise set statistics
 		Given I am logged in as the user "frank"
