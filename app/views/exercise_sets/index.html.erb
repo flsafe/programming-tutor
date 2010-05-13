@@ -1,21 +1,7 @@
-<h1>Listing exercise_sets</h1>
+<h1>Exercises</h1>
 
-<table>
-  <tr>
-		<th>Title</th>
-		<th>Description</th>
-  </tr>
+<%= render :partial => '_exercise_set_list', :locals=>{:exercise_sets=>@exercise_sets} %>
 
-<% @exercise_sets.each do |exercise_set| %>
-	<tr>
-		<td> <%= exercise_set.title %> </td>
-		<td> <%= exercise_set.description %> </td>
-		<td><%= link_to 'Show', exercise_set %></td>
-    <td><%= link_to 'Edit', edit_exercise_set_path(exercise_set) %></td>
-    <td><%= link_to 'Destroy', exercise_set, :confirm => 'Are you sure?', :method => :delete %></td>
-	</tr>
-<% end %>
-</table>
 
 <br />
 

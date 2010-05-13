@@ -1,0 +1,14 @@
+<table>
+  <tr>
+		<th>Title</th>
+  </tr>
+
+<% exercise_sets.each do |exercise_set| %>
+	<tr>
+		<td> <%= exercise_set.title %> </td>
+		<td><%= link_to 'Show', exercise_set %></td>
+    <td><%= link_to 'Edit', edit_exercise_set_path(exercise_set) %></td>
+    <td><%= link_to 'Destroy', exercise_set, :confirm => 'Are you sure?', :method => :delete %></td>
+	</tr>
+<% end %>
+</table>
