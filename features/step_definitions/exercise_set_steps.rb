@@ -19,7 +19,7 @@ end
 
 Given /^I have finished "([^\"]*)" with an average of "([^\"]*)"$/ do |title, avg_grade|
   exercise_set = ExerciseSet.find_by_title title
-  g = Factory.create :set_grade_sheet, :exercise_set=>exercise_set, :grade=>avg_grade
+  g = Factory.create :set_grade_sheet, :exercise_set=>exercise_set, :grade=>avg_grade, :user=>@current_user
 end
 
 When /^I view exercise set "([^\"]*)"$/ do |title|
