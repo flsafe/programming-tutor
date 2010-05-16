@@ -1,7 +1,7 @@
 module GradeableHelper
   def to_class(gradeable)
     obj_type = get_type(gradeable)
-    status    = user_completed?(gradeable)
+    status   = user_completed?(gradeable)
     "\"#{obj_type} #{status}\""
   end
   

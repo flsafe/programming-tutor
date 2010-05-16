@@ -17,6 +17,19 @@ Feature: Browse Exercise Sets
 		When I follow "Linked List Basics"
 		Then I should see "Ex1"
 		And I should see "Ex2"
+		
+	Scenario: The user can tell which exercise sets they have completed
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "Linked List Basics" with "Ex1" and "Ex2"
+		And I have finished "Linked List Basics" with an average of "91.9"
+		And I am on the exercise sets page
+		Then I should see "Linked List Basics" within ".complete"
+		
+	Scenario: The user can tell which exercise sets they have not completed
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "Linked List Basics" with "Ex1" and "Ex2"
+		And I am on the exercise sets page
+		Then I should see "Linked List Basics" within ".incomplete"
 
 	Scenario Outline: The user sees exercise set statistics
 		Given I am logged in as the user "frank"
