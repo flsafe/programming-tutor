@@ -6,7 +6,10 @@ Feature: Do exercise
 	Scenario: The user performs a syntax check
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "Pointer intro" and "Ex2"
-		And I am viewing the tutor page for "Pointer intro"
-		When I fill in the text editor with a sample solution containing a syntax error
-		And I press "Syntax Check"
+		And I am on the exercise sets page
+		When I follow "Linked List Basics"
+		And I follow "Pointer intro"
+		And I follow "Bring It On!"
+		And I fill in the text editor with a sample solution containing a syntax error
+		And I press "Check Syntax"
 		Then I should see "Syntax Error"
