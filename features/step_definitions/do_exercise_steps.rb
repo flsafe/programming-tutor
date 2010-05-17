@@ -12,6 +12,6 @@ When /^I fill in the text editor with a sample solution containing a syntax erro
     }
   CODE
 
-  fill_in("Code", :with => code)
+  fill_in("code", :with => code)
 end
 
