@@ -1,27 +1,18 @@
-<html>
-<head>
-<title>EditArea Test</title>
+
 <script language="javascript" type="text/javascript" src="/edit_area/edit_area/edit_area_full.js"></script>
 <script language="javascript" type="text/javascript">
 editAreaLoader.init({
 	id : "textarea_1"		// textarea id
-	,syntax: "css"			// syntax to be uses for highgliting
+	,syntax: "c"			// syntax to be uses for highgliting
 	,start_highlight: true		// to display with highlight mode on start-up
+	,allow_toggle: false
+	,tool_bar: "undo, redo, syntax_selection"
 });
 </script>
-</head>
-<body>
-<form method="post">
-	<textarea id="textarea_1" name="content" cols="80" rows="15">
-/*This is some css that will be editable with EditArea.*/
-body, html{
-	margin: 0; 
-	padding: 0;
-	height: 100%;
-	border: none;
-	overflow: hidden;
-}</textarea>
 
-</form>
-</body>
-</html>
+<% form_tag :action=>"form_action" do %>
+	<%= text_area_tag :textarea_1, nil, :name=>"code", :rows=>18, :cols=>80 %>
+	<%= submit_tag "Check Syntax" %>
+<% end %>
+
+
