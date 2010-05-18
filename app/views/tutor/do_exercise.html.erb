@@ -1,19 +1,5 @@
-<script language="javascript" type="text/javascript" src="/edit_area/edit_area/edit_area_full.js"></script>
-<script language="javascript" type="text/javascript">
-editAreaLoader.init({
-	id : "textarea_1"		// textarea id
-	,syntax: "c"			// syntax to be uses for highgliting
-	,start_highlight: true		// to display with highlight mode on start-up
-	,allow_toggle: false
-	,tool_bar: "undo, redo, syntax_selection"
-});
-</script>
+<%= render :partial => 'text_editor' %>
 
-<% form_tag :action=>"do_exercise", :id=>@exercise do %>
-	<%= text_area_tag :textarea_1, @code, :name=>"code", :rows=>18, :cols=>80 %>
-	<%= submit_tag "Check Syntax" %>
-	<%= submit_tag "Submit Solution" %>
-<% end %>
 
 <div id="syntax">
 	<%= @syntax_message if @syntax_message %>
