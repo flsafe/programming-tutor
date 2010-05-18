@@ -17,7 +17,9 @@ end
 
 
 Then /^I should see my code$/ do
+  within(:css, "#frame_textarea_1") do
     page.should have_content(@code)
+  end
 end
 
 
