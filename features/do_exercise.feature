@@ -12,4 +12,5 @@ Feature: Do exercise
 		And I follow "Bring It On!"
 		And I fill in the text editor with a sample solution containing a syntax error
 		And I press "Check Syntax"
-		Then I should see "Syntax Error"
+		Then I should see "syntax error" within "#syntax"
+		Then I should see my code

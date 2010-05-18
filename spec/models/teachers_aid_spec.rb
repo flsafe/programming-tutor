@@ -17,7 +17,7 @@ describe TeachersAid do
       @ta.record_grade(@gs)
     end
     
-    it "adds a new grade sheet to the exercise set when it is completed" do
+    it "adds a new grade sheet to the exercise's exercise set when all the exercises in the set have been completed" do
       set = Factory.create :complete_exercise_set
       u   = Factory.create :user
       @ta.record_grade Factory.create :grade_sheet, :user=>u, :exercise=>set.exercises[0]

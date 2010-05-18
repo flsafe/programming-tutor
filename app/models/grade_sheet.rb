@@ -10,7 +10,7 @@ class GradeSheet < ActiveRecord::Base
   end
   
   def complete_set?
-    completed_exercises = GradeSheet.count_distinct_grade_sheets(user, exercise)
+    completed_exercises = GradeSheet.count_distinct_sibling_grade_sheets(user, exercise)
     exercises_in_set    = GradeSheet.siblings(exercise).count
     completed_exercises == exercises_in_set
   end
@@ -54,7 +54,7 @@ class GradeSheet < ActiveRecord::Base
     GradeSheet.count :conditions=>["user_id=? AND exercise_id=?", user.id, exercise.id]
   end
   
-  def self.count_distinct_grade_sheets(user, exercise)
+  def self.count_distinct_sibling_grade_sheets(user, exercise)
     GradeSheet.count :conditions=>["user_id=? AND exercise_id IN (?)", user.id, GradeSheet.sibling_ids(exercise)], :select=>"distinct grade_sheets.exercise_id"
   end
   
