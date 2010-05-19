@@ -3,7 +3,6 @@ Given /^I am viewing the tutor page for "([^\"]*)"$/ do | title |
   visit exercise_path ex
 end
 
-
 When /^I fill in the text editor with a sample solution containing a syntax error$/ do
   @code = <<-CODE
     int main(){
@@ -11,10 +10,9 @@ When /^I fill in the text editor with a sample solution containing a syntax erro
       return 0;
     }
   CODE
-
-  fill_in("code", :with => @code)
+  uncheck('edit_area_toggle_checkbox_textarea_1')
+  fill_in("textarea_1", :with => @code)
 end
-
 
 Then /^I should see my code$/ do
   within(:css, "#frame_textarea_1") do

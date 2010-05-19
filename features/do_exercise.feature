@@ -3,6 +3,7 @@ Feature: Do exercise
 	As a user
 	I want to write the code to my solution
 	
+	@javascript
 	Scenario: The user performs a syntax check
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "Pointer intro" and "Ex2"

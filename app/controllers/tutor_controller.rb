@@ -3,23 +3,17 @@ class TutorController < ApplicationController
     @exercise = Exercise.find_by_id(params['id'])
   end
   
-  def do_exercise
+  def show
     @exercise = Exercise.find_by_id params[:id]
-    @code     = params[:code]
-    form_action
-    render 'do_exercise'
   end
   
-  private
-  
-  def form_action
-    if params[:commit] == "Check Syntax"
-      check_syntax params[:code]
-    end
+  def grade
+    
   end
   
-  def check_syntax(code)
-    syntax_checker  = SyntaxChecker.new
-    @syntax_message = syntax_checker.check_syntax(code)
+  def check_syntax
+    syntax_checker = SyntaxChecker.new
+    syntax_message = syntax_checker.check_syntax(params[:code])
+    render :partial=>'syntax_message', :object=>syntax_message, :layout=>false
   end
 end
