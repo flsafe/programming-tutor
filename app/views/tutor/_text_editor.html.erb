@@ -2,9 +2,9 @@
 	<%= javascript_include_tag '/edit_area/edit_area/edit_area_full' %>
 	<script type="text/javascript">
 		editAreaLoader.init({
-		id : "textarea_1"		// textarea id
-		,syntax: "c"			// syntax to be uses for highgliting
-		,start_highlight: true		// to display with highlight mode on start-up
+		id : "textarea_1"		       // textarea id
+		,syntax: "c"			         // syntax to be uses for highgliting
+		,start_highlight: true		 // to display with highlight mode on start-up
 		,allow_toggle: <%= ENV['RAILS_ENV'] != 'production' ? true : false %>
 		,tool_bar: "undo, redo, syntax_selection"
 	});
@@ -13,7 +13,9 @@
 
 <% form_tag :action=>"grade", :id=>@exercise do %>
 	<%= text_area_tag :textarea_1, nil, :name=>"code", :rows=>18, :cols=>80 %>
-	<%= submit_to_remote "check_syntax",'Check Syntax', :url=>{:action=>'check_syntax'}, 
+	<%= submit_to_remote "check_syntax",
+				'Check Syntax', 
+				:url=>{:action=>'check_syntax'}, 
 				:update=>'syntax', 
 				:before=>"$('textarea_1').update(editAreaLoader.getValue('textarea_1'))" %>
 	<%= submit_tag "Submit Solution" %>
