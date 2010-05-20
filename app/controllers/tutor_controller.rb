@@ -12,8 +12,13 @@ class TutorController < ApplicationController
   end
   
   def check_syntax
-    syntax_checker = SyntaxChecker.new
-    syntax_message = syntax_checker.check_syntax(params[:code])
-    render :partial=>'syntax_message', :object=>syntax_message, :layout=>false
+    syntax_check_job = SyntaxCheckJob.new(params[:code], current_user.id.to_s, params[:id])
+    Delayed::Job.enqueue syntax_check_job
+    
+    render :partial=>'check_syntax_status', :layout=>false
+  end
+  
+  def syntax_status
+    
   end
 end

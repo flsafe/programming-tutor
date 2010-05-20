@@ -20,28 +20,38 @@ describe TutorController do
   describe "post check_syntax" do
     
     before(:each) do
-      @syntax_checker = mock_model(SyntaxChecker).as_null_object
-      SyntaxChecker.stub(:new).and_return(@syntax_checker)
+      @syntax_job = mock_model(SyntaxCheckJob)
+      @syntax_job.stub(:perform)
+      SyntaxCheckJob.stub(:new).and_return(@syntax_job)
+      
       @code = "int main(){int i = 0; return 0;}"
+      
+      @current_user = Factory.create :user
+      @controller.stub(:current_user).and_return(@current_user)
+      
+      @exercise = Factory.create :exercise
     end
     
-    it "gives the code from the text editor to the syntax checker" do
-      @syntax_checker.should_receive(:check_syntax).with(@code)
+     it "gives the code from the text editor to the syntax check job" do
+      SyntaxCheckJob.should_receive(:new).with(@code, @current_user.id.to_s, @exercise.id.to_s)
+      post :check_syntax, :code=>@code, :id=>@exercise.id
+    end
+    
+    it "starts a new syntax job" do
+      Delayed::Job.should_receive(:enqueue).with @syntax_job
       post :check_syntax, :code=>@code
     end
     
-    it "shows the resulting syntax check message" do
-      pending "This damn parital shows what I need" do
-        @syntax_checker.stub(:check_syntax).and_return("syntax error")
-        post :check_syntax
-        response.should contain('syntax error')
-      end
-    end
-    
-    it "renders the syntax message partial" do
-      @syntax_checker.stub(:check_syntax).and_return("syntax error")
+    it "renders the check_syntax_status" do
       post :check_syntax
-      response.should render_template('tutor/_syntax_message')
+      response.should render_template('tutor/_check_syntax_status')
+    end
+  end
+  
+  describe "get syntax_status" do
+    
+    it "" do
+      
     end
   end
 end
