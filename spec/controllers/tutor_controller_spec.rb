@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe TutorController do
+  before(:each) do
+    @current_user = Factory.create :user
+    @controller.stub(:current_user).and_return(@current_user)
+      
+    @exercise = Factory.create :exercise
+  end
   
   describe "get show" do
     
@@ -25,11 +31,6 @@ describe TutorController do
       SyntaxCheckJob.stub(:new).and_return(@syntax_job)
       
       @code = "int main(){int i = 0; return 0;}"
-      
-      @current_user = Factory.create :user
-      @controller.stub(:current_user).and_return(@current_user)
-      
-      @exercise = Factory.create :exercise
     end
     
      it "gives the code from the text editor to the syntax check job" do
@@ -44,14 +45,30 @@ describe TutorController do
     
     it "renders the check_syntax_status" do
       post :check_syntax
-      response.should render_template('tutor/_check_syntax_status')
+      response.should render_template('tutor/check_syntax')
     end
   end
   
   describe "get syntax_status" do
     
-    it "" do
+    it "retrieves the result of the syntax check" do
+      SyntaxCheckResult.should_receive(:find).with(:first, :conditions=>['user_id=? AND exercise_id=?', @current_user.id, @exercise.id], :order=>'created_at DESC')
+      get :syntax_status, :id=>@exercise.id
+    end
+    
+    it "renders the syntax message template" do
+      get :syntax_status, :id=>@exercise.id
+      response.should render_template('tutor/syntax_status')
+    end
+    
+    it "returns the sytntax error message" do
+      pending "syntax error not showing up" do
+        syntax_check_result = stub_model(SyntaxCheckResult, :error_message=>'syntax error')
+        SyntaxCheckResult.stub(:find).and_return(syntax_check_result)
       
+        get :syntax_status, :id=>@exercise
+        response.should contain("syntax error")
+      end
     end
   end
 end

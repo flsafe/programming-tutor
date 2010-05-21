@@ -16,7 +16,6 @@
 	<%= submit_to_remote "check_syntax",
 				'Check Syntax', 
 				:url=>{:action=>'check_syntax', :id=>@exercise}, 
-				:update=>'syntax', 
 				:before=>"$('textarea_1').update(editAreaLoader.getValue('textarea_1'))" %>
 	<%= submit_tag "Submit Solution" %>
 <% end %>

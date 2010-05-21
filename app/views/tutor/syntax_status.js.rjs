@@ -1,0 +1,6 @@
+page.replace_html :syntax, @message
+if @message == "checking..."
+  page << "keepPolling = true"
+else
+  page << "keepPolling = false"
+end
