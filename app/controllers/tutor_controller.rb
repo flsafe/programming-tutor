@@ -23,7 +23,8 @@ class TutorController < ApplicationController
   
   def syntax_status
     @exercise           = Exercise.find_by_id params[:id]
-    syntax_check_result = SyntaxCheckResult.find :first, :conditions=>['user_id=? AND exercise_id=?', current_user.id, @exercise.id], :order=>'created_at DESC'
+    syntax_check_result = SyntaxCheckResult.find :first, :conditions=>['user_id=? AND exercise_id=?', current_user.id, @exercise.id]
+    syntax_check_result.delete if syntax_check_result
     if syntax_check_result == nil
       @message = "checking..."
     elsif syntax_check_result.syntax_error?

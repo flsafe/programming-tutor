@@ -52,8 +52,12 @@ describe TutorController do
   describe "get syntax_status" do
     
     it "retrieves the result of the syntax check" do
-      SyntaxCheckResult.should_receive(:find).with(:first, :conditions=>['user_id=? AND exercise_id=?', @current_user.id, @exercise.id], :order=>'created_at DESC')
+      SyntaxCheckResult.should_receive(:find).with(:first, :conditions=>['user_id=? AND exercise_id=?', @current_user.id, @exercise.id])
       get :syntax_status, :id=>@exercise.id
+    end
+    
+    it "clears the syntax check result" do
+      
     end
     
     it "renders the syntax message template" do
@@ -62,13 +66,11 @@ describe TutorController do
     end
     
     it "returns the sytntax error message" do
-      pending "syntax error not showing up" do
-        syntax_check_result = stub_model(SyntaxCheckResult, :error_message=>'syntax error')
-        SyntaxCheckResult.stub(:find).and_return(syntax_check_result)
-      
-        get :syntax_status, :id=>@exercise
-        response.should contain("syntax error")
-      end
+      syntax_check_result = stub_model(SyntaxCheckResult, :error_message=>'syntax error')
+      SyntaxCheckResult.stub(:find).and_return(syntax_check_result)
+    
+      get :syntax_status, :id=>@exercise
+      assigns[:message].should == 'syntax error'
     end
   end
 end
