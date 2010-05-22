@@ -1,4 +1,4 @@
-page.replace_html :syntax, 'checking...'
+page.replace_html :syntax, @message
 page << "keepPolling = true"
 page.select("#polling").each do |e|
   e.replace(periodically_call_remote(:url=>{:action=>'syntax_status', :id=>@exercise.id}, :condition=>'keepPolling == true')) 
