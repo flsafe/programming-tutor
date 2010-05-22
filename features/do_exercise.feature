@@ -4,6 +4,7 @@ Feature: Do exercise
 	I want to write the code to my solution
 	
 	@javascript
+	@start_delayed_job
 	Scenario: The user performs a syntax check
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "Pointer intro" and "Ex2"
