@@ -28,8 +28,8 @@ describe TutorController do
     before(:each) do
       @syntax_job = mock_model(SyntaxCheckJob)
       @syntax_job.stub(:perform)
-      
       SyntaxCheckJob.stub(:new).and_return(@syntax_job)
+      
       @delayed_job = stub_model(Delayed::Job)
       Delayed::Job.stub(:enqueue).and_return(@delayed_job)
       

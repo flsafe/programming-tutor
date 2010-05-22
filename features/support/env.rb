@@ -36,7 +36,7 @@ ActionController::Base.allow_rescue = false
 
 
 #Wait time
-Capybara.default_wait_time = 15
+Capybara.default_wait_time = 16
 
 
 # If you set this to true, each scenario will run in a database transaction.
