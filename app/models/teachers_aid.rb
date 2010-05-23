@@ -9,6 +9,8 @@ class TeachersAid
     add_set_grade_sheet_to_exercise_set if @grade_sheet.complete_set?
   end
   
+  private
+  
   def add_grade_sheet_to_exercise
       @exercise.grade_sheets << @grade_sheet
   end

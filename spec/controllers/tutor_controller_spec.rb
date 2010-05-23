@@ -107,8 +107,8 @@ describe TutorController do
       response.should render_template('tutor/syntax_status')
     end
     
-    it "assigns sytntax check resulting message" do
-      syntax_check_result = stub_model(SyntaxCheckResult, :error_message=>'syntax error')
+    it "assigns sytntax check message" do
+      syntax_check_result = stub_model(SyntaxCheckResult, :error_message=>'syntax error', :destroy=>true)
       SyntaxCheckResult.stub(:find).and_return(syntax_check_result)
     
       get :syntax_status, :id=>@exercise
