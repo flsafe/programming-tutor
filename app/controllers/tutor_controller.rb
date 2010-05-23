@@ -35,10 +35,8 @@ class TutorController < ApplicationController
     syntax_check_result.delete if syntax_check_result
     if syntax_check_result == nil
       @message = "checking..."
-    elsif syntax_check_result.syntax_error?
-      @message = syntax_check_result.error_message
     else
-      @message = "No syntax errors detected!"
+      @message = syntax_check_result.result
     end
     respond_to do |f|
       f.js
