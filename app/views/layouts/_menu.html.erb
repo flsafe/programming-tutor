@@ -3,5 +3,6 @@
 		<li> <%= link_to "Overview", :controller=>'school' %> </li>
 		<li> <%= link_to "Exercises", exercise_sets_path %> </li>
 		<li> <%= link_to "Trends" %> </li>
+		<li> <%= link_to("Admin", admin_path) if current_user.has_role? 'admin'%> </li>
 	</ul><br/><br/>
 <% end %>
