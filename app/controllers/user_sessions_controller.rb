@@ -20,4 +20,9 @@ class UserSessionsController < ApplicationController
     flash[:notice] = "Succesfully logged out"
     redirect_to root_url
   end
+  
+  protected
+  
+  def authorize
+  end
 end

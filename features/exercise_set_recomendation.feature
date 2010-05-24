@@ -35,7 +35,6 @@ Feature: Exercise Set Recommendation
 		When I follow "Linked List Basics"
 		And I follow "ex1"
 		Then I should see "Are you sure you want to do this"
-		And I should see "Back"
 		And I should see "Bring It On!"
 		
 		

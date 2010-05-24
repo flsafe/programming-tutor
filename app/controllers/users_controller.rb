@@ -82,4 +82,11 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def authorize
+    allowed_actions  = ['create', 'new']
+    if not allowed_actions.include? action_name
+      redirect_to login_url
+    end
+  end
 end

@@ -20,8 +20,7 @@ class TutorController < ApplicationController
       @message = 'checking...'
     else
       @message = 'Aw shoot! And error occured, try again later.'
-    end
-    
+    end    
     respond_to do |f| 
       f.js
     end
