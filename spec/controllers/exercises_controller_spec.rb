@@ -18,6 +18,49 @@ describe ExercisesController do
     @mock_exercise_set ||= mock_model(ExerciseSet, stubs).as_null_object
   end
   
+  shared_examples_for "controller_for_admin_resource" do
+    
+    describe "the current user is not an admin" do
+      
+      before(:each) do
+        current_user = stub_model(User, 'has_role?'=>false)
+        controller.stub(:current_user).and_return(current_user)
+      end
+      
+      it "renders the login page if new is requested" do
+        get :new
+        response.should redirect_to login_path
+      end
+      
+      it "renders the login page if create is posted" do
+        post :create
+        response.should redirect_to login_path
+      end
+      
+      it "renders the login page if edit is requested" do
+        get :edit
+        response.should redirect_to login_path
+      end
+      
+      it "renders the login page if put" do
+        put :update
+        response.should redirect_to login_path
+      end
+      
+      it "renders the login page if delete" do
+        delete "1"
+        response.should redirect_to login_path
+      end
+      
+      it "flashes the permssions message"do
+        get :new
+        flash[:error].should == "You don't have permission to do that!"
+      end
+    end
+  end
+  
+  it_should_behave_like "controller_for_admin_resource"
+  
   describe 'get new' do
     
     before(:each) do
@@ -46,23 +89,6 @@ describe ExercisesController do
       ExerciseSet.stub(:find).and_return([mock_exercise_set])
       get :new
       assigns[:exercise_sets].should ==([mock_exercise_set])
-    end
-    
-    describe "the current user is not an admin" do
-      before(:each) do
-        current_user = stub_model(User, 'has_role?'=>false)
-        controller.stub(:current_user).and_return(current_user)
-      end
-      
-      it "renders the login page" do
-        get :new
-        response.should redirect_to login_path
-      end
-      
-      it "flashes the permssions message"do
-        get :new
-        flash[:error].should == "You don't have permission to do that!"
-      end
     end
   end
   
