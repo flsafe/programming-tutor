@@ -3,7 +3,8 @@ Given /^I am the registered user "([^\"]*)"$/ do |username|
 end
 
 Given /^I have admin privileges$/ do
-  @current_user.add_role 'admin'
+  @current_user.add_role('admin')
+  @current_user.save
 end
 
 Given /^I am logged in as the user "([^\"]*)"$/ do |username|

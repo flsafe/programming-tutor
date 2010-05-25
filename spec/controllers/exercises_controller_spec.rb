@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ExercisesController do
   
   before(:each) do
-    controller.stub(:current_user).and_return(stub_model User)
+    controller.stub(:current_user).and_return(stub_model(User, 'has_role?'=>true))
   end
   
   def mock_exercise(stubs={})
@@ -46,6 +46,23 @@ describe ExercisesController do
       ExerciseSet.stub(:find).and_return([mock_exercise_set])
       get :new
       assigns[:exercise_sets].should ==([mock_exercise_set])
+    end
+    
+    describe "the current user is not an admin" do
+      before(:each) do
+        current_user = stub_model(User, 'has_role?'=>false)
+        controller.stub(:current_user).and_return(current_user)
+      end
+      
+      it "renders the login page" do
+        get :new
+        response.should redirect_to login_path
+      end
+      
+      it "flashes the permssions message"do
+        get :new
+        flash[:error].should == "You don't have permission to do that!"
+      end
     end
   end
   

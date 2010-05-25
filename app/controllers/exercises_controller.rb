@@ -1,4 +1,7 @@
 class ExercisesController < ApplicationController
+  
+  before_filter :check_user_permissions, :except=>[:index, :show]
+  
   # GET /exercises
   # GET /exercises.xml
   def index
@@ -82,6 +85,15 @@ class ExercisesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(exercises_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  protected
+  
+  def check_user_permissions
+    unless current_user.is_admin?
+      flash[:error] = "You don't have permission to do that!"
+      redirect_to login_path
     end
   end
 end
