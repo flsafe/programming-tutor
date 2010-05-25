@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def authorize
-    if not current_user_session
+    if not current_user
       flash[:notice] = 'You have to be logged in to do that!'
       redirect_to login_url
     end

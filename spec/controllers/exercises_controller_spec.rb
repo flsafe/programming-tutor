@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe ExercisesController do
+  
+  before(:each) do
+    controller.stub(:current_user).and_return(stub_model User)
+  end
+  
   def mock_exercise(stubs={})
     @mock_exercise ||= mock_model(Exercise, stubs).as_null_object
   end
@@ -47,8 +52,6 @@ describe ExercisesController do
   describe "post create" do
     
     describe "with valid attributes" do
-      before(:each) do
-      end
       
       it "creates a new exercise" do
         Exercise.should_receive(:new).with({'title'=>'title'}).and_return(mock_exercise)

@@ -3,11 +3,10 @@ Feature: Navigation
 	As a user
 	I want to navigate using navigation menu
 		
-	Scenario Outline: Navigation Visibility
+	Scenario Outline: Navigation Menu Visibility
 		Given I am logged in as the user "frank"
 		And I am on <page>
 		Then I <may> see the navigation menu
-		And I should not see "Admin" within "#menu"
 		
 	Examples:
 		| page              | may        |

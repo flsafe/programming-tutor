@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe ExerciseSetsController do
 
+  before(:each) do
+    controller.stub(:current_user).and_return(Factory.create :user)
+  end
+  
   def mock_exercise_set(stubs={})
     @mock_exercise_set ||= mock_model(ExerciseSet, stubs)
   end
@@ -67,11 +71,10 @@ describe ExerciseSetsController do
         response.should render_template('new')
       end
     end
-
   end
 
   describe "PUT update" do
-
+    
     describe "with valid params" do
       it "updates the requested exercise_set" do
         ExerciseSet.should_receive(:find).with("37").and_return(mock_exercise_set)
@@ -115,6 +118,7 @@ describe ExerciseSetsController do
   end
 
   describe "DELETE destroy" do
+    
     it "destroys the requested exercise_set" do
       ExerciseSet.should_receive(:find).with("37").and_return(mock_exercise_set)
       mock_exercise_set.should_receive(:destroy)

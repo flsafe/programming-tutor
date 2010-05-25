@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe SchoolController, "GET index" do
+  
   context 'a newly registered user browses their home page' do
     it 'gets exercise sets for the user' do
       current_user = stub_model(User, :username=>'frank', :id=>1000)

@@ -42,7 +42,19 @@ class Exercise < ActiveRecord::Base
     existing_attributes_for(:unit_tests, unit_test_attributes)
   end
   
-  private
+  def can_be_created_by?(user)
+    user.has_role? :admin
+  end
+  
+  def can_be_edited_by?(user)
+    user.has_role? :admin
+  end
+  
+  def can_be_destroyed_by?(user)
+    user.has_role? :admin
+  end
+  
+  protected
   
   def new_attributes_for(association, attributes)
     associates = self.send(association)

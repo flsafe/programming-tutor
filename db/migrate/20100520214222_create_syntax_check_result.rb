@@ -1,4 +1,4 @@
-class SyntaxCheckResult < ActiveRecord::Migration
+class CreateSyntaxCheckResult < ActiveRecord::Migration
   def self.up
     create_table :syntax_check_results, :force=>true do |t|
       t.integer :user_id
