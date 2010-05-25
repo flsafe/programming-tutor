@@ -1,4 +1,4 @@
-class Exercise < ActiveRecord::Base
+class Exercise < ActiveRecord::Base  
   acts_as_taggable
   acts_as_taggable_on :algorithms, :data_structures
 
@@ -16,7 +16,7 @@ class Exercise < ActiveRecord::Base
   validates_associated  :hints, :unit_tests, :figures, :exercise_set
   
   validates_uniqueness_of :title
-  
+    
   def new_hint_attributes=(attributes)
     new_attributes_for(:hints, attributes)
   end
@@ -40,18 +40,6 @@ class Exercise < ActiveRecord::Base
   
   def existing_unit_test_attributes=(unit_test_attributes)
     existing_attributes_for(:unit_tests, unit_test_attributes)
-  end
-  
-  def can_be_created_by?(user)
-    user.has_role? :admin
-  end
-  
-  def can_be_edited_by?(user)
-    user.has_role? :admin
-  end
-  
-  def can_be_destroyed_by?(user)
-    user.has_role? :admin
   end
   
   protected

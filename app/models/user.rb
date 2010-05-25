@@ -24,18 +24,6 @@ class User < ActiveRecord::Base
     gs.grade if gs
   end
   
-  def can_create?(resource)
-    resource.can_be_created_by?(self)
-  end
-  
-  def can_edit?(resouce)
-    resourse.can_be_edited_by?(self)
-  end
-  
-  def can_destroy?(resource)
-    resource.can_be_destroyed_by?(self)
-  end
-  
   protected
   
   def is_exercise?(ex)
