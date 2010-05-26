@@ -8,9 +8,9 @@ shared_examples_for "controller for admin resource" do
       controller.stub(:current_user).and_return(current_user)
     end
     
-    it "allows access to the index" do
+    it "does not allow access to the index" do
       get :index
-      response.should render_template 'index'
+      response.should redirect_to login_path
     end
     
     it "renders the login page if new is requested" do

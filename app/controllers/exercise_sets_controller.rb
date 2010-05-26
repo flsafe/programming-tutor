@@ -1,6 +1,6 @@
 class ExerciseSetsController < ApplicationController
   
-  before_filter :check_user_permissions
+  before_filter :check_current_user_is_admin, :except=>[:show]
   
   # GET /exercise_sets
   # GET /exercise_sets.xml
@@ -84,20 +84,5 @@ class ExerciseSetsController < ApplicationController
       format.html { redirect_to(exercise_sets_url) }
       format.xml  { head :ok }
     end
-  end
-  
-  protected
-  
-  def check_user_permissions
-    return if check_user_permissions_except.include? action_name.to_sym
-
-    unless current_user.is_admin?
-      flash[:error] = "You don't have permission to do that!"
-      redirect_to login_path
-    end
-  end
-  
-  def check_user_permissions_except
-    [:index, :show]
   end
 end
