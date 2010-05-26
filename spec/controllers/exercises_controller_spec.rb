@@ -29,6 +29,11 @@ describe ExercisesController do
         controller.stub(:current_user).and_return(current_user)
       end
       
+      it "allows access to the index" do
+        get :index
+        response.should render_template 'index'
+      end
+      
       it "renders the login page if new is requested" do
         get :new
         response.should redirect_to login_path
