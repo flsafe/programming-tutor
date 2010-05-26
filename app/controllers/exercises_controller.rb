@@ -45,7 +45,7 @@ class ExercisesController < ApplicationController
 
   # POST /exercises
   # POST /exercises.xml
-  def create
+  def create    
     @exercise = Exercise.new(params[:exercise])
     respond_to do |format|
       if @exercise.save
