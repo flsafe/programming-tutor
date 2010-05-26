@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  
+  before_filter :check_user_permissions
+  
   # GET /users
   # GET /users.xml
   def index
@@ -83,10 +86,26 @@ class UsersController < ApplicationController
     end
   end
   
+  protected
+  
   def authorize
     allowed_actions  = ['create', 'new']
-    if not allowed_actions.include? action_name
-      redirect_to login_url
+  
+    return if current_user
+    return if allowed_actions.include? action_name
+    redirect_to login_url
+  end
+  
+  def check_user_permissions
+    return if check_user_permissions_except.include? action_name.to_sym
+
+    unless current_user.is_admin?
+      flash[:error] = "You don't have permission to do that!"
+      redirect_to login_path
     end
+  end
+  
+  def check_user_permissions_except
+    [:create, :new]
   end
 end
