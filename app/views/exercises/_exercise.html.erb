@@ -1,0 +1,8 @@
+<li class= <%= to_class(exercise) %> >
+	<%= link_to exercise.title, {:controller=>:tutor, :action=>:confirm, :id=>exercise}, :class=>"exercise_title"%><br/>
+	<span class="exercise_description"><%=exercise.description%></span><br/>
+	<span class="exercise_statistics">
+		<%=h exercise.completed_users.count%> users, <%=h exercise.average_grade %> avg grade My Grade: <%= current_user.grade_for?(exercise) %>
+	</span>
+</li>
+

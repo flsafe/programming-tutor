@@ -29,6 +29,8 @@ module NavigationHelpers
     when /the register page/
       new_user_path
       
+    when /my exercises page/
+      url_for :controller=>'exercises', :action=>'user_index', :id=>'done'
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

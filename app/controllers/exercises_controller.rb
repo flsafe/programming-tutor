@@ -15,7 +15,12 @@ class ExercisesController < ApplicationController
   end
   
   def user_index
+    @exercises = current_user.completed_exercises
     
+    respond_to do |format|
+      format.html #index.html.erb
+      format.xml {render :xml=>@exercises}
+    end
   end
 
   # GET /exercises/1
