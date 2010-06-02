@@ -17,7 +17,18 @@ class Exercise < ActiveRecord::Base
   
   validates_uniqueness_of :title
     
-  def new_hint_attributes=(attributes)
+  def self.recommend(user_id, how_many)
+    exercises = Exercise.find :all
+    how_many  = clamp(how_many, 0, exercises.size)
+
+    indices  = random_indices(how_many, exercises.size)
+    
+    result = []
+    indices.each {|i| result << exercises[i]}
+    result
+  end
+  
+   def new_hint_attributes=(attributes)
     new_attributes_for(:hints, attributes)
   end
   
@@ -43,7 +54,7 @@ class Exercise < ActiveRecord::Base
   end
   
   protected
-  
+    
   def new_attributes_for(association, attributes)
     associates = self.send(association)
     attributes.each do |atts|
@@ -67,6 +78,19 @@ class Exercise < ActiveRecord::Base
     hints.each {|h| h.save(false)}
     unit_tests.each {|u| u.save(false)}
     exercise_set.save(false)
+  end
+  
+  def self.random_indices(how_many, size_of_array)
+    indices = []
+    while indices.size != how_many
+      index = rand(size_of_array)
+      indices << index if not indices.include?(index)
+    end
+    indices
+  end
+  
+  def self.clamp(v, min, max)
+    [[v, max].min, min].max
   end
 
   def update_stats(gs)

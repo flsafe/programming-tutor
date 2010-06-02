@@ -13,8 +13,8 @@ describe SchoolController, "GET index" do
     end
     
     it 'gets exercise sets for the user' do
-      sets = [stub_model(ExerciseSet)]
-      ExerciseSet.should_receive(:recommend).with(current_user.id, 2).and_return(sets)
+      exercises = [stub_model(Exercise)]
+      Exercise.should_receive(:recommend).with(current_user.id, 2).and_return(exercises)
       get :index
     end
     

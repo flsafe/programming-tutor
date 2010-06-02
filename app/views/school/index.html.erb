@@ -1,13 +1,13 @@
 <h3>Hey there <%=h current_user.username %>! To start things off here are some sample exercise sets you can try out!</h3>
 <div id="recommended_exercise_sets">
 	<ul>
-		<% @exercise_sets.each do |set| %>
-			<li class=<%= to_class(set) %>>
-				<%= link_to set.title, set %>
+		<% @exercises.each do |ex| %>
+			<li class=<%= to_class(ex) %>>
+				<%= link_to ex.title, ex %>
 				<span class="exercise_set_statistics">
-					<%=h "#{set.completed_users.count} users, #{set.average_grade} avg grade"%>
+					<%=h "#{ex.completed_users.count} users, #{ex.average_grade} avg grade"%>
 				</span>
-					<%= "My Grade #{current_user.grade_for? set}" if current_user.grade_for?(set)%>
+					<%= "My Grade #{current_user.grade_for? ex}" if current_user.grade_for?(ex)%>
 			</li>
 		<% end %>
 	</ul>

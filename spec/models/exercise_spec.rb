@@ -5,6 +5,40 @@ describe Exercise do
     @exercise ||= Factory.build :exercise
   end
   
+  describe '#recommend' do
+    
+    before(:each) do
+      @new_user = stub_model(User)
+      1.upto(4) do |n|
+        Factory.create :exercise
+      end
+    end
+
+    it "recommends (n) random exercise sets, no duplicates" do
+      n = 3
+      1.upto(3) do
+        exercises = Exercise.recommend(@new_user.id, n)
+        exercises.size.should == n
+        should_not_have_duplicate(exercises)
+      end
+    end
+
+    context "when (n) exercises are requested and (n) > ExerciseSet.count" do 
+      it "returns ExerciseSet.count exercise sets" do
+        exercises = Exercise.recommend(@new_user, 100)
+        exercises.size.should == Exercise.count
+      end
+    end
+    
+    def should_not_have_duplicate(exercise_sets)
+      have_seen = Hash.new(0)
+        exercise_sets.each do |set|
+          have_seen[set] += 1
+          have_seen[set].should <= 1
+        end
+    end
+  end
+  
   describe "#new_hint_attributes=" do
     
     it "adds a new hint object to the hints list" do
