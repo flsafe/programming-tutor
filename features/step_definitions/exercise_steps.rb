@@ -13,6 +13,11 @@ Given /^"([^\"]*)" has the grades "([^\"]*)"$/ do |exercise_title, grades|
   end
 end
 
+When /^I view exercise "([^\"]*)"$/ do |title|
+  exercise = Exercise.find_by_title title
+  visit exercise_path(exercise)
+end
+
 Then /^I should see exercise "([^\"]*)" with "([^\"]*)"$/ do |title, text|
   page.should have_css ".exercise", :content=>title do |exercise_set|
     exercise_set.should contain text

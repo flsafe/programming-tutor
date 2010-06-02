@@ -9,31 +9,28 @@ Feature: Exercise Set Recommendation
 		And there exists an exercise set "Linked List Basics2" with "ex1" and "ex2"
 		And I am on my home page
 		Then I should see a list of randomly recommended exercise sets
-		And I should see "Hey there frank! To start things off here are some sample exercise sets you can try out!" 
+		And I should see "Hey there frank! To start things off here are some sample exercise sets you can try out!"
 		
 	Scenario: Exercise sets display their statistics
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "ex1" and "ex2"
-		And "10" users have done "Linked List Basics"
-		And "Linked List Basics" has an average grade of "91.1"
+		And "ex1" has the grades "[90 91]"
 		And I am on my home page
-		Then I should see exercise set "Linked List Basics" with "10"
-		And I should see exercise set "Linked List Basics" with "91.1"
+		Then I should see exercise "Ex1" with "90.5"
 		
 	Scenario: A user follows a recommended exercise set
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "ex1" and "ex2"
 		And I am on my home page
-		When I follow "Linked List Basics"
-		Then I should see "ex1"
-		And I should see "ex2"
+		When I follow "ex1"
+		And I should see "Start Exercise"
 		
 	Scenario: A user follows an exercise in a recommended exercise set
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "ex1" and "ex2"
 		And I am on my home page
-		When I follow "Linked List Basics"
 		And I follow "ex1"
+		And I follow "Start Exercise"
 		Then I should see "Are you sure you want to do this"
 		And I should see "Bring It On!"
 		
