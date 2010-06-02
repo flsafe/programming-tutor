@@ -1,13 +1,12 @@
-<p>
-  <b>Title:</b>
-  <%=h @exercise.title %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%=h @exercise.description %>
-</p>
 
 
-<%= link_to 'Edit', edit_exercise_path(@exercise) %> |
-<%= link_to 'Back', exercises_path %>
+<h3> <%=h @exercise.title %> </h3>
+<span class="exercise_description"><%=@exercise.description%></span><br/>
+<span class="exercise_statistics">
+	<%=h @exercise.completed_users.count%> users, <%=h @exercise.average_grade %> avg grade
+</span>
+<%=h @exercise.description %><br/>
+
+<%= link_to "Start Exercise", {:controller=>:tutor, :action=>:confirm, :id=>@exercise}%> | 
+
+<%= link_to 'Edit', edit_exercise_path(@exercise) %>
