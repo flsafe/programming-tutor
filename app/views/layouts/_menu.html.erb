@@ -1,8 +1,8 @@
 <% if show_menu? %>
 	<ul id="menu">
 		<li> <%= link_to "Overview", :controller=>'school' %> </li>
-		<li> <%= link_to "Exercises", exercise_sets_path %> </li>
+		<li> <%= link_to "Exercises", {:controller=>'exercise_sets', :action=>'user_index', :id=>'done'} %> </li>
 		<li> <%= link_to "Trends" %> </li>
-		<li> <%= link_to("Admin", admin_path) if current_user.has_role? 'admin'%> </li>
+		<li> <%= link_to("Admin", admin_path) if current_user && current_user.has_role?('admin')%> </li>
 	</ul><br/><br/>
 <% end %>

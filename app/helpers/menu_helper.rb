@@ -1,6 +1,6 @@
 module MenuHelper
   def black_list
-    @black_list ||= [/\/$/, /\/login/, /\logout/, /\/users\/new/]
+    @black_list ||= [/\/$/, /\/login/, /\logout/, /\/users\/new/, /user_sessions/]
   end
 
   def show_menu?

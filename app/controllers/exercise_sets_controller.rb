@@ -1,6 +1,7 @@
 class ExerciseSetsController < ApplicationController
   
-  before_filter :check_current_user_is_admin, :except=>[:show]
+  before_filter :authorize
+  before_filter :check_current_user_is_admin, :except=>[:show, :user_index]
   
   # GET /exercise_sets
   # GET /exercise_sets.xml
@@ -11,6 +12,10 @@ class ExerciseSetsController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @exercise_sets }
     end
+  end
+  
+  def user_index
+    #show the exercise sets the user has completed
   end
 
   # GET /exercise_sets/1

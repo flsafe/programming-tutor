@@ -10,8 +10,6 @@ class ApplicationController < ActionController::Base
   
   helper_method :current_user_session, :current_user
   
-  before_filter :authorize
-
   protected
 
   def authorize
@@ -28,10 +26,6 @@ class ApplicationController < ActionController::Base
       redirect_to login_path
       false
     end
-  end
-  
-  def add_allowed_actions(*actions)
-    self.allowed_actions = allowed_actions.concat *actions
   end
 
   def current_user_session
