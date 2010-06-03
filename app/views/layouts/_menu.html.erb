@@ -4,5 +4,6 @@
 		<li> <%= link_to "Exercises", :controller=>'exercises', :action=>'user_index', :id=>'done' %> </li>
 		<li> <%= link_to "Trends" %> </li>
 		<li> <%= link_to("Admin", admin_path) if current_user && current_user.has_role?('admin')%> </li>
+		<li> <%= link_to "Logout", logout_path %>
 	</ul><br/><br/>
 <% end %>
