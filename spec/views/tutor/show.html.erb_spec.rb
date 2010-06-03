@@ -21,4 +21,10 @@ describe  'tutor/show.html.erb' do
     render
     response.should contain "exercise text"
   end
+  
+  it "displays the exercise hints" do
+    assigns[:exercise].stub(:hints).and_return([stub_model Hint, :text=>'hint1'])
+    render
+    response.should contain "Show Hint 1"
+  end
 end
