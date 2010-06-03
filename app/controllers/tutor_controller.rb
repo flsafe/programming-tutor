@@ -3,7 +3,7 @@ class TutorController < ApplicationController
   before_filter :authorize
   
   def confirm
-    @exercise = Exercise.find_by_id(params['id'])
+    @exercise = Exercise.find_by_id(params[:id])
   end
   
   def show

@@ -1,0 +1,6 @@
+<% index ||= 1 %>
+
+<%= link_to_function "Show Hint #{index}", :id=>"hint#{index}" do |page| 
+		page.insert_html :bottom, "hints", "#{hint.text}<br/>"
+		page.remove "hint#{index}"
+end %>
