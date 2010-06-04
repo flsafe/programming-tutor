@@ -5,7 +5,7 @@ Feature: Do exercise
 		
 	@javascript
 	@start_delayed_job
-	Scenario Outline: The use performs a syntax check
+	Scenario Outline: The user performs a syntax check
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "Pointer intro" and "Ex2"
 		And I am viewing the tutor page for "Pointer intro"
