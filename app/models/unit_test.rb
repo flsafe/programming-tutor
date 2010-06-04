@@ -21,6 +21,8 @@ class UnitTest < ActiveRecord::Base
     case UnitTest.base_part_of(unit_test_field.original_filename)
       when /\.(c)$/
         $1
+      when /\.(rb)$/
+        $1
     end
   end
   
