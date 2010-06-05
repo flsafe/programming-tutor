@@ -17,7 +17,7 @@ Feature: Create Exercise
 		And I select "60" from "Minutes"
 		And I attach the file "test.png" to "Figure"
 		And I attach the file "remove-letter.c" to "Upload Template"
-		And I attach the file "unittest.c" to "Upload Unit Test"
+		And I attach the file "remove-letter-unit-test.rb" to "Upload Unit Test"
 		And I fill in "Set Title" with "Linked List Basics"
 		And I fill in "Set Description" with "Implement linked lists"
 		And I fill in "Set Algorithm Tags" with "Traverse Linked List"
