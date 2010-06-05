@@ -115,16 +115,6 @@ describe Exercise do
     end
   end
   
-  describe "#new_exercise_set_attributes" do
-    
-    it "assigns the exercise_set " do
-      exercise_set = Factory.build :exercise_set, :title=>'donkeypoop', :description=>'description'
-      @exercise.new_exercise_set_attributes = exercise_set.attributes
-      @exercise.exercise_set.title.should == exercise_set.title
-      @exercise.exercise_set.description.should == exercise_set.description
-    end
-  end
-  
   describe "#existing_unit_test_attributes" do
     
     before(:each) do
@@ -143,6 +133,18 @@ describe Exercise do
     end
   end
 
+  
+  describe "#new_exercise_set_attributes" do
+    
+    it "assigns the exercise_set " do
+      exercise_set = Factory.build :exercise_set, :title=>'donkeypoop', :description=>'description'
+      @exercise.new_exercise_set_attributes = exercise_set.attributes
+      @exercise.exercise_set.title.should == exercise_set.title
+      @exercise.exercise_set.description.should == exercise_set.description
+    end
+  end
+  
+  
   def existing(object_sym, n)
     return @existing if @existing
     @existing = []
