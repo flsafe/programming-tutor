@@ -1,4 +1,11 @@
 module ExercisesHelper
+  
+  def add_model_link(title, replace_id, with_partial, object)
+    link_to_function title do |page|
+      page.insert_html :bottom, replace_id, :partial=>with_partial, :object=>object
+    end
+  end
+  
   def add_hint_link
     link_to_function "Add Hint" do |page| 
 			page.insert_html :bottom, :hints, :partial=>'hint', :object=>Hint.new

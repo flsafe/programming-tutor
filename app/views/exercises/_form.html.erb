@@ -35,7 +35,7 @@
 	<div id="hints">
 		<%= render :partial => 'hint', :collection=>@exercise.hints %>
 	</div>
-	<%= add_hint_link %>
+	<%= add_model_link("Add Hint", :hints, 'hint', Hint.new) %>
 	
 	<p>
 		<%= f.label :minutes %><br/>
@@ -47,7 +47,7 @@
 			<%= render :partial=>'code_template', :collection=>@exercise.templates %>
 		</p>
 	</div>
-	<%= add_template_link %>
+	<%= add_model_link("Add Template", :code_templates, 'code_template', Template.new) %>
 	
 	<div id="unit_tests">	
 		<p>	
@@ -71,10 +71,8 @@
 	<p>
 		<% #todo: Write cucumber and spec tests for these %>
 		<%= render :partial => 'exercise_set', :object=>@exercise.exercise_set, :locals=>{:exercise_sets=>@exercise_sets} %>
-
 	</p>
 			
-	
   <p>
     <%= f.submit %>
   </p>
