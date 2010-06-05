@@ -12,7 +12,7 @@ module ExercisesHelper
   end
   
   def add_figure_link
-    link_to_function "Add Figure Test" do |page|
+    link_to_function "Add Figure" do |page|
       page.insert_html :bottom, :figures, :partial=>'figure', :object=>Figure.new
     end
   end
