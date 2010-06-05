@@ -4,6 +4,7 @@ class Exercise < ActiveRecord::Base
 
   has_many :figures
   has_many :hints  
+  has_many :templates
   has_many :unit_tests
   has_many :completed_users, :through=>:grade_sheets, :source=>:user, :select=>'distinct users.*'
   has_many :grade_sheets, :after_add=>:update_stats
@@ -28,7 +29,11 @@ class Exercise < ActiveRecord::Base
     result
   end
   
-   def new_hint_attributes=(attributes)
+  def new_template_attributes=(attributes)
+    new_attributes_for(:templates, attributes)
+  end
+  
+  def new_hint_attributes=(attributes)
     new_attributes_for(:hints, attributes)
   end
   

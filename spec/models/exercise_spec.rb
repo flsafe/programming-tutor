@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe Exercise do
   before(:each) do
-    @exercise ||= Factory.build :exercise
+    @exercise ||= stub_model(Exercise)
+    @src_code     = 'source_code'
+    @src_language = 'ruby'
   end
   
   describe '#recommend' do
@@ -67,6 +69,29 @@ describe Exercise do
     end
   end
   
+  describe  "#new_template_attributes=" do
+    
+    it "adds a template object" do
+      template = stub_model(Template, :src_language=>'java', :src_code=>'public static void main(String args[]){;}')
+      @exercise.new_template_attributes = [template.attributes]
+      
+      (@exercise.templates.select {|t| t.src_language == template.src_language and
+        t.src_code == template.src_code}).should have(1).items
+    end
+    
+    context "from file" do
+      it "adds a template object" do
+        template = stub_model(Template, :src_language=>@src_language, :src_code=>@src_code)
+        Template.stub(:from_file_field).and_return(template.attributes)
+
+        @exercise.new_template_attributes = [:template_file=>nil]
+      
+        (@exercise.templates.select {|t| t.src_language == template.src_language and
+          t.src_code == template.src_code}).should have(1).items
+      end
+    end
+  end
+  
   describe "#new_unit_test_attributes=" do
     
     it "adds a new unit test object" do
@@ -75,6 +100,18 @@ describe Exercise do
       @exercise.new_unit_test_attributes = [unit_test.attributes]
       (@exercise.unit_tests.select {|ut| ut.src_language == unit_test.src_language and 
         ut.src_code == unit_test.src_code}).should have(1).items
+    end
+    
+    context "from file" do
+      it "adds a new unit test object" do
+        unit_test = stub_model(UnitTest, :src_language=>@src_language, :src_code=>@src_code)
+        UnitTest.stub(:from_file_field).and_return(unit_test.attributes)
+      
+        @exercise.new_unit_test_attributes = [:unit_test_file=>nil]
+        
+        (@exercise.unit_tests.select {|ut| ut.src_language == unit_test.src_language and 
+          ut.src_code == unit_test.src_code}).should have(1).items
+      end
     end
   end
   
