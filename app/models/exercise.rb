@@ -50,6 +50,10 @@ class Exercise < ActiveRecord::Base
     self.exercise_set = build_exercise_set new_exercise_set_attributes unless new_exercise_set_attributes['title'].blank?
   end
   
+  def existing_template_attributes=(template_attributes)
+    existing_attributes_for(:templates, template_attributes)
+  end
+  
   def existing_hint_attributes=(hint_attributes)
    existing_attributes_for(:hints, hint_attributes)
   end

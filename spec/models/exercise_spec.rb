@@ -92,6 +92,24 @@ describe Exercise do
     end
   end
   
+  describe "#existing_template_attributes" do
+    
+    before(:each) do
+      @exercise.templates = existing(:template, 4) #Unit tests and templates have the same interface for this purpose
+      @template = @exercise.templates[2]
+    end
+    
+    it "updates an existing template objects" do
+     @exercise.existing_template_attributes = update_existing(@template.id, {:src_code=>"cool code()"})
+      (@exercise.templates.select {|ut| ut.src_code == @template.src_code}).should have(1).items
+    end
+    
+    it "removes existing templtes not specified in the templates attributes" do
+      @exercise.existing_template_attributes = update_existing(@template.id, {}, {:delete=>true})
+      (@exercise.templates.select {|ut| ut.id == @template.id}).should have(0).items
+    end
+  end
+  
   describe "#new_unit_test_attributes=" do
     
     it "adds a new unit test object" do
@@ -129,7 +147,7 @@ describe Exercise do
     
     it "removes existing unit tests not specifed in the unit test attributes" do
       @exercise.existing_unit_test_attributes = update_existing(@unit_test.id, {}, {:delete=>true})
-      (@exercise.unit_tests.select {|ut| ut == @unit_test}).should have(0).items
+      (@exercise.unit_tests.select {|ut| ut.id == @unit_test.id}).should have(0).items
     end
   end
 
