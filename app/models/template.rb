@@ -3,26 +3,26 @@ class Template < ActiveRecord::Base
   
   validates_presence_of :src_language, :src_code
   
-  def unit_test_file=(unit_test_file)
-    self.attributes = UnitTest.from_file_field(unit_test_file)
+  def template_file=(template_file)
+    self.attributes = UnitTest.from_file_field(template_file)
   end
   
-  def self.from_file_field(unit_test_field)
-    return unless unit_test_field
-    src_language = UnitTest.language(unit_test_field)
-    src_code     = unit_test_field.read
+  def self.from_file_field(template_field)
+    return unless template_field
+    src_language = UnitTest.language(template_field)
+    src_code     = template_field.read
     
     {:src_language=>src_language, :src_code=>src_code}
   end
   
-  private
+  protected
   
-  def self.language(unit_test_field)
-    case UnitTest.base_part_of(unit_test_field.original_filename)
+  def self.language(template_field)
+    case UnitTest.base_part_of(template_field.original_filename)
       when /\.(c)$/
         $1
       when /\.(rb)$/
-        $1
+        'ruby'
     end
   end
   
