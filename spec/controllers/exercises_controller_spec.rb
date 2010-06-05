@@ -82,6 +82,11 @@ describe ExercisesController do
       get 'new'
     end
     
+    it "assigns a new templates list containg one template" do
+      stub_exercise.templates.should_receive(:build).once
+      get 'new'
+    end
+    
     it 'assigns a new unit test list containing one new unit test' do
       stub_exercise.unit_tests.should_receive(:build).once
       get 'new'
