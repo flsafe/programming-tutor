@@ -4,7 +4,7 @@ describe "exercises/new.html.erb" do
   before(:each) do
     assigns[:exercise] = stub_model(Exercise)
     assigns[:exercise_sets] = {'1'=>"Linked List Basics"}
-    assigns[:exercise].stub(:template).and_return(stub_model(Template).as_new_record.as_null_object)
+    assigns[:exercise].stub(:templates).and_return([stub_model(Template).as_new_record.as_null_object])
     assigns[:exercise].stub(:unit_tests).and_return([stub_model(UnitTest).as_new_record.as_null_object])
     assigns[:exercise].stub(:hints).and_return([stub_model(Hint).as_new_record.as_null_object])
     assigns[:exercise].stub(:figures).and_return([stub_model(Figure).as_new_record.as_null_object])
@@ -81,7 +81,7 @@ describe "exercises/new.html.erb" do
       end
     end
     
-    context "with associated new hints, unit_tests and figures" do
+    context "with associated new hints, templates, unit_tests and figures" do
       
       it "renders a file field to upload a template file" do
         render

@@ -42,9 +42,12 @@
 		<%= f.select :minutes, %w{15 30 45 60 90 120} %>
 	</p>
 	
-	<p>
-		<%= render :partial=>'template', :object=>@exercise.template %>
-	</p>
+	<div id="code_templates">
+		<p>
+			<%= render :partial=>'code_template', :collection=>@exercise.templates %>
+		</p>
+	</div>
+	<%= add_template_link %>
 	
 	<div id="unit_tests">	
 		<p>	
