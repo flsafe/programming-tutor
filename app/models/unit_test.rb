@@ -15,7 +15,7 @@ class UnitTest < ActiveRecord::Base
     {:src_language=>src_language, :src_code=>src_code}
   end
   
-  private
+  protected
   
   def self.language(unit_test_field)
     case UnitTest.base_part_of(unit_test_field.original_filename)
