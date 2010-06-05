@@ -1,9 +1,16 @@
 require "spec_helper"
 
+class Template
+end
+
 describe "exercises/new.html.erb" do
   before(:each) do
     assigns[:exercise] = stub_model(Exercise)
     assigns[:exercise_sets] = {'1'=>"Linked List Basics"}
+    assigns[:exercise].stub(:template).and_return(mock_model(Template, :src_code=>"").as_new_record.as_null_object)
+    assigns[:exercise].stub(:unit_tests).and_return([stub_model(UnitTest).as_new_record.as_null_object])
+    assigns[:exercise].stub(:hints).and_return([stub_model(Hint).as_new_record.as_null_object])
+    assigns[:exercise].stub(:figures).and_return([stub_model(Figure).as_new_record.as_null_object])
   end
   
   describe "new exercise form" do
@@ -78,10 +85,12 @@ describe "exercises/new.html.erb" do
     end
     
     context "with associated new hints, unit_tests and figures" do
-      before(:each) do
-        assigns[:exercise].stub(:unit_tests).and_return([stub_model(UnitTest).as_new_record])
-        assigns[:exercise].stub(:hints).and_return([stub_model(Hint).as_new_record])
-        assigns[:exercise].stub(:figures).and_return([stub_model(Figure).as_new_record])
+      
+      it "renders a file field to upload a template file" do
+        render
+        response.should have_selector 'form' do |f|
+          f.should have_selector 'input', :type=>'file', :name=>'exercise[new_template_attributes][][template_file]'
+        end
       end
       
       it "renders a file field to upload a unit test file" do
