@@ -39,6 +39,7 @@ class ExercisesController < ApplicationController
   def new
     @exercise = Exercise.new
     @exercise.hints.build
+    @exercise.templates.build
     @exercise.unit_tests.build
     @exercise.figures.build
     @exercise_sets = ExerciseSet.find(:all, :select=>"id, title")
