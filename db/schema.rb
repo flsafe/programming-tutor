@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100605192521) do
+ActiveRecord::Schema.define(:version => 20100605230045) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -78,6 +78,14 @@ ActiveRecord::Schema.define(:version => 20100605192521) do
     t.datetime "updated_at"
   end
 
+  create_table "solution_templates", :force => true do |t|
+    t.integer  "exercise_id"
+    t.text     "src_code"
+    t.string   "src_language"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "syntax_check_results", :force => true do |t|
     t.integer  "user_id"
     t.integer  "exercise_id"
@@ -101,14 +109,6 @@ ActiveRecord::Schema.define(:version => 20100605192521) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
-  end
-
-  create_table "templates", :force => true do |t|
-    t.integer  "exercise_id"
-    t.text     "src_code"
-    t.string   "src_language"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "unit_tests", :force => true do |t|

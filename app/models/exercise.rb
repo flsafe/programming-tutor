@@ -4,7 +4,7 @@ class Exercise < ActiveRecord::Base
 
   has_many :figures
   has_many :hints  
-  has_many :templates
+  has_many :solution_templates
   has_many :unit_tests
   has_many :completed_users, :through=>:grade_sheets, :source=>:user, :select=>'distinct users.*'
   has_many :grade_sheets, :after_add=>:update_stats
@@ -29,8 +29,8 @@ class Exercise < ActiveRecord::Base
     result
   end
   
-  def new_template_attributes=(attributes)
-    new_attributes_for(:templates, attributes)
+  def new_solution_template_attributes=(attributes)
+    new_attributes_for(:solution_templates, attributes)
   end
   
   def new_hint_attributes=(attributes)
@@ -50,8 +50,8 @@ class Exercise < ActiveRecord::Base
     self.exercise_set = build_exercise_set new_exercise_set_attributes unless new_exercise_set_attributes['title'].blank?
   end
   
-  def existing_template_attributes=(template_attributes)
-    existing_attributes_for(:templates, template_attributes)
+  def existing_solution_template_attributes=(template_attributes)
+    existing_attributes_for(:solution_templates, template_attributes)
   end
   
   def existing_hint_attributes=(hint_attributes)

@@ -72,21 +72,21 @@ describe Exercise do
   describe  "#new_template_attributes=" do
     
     it "adds a template object" do
-      template = stub_model(Template, :src_language=>'java', :src_code=>'public static void main(String args[]){;}')
-      @exercise.new_template_attributes = [template.attributes]
+      template = stub_model(SolutionTemplate, :src_language=>'java', :src_code=>'public static void main(String args[]){;}')
+      @exercise.new_solution_template_attributes = [template.attributes]
       
-      (@exercise.templates.select {|t| t.src_language == template.src_language and
+      (@exercise.solution_templates.select {|t| t.src_language == template.src_language and
         t.src_code == template.src_code}).should have(1).items
     end
     
     context "from file" do
       it "adds a template object" do
-        template = stub_model(Template, :src_language=>@src_language, :src_code=>@src_code)
-        Template.stub(:from_file_field).and_return(template.attributes)
+        template = stub_model(SolutionTemplate, :src_language=>@src_language, :src_code=>@src_code)
+        SolutionTemplate.stub(:from_file_field).and_return(template.attributes)
 
-        @exercise.new_template_attributes = [:template_file=>nil]
+        @exercise.new_solution_template_attributes = [:solution_template_file=>nil]
       
-        (@exercise.templates.select {|t| t.src_language == template.src_language and
+        (@exercise.solution_templates.select {|t| t.src_language == template.src_language and
           t.src_code == template.src_code}).should have(1).items
       end
     end
@@ -95,18 +95,18 @@ describe Exercise do
   describe "#existing_template_attributes" do
     
     before(:each) do
-      @exercise.templates = existing(:template, 4) #Unit tests and templates have the same interface for this purpose
-      @template = @exercise.templates[2]
+      @exercise.solution_templates = existing(:solution_template, 4)
+      @template = @exercise.solution_templates[2]
     end
     
     it "updates an existing template objects" do
-     @exercise.existing_template_attributes = update_existing(@template.id, {:src_code=>"cool code()"})
-      (@exercise.templates.select {|ut| ut.src_code == @template.src_code}).should have(1).items
+     @exercise.existing_solution_template_attributes = update_existing(@template.id, {:src_code=>"cool code()"})
+      (@exercise.solution_templates.select {|ut| ut.src_code == @template.src_code}).should have(1).items
     end
     
     it "removes existing templtes not specified in the templates attributes" do
-      @exercise.existing_template_attributes = update_existing(@template.id, {}, {:delete=>true})
-      (@exercise.templates.select {|ut| ut.id == @template.id}).should have(0).items
+      @exercise.existing_solution_template_attributes = update_existing(@template.id, {}, {:delete=>true})
+      (@exercise.solution_templates.select {|ut| ut.id == @template.id}).should have(0).items
     end
   end
   

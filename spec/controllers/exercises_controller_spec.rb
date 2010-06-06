@@ -83,7 +83,7 @@ describe ExercisesController do
     end
     
     it "assigns a new templates list containg one template" do
-      stub_exercise.templates.should_receive(:build).once
+      stub_exercise.solution_templates.should_receive(:build).once
       get 'new'
     end
     

@@ -3,7 +3,7 @@
 <% prefix = "exercise[#{new_or_existing}_figure_attributes][]" %>
 
 <% fields_for prefix, figure  do |f| %>
-		<%= f.label :image, "Figure" %> <br/>
-		<%= f.file_field :image %>	<%= link_to_function 'Remove Figure', "this.up('.figure').remove()" %><br/>
+		<%= f.label :image, "Upload Figure" %> <br/>
+		<%= f.file_field :image %>	<%= link_to_function 'Remove', "this.up('.figure').remove()" %><br/>
 <% end %>
 </div>

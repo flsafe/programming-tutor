@@ -35,33 +35,34 @@
 	<div id="hints">
 		<%= render :partial => 'hint', :collection=>@exercise.hints %>
 	</div>
-	<%= add_model_link("Add Hint", :hints, 'hint', Hint.new) %>
+	<%= add_model_link("Add Hint", :hints, :partial=>'hint', :object=>Hint.new) %>
 	
 	<p>
 		<%= f.label :minutes %><br/>
 		<%= f.select :minutes, %w{15 30 45 60 90 120} %>
 	</p>
 	
-	<div id="code_templates">
+	<div id="solution_templates">
 		<p>
-			<%= render :partial=>'code_template', :collection=>@exercise.templates %>
+			<%= render :partial=>'solution_template', :collection=>@exercise.solution_templates%>
 		</p>
 	</div>
-	<%= add_model_link("Add Template", :code_templates, 'code_template', Template.new) %>
+	<%= add_model_link "Add Solution Template", :solution_templates, :partial=>'solution_template', :object=>SolutionTemplate.new %>
 	
 	<div id="unit_tests">	
 		<p>	
-			<%= render :partial => 'unit_test', :collection=>@exercise.unit_tests %>
+			<%= render :partial=>'unit_test', :collection=>@exercise.unit_tests%>
 		</p>
-	</div>	
-	<%= add_unit_test_link %>
+	</div>
+	<%= add_model_link "Add Unit Test", :unit_tests, :partial=>'unit_test', :object=>UnitTest.new %>
+
 	
 	<div id="figures">
 		<p>
 			<%= render :partial=>'figure', :collection=>@exercise.figures %>
 		</p>	
 	</div>
-	<%= add_figure_link %>
+	<%= add_model_link "Add Figure", :figures, :partial=>'figure', :object=>Figure.new %>
 
 	<p>
 		<%= f.label :exercise_set_id, "Exercise Set" %>

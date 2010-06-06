@@ -3,7 +3,7 @@
 <% prefix = "exercise[#{new_or_existing}_hint_attributes][]" %>
 
 <% fields_for prefix, hint  do |hf| %>
-		<%= hf.label :text, "Hint" %>	<%= link_to_function 'Remove Hint', "this.up('.hint').remove()" %><br/>
+		<%= hf.label :text, "Hint" %>	<%= link_to_function 'Remove', "this.up('.hint').remove()" %><br/>
 		<%= hf.text_area :text %><br/>
 <% end %>
 </div>
