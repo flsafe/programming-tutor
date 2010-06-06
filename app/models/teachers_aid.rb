@@ -1,4 +1,5 @@
 class TeachersAid
+  
   def record_grade(grade_sheet)
     @user         = grade_sheet.user
     @grade_sheet  = grade_sheet
