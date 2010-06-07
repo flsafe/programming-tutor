@@ -11,7 +11,15 @@ describe GradeSolutionJob do
   end
   
   def template
-    @template ||= stub(SolutionTemplate)
+    @template ||= mock_model(SolutionTemplate).as_null_object
+  end
+  
+  def unit_test
+    @unit_test ||= mock_model(UnitTest)
+  end
+  
+  def job
+    @job ||= GradeSolutionJob.new code, current_user.id, exercise.id
   end
   
   def code
@@ -21,16 +29,17 @@ describe GradeSolutionJob do
   describe "#perform" do
     
     before(:each) do
-      SolutionTemplate.stub(:new).and_return(template)
+      SolutionTemplate.stub(:find_by_exercise_id).and_return(template)
     end
     
     it "creates a new solution template with the user code" do
       template.should_receive(:fill_in).with(code)
-      GradeSolutionJob.new code, current_user.id, exercise.id
+      job.perform
     end
     
     it "checks the template for a syntax error" do
-      pending
+      template.should_receive(:syntax_error?)
+      job.perform
     end
     
     it "runs the unit test on the template" do
