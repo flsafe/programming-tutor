@@ -49,7 +49,11 @@ describe GradeSolutionJob do
       job.perform
     end
     
-    it "creates a grade sheet from the unit test results" do
+    it "creates a new grade sheet from the unit test results" do
+      pending
+    end
+    
+    it "records the grade sheet for the user" do
       pending
     end
     
@@ -59,6 +63,20 @@ describe GradeSolutionJob do
     
     context "the template has a syntax error" do
       it "Saves a grade_job_result with the message describing the syntax error" do
+        pending
+      end
+      
+      it "does not record a grade sheet" do
+        pending
+      end
+    end
+    
+    context "the unit test results indicate that the solution timed out" do
+      it "saves a grade_job_result with the message describing the solution timed out" do
+        pending
+      end
+
+      it "does not save a grade sheet" do
         pending
       end
     end
