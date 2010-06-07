@@ -35,7 +35,12 @@ describe TutorController do
     
     before(:each) do
       Exercise.stub(:find_by_id).and_return(stub_exercise)
+      
       @grade_job = mock_model(GradeSolutionJob, :perform=>true)
+      GradeSolutionJob.stub(:new).and_return(@grade_job).as_null_object
+      
+      @delayed_job = mock_model(Delayed::Job).as_null_object
+      Delayed::Job.stub(:new).and_return(@delayed_job)
     end
     
     it "creates a new grade job for the user, with the given code and the current exercise" do
@@ -43,11 +48,35 @@ describe TutorController do
       post :grade, :code=>code, :id=>stub_exercise.id
     end
     
-    it "does not create a new job for the user if there is a solution_grade_job id in the session and db" do
-      Delayed::Job.stub(:find_by_id).and_return(mock_model(GradeSolutionJob, :id=>1000))
-      session[:grade_solution_job_id] = 1000
-      GradeSolutionJob.should_not_receive(:new).with(code, current_user.id, stub_exercise.id)
+    it "associates the job with the current session" do
       post :grade, :code=>code, :id=>stub_exercise.id
+      session[:grade_solution_job].should == @delayed_job.id
+    end
+    
+    it "assigns a status message" do
+      post :grade, :code=>code, id=>stub_exercise.id
+      assigns[:message].should == "grading..."
+    end
+    
+    it "renders grading" do
+      post :grade, :code=>code, id=>stub_exercise.id
+      response.should render_template 'tutor/grade'
+    end
+    
+    context "there is already a job associated with the session" do
+      it "does not create a new job if the session already has a grade solution job" do
+        controller.stub(:job_running?).and_return(true)
+        GradeSolutionJob.should_not_receive(:new).with(code, current_user.id, stub_exercise.id)
+        post :grade, :code=>code, :id=>stub_exercise.id
+      end
+    end
+    
+    context "the given exercise id does not exisit" do
+      it "does not create a new job" do
+        Exercise.stub(:find_by_id).and_return(nil)
+        GradeSolutionJob.should_not_receive(:new).with(code, current_user.id, stub_exercise.id)
+        post :grade, :code=>code, :id=>0
+      end
     end
   end
   
@@ -80,7 +109,7 @@ describe TutorController do
     
     it 'stores the delayed job id in the session' do
       post :check_syntax, :code=>code, :id=>stub_exercise
-      session[:syntax_check_job_id].should == @delayed_job.id
+      session[:syntax_check_job].should == @delayed_job.id
     end
     
      it "renders check_syntax" do
@@ -97,25 +126,11 @@ describe TutorController do
         Delayed::Job.should_not_receive(:enqueue).with @syntax_job
         post :check_syntax
       end
-      
-      it "assigns an error message" do
-        post :check_syntax
-        assigns[:message].should == 'Aw shoot! And error occured, try again later.'
-      end
     end
     
     context "when the user posts check syntax a few times really fast but they already have a syntax job running" do
-      before(:each) do
-        Delayed::Job.stub(:find_by_id).and_return(@delayed_job)
-        session[:syntax_check_job_id] = @delayed_job.id
-      end
-      
-      it "checks the database for an existing syntax job" do
-        Delayed::Job.should_receive(:find_by_id).with(@delayed_job.id)
-        post :check_syntax, :code=>code, :id=>stub_exercise
-      end
-      
       it "doesn't create a new syntax job if the user still has a syntax job in the db" do
+        controller.stub(:job_running?).and_return(true)
         Delayed::Job.should_not_receive(:enqueue)
         post :check_syntax, :code=>code, :id=>stub_exercise
       end

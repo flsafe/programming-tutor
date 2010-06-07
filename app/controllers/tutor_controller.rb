@@ -12,21 +12,24 @@ class TutorController < ApplicationController
   
   def grade
     @exercise = Exercise.find_by_id params[:id]
-    puts session[:grade_solution_job_id]
-    if not Delayed::Job.find_by_id session[:grade_solution_job_id]
-      GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
+    if @exercise
+      if not job_running? :grade_solution_job
+        enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
+        @message = "grading..."
+      end
+    end
+    respond_to do |f|
+      f.js
     end
   end
   
   def check_syntax
     @exercise = Exercise.find_by_id params[:id]
     if @exercise
-      if does_not_have_job_running
-        enqueue_syntax_job
+      if not job_running? :syntax_check_job
+        enqueue_job :syntax_check_job, SyntaxCheckJob.new(params[:code], current_user.id.to_s, params[:id])
       end
       @message = 'checking...'
-    else
-      @message = 'Aw shoot! And error occured, try again later.'
     end    
     respond_to do |f| 
       f.js
@@ -46,15 +49,14 @@ class TutorController < ApplicationController
     end
   end
   
-  private
+  protected
   
-  def does_not_have_job_running
-    not Delayed::Job.find_by_id session[:syntax_check_job_id]
+  def job_running?(job_name)
+    Delayed::Job.find_by_id session[job_name]
   end
   
-  def enqueue_syntax_job
-    syntax_check_job = SyntaxCheckJob.new(params[:code], current_user.id.to_s, params[:id])
-    delayed_job      = Delayed::Job.enqueue syntax_check_job
-    session[:syntax_check_job_id] = delayed_job.id
+  def enqueue_job(name, job)
+    delayed_job = Delayed::Job.enqueue job
+    session[name] = delayed_job.id
   end
 end
