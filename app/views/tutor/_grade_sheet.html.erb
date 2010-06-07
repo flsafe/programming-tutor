@@ -1,0 +1,16 @@
+<table id="grade_sheet">
+	<tr>
+		<th>Test</th>
+		<th>Points Earned</th>
+	</tr>
+	<tr>
+		<th>Grade:</th>
+		<% grade_sheet.tests.each_pair do |test, points| %>
+			<tr> 
+				<td><%= test %></td> 
+				<td><%= points %></td> 
+			</tr>
+		<% end %>
+		<th><%= grade_sheet.grade %>></th>
+	</tr>
+</table>
