@@ -15,7 +15,7 @@ describe GradeSolutionJob do
   end
   
   def unit_test
-    @unit_test ||= mock_model(UnitTest)
+    @unit_test ||= mock_model(UnitTest).as_null_object
   end
   
   def job
@@ -29,7 +29,9 @@ describe GradeSolutionJob do
   describe "#perform" do
     
     before(:each) do
+      template.stub(:syntax_error?).and_return(false)
       SolutionTemplate.stub(:find_by_exercise_id).and_return(template)
+      UnitTest.stub(:find_by_exercise_id).and_return(unit_test)
     end
     
     it "creates a new solution template with the user code" do
@@ -43,7 +45,8 @@ describe GradeSolutionJob do
     end
     
     it "runs the unit test on the template" do
-      pending
+      unit_test.should_receive(:run_on).with(template)
+      job.perform
     end
     
     it "creates a grade sheet from the unit test results" do
