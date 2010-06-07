@@ -12,7 +12,10 @@ class TutorController < ApplicationController
   
   def grade
     @exercise = Exercise.find_by_id params[:id]
-    GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
+    puts session[:grade_solution_job_id]
+    if not Delayed::Job.find_by_id session[:grade_solution_job_id]
+      GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
+    end
   end
   
   def check_syntax

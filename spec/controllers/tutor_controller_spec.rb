@@ -3,7 +3,6 @@ require 'spec_helper'
 describe TutorController do
   before(:each) do
     controller.stub(:current_user).and_return(current_user)
-    @code = "int main(){int i = 0; return 0;}"
   end
   
   def current_user(stubs={})
@@ -12,6 +11,10 @@ describe TutorController do
   
   def stub_exercise(stubs={})
     @stub_exercise ||= stub_model(Exercise, stubs)
+  end
+  
+  def code
+    "int main(){int i = 0; return 0;}"
   end
   
   describe "get show" do
@@ -31,13 +34,20 @@ describe TutorController do
   describe "post grade" do
     
     before(:each) do
+      Exercise.stub(:find_by_id).and_return(stub_exercise)
       @grade_job = mock_model(GradeSolutionJob, :perform=>true)
     end
     
     it "creates a new grade job for the user, with the given code and the current exercise" do
-      Exercise.stub(:find_by_id).and_return(stub_exercise)
-      GradeSolutionJob.should_receive(:new).with(@code, current_user.id, stub_exercise.id)
-      post :grade, :code=>@code, :id=>stub_exercise.id
+      GradeSolutionJob.should_receive(:new).with(code, current_user.id, stub_exercise.id).once
+      post :grade, :code=>code, :id=>stub_exercise.id
+    end
+    
+    it "does not create a new job for the user if there is a solution_grade_job id in the session and db" do
+      Delayed::Job.stub(:find_by_id).and_return(mock_model(GradeSolutionJob, :id=>1000))
+      session[:grade_solution_job_id] = 1000
+      GradeSolutionJob.should_not_receive(:new).with(code, current_user.id, stub_exercise.id)
+      post :grade, :code=>code, :id=>stub_exercise.id
     end
   end
   
@@ -54,22 +64,22 @@ describe TutorController do
     end
     
      it "creates a new syntax job for the user, with the given code and exercise" do
-      SyntaxCheckJob.should_receive(:new).with(@code, current_user.id.to_s, stub_exercise.id.to_s)
-      post :check_syntax, :code=>@code, :id=>stub_exercise.id
+      SyntaxCheckJob.should_receive(:new).with(code, current_user.id.to_s, stub_exercise.id.to_s)
+      post :check_syntax, :code=>code, :id=>stub_exercise.id
     end
     
     it "queues a new syntax job" do
       Delayed::Job.should_receive(:enqueue).with(@syntax_job)
-      post :check_syntax, :code=>@code, :id=>stub_exercise
+      post :check_syntax, :code=>code, :id=>stub_exercise
     end
     
     it 'assigns a message describing the job is in progress' do
-      post :check_syntax, :code=>@code, :id=>stub_exercise
+      post :check_syntax, :code=>code, :id=>stub_exercise
       assigns[:message].should == "checking..."
     end
     
     it 'stores the delayed job id in the session' do
-      post :check_syntax, :code=>@code, :id=>stub_exercise
+      post :check_syntax, :code=>code, :id=>stub_exercise
       session[:syntax_check_job_id].should == @delayed_job.id
     end
     
@@ -102,12 +112,12 @@ describe TutorController do
       
       it "checks the database for an existing syntax job" do
         Delayed::Job.should_receive(:find_by_id).with(@delayed_job.id)
-        post :check_syntax, :code=>@code, :id=>stub_exercise
+        post :check_syntax, :code=>code, :id=>stub_exercise
       end
       
       it "doesn't create a new syntax job if the user still has a syntax job in the db" do
         Delayed::Job.should_not_receive(:enqueue)
-        post :check_syntax, :code=>@code, :id=>stub_exercise
+        post :check_syntax, :code=>code, :id=>stub_exercise
       end
     end
   end
