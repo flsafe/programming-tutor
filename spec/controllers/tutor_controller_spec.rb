@@ -35,7 +35,9 @@ describe TutorController do
     end
     
     it "creates a new grade job for the user, with the given code and the current exercise" do
-      SyntaxCheckJob.should_receive(:new).with(@code, current_user, stub_exercise)
+      Exercise.stub(:find_by_id).and_return(stub_exercise)
+      GradeSolutionJob.should_receive(:new).with(@code, current_user.id, stub_exercise.id)
+      post :grade, :code=>@code, :id=>stub_exercise.id
     end
   end
   

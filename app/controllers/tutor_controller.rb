@@ -11,7 +11,8 @@ class TutorController < ApplicationController
   end
   
   def grade
-    
+    @exercise = Exercise.find_by_id params[:id]
+    GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
   end
   
   def check_syntax
