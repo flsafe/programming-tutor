@@ -6,8 +6,9 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     if template.syntax_error?
       
     else
-      unit_test = UnitTest.find_by_exercise_id(exercise_id)
-      results   = unit_test.run_on(template)
+      unit_test   = UnitTest.find_by_exercise_id(exercise_id)
+      results     = unit_test.run_on(template)
+      grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id
     end
   end
   

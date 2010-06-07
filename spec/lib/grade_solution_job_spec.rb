@@ -18,12 +18,12 @@ describe GradeSolutionJob do
     @unit_test ||= mock_model(UnitTest).as_null_object
   end
   
-  def job
-    @job ||= GradeSolutionJob.new code, current_user.id, exercise.id
-  end
-  
   def code
     "int main(){return 0;}"
+  end
+  
+  def job
+    @job ||= GradeSolutionJob.new code, current_user.id, exercise.id
   end
   
   describe "#perform" do
@@ -45,7 +45,7 @@ describe GradeSolutionJob do
     end
     
     it "runs the unit test on the template" do
-      unit_test.should_receive(:run_on).with(template)
+      unit_test.should_receive(:run_on).with(template).and_return({})
       job.perform
     end
     
