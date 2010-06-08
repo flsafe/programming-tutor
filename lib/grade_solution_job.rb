@@ -6,7 +6,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     if template.syntax_error?
       post_result("Your solution did not compile! Check your syntax.", :did_not_compile, nil)
     else
-      results = run_unit_tests_on(exercise_id, template)
+      results = run_unit_tests_on(template)
       if results[:error]
         post_result("Your solution timed out!", results[:error], nil)
       else
@@ -18,8 +18,8 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   
   protected
   
-  def run_unit_tests_on(ex_id, template)
-    unit_test   = UnitTest.find_by_exercise_id(ex_id)
+  def run_unit_tests_on(template)
+    unit_test   = UnitTest.find_by_exercise_id(exercise_id)
     results     = unit_test.run_on(template)
     results
   end
