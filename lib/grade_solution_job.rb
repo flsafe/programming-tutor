@@ -9,12 +9,10 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       unit_test   = UnitTest.find_by_exercise_id(exercise_id)
       results     = unit_test.run_on(template)
       grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id
+      grade_sheet.unit_test_results = results
     end
   end
   
   protected
-  
-  def bail_on_error(msg)
-    
-  end
+
 end

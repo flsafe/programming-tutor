@@ -18,6 +18,10 @@ describe GradeSolutionJob do
     @unit_test ||= mock_model(UnitTest).as_null_object
   end
   
+  def grade_sheet
+    @grade_sheet ||= mock_model(GradeSheet)
+  end
+  
   def code
     "int main(){return 0;}"
   end
@@ -29,8 +33,12 @@ describe GradeSolutionJob do
   describe "#perform" do
     
     before(:each) do
-      template.stub(:syntax_error?).and_return(false)
       SolutionTemplate.stub(:find_by_exercise_id).and_return(template)
+      template.stub(:syntax_error?).and_return(false)
+      
+      GradeSheet.stub(:new).and_return(grade_sheet)
+      grade_sheet.stub(:unit_test_results=)
+      
       UnitTest.stub(:find_by_exercise_id).and_return(unit_test)
     end
     
@@ -50,7 +58,10 @@ describe GradeSolutionJob do
     end
     
     it "creates a new grade sheet from the unit test results" do
-      pending
+      results = {:grade=>90}
+      unit_test.stub(:run_on).and_return results
+      grade_sheet.should_receive(:unit_test_results=).with(results).once
+      job.perform
     end
     
     it "records the grade sheet for the user" do
