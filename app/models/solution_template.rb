@@ -3,6 +3,10 @@ class SolutionTemplate < ActiveRecord::Base
   
   validates_presence_of :src_language, :src_code
   
+  def fill_in(solution_code)
+    src_code.sub(/<SRC_CODE>/, solution_code)
+  end
+  
   def solution_template_file=(template_file)
     self.attributes = SolutionTemplate.from_file_field(template_file)
   end
