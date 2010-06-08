@@ -54,12 +54,12 @@ describe TutorController do
     end
     
     it "assigns a status message" do
-      post :grade, :code=>code, id=>stub_exercise.id
+      post :grade, :code=>code, :id=>stub_exercise.id
       assigns[:message].should == "grading..."
     end
     
     it "renders grading" do
-      post :grade, :code=>code, id=>stub_exercise.id
+      post :grade, :code=>code, :id=>stub_exercise.id
       response.should render_template 'tutor/grade'
     end
     
