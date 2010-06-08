@@ -86,6 +86,7 @@ class Exercise < ActiveRecord::Base
   def save_associates
     hints.each {|h| h.save(false)}
     unit_tests.each {|u| u.save(false)}
+    solution_templates.each {|s| s.save(false)}
     exercise_set.save(false)
   end
   
