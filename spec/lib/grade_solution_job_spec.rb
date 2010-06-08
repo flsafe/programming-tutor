@@ -19,7 +19,11 @@ describe GradeSolutionJob do
   end
   
   def grade_sheet
-    @grade_sheet ||= mock_model(GradeSheet)
+    @grade_sheet ||= mock_model(GradeSheet).as_null_object
+  end
+  
+  def ta
+    @ta ||= mock(TeachersAid).as_null_object
   end
   
   def code
@@ -40,6 +44,8 @@ describe GradeSolutionJob do
       grade_sheet.stub(:unit_test_results=)
       
       UnitTest.stub(:find_by_exercise_id).and_return(unit_test)
+      
+      TeachersAid.stub(:new).and_return(ta)
     end
     
     it "creates a new solution template with the user code" do
@@ -65,7 +71,8 @@ describe GradeSolutionJob do
     end
     
     it "records the grade sheet for the user" do
-      pending
+      ta.should_receive(:record_grade).with(grade_sheet)
+      job.perform
     end
     
     it "it saves a grade_job_result to the database with a success message" do

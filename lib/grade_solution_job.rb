@@ -10,6 +10,8 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       results     = unit_test.run_on(template)
       grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id
       grade_sheet.unit_test_results = results
+      ta = TeachersAid.new
+      ta.record_grade grade_sheet
     end
   end
   
