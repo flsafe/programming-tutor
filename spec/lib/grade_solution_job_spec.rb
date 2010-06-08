@@ -1,5 +1,8 @@
 require 'spec_helper'
 
+class GradeSolutionResult
+end
+
 describe GradeSolutionJob do
   
   def current_user
@@ -26,6 +29,10 @@ describe GradeSolutionJob do
     @ta ||= mock(TeachersAid).as_null_object
   end
   
+  def grade_solution_result
+    @grade_solution_result ||= mock_model(GradeSolutionResult).as_null_object
+  end
+  
   def code
     "int main(){return 0;}"
   end
@@ -46,6 +53,7 @@ describe GradeSolutionJob do
       UnitTest.stub(:find_by_exercise_id).and_return(unit_test)
       
       TeachersAid.stub(:new).and_return(ta)
+      GradeSolutionResult.stub(:new).and_return(grade_solution_result)
     end
     
     it "creates a new solution template with the user code" do
@@ -76,16 +84,27 @@ describe GradeSolutionJob do
     end
     
     it "it saves a grade_job_result to the database with a success message" do
-      pending
+      GradeSolutionResult.should_receive(:new).with(:message=>"Success!", :grade_sheet_id=>grade_sheet.id)
+      job.perform
     end
     
     context "the template has a syntax error" do
+      before(:each) do
+        template.stub(:syntax_error?).and_return(true)
+      end
+      
       it "Saves a grade_job_result with the message describing the syntax error" do
-        pending
+        GradeSolutionResult.should_receive(:new).with(:message=>"Your solution did not compile! Check your syntax.", :error=>:did_not_compile)
+        job.perform
+      end
+      
+      it "saves the grade sheet" do
+        grade_solution_result.should_receive(:save)
+        job.perform
       end
       
       it "does not record a grade sheet" do
-        pending
+        ta.should_not_receive(:record_grade)
       end
     end
     
