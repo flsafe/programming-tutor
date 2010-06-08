@@ -6,10 +6,13 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     if template.syntax_error?
       post_result("Your solution did not compile! Check your syntax.", :did_not_compile, nil)
     else
-      grade_sheet = run_unit_tests_on(exercise_id, template)
-      ta          = TeachersAid.new
-      ta.record_grade grade_sheet
-      post_result("Success!", nil, grade_sheet.id)
+      results = run_unit_tests_on(exercise_id, template)
+      if results[:error]
+        post_result("Your solution timed out!", results[:error], nil)
+      else
+        gs_id   = save_grade_sheet(results)
+        post_result("Success!", nil, gs_id)
+      end
     end
   end
   
@@ -18,9 +21,15 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   def run_unit_tests_on(ex_id, template)
     unit_test   = UnitTest.find_by_exercise_id(ex_id)
     results     = unit_test.run_on(template)
+    results
+  end
+  
+  def save_grade_sheet(results)
+    ta          = TeachersAid.new
     grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id
     grade_sheet.unit_test_results = results
-    grade_sheet
+    ta.record_grade grade_sheet
+    grade_sheet.id
   end
   
   def post_result(message, error_msg = nil, grade_sheet_id=nil)

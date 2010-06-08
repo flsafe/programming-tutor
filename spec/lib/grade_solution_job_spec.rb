@@ -22,7 +22,7 @@ describe GradeSolutionJob do
   end
   
   def grade_sheet
-    @grade_sheet ||= mock_model(GradeSheet).as_null_object
+    @grade_sheet ||= mock_model(GradeSheet).as_null_object.as_new_record
   end
   
   def ta
@@ -51,6 +51,7 @@ describe GradeSolutionJob do
       grade_sheet.stub(:unit_test_results=)
       
       UnitTest.stub(:find_by_exercise_id).and_return(unit_test)
+      unit_test.stub(:run_on).and_return({:grade=>90})
       
       TeachersAid.stub(:new).and_return(ta)
       GradeSolutionResult.stub(:new).and_return(grade_solution_result)
@@ -109,12 +110,23 @@ describe GradeSolutionJob do
     end
     
     context "the unit test results indicate that the solution timed out" do
-      it "saves a grade_job_result with the message describing the solution timed out" do
-        pending
+      before(:each) do
+        unit_test.stub(:run_on).and_return({:error=>:timed_out})
+      end
+      
+      it "creates grade_job_result with the message describing the solution timed out" do
+        GradeSolutionResult.should_receive(:new).with(:message=>"Your solution timed out!", :error=>:timed_out, :grade_sheet_id=>nil)
+        job.perform
+      end
+      
+      it "saves the grade_solution_result" do
+        grade_solution_result.should_receive(:save)
+        job.perform
       end
 
       it "does not save a grade sheet" do
-        pending
+        grade_sheet.should_not_receive(:save)
+        job.perform
       end
     end
   end
