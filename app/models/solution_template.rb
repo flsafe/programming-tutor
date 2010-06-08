@@ -3,8 +3,15 @@ class SolutionTemplate < ActiveRecord::Base
   
   validates_presence_of :src_language, :src_code
   
+  attr_reader :filled_in_src_code
+  
   def fill_in(solution_code)
-    src_code.sub(/<SRC_CODE>/, solution_code)
+    @filled_in_src_code = src_code.sub(/<SRC_CODE>/, solution_code)
+  end
+  
+  def syntax_error?
+    check_code  = filled_in_src_code || "Template not filled in, syntax error"
+    SyntaxChecker.syntax_error?(check_code)
   end
   
   def solution_template_file=(template_file)
