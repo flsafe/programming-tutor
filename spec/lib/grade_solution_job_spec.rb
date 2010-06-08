@@ -14,7 +14,7 @@ describe GradeSolutionJob do
   end
   
   def template
-    @template ||= mock_model(SolutionTemplate).as_null_object
+    @template ||= stub_model(SolutionTemplate, :fill_in=>true, 'syntax_error?'=>false).as_null_object
   end
   
   def unit_test
@@ -22,7 +22,7 @@ describe GradeSolutionJob do
   end
   
   def grade_sheet
-    @grade_sheet ||= mock_model(GradeSheet).as_null_object.as_new_record
+    @grade_sheet ||= stub_model(GradeSheet).as_null_object.as_new_record
   end
   
   def ta
@@ -45,14 +45,15 @@ describe GradeSolutionJob do
     
     before(:each) do
       SolutionTemplate.stub(:find_by_exercise_id).and_return(template)
-      template.stub(:syntax_error?).and_return(false)
       
+      grade_sheet
       GradeSheet.stub(:new).and_return(grade_sheet)
       grade_sheet.stub(:unit_test_results=)
       
       UnitTest.stub(:find_by_exercise_id).and_return(unit_test)
       unit_test.stub(:run_on).and_return({:grade=>90})
       
+      ta
       TeachersAid.stub(:new).and_return(ta)
       GradeSolutionResult.stub(:new).and_return(grade_solution_result)
     end
