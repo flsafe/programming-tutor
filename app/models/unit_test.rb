@@ -3,6 +3,10 @@ class UnitTest < ActiveRecord::Base
   
   validates_presence_of :src_language, :src_code
   
+  def run_on(template)
+    
+  end
+  
   def unit_test_file=(unit_test_file)
     self.attributes = UnitTest.from_file_field(unit_test_file)
   end
