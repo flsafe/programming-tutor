@@ -18,6 +18,11 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   
   protected
   
+   def post_result(message, error_msg = nil, grade_sheet_id=nil)
+     grade_solution_result = GradeSolutionResult.new :message=>message, :error=>error_msg, :grade_sheet_id=>grade_sheet_id
+     grade_solution_result.save
+  end
+  
   def run_unit_tests_on(template)
     unit_test   = UnitTest.find_by_exercise_id(exercise_id)
     results     = unit_test.run_on(template)
@@ -30,11 +35,6 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     grade_sheet.unit_test_results = results
     ta.record_grade grade_sheet
     grade_sheet.id
-  end
-  
-  def post_result(message, error_msg = nil, grade_sheet_id=nil)
-     grade_solution_result = GradeSolutionResult.new :message=>message, :error=>error_msg, :grade_sheet_id=>grade_sheet_id
-     grade_solution_result.save
   end
 
 end

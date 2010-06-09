@@ -5,6 +5,10 @@ end
 
 describe GradeSolutionJob do
   
+  def code
+    "int main(){return 0;}"
+  end
+  
   def current_user
     @current_user ||= stub_model(User)
   end
@@ -13,32 +17,28 @@ describe GradeSolutionJob do
     @exercise ||= stub_model(Exercise)
   end
   
+   def grade_sheet
+    @grade_sheet ||= stub_model(GradeSheet).as_null_object.as_new_record
+  end
+  
+   def grade_solution_result
+    @grade_solution_result ||= mock_model(GradeSolutionResult).as_null_object
+  end
+  
+   def job
+    @job ||= GradeSolutionJob.new code, current_user.id, exercise.id
+  end
+  
+   def ta
+    @ta ||= mock(TeachersAid).as_null_object
+  end
+  
   def template
     @template ||= stub_model(SolutionTemplate, :fill_in=>true, 'syntax_error?'=>false).as_null_object
   end
   
   def unit_test
-    @unit_test ||= mock_model(UnitTest).as_null_object
-  end
-  
-  def grade_sheet
-    @grade_sheet ||= stub_model(GradeSheet).as_null_object.as_new_record
-  end
-  
-  def ta
-    @ta ||= mock(TeachersAid).as_null_object
-  end
-  
-  def grade_solution_result
-    @grade_solution_result ||= mock_model(GradeSolutionResult).as_null_object
-  end
-  
-  def code
-    "int main(){return 0;}"
-  end
-  
-  def job
-    @job ||= GradeSolutionJob.new code, current_user.id, exercise.id
+    @unit_test ||= stub_model(UnitTest).as_null_object
   end
   
   describe "#perform" do
