@@ -15,6 +15,7 @@ describe SolutionTemplate do
   end
   
   describe "#syntax_error" do
+    
     it "returns a syntax error if one is detected in the filled in source code" do
       template.fill_in('return 0')
       template.syntax_error?.should =~ /error/i

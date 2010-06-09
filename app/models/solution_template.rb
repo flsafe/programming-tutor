@@ -14,7 +14,7 @@ class SolutionTemplate < ActiveRecord::Base
     SyntaxChecker.syntax_error?(check_code)
   end
   
-  def solution_template_file=(template_file)
+   def solution_template_file=(template_file)
     self.attributes = SolutionTemplate.from_file_field(template_file)
   end
   
@@ -28,6 +28,10 @@ class SolutionTemplate < ActiveRecord::Base
   
   protected
   
+   def self.base_part_of(file_name) 
+    File.basename(file_name).gsub(/[^\w._-]/, '') 
+  end 
+  
   def self.language(template_field)
     case UnitTest.base_part_of(template_field.original_filename)
       when /\.(c)$/
@@ -36,8 +40,4 @@ class SolutionTemplate < ActiveRecord::Base
         'ruby'
     end
   end
-  
-  def self.base_part_of(file_name) 
-    File.basename(file_name).gsub(/[^\w._-]/, '') 
-  end 
 end
