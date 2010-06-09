@@ -4,21 +4,22 @@ class UnitTest < ActiveRecord::Base
   validates_presence_of :src_language, :src_code
   
   def run_on(template)
-    unless FileUtils.mkdir_p(work_slash)
+    unless FileUtils.mkdir_p(work_dir)
       return {:error=>"Work dir failed"}
     end
     
-    file_name = generate_unique_name(template)
-    unless template.compile_to(work_slash file_name)
+    generate_user_program_path(template)
+    
+    unless template.compile_to(user_program_path)
       return {:error=>"Could not compile"}
     end
     
-    filled_in_src_code = fill_in_executable_to_test(work_slash file_name)
-    f = File.open(work_slash(file_name, '-unit-test'), 'w')
-    f.write(filled_in_src_code)
-    f.close
+    unit_test_src_code = set_test_program(user_program_path)
+    unless write_unit_test(unit_test_path, unit_test_src_code)
+      return {:error=>"Could not prepare unit test"}
+    end
     
-    results = execute_unit_test(work_slash(file_name, "-unit-test"))
+    execute_file(unit_test_path)
   end
   
   def unit_test_file=(unit_test_file)
@@ -34,21 +35,44 @@ class UnitTest < ActiveRecord::Base
   end
   
   protected
-  
-  def work_slash(file_name="", anything="")
-    "tmp/work/#{file_name}#{anything}"
-  end
-  
-  def fill_in_executable_to_test(file_name)
-    src_code.gsub(/<EXEC_NAME>/, "tmp/work/#{file_name}")
+
+  def execute_file(file)
+    `ruby #{file}`
   end
   
   def generate_unique_name(template)
     "tmp-#{Time.now}-#{template.id}"
   end
   
-  def execute_unit_test(file_name)
-    `ruby #{file_name}`
+  def generate_user_program_path(template)
+    @user_program_path = "#{work_dir}/#{generate_unique_name(template)}"
+  end
+  
+  def set_test_program(user_program)
+    src_code.gsub(/<EXEC_NAME>/, user_program_path)
+  end
+  
+  def user_program_path
+    @user_program_path
+  end
+  
+  def unit_test_path
+    user_program_path+'-unit-test'
+  end
+  
+  def write_unit_test(path, src_code)
+    begin
+      f = File.open(path, 'w')
+      f.write(src_code)
+      f.close
+      true
+    rescue
+      false
+    end
+  end
+  
+   def work_dir
+    "tmp/work"
   end
   
   def self.language(unit_test_field)
@@ -60,7 +84,7 @@ class UnitTest < ActiveRecord::Base
     end
   end
   
-  def self.base_part_of(file_name) 
-    File.basename(file_name).gsub(/[^\w._-]/, '') 
+  def self.base_part_of(user_program) 
+    File.basename(user_program).gsub(/[^\w._-]/, '') 
   end 
 end

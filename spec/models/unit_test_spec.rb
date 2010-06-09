@@ -18,16 +18,21 @@ describe UnitTest do
     "tmp/work/tmp-#{curr_time}-#{template.id}"
   end
   
+  def file
+    @stub_file ||= stub(File, :write=>true).as_null_object
+  end
+  
   before(:each) do
     FileUtils.stub(:mkdir_p).and_return(true)
     Time.stub(:now).and_return(curr_time)
-    unit_test.stub(:execute_unit_test)
+    unit_test.stub(:execute_file).and_return(true)
+    unit_test.stub(:write_unit_test).and_return(true)
   end
   
   describe "#run_on" do
     
     it "creates a work directory where the compiled solution will be temporarly stored" do
-      FileUtils.should_receive(:mkdir_p).with("tmp/work/").once
+      FileUtils.should_receive(:mkdir_p).with("tmp/work").once
       unit_test.run_on(template)
     end
     
@@ -36,21 +41,18 @@ describe UnitTest do
       unit_test.run_on(template)
     end
     
-    it "fills in the name of the executable file it will be testing within the unit test code" do
-      unit_test.should_receive(:fill_in_executable_to_test).with(exec_name)
+    it "sets the program the unit test will be testing" do
+      unit_test.should_receive(:set_test_program).with(exec_name)
       unit_test.run_on(template)
     end
     
     it "writes the unit test code to a file" do
-      stub_file = stub(File, :write=>true).as_null_object
-      File.stub(:open).and_return(stub_file)
-      
-      stub_file.should_receive(:write)
+      unit_test.should_receive(:write_unit_test)
       unit_test.run_on(template)
     end
     
-    it "executes the written unit test" do
-      unit_test.should_receive(:execute_unit_test).with(exec_name+'-unit-test')
+    it "executes the unit test" do
+      unit_test.should_receive(:execute_file).with(exec_name+'-unit-test')
       unit_test.run_on(template)
     end
     
