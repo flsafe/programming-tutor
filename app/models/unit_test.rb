@@ -4,7 +4,13 @@ class UnitTest < ActiveRecord::Base
   validates_presence_of :src_language, :src_code
   
   def run_on(template)
+    unless FileUtils.mkdir_p('tmp/work/')
+      return {:error=>"Work dir failed"}
+    end
     
+    unless template.compile_to("tmp/work/unique_file_name")
+      return {:error=>"Could not compile"}
+    end
   end
   
   def unit_test_file=(unit_test_file)
@@ -20,6 +26,10 @@ class UnitTest < ActiveRecord::Base
   end
   
   protected
+  
+  def generate_unique_name
+    "tmp-#{Time.now}"
+  end
   
   def self.language(unit_test_field)
     case UnitTest.base_part_of(unit_test_field.original_filename)
