@@ -3,14 +3,19 @@ class UnitTest < ActiveRecord::Base
   
   validates_presence_of :src_language, :src_code
   
+  attr_reader :filled_in_src_code
+  
   def run_on(template)
     unless FileUtils.mkdir_p('tmp/work/')
       return {:error=>"Work dir failed"}
     end
     
-    unless template.compile_to("tmp/work/unique_file_name")
+    file_name = generate_unique_name(template)
+    unless template.compile_to("tmp/work/#{file_name}")
       return {:error=>"Could not compile"}
     end
+    
+    self.fill_in_executable_to_test(file_name)
   end
   
   def unit_test_file=(unit_test_file)
@@ -27,8 +32,12 @@ class UnitTest < ActiveRecord::Base
   
   protected
   
-  def generate_unique_name
-    "tmp-#{Time.now}"
+  def fill_in_executable_to_test(file_name)
+    @filled_in_src_code = src_code.gsub(/<EXEC_NAME>/, file_name)
+  end
+  
+  def generate_unique_name(template)
+    "tmp-#{Time.now}-#{template.id}"
   end
   
   def self.language(unit_test_field)
