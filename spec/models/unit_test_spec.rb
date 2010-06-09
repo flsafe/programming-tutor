@@ -3,7 +3,7 @@ require 'spec_helper'
 describe UnitTest do
   
   def unit_test
-    @ut ||= stub_model(UnitTest, :src_code=>'out = `<EXEC_NAME>`')
+    @ut ||= stub_model(UnitTest, :src_code=>'<EXEC_NAME>')
   end
   
   def template
@@ -15,12 +15,13 @@ describe UnitTest do
   end
   
   def exec_name
-    "tmp-#{curr_time}-#{template.id}"
+    "tmp/work/tmp-#{curr_time}-#{template.id}"
   end
   
   before(:each) do
     FileUtils.stub(:mkdir_p).and_return(true)
     Time.stub(:now).and_return(curr_time)
+    unit_test.stub(:execute_unit_test)
   end
   
   describe "#run_on" do
@@ -31,12 +32,25 @@ describe UnitTest do
     end
     
     it "compiles the user's solution to the temp work dir" do
-      template.should_receive(:compile_to).with("tmp/work/#{exec_name}").once
+      template.should_receive(:compile_to).with(exec_name).once
       unit_test.run_on(template)
     end
     
-    it "fills in the name of the executable file it will be testing" do
+    it "fills in the name of the executable file it will be testing within the unit test code" do
       unit_test.should_receive(:fill_in_executable_to_test).with(exec_name)
+      unit_test.run_on(template)
+    end
+    
+    it "writes the unit test code to a file" do
+      stub_file = stub(File, :write=>true).as_null_object
+      File.stub(:open).and_return(stub_file)
+      
+      stub_file.should_receive(:write)
+      unit_test.run_on(template)
+    end
+    
+    it "executes the written unit test" do
+      unit_test.should_receive(:execute_unit_test).with(exec_name+'-unit-test')
       unit_test.run_on(template)
     end
     
