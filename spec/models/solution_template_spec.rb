@@ -1,11 +1,18 @@
 require 'spec_helper'
 
+class Compiler
+end  
+
 describe SolutionTemplate do
   
   def template
     @template ||= stub_model(SolutionTemplate, :src_code=>"void test_function(){<SRC_CODE>}")
   end
-
+  
+  def  file
+    @file ||= stub(File, :write=>true)
+  end
+  
   describe "#fill_in" do
     
     it "fills in the source code template with the provided code" do
@@ -25,6 +32,16 @@ describe SolutionTemplate do
       it "does not return a sytnax error" do
         template.syntax_error?.should =~ /error/i
       end
+    end
+  end
+  
+  describe "#compile_to" do
+    
+    it "compiles an executable to the given path" do
+      output_path = "tmp/work/tmp-path"
+      template.stub(:filled_in_src_code).and_return('test')
+      Compiler.should_receive(:compile).with('test', output_path)
+      template.compile_to(output_path)
     end
   end
 end
