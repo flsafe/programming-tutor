@@ -110,7 +110,8 @@ describe TutorController do
       end
       
       it "renders the grade status rjs" do
-        pending
+        post :grade_status, :id=>stub_exercise.id
+        response.should render_template('tutor/grade_status')
       end
     end
     
