@@ -45,7 +45,6 @@ describe GradeSolutionJob do
       
       grade_sheet
       GradeSheet.stub(:new).and_return(grade_sheet)
-      grade_sheet.stub(:unit_test_results=)
       
       UnitTest.stub(:find_by_exercise_id).and_return(unit_test)
       unit_test.stub(:run_on).and_return({:grade=>90})
@@ -76,6 +75,11 @@ describe GradeSolutionJob do
       results = {:grade=>90}
       unit_test.stub(:run_on).and_return results
       grade_sheet.should_receive(:unit_test_results=).with(results).once
+      job.perform
+    end
+    
+    it "assigns the solution code to the grade sheet" do
+      grade_sheet.should_receive(:src_code=).with(code)
       job.perform
     end
     
