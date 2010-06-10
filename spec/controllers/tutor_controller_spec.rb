@@ -115,15 +115,25 @@ describe TutorController do
       end
     end
     
-    context "if the grade solution job was not successfull" do
+    context "there is no grade solution result yet" do
       before(:each) do
-      end
-      it "assigns a grade solution error message" do
-        pending
+        GradeSolutionResult.stub(:get_result).and_return(nil)
       end
       
-      it "renders the grade status rjs" do
-        pending
+      it "assigns a waiting message" do
+        post :grade_status, :id=>stub_exercise.id
+        assigns[:message].should == "grading..."
+      end
+    end
+    
+    context "if the grade solution job was not successfull" do
+      before(:each) do
+        GradeSolutionResult.stub(:get_result).and_return(grade_solution_result(:error_message=>"error", :grade_sheet_id=>nil))
+      end
+      
+      it "assigns a grade solution error message" do
+        post :grade_status, :id=>stub_exercise.id
+        assigns[:message].should_not == nil
       end
     end
   end
