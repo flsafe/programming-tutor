@@ -19,6 +19,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   protected
   
    def post_result(error_message = nil, grade_sheet_id = nil)
+     GradeSolutionResult.delete_all ['user_id=? AND exercise_id=?', user_id, exercise_id]
      grade_solution_result = GradeSolutionResult.new :error_message=>error_message, :grade_sheet_id=>grade_sheet_id
      grade_solution_result.save
   end
