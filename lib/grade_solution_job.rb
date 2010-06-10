@@ -4,7 +4,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     template = SolutionTemplate.find_by_exercise_id(exercise_id)
     template.fill_in(code)
     if template.syntax_error?
-      post_result("Your solution did not compile! Check your syntax.", :did_not_compile, nil)
+      post_result("Your solution did not compile! Check your syntax.", :did_not_compile)
     else
       results = run_unit_tests_on(template)
       if results[:error]
