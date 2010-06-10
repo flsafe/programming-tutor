@@ -8,7 +8,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     else
       results = run_unit_tests_on(template)
       if results[:error]
-        post_result("Your solution timed out!", results[:error], nil)
+        post_result("Your solution could not be graded!", results[:error], nil)
       else
         gs_id   = save_grade_sheet(results)
         post_result("Success!", nil, gs_id)

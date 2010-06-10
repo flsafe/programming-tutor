@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-class Compiler
-end  
-
 describe SolutionTemplate do
   
   def template
@@ -37,10 +34,10 @@ describe SolutionTemplate do
   
   describe "#compile_to" do
     
-    it "compiles an executable to the given path" do
+    it "compiles the templated filled in with the user's solution to an executable file" do
       output_path = "tmp/work/tmp-path"
       template.stub(:filled_in_src_code).and_return('test')
-      Compiler.should_receive(:compile).with('test', output_path)
+      Compiler.should_receive(:compile_to).with('test', output_path)
       template.compile_to(output_path)
     end
   end

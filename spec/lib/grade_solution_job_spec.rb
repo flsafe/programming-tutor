@@ -116,7 +116,7 @@ describe GradeSolutionJob do
       end
       
       it "creates grade_job_result with the message describing the solution timed out" do
-        GradeSolutionResult.should_receive(:new).with(:message=>"Your solution timed out!", :error=>:timed_out, :grade_sheet_id=>nil)
+        GradeSolutionResult.should_receive(:new).with(:message=>"Your solution could not be graded!", :error=>:timed_out, :grade_sheet_id=>nil)
         job.perform
       end
       

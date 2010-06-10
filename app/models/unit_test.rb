@@ -5,18 +5,18 @@ class UnitTest < ActiveRecord::Base
   
   def run_on(template)
     unless FileUtils.mkdir_p(work_dir)
-      return {:error=>"Work dir failed"}
+      return {:error=>"A server error occured!"}
     end
     
     generate_user_program_path(template)
     
     unless template.compile_to(user_program_path)
-      return {:error=>"Could not compile"}
+      return {:error=>"Could not compile the solution!"}
     end
     
     unit_test_src_code = set_test_program(user_program_path)
-    unless write_unit_test(unit_test_path, unit_test_src_code)
-      return {:error=>"Could not prepare unit test"}
+    unless write_unit_test(unit_test_src_code, unit_test_path)
+      return {:error=>"A server error occured! Could not prepare the unit test."}
     end
     
     execute_file(unit_test_path)
@@ -60,7 +60,7 @@ class UnitTest < ActiveRecord::Base
     user_program_path+'-unit-test'
   end
   
-  def write_unit_test(path, src_code)
+  def write_unit_test(src_code, path)
     begin
       f = File.open(path, 'w')
       f.write(src_code)

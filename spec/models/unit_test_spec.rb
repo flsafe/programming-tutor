@@ -7,7 +7,7 @@ describe UnitTest do
   end
   
   def template
-    @template ||= mock_model(SolutionTemplate).as_null_object
+    @template ||= stub_model(SolutionTemplate).as_null_object
   end
   
   def curr_time
@@ -31,7 +31,7 @@ describe UnitTest do
   
   describe "#run_on" do
     
-    it "creates a work directory where the compiled solution will be temporarly stored" do
+    it "creates a work directory where the compiled solution will be executed" do
       FileUtils.should_receive(:mkdir_p).with("tmp/work").once
       unit_test.run_on(template)
     end
@@ -41,7 +41,7 @@ describe UnitTest do
       unit_test.run_on(template)
     end
     
-    it "sets the program the unit test will be testing" do
+    it "sets gives the unit test the name of the executable it will be testing" do
       unit_test.should_receive(:set_test_program).with(exec_name)
       unit_test.run_on(template)
     end
@@ -58,13 +58,17 @@ describe UnitTest do
     
     context "the temp dir could not be created" do
       it "returns an error result" do
-        pending
+        FileUtils.stub(:mkdir_p).and_return(false)
+        result = unit_test.run_on(template)
+        result[:error].should_not == nil
       end
     end
     
     context "the solution could not be compiled" do
       it "returns an error result" do
-        pending
+        template.stub(:compile_to).and_return(false)
+        result = unit_test.run_on(template)
+        result[:error].should_not == nil
       end
     end
   end

@@ -6,7 +6,7 @@ class SolutionTemplate < ActiveRecord::Base
   attr_reader :filled_in_src_code
   
   def compile_to(path)
-    Compiler.compile(filled_in_src_code, path)
+    Compiler.compile_to(filled_in_src_code, path)
   end
   
   def fill_in(solution_code)
@@ -15,7 +15,7 @@ class SolutionTemplate < ActiveRecord::Base
   
   def syntax_error?
     check_code  = filled_in_src_code || "Template not filled in, syntax error"
-    SyntaxChecker.syntax_error?(check_code)
+    Compiler.syntax_error?(check_code)
   end
   
    def solution_template_file=(template_file)
