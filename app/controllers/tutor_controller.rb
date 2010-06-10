@@ -28,10 +28,10 @@ class TutorController < ApplicationController
     result    = GradeSolutionResult.get_result(current_user.id, @exercise.id)
     if not result
       @message = 'grading...'
-    elsif result.error_message.blank?
-      @grade_sheet = GradeSheet.find_by_id(result.grade_sheet_id)
-    else
+    elsif not result.error_message.blank?
       @message = result.error_message
+    else
+      @grade_sheet = GradeSheet.find_by_id(result.grade_sheet_id)
     end
     respond_to do |f|
       f.js

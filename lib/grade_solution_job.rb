@@ -10,7 +10,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       if results[:error]
         post_result("Your solution could not be graded!", results[:error], nil)
       else
-        gs_id   = save_grade_sheet(results)
+        gs_id   = save_grade_sheet(results, code)
         post_result("Success!", nil, gs_id)
       end
     end
@@ -29,10 +29,11 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     results
   end
   
-  def save_grade_sheet(results)
+  def save_grade_sheet(results, code)
     ta          = TeachersAid.new
     grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id
     grade_sheet.unit_test_results = results
+    grade_sheet.src_code          = code
     ta.record_grade grade_sheet
     grade_sheet.id
   end
