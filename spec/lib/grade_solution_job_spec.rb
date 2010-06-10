@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-class GradeSolutionResult
-end
-
 describe GradeSolutionJob do
   
   def code
@@ -22,7 +19,7 @@ describe GradeSolutionJob do
   end
   
    def grade_solution_result
-    @grade_solution_result ||= mock_model(GradeSolutionResult).as_null_object
+    @grade_solution_result ||= stub_model(GradeSolutionResult).as_null_object
   end
   
    def job
@@ -55,6 +52,8 @@ describe GradeSolutionJob do
       
       ta
       TeachersAid.stub(:new).and_return(ta)
+      
+      grade_solution_result
       GradeSolutionResult.stub(:new).and_return(grade_solution_result)
     end
     
