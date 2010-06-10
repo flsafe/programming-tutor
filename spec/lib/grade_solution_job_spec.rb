@@ -89,7 +89,7 @@ describe GradeSolutionJob do
     end
     
     it "it saves a grade_job_result to the database with a success message" do
-      GradeSolutionResult.should_receive(:new).with(:message=>"Success!", :grade_sheet_id=>grade_sheet.id, :error=>nil)
+      GradeSolutionResult.should_receive(:new).with(:error_message=>nil, :grade_sheet_id=>grade_sheet.id)
       job.perform
     end
     
@@ -99,7 +99,7 @@ describe GradeSolutionJob do
       end
       
       it "Saves a grade_job_result with the message describing the syntax error" do
-        GradeSolutionResult.should_receive(:new).with(:message=>"Your solution did not compile! Check your syntax.", :error=>:did_not_compile, :grade_sheet_id=>nil)
+        GradeSolutionResult.should_receive(:new).with(:error_message=>"Your solution did not compile! Check your syntax.", :grade_sheet_id=>nil)
         job.perform
       end
       
@@ -119,7 +119,7 @@ describe GradeSolutionJob do
       end
       
       it "creates grade_job_result with the message describing the solution timed out" do
-        GradeSolutionResult.should_receive(:new).with(:message=>"Your solution could not be graded!", :error=>:timed_out, :grade_sheet_id=>nil)
+        GradeSolutionResult.should_receive(:new).with(:error_message=>:timed_out, :grade_sheet_id=>nil)
         job.perform
       end
       

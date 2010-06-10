@@ -4,22 +4,22 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     template = SolutionTemplate.find_by_exercise_id(exercise_id)
     template.fill_in(code)
     if template.syntax_error?
-      post_result("Your solution did not compile! Check your syntax.", :did_not_compile)
+      post_result("Your solution did not compile! Check your syntax.")
     else
       results = run_unit_tests_on(template)
       if results[:error]
-        post_result("Your solution could not be graded!", results[:error], nil)
+        post_result(results[:error], nil)
       else
         gs_id   = save_grade_sheet(results, code)
-        post_result("Success!", nil, gs_id)
+        post_result(nil, gs_id)
       end
     end
   end
   
   protected
   
-   def post_result(message, error_msg = nil, grade_sheet_id=nil)
-     grade_solution_result = GradeSolutionResult.new :message=>message, :error=>error_msg, :grade_sheet_id=>grade_sheet_id
+   def post_result(error_message = nil, grade_sheet_id = nil)
+     grade_solution_result = GradeSolutionResult.new :error_message=>error_message, :grade_sheet_id=>grade_sheet_id
      grade_solution_result.save
   end
   
