@@ -25,7 +25,7 @@ class TutorController < ApplicationController
   
   def grade_status
     @exercise = Exercise.find_by_id params[:id]
-    result    = SyntaxCheckResult.get_result(current_user.id, @exercise.id)
+    result    = GradeSolutionResult.get_result(current_user.id, @exercise.id)
     respond_to do |f|
       f.js
     end

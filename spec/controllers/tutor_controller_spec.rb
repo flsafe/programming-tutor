@@ -2,11 +2,16 @@ require 'spec_helper'
 
 describe TutorController do
   before(:each) do
+    Exercise.stub(:find_by_id).and_return(stub_exercise)
     controller.stub(:current_user).and_return(current_user)
   end
   
   def current_user(stubs={})
     @current_user ||= stub_model(User, stubs)
+  end
+  
+  def grade_solution_result(stubs={})
+    @grade_solution_result ||= stub_model(GradeSolutionResult, stubs)
   end
   
   def stub_exercise(stubs={})
@@ -20,7 +25,6 @@ describe TutorController do
   describe "get show" do
     
     it "assigns the exercise to be displayed to the user" do
-      Exercise.stub(:find_by_id).and_return(stub_exercise)
       get 'show'
       assigns[:exercise].should == stub_exercise
     end
@@ -34,8 +38,6 @@ describe TutorController do
   describe "post grade" do
     
     before(:each) do
-      Exercise.stub(:find_by_id).and_return(stub_exercise)
-      
       @grade_job = mock_model(GradeSolutionJob, :perform=>true)
       GradeSolutionJob.stub(:new).and_return(@grade_job).as_null_object
       
@@ -84,10 +86,17 @@ describe TutorController do
 
     context "if the grade solution job was a success" do
       before(:each) do
+        GradeSolutionResult.stub(:get_result).and_return(grade_solution_result(:error_message=>nil, :grade_sheet_id=>1000))
+      end
+      
+      it "retrieves the grade solution job result" do
+        GradeSolutionResult.should_receive(:get_result).with(current_user.id, stub_exercise.id)
+        post :grade_status, :id=>stub_exercise.id
       end
       
       it "retrieves the grade sheet from the db" do
-        pending
+        GradeSheet.should_receive(:find_by_grade_sheet_id).with(grade_solution_result.grade_sheet_id)
+        post :grade_status, :id=>stub_exercise.id
       end
       
       it "assigns the grade results from the grade sheet" do
@@ -100,6 +109,8 @@ describe TutorController do
     end
     
     context "if the grade solution job was not successfull" do
+      before(:each) do
+      end
       it "assigns a grade solution error message" do
         pending
       end
