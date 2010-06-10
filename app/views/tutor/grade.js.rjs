@@ -1,0 +1,5 @@
+page.replace_html :grade, @message
+page << "keepPollingGrade = true"
+page.select("#polling_grade").each do |e|
+  e.replace(periodically_call_remote(:url=>{:action=>'grade_status', :id=>@exercise.id}, :condition=>'keepPollingGrade == true')) 
+end

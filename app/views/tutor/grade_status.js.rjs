@@ -1,0 +1,6 @@
+page.replace_html :grade, h(@message)
+if @message == "checking..."
+  page << "keepPollingGrade = true"
+else
+  page << "keepPollingGrade = false"
+end

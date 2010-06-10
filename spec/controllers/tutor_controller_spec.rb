@@ -80,6 +80,36 @@ describe TutorController do
     end
   end
   
+  describe "get grade_status" do
+
+    context "if the grade solution job was a success" do
+      before(:each) do
+      end
+      
+      it "retrieves the grade sheet from the db" do
+        pending
+      end
+      
+      it "assigns the grade results from the grade sheet" do
+        pending
+      end
+      
+      it "renders the grade status rjs" do
+        pending
+      end
+    end
+    
+    context "if the grade solution job was not successfull" do
+      it "assigns a grade solution error message" do
+        pending
+      end
+      
+      it "renders the grade status rjs" do
+        pending
+      end
+    end
+  end
+  
   describe "post check_syntax" do
     
     before(:each) do
@@ -148,16 +178,16 @@ describe TutorController do
       get :syntax_status, :id=>stub_exercise.id
     end
     
-    it "renders the syntax message template" do
-      get :syntax_status, :id=>stub_exercise.id
-      response.should render_template('tutor/syntax_status')
-    end
-    
     it "assigns sytntax check message" do
       syntax_check_result = stub_model(SyntaxCheckResult, :error_message=>'syntax error', :destroy=>true)
       SyntaxCheckResult.stub(:find).and_return(syntax_check_result)
       get :syntax_status, :id=>stub_exercise
       assigns[:message].should == 'syntax error'
+    end
+    
+    it "renders the syntax message template" do
+      get :syntax_status, :id=>stub_exercise.id
+      response.should render_template('tutor/syntax_status')
     end
   end
 end

@@ -23,6 +23,14 @@ class TutorController < ApplicationController
     end
   end
   
+  def grade_status
+    @exercise = Exercise.find_by_id params[:id]
+    result    = SyntaxCheckResult.get_result(current_user.id, @exercise.id)
+    respond_to do |f|
+      f.js
+    end
+  end
+  
   def check_syntax
     @exercise = Exercise.find_by_id params[:id]
     if @exercise
