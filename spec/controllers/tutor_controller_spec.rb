@@ -10,6 +10,10 @@ describe TutorController do
     @current_user ||= stub_model(User, stubs)
   end
   
+  def grade_sheet(stubs={})
+    @grade_sheet ||= stub_model(GradeSheet, stubs)
+  end
+  
   def grade_solution_result(stubs={})
     @grade_solution_result ||= stub_model(GradeSolutionResult, stubs)
   end
@@ -87,6 +91,7 @@ describe TutorController do
     context "if the grade solution job was a success" do
       before(:each) do
         GradeSolutionResult.stub(:get_result).and_return(grade_solution_result(:error_message=>nil, :grade_sheet_id=>1000))
+        GradeSheet.stub(:find_by_id).and_return(grade_sheet)
       end
       
       it "retrieves the grade solution job result" do
@@ -100,7 +105,8 @@ describe TutorController do
       end
       
       it "assigns the grade results from the grade sheet" do
-        pending
+        post :grade_status, :id=>stub_exercise.id
+        assigns[:grade_sheet].should == grade_sheet
       end
       
       it "renders the grade status rjs" do

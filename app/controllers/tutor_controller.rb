@@ -27,7 +27,9 @@ class TutorController < ApplicationController
     @exercise = Exercise.find_by_id params[:id]
     result    = GradeSolutionResult.get_result(current_user.id, @exercise.id)
     if result.error_message.blank?
-      grade_sheet = GradeSheet.find_by_id(result.grade_sheet_id)
+      @grade_sheet = GradeSheet.find_by_id(result.grade_sheet_id)
+    else
+      
     end
     respond_to do |f|
       f.js
