@@ -95,7 +95,7 @@ describe TutorController do
       end
       
       it "retrieves the grade sheet from the db" do
-        GradeSheet.should_receive(:find_by_grade_sheet_id).with(grade_solution_result.grade_sheet_id)
+        GradeSheet.should_receive(:find_by_id).with(grade_solution_result.grade_sheet_id)
         post :grade_status, :id=>stub_exercise.id
       end
       
