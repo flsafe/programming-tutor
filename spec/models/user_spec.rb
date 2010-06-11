@@ -12,15 +12,15 @@ describe User do
     
     context "when given an exercise" do
       it "returns the grade for the associated exercise" do
-        @exercise.grade_sheets.create! :grade=>92.1, :user=>@current_user, :exercise=>@exercise
+        @exercise.grade_sheets.create!(Factory.build(:grade_sheet, :grade=>92.1, :user=>@current_user, :exercise=>@exercise).attributes)
         @current_user.grade_for?(@exercise).should == 92.1
       end
     
       it "returns the most recent grade" do
-       GradeSheet.create! :grade=>60, :user=>@current_user, :exercise=>@exercise
-       GradeSheet.create! :grade=>90, :user=>@current_user, :exercise=>@exercise
+       Factory.create :grade_sheet, :grade=>60, :user=>@current_user, :exercise=>@exercise
+       Factory.create :grade_sheet, :grade=>90, :user=>@current_user, :exercise=>@exercise
        sleep(1) #Make sure one is inserted at a later time
-       GradeSheet.create! :grade=>100, :user=>@current_user, :exercise=>@exercise
+       GradeSheet.create!(Factory.build(:grade_sheet, :grade=>100, :user=>@current_user, :exercise=>@exercise).attributes)
        @current_user.grade_for?(@exercise).should == 100
       end
     
@@ -31,7 +31,7 @@ describe User do
     
     context "when given an exercise set" do
       it "returns the average grade for the associated exercise set" do
-        @exercise_set.set_grade_sheets.create! :grade=>91.1, :user=>@current_user, :exercise_set=>@exercise_set
+        @exercise_set.set_grade_sheets.create! Factory.build(:set_grade_sheet, :grade=>91.1, :user=>@current_user, :exercise_set=>@exercise_set).attributes
         @current_user.grade_for?(@exercise_set).should == 91.1
       end
     end

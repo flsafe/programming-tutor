@@ -16,6 +16,8 @@ class TutorController < ApplicationController
       if not job_running? :grade_solution_job
         enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
         @message = "grading..."
+      else
+        @message = "already grading! wait"
       end
     end
     respond_to do |f|

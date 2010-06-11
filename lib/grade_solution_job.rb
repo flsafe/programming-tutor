@@ -20,8 +20,8 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   
    def post_result(error_message = nil, grade_sheet_id = nil)
      GradeSolutionResult.delete_all ['user_id=? AND exercise_id=?', user_id, exercise_id]
-     grade_solution_result = GradeSolutionResult.new :error_message=>error_message, :grade_sheet_id=>grade_sheet_id
-     grade_solution_result.save
+     grade_solution_result = GradeSolutionResult.new :user_id=>user_id, :exercise_id=>exercise_id, :error_message=>error_message, :grade_sheet_id=>grade_sheet_id
+     grade_solution_result.save!
   end
   
   def run_unit_tests_on(template)
@@ -32,9 +32,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   
   def save_grade_sheet(results, code)
     ta          = TeachersAid.new
-    grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id
-    grade_sheet.unit_test_results = results
-    grade_sheet.src_code          = code
+    grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code
     ta.record_grade grade_sheet
     grade_sheet.id
   end

@@ -1,5 +1,5 @@
 class GradeSolutionResult < ActiveRecord::Base
-  validates_presence_of :user_id, :exercise_id, :src_code, :unit_test_results
+  validates_presence_of :user_id, :exercise_id, :grade_sheet_id
   
   def self.get_result(user_id, exercise_id)
     result = GradeSolutionResult.find :first, :conditions=>['user_id=? AND exercise_id=?', user_id, exercise_id]

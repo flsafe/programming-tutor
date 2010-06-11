@@ -1,4 +1,4 @@
-page.replace_html :grade, h(grade_sheet.unit_test_results) if grade_sheet
+page.replace_html :grade, h(@grade_sheet.unit_test_results) if @grade_sheet
 if @message == "grading..."
   page << "keepPollingGrade = true"
 else
