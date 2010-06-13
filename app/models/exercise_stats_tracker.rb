@@ -1,5 +1,6 @@
 class ExerciseStatsTracker < StatsTracker
   def update(grade_sheet)
+    raise "Can't track stats on the grade sheet because it is not vaild!\n #{grade_sheet.errors}" unless grade_sheet.valid?
     return if grade_sheet.retake?
     @exercise    = grade_sheet.exercise
     @grade_sheet = grade_sheet
