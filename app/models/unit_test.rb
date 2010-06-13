@@ -1,3 +1,5 @@
+require 'yaml'
+
 class UnitTest < ActiveRecord::Base
   belongs_to :exercise
   
@@ -8,7 +10,7 @@ class UnitTest < ActiveRecord::Base
       return {:error=>"A server error occured!"}
     end
     
-    generate_user_program_path(template)
+    user_program_path = generate_unique_name(template)
     
     unless template.compile_to(user_program_path)
       return {:error=>"Could not compile the solution!"}
@@ -18,8 +20,11 @@ class UnitTest < ActiveRecord::Base
     unless write_unit_test(unit_test_src_code, unit_test_path)
       return {:error=>"A server error occured! Could not prepare the unit test."}
     end
-    
-    execute_file(unit_test_path)
+
+    File.open('out', 'w') {|f| f.write(unit_test_src_code)}    
+    results = execute_file(unit_test_path)
+    File.open('out-results', 'w') {|f| f.write(results)}    
+    YAML.load(results)
   end
   
   def unit_test_file=(unit_test_file)
@@ -41,7 +46,12 @@ class UnitTest < ActiveRecord::Base
   end
   
   def generate_unique_name(template)
-    "tmp-#{Time.now}-#{template.id}"
+    t = Time.now
+    path = "#{work_dir}/tmp-#{t.usec}-#{template.id}-#{Kernel.rand(10000)+1}"
+    while File.exists?(path)
+      path = "#{work}/tmp-#{t.usec}-#{template.id}-#{Kernel.rand(10000)+1}"
+    end
+    @user_program_path = path
   end
   
   def generate_user_program_path(template)
@@ -49,7 +59,7 @@ class UnitTest < ActiveRecord::Base
   end
   
   def set_test_program(user_program)
-    src_code.gsub(/<EXEC_NAME>/, user_program_path)
+    src_code.gsub(/<EXEC_NAME>/, user_program)
   end
   
   def user_program_path
@@ -72,7 +82,7 @@ class UnitTest < ActiveRecord::Base
   end
   
    def work_dir
-    "tmp/work"
+    APP_CONFIG['work_dir']
   end
   
   def self.language(unit_test_field)
