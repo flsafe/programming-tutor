@@ -13,7 +13,7 @@ class TeachersAid
   private
   
   def add_grade_sheet_to_exercise
-      @exercise.grade_sheets << @grade_sheet
+    @exercise.grade_sheets << @grade_sheet
   end
   
   def add_set_grade_sheet_to_exercise_set
