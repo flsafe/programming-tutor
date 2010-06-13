@@ -83,9 +83,9 @@ describe GradeSolutionJob do
     
     it "saves the grade sheet to the database" do
       GradeSheet.stub(:new).and_return(grade_sheet)
-      unit_test.stub(:run_on).and_return(reslt = {:error => nil, :grade => 100, :test1 => '20 points'})
+      unit_test.stub(:run_on).and_return(reslt = {'error' => nil, 'grade' => 100, 'test1' => '20 points'})
       
-      GradeSheet.should_receive(:new).with(:user_id => current_user.id, :exercise_id => exercise.id, :src_code => code, :unit_test_results => reslt, :grade => reslt[:grade])
+      GradeSheet.should_receive(:new).with(:user_id => current_user.id, :exercise_id => exercise.id, :src_code => code, :unit_test_results => reslt, :grade => reslt['grade'])
       ta.should_receive(:record_grade).with(grade_sheet)
       job.perform
     end
