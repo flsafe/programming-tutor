@@ -3,11 +3,11 @@ require 'spec_helper'
 describe UnitTest do
   
   def unit_test
-    @ut ||= stub_model(UnitTest, :src_code=>'<EXEC_NAME>')
+    @ut ||= Factory.build :unit_test, :src_code=>'<EXEC_NAME>'
   end
   
   def template
-    @template ||= stub_model(SolutionTemplate).as_null_object
+    @template ||= mock_model(SolutionTemplate).as_null_object
   end
   
   def curr_time
@@ -15,7 +15,7 @@ describe UnitTest do
   end
   
   def exec_name
-    "tmp/work/tmp-#{curr_time}-#{template.id}"
+    "tmp/work/tmp-#{curr_time}-#{template.id}-101"
   end
   
   def file
@@ -23,8 +23,9 @@ describe UnitTest do
   end
   
   before(:each) do
+    Kernel.stub(:rand).and_return(100)
     FileUtils.stub(:mkdir_p).and_return(true)
-    Time.stub(:now).and_return(curr_time)
+    Time.stub(:now).and_return(stub('time', :usec=>1000))
     unit_test.stub(:execute_file).and_return(true)
     unit_test.stub(:write_unit_test).and_return(true)
   end
