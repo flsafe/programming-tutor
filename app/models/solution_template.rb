@@ -15,7 +15,8 @@ class SolutionTemplate < ActiveRecord::Base
   
   def syntax_error?
     check_code  = filled_in_src_code || "Template not filled in, syntax error"
-    Compiler.syntax_error?(check_code)
+    msg = Compiler.syntax_error?(check_code)
+    msg =~ /error/i ? true : false
   end
   
    def solution_template_file=(template_file)
