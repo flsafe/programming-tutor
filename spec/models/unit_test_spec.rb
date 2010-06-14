@@ -41,7 +41,9 @@ describe UnitTest do
     end
       
     it "sets the name of the executable the unit test will be running" do
-      unit_test.should_receive(:set_test_program).with(exec_name)
+      mock_str = mock(String)
+      unit_test.stub_chain(:src_code).and_return(mock_str)
+      mock_str.should_receive(:gsub).with(/<EXEC_NAME>/, exec_name)
       unit_test.run_on(template)
     end
     
