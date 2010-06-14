@@ -16,6 +16,7 @@ The template class should not be responsibile for compiling it self or checking 
 	
 The unit_test#run_on method doesn't need the entire template. Instead it just needs the filled in template code
 
+#add error message to the return result
 
 Don't run raw commands using `` instead move into some object
  so that I can change the way this stuff runs on heroku

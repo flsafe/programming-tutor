@@ -15,7 +15,7 @@ describe UnitTest do
   end
   
   def exec_name
-    "tmp/work/tmp-#{curr_time}-#{template.id}-101"
+    "tmp/work/tmp-#{curr_time}-101"
   end
   
   def file
@@ -33,9 +33,16 @@ describe UnitTest do
   
   describe "#run_on" do
     
+    it "compilers the user's solution code to the work directory" do
+      solution_code = 'solution code'
+      Compiler.stub(:compile_to)
+      Compiler.should_receive(:compile_to).with('solution code', "#{APP_CONFIG['work_dir']}/tmp-1000-101")
+      unit_test.run_on(template, template.id, solution_code)
+    end
+    
     it "compiles the user's solution to the temp work dir" do
-      template.should_receive(:compile_to).with(exec_name).once
-      unit_test.run_on(template)
+      #template.should_receive(:compile_to).with(exec_name).once
+      #unit_test.run_on(template)
     end
     
     it "sets gives the unit test the name of the executable it will be testing" do
@@ -55,7 +62,7 @@ describe UnitTest do
     
     context "the solution could not be compiled" do
       it "returns an error result" do
-        template.stub(:compile_to).and_return(false)
+        Compiler.stub(:compile_to).and_return(false)
         result = unit_test.run_on(template)
         result[:error].should_not == nil
       end
