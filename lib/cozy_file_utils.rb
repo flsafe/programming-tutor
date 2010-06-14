@@ -2,7 +2,6 @@ module CozyFileUtils
   
   def self.unique_file_in(dir, prefix)
     begin
-      FileUtils.mkdir_p(dir)
       CozyFileUtils.unique_file_path(dir, prefix)
     rescue Exception=>e
       nil
