@@ -1,5 +1,5 @@
 Autotest.add_hook :initialize do |at|
-  %w{tmp .git}.each {|exception| 
+  %w{tmp .git rerun.txt}.each {|exception| 
     at.add_exception(exception)
   }
 	at.add_exception(/out-*/)
