@@ -1,0 +1,6 @@
+Autotest.add_hook :initialize do |at|
+  %w{tmp .git}.each {|exception| 
+    at.add_exception(exception)
+  }
+	at.add_exception(/out-*/)
+end
