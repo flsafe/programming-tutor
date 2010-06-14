@@ -15,9 +15,7 @@ class UnitTest < ActiveRecord::Base
     end
     
     unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, user_program_path)
-    unless write_unit_test(unit_test_src_code, unit_test_path)
-      return {:error=>"A server error occured! Could not prepare the unit test."}
-    end
+    write_unit_test(unit_test_src_code, unit_test_path)
 
     results = execute_file(unit_test_path)
     
@@ -49,14 +47,9 @@ class UnitTest < ActiveRecord::Base
   end
   
   def write_unit_test(src_code, path)
-    begin
-      f = File.open(path, 'w')
-      f.write(src_code)
-      f.close
-      true
-    rescue
-      false
-    end
+    f = File.open(path, 'w')
+    f.write(src_code)
+    f.close
   end
   
    def work_dir
