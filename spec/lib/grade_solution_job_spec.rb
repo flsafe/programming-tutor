@@ -66,9 +66,7 @@ describe GradeSolutionJob do
     
     it "Runs the unit test on the solution template" do
       solution_code = "solution code"
-      template.stub(:filled_in_src_code).and_return(solution_code)
-      
-      template.should_receive(:filled_in_src_code)
+      template.stub(:fill_in).and_return(solution_code)
       unit_test.should_receive(:run_on).with(template, template.id, solution_code).and_return({})
       job.perform
     end

@@ -11,8 +11,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       raise "Could not find the unit test to use"
     end
     
-    template.fill_in(code)
-    solution_code = template.filled_in_src_code
+    solution_code = template.fill_in(code)
     results   = unit_test.run_on(template, template.id, solution_code)
     if results['error']
       post_result(results['error'], nil)
