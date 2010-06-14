@@ -22,6 +22,6 @@ module CozyFileUtils
   
    def self.rand_file_name(prefix)
     t = Time.now
-    "#{prefix}-#{t.usec}-#{rand(10000)+1}"
+    "#{prefix}-#{t.usec}-#{Kernel.rand(10000)+1}"
   end
 end

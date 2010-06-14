@@ -6,7 +6,6 @@ class UnitTest < ActiveRecord::Base
   validates_presence_of :src_language, :src_code
   
   def run_on(template, template_id = nil, solution_code = nil)
-    
     user_program_path = generate_unique_name(template)
     
     unless Compiler.compile_to(solution_code, user_program_path)
