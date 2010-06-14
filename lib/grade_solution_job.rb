@@ -1,15 +1,21 @@
 class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   
   def perform
-    template  = SolutionTemplate.find_by_exercise_id(exercise_id)
+    template  = SolutionTemplate.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'c']
+    unless template
+      raise "Could not find the solution template"
+    end
     template.fill_in(code)
     if template.syntax_error?
-      post_result("Your solution did not compile! Check your syntax. Error: #{template.syntax_error?}")
+      post_result("Your solution did not compile! Check your syntax. Error: #{Compiler.syntax_error?(template.filled_in_src_code)}")
     else
-      unit_test = UnitTest.find_by_exercise_id(exercise_id)
+      unit_test = UnitTest.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'rb']
+      unless unit_test
+        raise "Could not find the unit test to use"
+      end
       results   = unit_test.run_on(template)
       if results['error']
-        post_result(results[:error], nil)
+        post_result(results['error'], nil)
       else
         gs_id   = save_grade_sheet(results, code)
         post_result(nil, gs_id)
@@ -26,6 +32,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   end
   
   def save_grade_sheet(results, code)  
+    File.open('out-save-grade-sheet-results', 'w') {|f| f.write(results)}
     grade_sheet = GradeSheet.new :grade=>results['grade'], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code
     ta          = TeachersAid.new    
     ta.record_grade grade_sheet

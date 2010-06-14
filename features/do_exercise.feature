@@ -26,9 +26,9 @@ Feature: Do exercise
 		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
 		And the exercise "RemoveChar" has the associated solution template and unit test
 		And I am viewing the tutor page for "RemoveChar"
-		When I fill in the text editor with "void do_remove_char(char remove_char, char str[]){int write_index = 0; int read_index  = 0; char curr_char; do{ curr_char = str[read_index]; if(curr_char != remove_char){ str[write_index] = str[read_index]; write_index++;} read_index++; }while(curr_char);}"
+		When I fill in the text editor with "int write_index = 0; int read_index  = 0; char curr_char; do{ curr_char = str[read_index]; if(curr_char != c){ str[write_index] = str[read_index]; write_index++;} read_index++; }while(curr_char);"
 		And I press "Submit"
-		Then I should see "Grade: 100" within "#grade_sheet"
+		Then I should see "grade: 100" within "#grade"
 			
 			
 			

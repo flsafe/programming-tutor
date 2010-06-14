@@ -25,7 +25,7 @@ describe UnitTest do
   before(:each) do
     Kernel.stub(:rand).and_return(100)
     FileUtils.stub(:mkdir_p).and_return(true)
-    YAML.stub(:load).and_return('results')
+    YAML.stub(:load).and_return({:error=>nil, :grade=>100})
     Time.stub(:now).and_return(stub('time', :usec=>1000))
     unit_test.stub(:execute_file).and_return(true)
     unit_test.stub(:write_unit_test).and_return(true)

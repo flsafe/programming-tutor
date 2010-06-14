@@ -21,10 +21,19 @@ class UnitTest < ActiveRecord::Base
       return {:error=>"A server error occured! Could not prepare the unit test."}
     end
 
-    File.open('out', 'w') {|f| f.write(unit_test_src_code)}    
+    File.open('out-unit-test-src-code', 'w') {|f| f.write(unit_test_src_code)}    
+    
     results = execute_file(unit_test_path)
     File.open('out-results', 'w') {|f| f.write(results)}    
-    YAML.load(results)
+    
+    results_hash = YAML.load(results)
+    results_hash = results_hash.with_indifferent_access
+    File.open('out-results-hash', 'w') { |f| f.write(results_hash)}
+    
+    unless results_hash and results_hash['grade']
+      return {'error'=>"A server error occured! Unit test did not return a grade"}
+    end
+    results_hash
   end
   
   def unit_test_file=(unit_test_file)

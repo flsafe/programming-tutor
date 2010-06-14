@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-
 describe GradeSolutionJob do
-  
   
   def current_user
     @user ||= stub_model(User)
@@ -53,7 +51,7 @@ describe GradeSolutionJob do
     end
     
     it "gets the solution template associated with the exercise" do
-      SolutionTemplate.should_receive(:find).with(:first, {:conditions=>{:exercise_id=>exercise.id}}).and_return(template)
+      SolutionTemplate.should_receive(:find).with(:first, {:conditions=>['exercise_id=? AND src_language=?', exercise.id, 'c']}).and_return(template)
       job.perform
     end
     
@@ -63,7 +61,7 @@ describe GradeSolutionJob do
     end
     
     it "gets the unit test associated with the exercise" do
-      UnitTest.should_receive(:find).with(:first, {:conditions=>{:exercise_id=>exercise.id}})
+      UnitTest.should_receive(:find).with(:first, {:conditions=>['exercise_id=? AND src_language=?', exercise.id, 'rb']})
       job.perform
     end
     
