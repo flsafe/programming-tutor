@@ -19,7 +19,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     solution_code = template.fill_in(code)
     results   = unit_test.run_on(template, template.id, solution_code)
     if results['error']
-      post_result(results['error'], nil)
+      post_result(results['error'], nil) #add error message to the return result
     else
       gs_id   = save_grade_sheet(results, code)
       post_result(nil, gs_id)

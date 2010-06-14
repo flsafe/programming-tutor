@@ -33,11 +33,6 @@ describe UnitTest do
   
   describe "#run_on" do
     
-    it "creates a work directory where the compiled solution will be executed" do
-      FileUtils.should_receive(:mkdir_p).with("tmp/work").once
-      unit_test.run_on(template)
-    end
-    
     it "compiles the user's solution to the temp work dir" do
       template.should_receive(:compile_to).with(exec_name).once
       unit_test.run_on(template)
@@ -56,14 +51,6 @@ describe UnitTest do
     it "executes the unit test" do
       unit_test.should_receive(:execute_file).with(exec_name+'-unit-test')
       unit_test.run_on(template)
-    end
-    
-    context "the temp dir could not be created" do
-      it "returns an error result" do
-        FileUtils.stub(:mkdir_p).and_return(false)
-        result = unit_test.run_on(template)
-        result[:error].should_not == nil
-      end
     end
     
     context "the solution could not be compiled" do

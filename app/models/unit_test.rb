@@ -6,9 +6,6 @@ class UnitTest < ActiveRecord::Base
   validates_presence_of :src_language, :src_code
   
   def run_on(template, template_id = nil, solution_code = nil)
-    unless FileUtils.mkdir_p(work_dir)
-      return {:error=>"A server error occured!"}
-    end
     
     user_program_path = generate_unique_name(template)
     
