@@ -1,16 +1,6 @@
 module CozyFileUtils
   
   def self.unique_file_in(dir, prefix)
-    begin
-      CozyFileUtils.unique_file_path(dir, prefix)
-    rescue Exception=>e
-      nil
-    end
-  end
-  
-  protected
-  
-   def self.unique_file_path(dir, prefix)
     while true
      file = CozyFileUtils.rand_file_name(prefix)
      path = "#{dir}/#{file}"
@@ -18,6 +8,8 @@ module CozyFileUtils
     end
     path
   end
+  
+  protected
   
    def self.rand_file_name(prefix)
     t = Time.now
