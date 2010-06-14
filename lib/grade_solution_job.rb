@@ -5,21 +5,20 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     unless template
       raise "Could not find the solution template"
     end
+
+    unit_test = UnitTest.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'rb']
+    unless unit_test
+      raise "Could not find the unit test to use"
+    end
+    
     template.fill_in(code)
-    if template.syntax_error?
-      post_result("Your solution did not compile! Check your syntax. Error: #{Compiler.syntax_error?(template.filled_in_src_code)}")
+    solution_code = template.filled_in_src_code
+    results   = unit_test.run_on(template, template.id, solution_code)
+    if results['error']
+      post_result(results['error'], nil)
     else
-      unit_test = UnitTest.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'rb']
-      unless unit_test
-        raise "Could not find the unit test to use"
-      end
-      results   = unit_test.run_on(template)
-      if results['error']
-        post_result(results['error'], nil)
-      else
-        gs_id   = save_grade_sheet(results, code)
-        post_result(nil, gs_id)
-      end
+      gs_id   = save_grade_sheet(results, code)
+      post_result(nil, gs_id)
     end
   end
   

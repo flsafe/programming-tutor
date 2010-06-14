@@ -41,12 +41,11 @@ describe GradeSolutionJob do
   describe "#perform" do
     
     before(:each) do
-      template.stub(:syntax_error?).and_return(false)
       SolutionTemplate.stub(:find).and_return(template)
-      
-      unit_test.stub(:run_on).and_return({:error => nil})
       UnitTest.stub(:find).and_return(unit_test)
       
+      unit_test.stub(:run_on).and_return({:error => nil})
+
       TeachersAid.stub(:new).and_return(ta)
     end
     
@@ -66,7 +65,11 @@ describe GradeSolutionJob do
     end
     
     it "Runs the unit test on the solution template" do
-      unit_test.should_receive(:run_on).with(template).and_return({})
+      solution_code = "solution code"
+      template.stub(:filled_in_src_code).and_return(solution_code)
+      
+      template.should_receive(:filled_in_src_code)
+      unit_test.should_receive(:run_on).with(template, template.id, solution_code).and_return({})
       job.perform
     end
     
