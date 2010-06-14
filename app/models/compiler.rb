@@ -16,7 +16,8 @@ class Compiler
     f.write(code)
     f.close
     
-    `gcc -x c -o #{dest_path} #{code_file_path} 2>&1`
+    out = `gcc -x c -o #{dest_path} #{code_file_path} 2>&1`
+    out =~ /error/i ? false : true
   end
   
   protected

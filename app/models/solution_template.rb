@@ -5,10 +5,6 @@ class SolutionTemplate < ActiveRecord::Base
   
   attr_reader :filled_in_src_code
   
-  def compile_to(path)
-    Compiler.compile_to(filled_in_src_code, path)
-  end
-  
   def fill_in(solution_code)
     @filled_in_src_code = src_code.sub(/<SRC_CODE>/, solution_code)
   end
