@@ -49,6 +49,12 @@ describe GradeSolutionJob do
       TeachersAid.stub(:new).and_return(ta)
     end
     
+    it "creates a work directory where the solution will be compiled and the unit test executed" do
+      FileUtils.stub(:mkdir_p).and_return true
+      FileUtils.should_receive(:mkdir_p).with(APP_CONFIG['work_dir'])
+      job.perform
+    end
+    
     it "gets the solution template associated with the exercise" do
       SolutionTemplate.should_receive(:find).with(:first, {:conditions=>['exercise_id=? AND src_language=?', exercise.id, 'c']}).and_return(template)
       job.perform

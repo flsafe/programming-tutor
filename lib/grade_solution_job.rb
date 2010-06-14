@@ -1,6 +1,11 @@
 class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   
   def perform
+    unless FileUtils.mkdir_p(APP_CONFIG['work_dir'])
+      post_result("A server error occured! We couldn't grade your solution!")
+      raise "Could not create the work directory"
+    end
+    
     template  = SolutionTemplate.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'c']
     unless template
       raise "Could not find the solution template"
