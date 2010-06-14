@@ -18,20 +18,6 @@ describe SolutionTemplate do
     end
   end
   
-  describe "#syntax_error" do
-    
-    it "returns a syntax error if one is detected in the filled in source code" do
-      template.fill_in('return 0')
-      template.syntax_error?.should == true
-    end
-    
-    context "the template hasn't been filled in it should return an error" do
-      it "does not return a sytnax error" do
-        template.syntax_error?.should == true
-      end
-    end
-  end
-  
   describe "#compile_to" do
     
     it "compiles the templated filled in with the user's solution to an executable file" do

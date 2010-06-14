@@ -6,7 +6,8 @@ class Compiler
     f.write(code)
     f.close
     
-    `gcc -x c -fsyntax-only #{path} 2>&1`
+    out = `gcc -x c -fsyntax-only #{path} 2>&1`
+    out =~ /error/i ? true : false
   end
 
   def self.compile_to(code, dest_path)

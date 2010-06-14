@@ -13,12 +13,6 @@ class SolutionTemplate < ActiveRecord::Base
     @filled_in_src_code = src_code.sub(/<SRC_CODE>/, solution_code)
   end
   
-  def syntax_error?
-    check_code  = filled_in_src_code || "Template not filled in, syntax error"
-    msg = Compiler.syntax_error?(check_code)
-    msg =~ /error/i ? true : false
-  end
-  
    def solution_template_file=(template_file)
     self.attributes = SolutionTemplate.from_file_field(template_file)
   end
