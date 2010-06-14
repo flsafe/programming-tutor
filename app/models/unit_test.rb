@@ -20,11 +20,9 @@ class UnitTest < ActiveRecord::Base
     end
 
     results = execute_file(unit_test_path)
-    File.open('out-results', 'w') {|f| f.write(results)}    
     
     results_hash = YAML.load(results)
     results_hash = results_hash.with_indifferent_access
-    File.open('out-results-hash', 'w') { |f| f.write(results_hash)}
     
     unless results_hash and results_hash['grade']
       return {'error'=>"A server error occured! Unit test did not return a grade"}
