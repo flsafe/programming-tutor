@@ -17,7 +17,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     end
     
     solution_code = template.fill_in(code)
-    results   = unit_test.run_on(template, template.id, solution_code)
+    results   = unit_test.run_on(solution_code)
     if results['error']
       post_result(results['error'], nil) #add error message to the return result
     else

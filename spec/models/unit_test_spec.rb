@@ -37,14 +37,14 @@ describe UnitTest do
       solution_code = 'solution code'
       Compiler.stub(:compile_to)
       Compiler.should_receive(:compile_to).with('solution code', "#{APP_CONFIG['work_dir']}/tmp-1000-101")
-      unit_test.run_on(template, template.id, solution_code)
+      unit_test.run_on(solution_code)
     end
       
     it "sets the name of the executable the unit test will be running" do
       mock_str = mock(String)
       unit_test.stub_chain(:src_code).and_return(mock_str)
       mock_str.should_receive(:gsub).with(/<EXEC_NAME>/, exec_name)
-      unit_test.run_on(template)
+      unit_test.run_on('code')
     end
     
     it "writes the unit test code to a file" do
@@ -54,7 +54,7 @@ describe UnitTest do
     
     it "executes the unit test" do
       unit_test.should_receive(:execute_file).with(exec_name+'-unit-test')
-      unit_test.run_on(template)
+      unit_test.run_on('code')
     end
     
     context "the solution could not be compiled" do

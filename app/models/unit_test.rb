@@ -5,7 +5,7 @@ class UnitTest < ActiveRecord::Base
   
   validates_presence_of :src_language, :src_code
   
-  def run_on(template, template_id = nil, solution_code = nil)
+  def run_on(solution_code = nil)
     begin
       user_program_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
       unless Compiler.compile_to(solution_code, user_program_path)
