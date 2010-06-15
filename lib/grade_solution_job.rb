@@ -1,28 +1,29 @@
 class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   
   def perform
-    unless FileUtils.mkdir_p(APP_CONFIG['work_dir'])
-      post_result("A server error occured! We couldn't grade your solution!")
-      raise "Could not create the work directory"
-    end
+    begin
+      FileUtils.mkdir_p(APP_CONFIG['work_dir'])
     
-    template  = SolutionTemplate.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'c']
-    unless template
-      raise "Could not find the solution template"
-    end
+      template  = SolutionTemplate.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'c']
+      unless template
+        raise "Could not find the template solution template associated with this exercise!"
+      end
 
-    unit_test = UnitTest.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'rb']
-    unless unit_test
-      raise "Could not find the unit test to use"
-    end
+      unit_test = UnitTest.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'rb']
+      unless unit_test
+        raise "Could not find the unit test associated with this exercise!"
+      end
     
-    solution_code = template.fill_in(code)
-    results   = unit_test.run_on(solution_code)
-    if results['error']
-      post_result(results['error'], nil)
-    else
-      gs_id   = save_grade_sheet(results, code)
-      post_result(nil, gs_id)
+      solution_code = template.fill_in(code)
+      results   = unit_test.run_on(solution_code)
+      if results['error']
+        post_result(results['error'], nil)
+      else
+        gs_id   = save_grade_sheet(results, code)
+        post_result(nil, gs_id)
+      end
+    rescue Exception => e
+      post_result("Aw, Fiddle Sticks! A server error occurred. Sorry about that. Try again a little later!")
     end
   end
   
@@ -41,5 +42,4 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     ta.record_grade grade_sheet
     grade_sheet.id
   end
-
 end
