@@ -32,3 +32,5 @@ Implement the following convention for UnitTest.run_on
 														:linear_time=>[time1, time2, ...]
 														}
 							}
+							
+Should GradeSolutionResult and SyntaxCheckResult be consolidated somehow?
