@@ -15,7 +15,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       end
     
       solution_code = template.fill_in(code)
-      results   = unit_test.run_on(solution_code)
+      results       = unit_test.run_on(solution_code)
       if results[:error]
         post_result(results[:error], nil)
       else
@@ -23,7 +23,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
         post_result(nil, gs_id)
       end
     rescue Exception => e
-      post_result("Aw, Fiddle Sticks! A server error occurred. Sorry about that. Try again a little later!")
+      post_result("Aw, Fiddle Sticky Sticks! A server error occurred. Sorry about that. Try again a little later!")
     end
   end
   
