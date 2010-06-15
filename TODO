@@ -34,3 +34,5 @@ Implement the following convention for UnitTest.run_on
 							}
 							
 Should GradeSolutionResult and SyntaxCheckResult be consolidated somehow?
+
+The rescue's should log the exceptions
