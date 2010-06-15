@@ -11,7 +11,7 @@
 	</script>
 <% end %>
 
-<% form_tag :action=>"grade", :id=>@exercise do %>
+<% form_tag '', :id=>'editor' do %>
 	<%= text_area_tag :textarea_1, nil, :name=>"code", :rows=>18, :cols=>80 %>
 	<%= submit_to_remote "check_syntax",'Check Syntax', :url=>{:action=>'check_syntax', :id=>@exercise}, 
 				:before=>"$('textarea_1').setValue(editAreaLoader.getValue('textarea_1'))" %>

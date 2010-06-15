@@ -20,6 +20,13 @@ Feature: Do exercise
 		| "int main(){int i return 0;}"  | "syntax error"              | 
 		
 		
+	Scenario: The user sees the exercise prototype
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		And the exercise "RemoveChar" has the associated solution template and unit test
+		And I am viewing the tutor page for "RemoveChar"
+		Then the "textarea_1" field within "#editor" should contain "void remove_char\(char c, char str\[\]\)"
+
 	@javascript
 	@start_delayed_job
 	Scenario: The user submits a solution
