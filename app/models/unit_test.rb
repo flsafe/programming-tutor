@@ -53,9 +53,9 @@ class UnitTest < ActiveRecord::Base
   end
   
   def error_results?(results)
-    #These are exceptional cases that shouldn't happen.
-    #They usually happend when the unit test crashed
-    #or returned some nonsense.
+    #These are exceptional cases caused by
+    #the unit test crashing and returning
+    #nonsense.
     case results
       when !results               then true
       when results.blank?         then true 
