@@ -15,10 +15,12 @@ class TutorController < ApplicationController
     if @exercise
       if not job_running? :grade_solution_job
         enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
-        @message = "grading..."
+        @status = :job_enqueued
       else
-        @message = "already grading! wait"
+        @status = :duplicate_job
       end
+    else
+      @status = :exercise_dne
     end
     respond_to do |f|
       f.js

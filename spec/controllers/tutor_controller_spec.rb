@@ -61,7 +61,7 @@ describe TutorController do
     
     it "assigns a status message" do
       post :grade, :code=>code, :id=>stub_exercise.id
-      assigns[:message].should == "grading..."
+      assigns[:status].should == :job_enqueued
     end
     
     it "renders grading" do
@@ -75,6 +75,12 @@ describe TutorController do
         GradeSolutionJob.should_not_receive(:new).with(code, current_user.id, stub_exercise.id)
         post :grade, :code=>code, :id=>stub_exercise.id
       end
+      
+      it "assigns a duplicate job to the status" do
+        controller.stub(:job_running?).and_return(true)
+        post :grade, :code=>code, id=>stub_exercise.id
+        assigns[:status].should == :duplicate_job
+      end
     end
     
     context "the given exercise id does not exisit" do
@@ -82,6 +88,12 @@ describe TutorController do
         Exercise.stub(:find_by_id).and_return(nil)
         GradeSolutionJob.should_not_receive(:new).with(code, current_user.id, stub_exercise.id)
         post :grade, :code=>code, :id=>0
+      end
+      
+      it "assigns :no_exercise to the status" do
+        Exercise.stub(:find_by_id).and_return(nil)
+        post :grade, :code=>code, :id=>0
+        assigns[:status] = :exercise_dne
       end
     end
   end
