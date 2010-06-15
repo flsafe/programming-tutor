@@ -68,5 +68,13 @@ describe UnitTest do
         end
       end
     end
+    
+    context "an exception is raised while attempting to run the unit test" do
+      it "returns the error message :no_result_returned" do
+        unit_test.should_receive(:write_unit_test).and_raise("A Mock Exception")
+        result = unit_test.run_on('code')
+        result[:error].should == :no_result_returned
+      end
+    end
   end
 end
