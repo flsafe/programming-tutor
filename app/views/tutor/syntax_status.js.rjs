@@ -1,6 +1,10 @@
-page.replace_html :syntax, h(@message)
-if @message == "checking..."
+if @status == :job_in_progrress
+  page.replace_html :message, 'checking...'
   page << "keepPolling = true"
-else
+elsif @status == :job_done
+  page.replace_html :syntax, h(@result.message) if @result
+  page << "keepPolling = false"
+elsif @status == :job_error
+  page.replace_html :message, h(@result.error_message) if @result
   page << "keepPolling = false"
 end

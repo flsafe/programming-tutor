@@ -179,7 +179,7 @@ describe TutorController do
     
     it 'assigns a message describing the job is in progress' do
       post :check_syntax, :code=>code, :id=>stub_exercise
-      assigns[:message].should == "checking..."
+      assigns[:status].should == :job_enqueued
     end
     
     it 'stores the delayed job id in the session' do
@@ -201,13 +201,25 @@ describe TutorController do
         Delayed::Job.should_not_receive(:enqueue).with @syntax_job
         post :check_syntax
       end
+      
+      it "assigns :exercise_dne to the status" do
+        post :check_syntax
+        assigns[:status].should == :exercise_dne
+      end
     end
     
     context "when the user posts check syntax a few times really fast but they already have a syntax job running" do
-      it "doesn't create a new syntax job if the user still has a syntax job in the db" do
+      before(:each) do
         controller.stub(:job_running?).and_return(true)
+      end
+      it "doesn't create a new syntax job if the user still has a syntax job in the db" do
         Delayed::Job.should_not_receive(:enqueue)
         post :check_syntax, :code=>code, :id=>stub_exercise
+      end
+      
+      it "assigns :duplicate_job to the status" do
+        post :check_syntax
+        assigns[:status].should == :duplicate_job
       end
     end
   end
@@ -223,16 +235,44 @@ describe TutorController do
       get :syntax_status, :id=>stub_exercise.id
     end
     
-    it "assigns sytntax check message" do
+    it "assigns the SyntaxCheckResults" do
+      mock_result = mock_model(SyntaxCheckResult).as_null_object
+      SyntaxCheckResult.stub(:get_result).and_return(mock_result)
+      
+      post :syntax_status, :id=>stub_exercise.id
+      
+      assigns[:result].should == mock_result
+    end
+    
+    it "assigns sytntax check status" do
       syntax_check_result = stub_model(SyntaxCheckResult, :error_message=>'syntax error', :destroy=>true)
       SyntaxCheckResult.stub(:find).and_return(syntax_check_result)
       get :syntax_status, :id=>stub_exercise
-      assigns[:message].should == 'syntax error'
+      assigns[:status].should == :job_done
     end
     
     it "renders the syntax message template" do
       get :syntax_status, :id=>stub_exercise.id
       response.should render_template('tutor/syntax_status')
+    end
+    
+    context "when there are not associated syntax job results in the database" do
+      before(:each) do
+        SyntaxCheckResult.stub(:find).and_return(nil)
+      end
+      
+      it "assigns :job_in_progress to the status" do
+        post :syntax_status, :id=>stub_exercise
+        assigns[:status].should == :job_in_progress
+      end
+    end
+    
+    context "when the exercise does not exist" do
+      it "assigns :exercise_dne to the status" do
+        Exercise.stub(:find_by_id).and_return(nil)
+        post :syntax_status, :id => 0
+        assigns[:status].should == :exercise_dne
+      end
     end
   end
 end

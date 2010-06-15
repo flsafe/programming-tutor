@@ -1,9 +1,10 @@
-@message = case @status
-when :job_enqueued then "grading..."
-when :duplicate_job then "already grading! Wait a just a moment."
-when :exercise_dne then "an error occured!"
+message = case @status
+  when :job_enqueued  then "grading..."
+  when :duplicate_job then "already grading! Wait a just a moment."
+  when :exercise_dne  then "an error occured!"
 end
-page.replace_html :grade, @message
+
+page.replace_html :grade, message
 page << "keepPollingGrade = true"
 page.select("#polling_grade").each do |e|
   e.replace(periodically_call_remote(:url=>{:action=>'grade_status', :id=>@exercise.id}, :condition=>'keepPollingGrade == true')) 

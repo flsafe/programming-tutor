@@ -48,8 +48,12 @@ class TutorController < ApplicationController
     if @exercise
       if not job_running? :syntax_check_job
         enqueue_job :syntax_check_job, SyntaxCheckJob.new(params[:code], current_user.id.to_s, params[:id])
+        @status = :job_enqueued
+      else
+        @status = :duplicate_job
       end
-      @message = 'checking...'
+    else
+      @status = :exercise_dne
     end    
     respond_to do |f| 
       f.js
@@ -58,11 +62,15 @@ class TutorController < ApplicationController
   
   def syntax_status
     @exercise = Exercise.find_by_id params[:id]
-    result    = SyntaxCheckResult.get_result(current_user.id, @exercise.id)
-    if result
-      @message = result.message
+    if @exercise
+      @result = SyntaxCheckResult.get_result(current_user.id, @exercise.id)
+      if @result
+        @status  = :job_done
+      else
+        @status = :job_in_progress
+      end
     else
-      @message = "checking..."
+      @status = :exercise_dne
     end
     respond_to do |f|
       f.js

@@ -11,6 +11,7 @@ Feature: Do exercise
 		And I am viewing the tutor page for "Pointer intro"
 		When I fill in the text editor with <code>
 		And I press "Check Syntax"
+		Then I should see "checking..."
 		Then I should see <message> within "#syntax"
 		
 	Examples:
