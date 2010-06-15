@@ -17,13 +17,21 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       solution_code = template.fill_in(code)
       results       = unit_test.run_on(solution_code)
       if results[:error]
-        post_result(results[:error], nil)
+        post_result(humanize(results[:error]), nil)
       else
         gs_id   = save_grade_sheet(results, code)
         post_result(nil, gs_id)
       end
     rescue Exception => e
-      post_result("Aww Crap! A server error occurred. Sorry about that, I'm working on it. Try again a little later!")
+      post_result("My codes have failed! An error occured while preparing the grade your solution. Sorry about that, I'm working on it. Try again a little later!")
+    end
+  end
+  
+  def humanize(error_message)
+    case error_message
+      when :did_not_compile     then "Your solution did not compile! Check your syntax"
+      when :no_result_returned  then "My codes have failed! An error occured while grading your solution. I'm working on it. Try again later!"
+      else error_message.to_s
     end
   end
   

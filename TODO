@@ -10,7 +10,11 @@
 #	Instead have the unit-test class be responsible for compiling the solution template and checking for syntax errors
 #The unit_test#run_on method doesn't need the entire template. Instead it just needs the filled in template code
 
+
+
 Add the exercise prototypes and handle the unit tests and syntax checks
+
+Add a limit to the amount of times the client will poll for results
 
 The rescue's should log the exceptions
 

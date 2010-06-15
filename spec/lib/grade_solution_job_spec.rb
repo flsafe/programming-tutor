@@ -94,5 +94,27 @@ describe GradeSolutionJob do
       ta.should_receive(:record_grade).with(grade_sheet)
       job.perform
     end
+    
+    context "when the unit test results include a :did_not_compile error message" do
+      it "it posts a humanized error message" do
+        #these are the two errors the unit test can return
+        errors = [{:error=>:did_not_compile}, {:error=>:no_result_returned}]
+          errors.each do |r|
+          unit_test.stub(:run_on).and_return(r)
+          job.stub(:post_result)
+          job.should_receive(:humanize).with(r[:error]).twice #Twice because I'm calling it here once, and I excpect it ti be called one more time in the subject code
+          job.should_receive(:post_result).with(job.humanize(r[:error]), nil)
+          job.perform
+        end
+      end
+    end
+    
+    context "when an exception is thrown before the results are returned" do
+      it "posts the error to the database" do
+        SolutionTemplate.stub(:find).and_raise("A mock exception")
+        job.should_receive(:post_result).with("My codes have failed! An error occured while preparing the grade your solution. Sorry about that, I'm working on it. Try again a little later!")
+        job.perform
+      end
+    end
   end
 end
