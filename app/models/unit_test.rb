@@ -6,23 +6,26 @@ class UnitTest < ActiveRecord::Base
   validates_presence_of :src_language, :src_code
   
   def run_on(template, template_id = nil, solution_code = nil)
-    user_program_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
+    begin
+      user_program_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
+      unless Compiler.compile_to(solution_code, user_program_path)
+        return {:error=>"Could not compile your solution! Check your syntax"}
+      end
     
-    unless Compiler.compile_to(solution_code, user_program_path)
-      return {:error=>"Could not compile your solution! Check your syntax"}
-    end
-    
-    unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, user_program_path)
-    unit_test_path     = user_program_path + '-unit-test'
-    write_unit_test(unit_test_src_code, unit_test_path)
+      unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, user_program_path)
+      unit_test_path     = user_program_path + '-unit-test'
+      write_unit_test(unit_test_src_code, unit_test_path)
 
-    results      = execute_file(unit_test_path)
-    results_hash = YAML.load(results).with_indifferent_access
-    if error_results?(results_hash)
-      raise "Then unit test did not return any valid results!"
-    end
+      results      = execute_file(unit_test_path)
+      results_hash = YAML.load(results).with_indifferent_access
+      if error_results?(results_hash)
+        raise "Then unit test did not return any valid results!"
+      end
    
-    results_hash
+      results_hash
+    rescue
+      return {:error=>"A server error occured and the unit test could not be run"}
+    end
   end
   
   def unit_test_file=(unit_test_file)
