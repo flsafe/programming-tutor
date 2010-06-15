@@ -23,7 +23,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
         post_result(nil, gs_id)
       end
     rescue Exception => e
-      post_result("Aw, Fiddle Sticky Sticks! A server error occurred. Sorry about that. Try again a little later!")
+      post_result("Aww Crap! A server error occurred. Sorry about that, I'm working on it. Try again a little later!")
     end
   end
   
@@ -37,7 +37,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   
   def save_grade_sheet(results, code)  
     File.open('out-save-grade-sheet-results', 'w') {|f| f.write(results)}
-    grade_sheet = GradeSheet.new :grade=>results['grade'], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code
+    grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code
     ta          = TeachersAid.new    
     ta.record_grade grade_sheet
     grade_sheet.id
