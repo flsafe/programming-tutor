@@ -78,7 +78,7 @@ describe TutorController do
       
       it "assigns a duplicate job to the status" do
         controller.stub(:job_running?).and_return(true)
-        post :grade, :code=>code, id=>stub_exercise.id
+        post :grade, :code=>code, :id=>stub_exercise.id
         assigns[:status].should == :duplicate_job
       end
     end
@@ -121,6 +121,11 @@ describe TutorController do
         assigns[:grade_sheet].should == grade_sheet
       end
       
+      it "assigns :grading_done" do
+        post :grade_status, :id=>stub_exercise
+        assigns[:status].should == :job_done
+      end
+      
       it "renders the grade status rjs" do
         post :grade_status, :id=>stub_exercise.id
         response.should render_template('tutor/grade_status')
@@ -132,9 +137,9 @@ describe TutorController do
         GradeSolutionResult.stub(:get_result).and_return(nil)
       end
       
-      it "assigns a waiting message" do
+      it "assigns :job_in_progress to status" do
         post :grade_status, :id=>stub_exercise.id
-        assigns[:message].should == "grading..."
+        assigns[:status].should == :job_in_progress
       end
     end
     
@@ -143,9 +148,9 @@ describe TutorController do
         GradeSolutionResult.stub(:get_result).and_return(grade_solution_result(:error_message=>"error", :grade_sheet_id=>nil))
       end
       
-      it "assigns a grade solution error message" do
+      it "assigns :job_error to status" do
         post :grade_status, :id=>stub_exercise.id
-        assigns[:message].should_not == nil
+        assigns[:status].should == :job_error
       end
     end
   end

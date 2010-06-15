@@ -29,13 +29,14 @@ class TutorController < ApplicationController
   
   def grade_status
     @exercise = Exercise.find_by_id params[:id]
-    result    = GradeSolutionResult.get_result(current_user.id, @exercise.id)
-    if not result
-      @message = 'grading...'
-    elsif not result.error_message.blank?
-      @message = result.error_message
+    @result   = GradeSolutionResult.get_result(current_user.id, @exercise.id)
+    if not @result
+      @status = :job_in_progress
+    elsif not @result.error_message.blank?
+      @status  = :job_error
     else
-      @grade_sheet = GradeSheet.find_by_id(result.grade_sheet_id)
+      @grade_sheet = GradeSheet.find_by_id(@result.grade_sheet_id)
+      @status = :job_done
     end
     respond_to do |f|
       f.js
