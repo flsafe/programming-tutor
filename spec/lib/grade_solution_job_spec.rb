@@ -70,14 +70,14 @@ describe GradeSolutionJob do
       job.perform
     end
     
-    it "Runs the unit test on the solution template" do
+    it "runs the unit test on the solution template" do
       solution_code = "solution code"
       template.stub(:fill_in).and_return(solution_code)
       unit_test.should_receive(:run_on).with(solution_code).and_return({})
       job.perform
     end
     
-    it "Saves a grade solution result object to the database" do
+    it "saves a grade solution result object to the database" do
       GradeSheet.stub(:new).and_return(grade_sheet)
       GradeSolutionResult.stub(:new).and_return(result)
       
