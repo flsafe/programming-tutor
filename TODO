@@ -20,3 +20,15 @@ The unit_test#run_on method doesn't need the entire template. Instead it just ne
 
 Don't run raw commands using `` instead move into some object
  so that I can change the way this stuff runs on heroku
+
+Get rid of the string literals in UnitTestSpec
+
+Implement the following convention for UnitTest.run_on
+	- results = {:error=>[a standard list of errors], 
+							 ? :error_message=>"A description of the error", ?
+							 :grade=>[the grade], 
+							 :tests=>{:unit_test_name=>:points}
+							 :run_times=>{:linear_size=>[size1, size2, ...],
+														:linear_time=>[time1, time2, ...]
+														}
+							}
