@@ -1,20 +1,20 @@
 #Rewrite the user specs to use factory stubs
 #if the solution does not compile, then should that not be part of the unit test object, not the job object
 #The grade sheet specs are all fucked, rewrite using factory specs
+#add error message to the return result (*done but instead I added a different method that returns the error)
+#Write grade solution specs 
+#Get rid of the SyntaxChecker, use the Compile class instead
+#In unit_test and Compiler, consolidate the file manipulation stuff, to an external class
+#	that is responsible for generating unique file names.
+#The template class should not be responsibile for compiling it self or checking it self forsyntax errors. 
+#	Instead have the unit-test class be responsible for compiling the solution template and checking for syntax errors
+#The unit_test#run_on method doesn't need the entire template. Instead it just needs the filled in template code
 
-Write grade solution specs 
+Add the exercise prototypes and handle the unit tests and syntax checks
 
-Get rid of the SyntaxChecker, use the Compile class instead
+The rescue's should log the exceptions
 
-In unit_test and Compiler, consolidate the file manipulation stuff, to an external class
-	that is responsible for generating unique file names.
-	
-The template class should not be responsibile for compiling it self or checking it self forsyntax errors. 
-	Instead have the unit-test class be responsible for compiling the solution template and checking for syntax errors
-	
-The unit_test#run_on method doesn't need the entire template. Instead it just needs the filled in template code
 
-#add error message to the return result
 
 Don't run raw commands using `` instead move into some object
  so that I can change the way this stuff runs on heroku
@@ -33,4 +33,5 @@ Implement the following convention for UnitTest.run_on
 							
 Should GradeSolutionResult and SyntaxCheckResult be consolidated somehow?
 
-The rescue's should log the exceptions
+
+
