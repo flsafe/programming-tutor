@@ -1,10 +1,8 @@
 #Rewrite the user specs to use factory stubs
+#if the solution does not compile, then should that not be part of the unit test object, not the job object
+#The grade sheet specs are all fucked, rewrite using factory specs
 
 Write grade solution specs 
-
-if the solution does not compile, then should that not be part of the unit test object, not the job object
-
-#The grade sheet specs are all fucked, rewrite using factory specs
 
 Get rid of the SyntaxChecker, use the Compile class instead
 
