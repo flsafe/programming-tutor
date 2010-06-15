@@ -9,7 +9,7 @@ class UnitTest < ActiveRecord::Base
     begin
       user_program_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
       unless Compiler.compile_to(solution_code, user_program_path)
-        return {:error=>"Could not compile your solution! Check your syntax"}
+        return {:error=>:did_not_compile}
       end
     
       unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, user_program_path)
@@ -19,12 +19,12 @@ class UnitTest < ActiveRecord::Base
       results      = execute_file(unit_test_path)
       results_hash = YAML.load(results).with_indifferent_access
       if error_results?(results_hash)
-        raise "Then unit test did not return any valid results!"
+        raise "The unit test did not return any valid results!"
       end
    
       results_hash
     rescue
-      return {:error=>"A server error occured and the unit test could not be run"}
+      return {:error=>:no_result_returned}
     end
   end
   
