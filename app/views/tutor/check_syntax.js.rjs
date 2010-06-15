@@ -5,9 +5,9 @@ message = case @status
 end
 
 page.replace_html :message, message
-page << "keepPolling = true"
-page.select("#polling").each do |e|
-  e.replace(periodically_call_remote(:url=>{:action=>'syntax_status', :id=>@exercise.id}, :condition=>'keepPolling == true')) 
+page << "keepPollingSyntax = true"
+page.select("#syntax_polling").each do |e|
+  e.replace(periodically_call_remote(:url=>{:action=>'syntax_status', :id=>@exercise.id}, :condition=>'keepPollingSyntax == true')) 
 end
 
 
