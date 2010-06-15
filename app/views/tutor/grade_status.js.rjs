@@ -2,7 +2,7 @@ if @status == :job_in_progrress
   page.replace_html :message, 'grading...'
   page << "keepPollingGrade = true"
 elsif @status == :job_done
-  page.replace_html :grade, h(@grade_sheet.unit_test_results) if @grade_sheet
+  page.replace_html :message, h(@grade_sheet.unit_test_results) if @grade_sheet
   page << "keepPollingGrade = false"
 elsif @status == :job_error
   page.replace_html :message, @result.error_message if @result
