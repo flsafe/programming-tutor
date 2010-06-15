@@ -13,6 +13,7 @@ class Compiler
       f.write(code)
       f.flush
       out = `gcc -x c -fsyntax-only #{code_file_path} 2>&1`
+      out.gsub(/#{f.path}:/, '')
     rescue
       raise "Could not write tmp scratch file to do the syntax check!"
     ensure
