@@ -30,9 +30,11 @@ int main(int argc, char* argv[]){
   return 0;
 }
 
+/*start_prototype*/
 void remove_char(char c, char str[]){
- <SRC_CODE>
+ /*Your code here*/
 }
+/*end_prototype*/
 
 void do_remove_char(char remove_char, char str[]){
   int write_index = 0;

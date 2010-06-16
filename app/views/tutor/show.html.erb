@@ -4,8 +4,11 @@
 
 <div id="hints"></div>
 <%= render :partial=>'hint', :collection=>@exercise.hints %>
-
-<%= render :partial => 'text_editor' %>
+<%
+ templates = @exercise.solution_templates.written_in('c')
+ prototype = templates.first.prototype if templates.first
+%>
+<%= render :partial => 'text_editor', :locals=>{:editor_content=>prototype} %>
 
 <div id="message"></div>
 

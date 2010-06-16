@@ -3,10 +3,17 @@ class SolutionTemplate < ActiveRecord::Base
   
   validates_presence_of :src_language, :src_code
   
+  named_scope :written_in, lambda {|lang| {:limit=>1, :conditions=>{:src_language=>lang}}}
+  
   attr_reader :filled_in_src_code
   
   def fill_in(solution_code)
-    @filled_in_src_code = src_code.sub(/<SRC_CODE>/, solution_code)
+    @filled_in_src_code = src_code.sub(/\/\*start_prototype\*\/(.*)\/\*end_prototype\*\//, solution_code)
+  end
+  
+  def prototype
+    src_code =~ /\/\*start_prototype\*\/(.*)\/\*end_prototype\*\//m
+    $1
   end
   
    def solution_template_file=(template_file)

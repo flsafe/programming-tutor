@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe  'tutor/show.html.erb' do
   before(:each) do
-    assigns[:exercise] = stub_model(Exercise)
+    @exercise = assigns[:exercise] = stub_model(Exercise)
+    @exercise.stub_chain(:solution_templates, :written_in, :first, :prototype).and_return("")
   end
   
   it "displays a text editor" do
