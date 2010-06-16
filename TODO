@@ -10,9 +10,13 @@
 #	Instead have the unit-test class be responsible for compiling the solution template and checking for syntax errors
 #The unit_test#run_on method doesn't need the entire template. Instead it just needs the filled in template code
 
+#Add the exercise prototypes and handle the unit tests and syntax checks
 
+Fix the unit test grade sheet it is not returning the correct results
 
-Add the exercise prototypes and handle the unit tests and syntax checks
+Add a basic 'conectivity' scenario for grading, and then one to test every exercise
+
+Write a unit test frame work so that there is no duplication between unit tests
 
 Add a limit to the amount of times the client will poll for results
 
