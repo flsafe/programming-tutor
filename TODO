@@ -12,6 +12,8 @@
 
 #Add the exercise prototypes and handle the unit tests and syntax checks
 
+Unit tests and executables should communicate through stdin
+
 Fix the unit test grade sheet it is not returning the correct results
 
 Add a basic 'conectivity' scenario for grading, and then one to test every exercise
