@@ -1,38 +1,26 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define MAX_STR 255
+
 void remove_char(char, char[]);
 void do_remove_char(char, char[]);
 
-int main(int argc, char* argv[]){
-  char *str;
-  char remove;
-  int str_size;
+int main(){
+  char str[MAX_STR + 1];
+  char rm_char;
   
-  int write, read;
-	
-	if(argc < 2){
-		printf("Not enough arguments\n");
-		return 1;
-	}
-
-  remove   = *argv[1];
-  str_size = argc - 2;
-
-  str      = malloc(sizeof(char) * str_size + 1);
-	for(write = 0, read = 2 ; write < str_size; write++, read++)
-    str[write] = *argv[read];
-	str[write] = 0;
-
-  remove_char(remove, str);
+  scanf("%c %255s",&rm_char, str);
+  remove_char(rm_char, str);
   printf("%s", str);
-  
   return 0;
 }
 
 /*start_prototype*/
 void remove_char(char c, char str[]){
- /*Your code here*/
+  
+  /*Your code goes here*/
+  
 }
 /*end_prototype*/
 

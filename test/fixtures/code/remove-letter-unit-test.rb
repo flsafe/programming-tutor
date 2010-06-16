@@ -2,10 +2,9 @@ require 'yaml'
 
 class RemoveLetterUnitTest
   
-  attr_accessor :results, :src_code
+  attr_accessor :results
   
-  def initialize(src_code)
-    @src_code = src_code
+  def initialize()
     @results = {}
   end
   
@@ -15,67 +14,69 @@ class RemoveLetterUnitTest
     test_last_letter_removed
     test_no_letters_removed
     test_empty_string
-    #test_no_extra_buffer_allocated
     add('grade', 100)
   end
   
   def test_all_letters_removed
-    title = 'A string where every char is an instance of the char to be removed remove("c", "cccc") => ""'
-    run_with_and_expect('c c c c', '', title, 20)
+    title = "Remove all leters: remove('c', 'ccc')"
+    run_with_and_expect('c ccc', '', title, 20)
   end
   
   def test_first_letter_removed
-    title = "A string where the first letter is the letter to be removed remove('c', 'caaaa')"
-    run_with_and_expect('c a a a', 'aaa', title, 20)
+    title = "Remove first letter: remove('c', 'caaa')"
+    run_with_and_expect('c caaa', 'aaa', title, 20)
   end
   
   def test_last_letter_removed
-    title = "A string where the last letter is the letter to be removed remove('c', 'aaaac')"
-    run_with_and_expect('c a a a c', 'aaa', title, 20)
+    title = "Remove last letter: remove('c', 'aaac')"
+    run_with_and_expect('c aaac', 'aaa', title, 20)
   end
   
   def test_no_letters_removed
-    title = "A string where no letters are removed remove('c', 'aaaa')"
-    run_with_and_expect('c a a a ', 'aaa', title, 20)
+    title = "Remove no letters: remove('c', 'aaa')"
+    run_with_and_expect('c aaa', 'aaa', title, 20)
   end
   
   def test_empty_string
-    title = "An empty string remove('c', '')=>''"
-    run_with_and_expect('c ', '', title, 20)
-  end
-  
-  def test_no_extra_buffer_allocated
-    if src_code =~ /malloc/ || src_code =~ /realloc/
-      add("Allocated a new buffer", 0)
-    else
-      add("Did not allocate a new buffer", 20)
-    end
+    title = "Remove from empty string: remove('c', '')"
+    run_with_and_expect('c', '', title, 20)
   end
   
   protected
   
-  def run_with(params)
-    cmd = "./<EXEC_NAME> #{params}"
-    `#{cmd}`
+  def run_with(input)
+    p = IO.popen('-', 'w+')
+    if p 
+      p.write(input)
+      p.close_write
+  
+      Thread.new(p.pid, 2) do |pid, wait_for|
+        sleep(wait_for)
+        Process.kill('KILL', pid)
+      end
+  
+      result = p.read()
+      p.close
+      result
+    else
+      exec("./<EXEC_NAME>")
+    end   
   end
   
-  def run_with_and_expect(params, expected, title, points)
-    cmd = "./<EXEC_NAME> #{params}"
-    out = `#{cmd}`
-    if out == expected
-      add(title, points)
-    else
-      add(title, 0)
-    end
+  def run_with_and_expect(input, expected, title, points)
+   result = run_with(input)
+   if result.lstrip.chomp == expected.lstrip.chomp
+     add(title, points)
+   else
+     add(title, 0)
+   end
   end
   
   def add(title, points)
     results[title] = points
   end
 end
-
-$SRC_CODE = ARGV[0]
   
-test = RemoveLetterUnitTest.new($SRC_CODE)
+test = RemoveLetterUnitTest.new
 test.start
 puts YAML.dump(test.results)
