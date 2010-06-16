@@ -15,9 +15,6 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       end
     
       solution_code = template.fill_in(code)
-      
-      File.open('out-solution-code', 'w') { |f| f.write(solution_code)}
-      
       results       = unit_test.run_on(solution_code)
       if results[:error]
         post_result(humanize(results[:error]), nil)
@@ -47,7 +44,6 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   end
   
   def save_grade_sheet(results, code)  
-    File.open('out-save-grade-sheet-results', 'w') {|f| f.write(results)}
     grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code
     ta          = TeachersAid.new    
     ta.record_grade grade_sheet
