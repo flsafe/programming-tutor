@@ -3,7 +3,16 @@ require 'spec_helper'
 describe SolutionTemplate do
   
   def template
-    @template ||= stub_model(SolutionTemplate, :src_code=>"/*start_prototype*/void test_function(){}/*end_prototype*/")
+code =<<END
+  /*start_prototype*/
+  void remove_char(char c, char str[]){
+  
+    /*Your code goes here*/
+  
+  }
+  /*end_prototype*/
+END
+    @template ||= stub_model(SolutionTemplate, :src_code=>code)
   end
   
   def  file
@@ -14,7 +23,7 @@ describe SolutionTemplate do
     
     it "fills in the source code template with the provided code" do
       template.fill_in('void test_function(){return 0;}');
-      template.filled_in_src_code.should == "void test_function(){return 0;}"
+      template.filled_in_src_code.lstrip.chomp.should == "void test_function(){return 0;}"
     end
   end
   
