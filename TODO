@@ -9,12 +9,9 @@
 #The template class should not be responsibile for compiling it self or checking it self forsyntax errors. 
 #	Instead have the unit-test class be responsible for compiling the solution template and checking for syntax errors
 #The unit_test#run_on method doesn't need the entire template. Instead it just needs the filled in template code
-
 #Add the exercise prototypes and handle the unit tests and syntax checks
-
-Unit tests and executables should communicate through stdin
-
-Fix the unit test grade sheet it is not returning the correct results
+#Unit tests and executables should communicate through stdin and pipes
+#Fix the unit test grade sheet it is not returning the correct results
 
 Add a basic 'conectivity' scenario for grading, and then one to test every exercise
 
