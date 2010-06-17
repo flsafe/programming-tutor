@@ -21,6 +21,7 @@ Add a limit to the amount of times the client will poll for results
 
 The rescue's should log the exceptions
 
+Make compiler use pipes instead of files to use the compiler
 
 
 Don't run raw commands using `` instead move into some object
