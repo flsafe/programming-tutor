@@ -17,6 +17,8 @@ Add a basic 'conectivity' scenario for grading, and then one to test every exerc
 
 Finish the first exercise. Create the timing test, have it return a real grade, ...
 
+Write another exercise, within the same set
+
 Write a unit test frame work so that there is no duplication between unit tests
 
 Add a limit to the amount of times the client will poll for results
