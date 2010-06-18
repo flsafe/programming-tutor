@@ -19,7 +19,7 @@ Feature: Do exercise
 		| "int main(){int i; return 0;}" | "No syntax errors detected" |
 		| "int main(){int i return 0;}"  | "syntax error"              | 
 		
-	Scenario: The user sees the exercise prototype
+	Scenario: The sees the prototype for the exercise they need to complete
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
