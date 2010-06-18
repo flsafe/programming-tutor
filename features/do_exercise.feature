@@ -19,11 +19,10 @@ Feature: Do exercise
 		| "int main(){int i; return 0;}" | "No syntax errors detected" |
 		| "int main(){int i return 0;}"  | "syntax error"              | 
 		
-		
 	Scenario: The user sees the exercise prototype
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
-		And the exercise "RemoveChar" has the associated solution template and unit test
+		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And I am viewing the tutor page for "RemoveChar"
 		Then the "textarea_1" field within "#editor" should contain "void remove_char\(char c, char str\[\]\)"
 
@@ -32,7 +31,7 @@ Feature: Do exercise
 	Scenario: The user submits a solution
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
-		And the exercise "RemoveChar" has the associated solution template and unit test
+		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And I am viewing the tutor page for "RemoveChar"
 		When I fill in the text editor with "void remove_char(char c, char str[]){ int write_index = 0; int read_index  = 0; char curr_char; do{ curr_char = str[read_index]; if(curr_char != c){ str[write_index] = str[read_index]; write_index++;} read_index++; }while(curr_char);}"
 		And I press "Submit"
