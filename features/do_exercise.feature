@@ -3,6 +3,13 @@ Feature: Do exercise
 	As a user
 	I want to write the code to my solution
 		
+	Scenario: The user sees the prototype for the exercise they need to complete
+	Given I am logged in as the user "frank"
+	And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+	And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
+	And I am viewing the tutor page for "RemoveChar"
+	Then the "textarea_1" field within "#editor" should contain "void remove_char\(char c, char str\[\]\)"
+			
 	@javascript
 	@start_delayed_job
 	Scenario Outline: The user performs a syntax check
@@ -19,16 +26,9 @@ Feature: Do exercise
 		| "int main(){int i; return 0;}" | "No syntax errors detected" |
 		| "int main(){int i return 0;}"  | "syntax error"              | 
 		
-	Scenario: The sees the prototype for the exercise they need to complete
-		Given I am logged in as the user "frank"
-		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
-		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
-		And I am viewing the tutor page for "RemoveChar"
-		Then the "textarea_1" field within "#editor" should contain "void remove_char\(char c, char str\[\]\)"
-
 	@javascript
 	@start_delayed_job
-	Scenario: The user submits a solution
+	Scenario: The user submits a solution to an exercise and it gets graded
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
