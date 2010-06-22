@@ -6,7 +6,7 @@ class Exercise < ActiveRecord::Base
   has_many :hints  
   has_many :solution_templates
   has_many :unit_tests
-  has_many :completed_users, :through=>:grade_sheets, :source=>:user, :select=>'distinct users.*'
+  has_many :completed_users, :through=>:grade_sheets, :source=>:user, :uniq=>true
   has_many :grade_sheets, :after_add=>:update_stats
 
   belongs_to :exercise_set  
