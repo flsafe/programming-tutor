@@ -25,16 +25,36 @@ describe Exercise do
       end
     end
     
-    it "does not recommend exercises that have been completed" do
+    it "does not recommend exercises that have been completed by the current user" do
         exercises = Exercise.find :all
         ta        = TeachersAid.new
-        exercises.each do |e|
+        
+        exercises[0,1].each do |e|
           gs = Factory.build(:grade_sheet, :user=>@new_user, :grade=>100, :exercise=>e)
           ta.record_grade(gs)
         end
+        
+        exercises[2,3].each do |e|
+          gs = Factory.build(:grade_sheet, :user=>mock_model(User), :grade=>100, :exercise=>e)
+          ta.record_grade(gs)
+        end
       
-        r = Exercise.recommend(@new_user.id, 1)
-        r.should == []
+        r = Exercise.recommend(@new_user.id, 2)
+        r.include?(exercises[2])
+        r.include?(exercises[3])
+    end
+    
+    it "does not recommend exercises if they have all been completed by the current user" do
+      exercises = Exercise.find :all
+      ta        = TeachersAid.new
+      
+      exercises.each do |e|
+        gs = Factory.build(:grade_sheet, :user=>@new_user, :grade=>100, :exercise=>e)
+        ta.record_grade(gs)
+      end
+      
+      r = Exercise.recommend(@new_user.id, 1)
+      r.should == []
     end
 
     context "when (n) exercises are requested and (n) > ExerciseSet.count" do 

@@ -19,11 +19,12 @@ class Exercise < ActiveRecord::Base
   validates_uniqueness_of :title
     
   def self.recommend(user_id, how_many)
-    exercises = Exercise.find :all
-    how_many  = clamp(how_many, 0, exercises.size)
+    ex_no_grades = Exercise.find(:all).find_all {|e| e.grade_sheets.empty?}
+    exercises    = Exercise.find(:all, :conditions=>['grade_sheets.user_id <> ?', user_id], :joins=>:grade_sheets)
+    exercises   += ex_no_grades
 
-    indices  = random_indices(how_many, exercises.size)
-    
+    how_many     = clamp(how_many, 0, exercises.size)
+    indices      = random_indices(how_many, exercises.size)
     indices.collect {|i| exercises[i]}
   end
   
