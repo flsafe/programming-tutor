@@ -24,9 +24,7 @@ class Exercise < ActiveRecord::Base
 
     indices  = random_indices(how_many, exercises.size)
     
-    result = []
-    indices.each {|i| result << exercises[i]}
-    result
+    indices.collect {|i| exercises[i]}
   end
   
   def new_solution_template_attributes=(attributes)

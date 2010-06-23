@@ -26,7 +26,6 @@ describe Exercise do
     end
     
     it "does not recommend exercises that have been completed" do
-      pending("All exercises belong to exercise sets") do
         exercises = Exercise.find :all
         ta        = TeachersAid.new
         exercises.each do |e|
@@ -36,7 +35,6 @@ describe Exercise do
       
         r = Exercise.recommend(@new_user.id, 1)
         r.should == []
-      end
     end
 
     context "when (n) exercises are requested and (n) > ExerciseSet.count" do 
