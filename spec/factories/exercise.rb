@@ -9,5 +9,6 @@ Factory.define :exercise do |e|
   e.tutorial 'tutorial text'
   e.minutes '60'
   e.unit_tests {|e| [e.association(:unit_test)]}
+  e.exercise_set {|e| e.association(:exercise_set)}
   #todo: tags need to be included?
 end

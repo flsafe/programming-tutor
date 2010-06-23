@@ -20,8 +20,8 @@ class GradeSheet < ActiveRecord::Base
     return [] unless grade_sheets
     filter_retakes(grade_sheets)
   end
-  
-  private
+
+  protected
   
   def filter_retakes(grade_sheets)
     gs_no_retakes = get_oldest_grade_sheets(grade_sheets)

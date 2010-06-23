@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Exercise do
   before(:each) do
-    @exercise ||= stub_model(Exercise)
+    @exercise ||= Factory.build(:exercise)
     @src_code     = 'source_code'
     @src_language = 'ruby'
   end
@@ -22,6 +22,20 @@ describe Exercise do
         exercises = Exercise.recommend(@new_user.id, n)
         exercises.size.should == n
         should_not_have_duplicate(exercises)
+      end
+    end
+    
+    it "does not recommend exercises that have been completed" do
+      pending("All exercises belong to exercise sets") do
+        exercises = Exercise.find :all
+        ta        = TeachersAid.new
+        exercises.each do |e|
+          gs = Factory.build(:grade_sheet, :user=>@new_user, :grade=>100, :exercise=>e)
+          ta.record_grade(gs)
+        end
+      
+        r = Exercise.recommend(@new_user.id, 1)
+        r.should == []
       end
     end
 

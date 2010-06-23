@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe GradeSheet do
   before(:each) do
-    @user = Factory.create :user
+    @user         = Factory.create :user
     @exercise_set = Factory.create :complete_exercise_set
-    @ex1, @ex2 = @exercise_set.exercises[0], @exercise_set.exercises[1]
-    @ta = TeachersAid.new
+    @exercise_set.exercises.each {|e| e.update_attributes :exercise_set=>@exercise_set}
+    @ex1, @ex2    = @exercise_set.exercises[0], @exercise_set.exercises[1]
+    @ta           = TeachersAid.new
   end
   
   def code
@@ -45,7 +46,8 @@ describe GradeSheet do
     end
     
     it "returns false if the @user has not finished the exercise set" do
-      gs = @ex1.grade_sheets.create!(Factory.build(:grade_sheet, :grade=>90.0, :user=>@user, :exercise=>@ex1).attributes)
+      gs = Factory.build(:grade_sheet, :grade=>90.0, :user=>@user, :exercise=>@ex1)
+      @ta.record_grade gs
       gs.complete_set?.should == false
       
       jim = Factory.create :user

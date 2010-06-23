@@ -13,6 +13,13 @@
 #Unit tests and executables should communicate through stdin and pipes
 #Fix the unit test grade sheet it is not returning the correct results
 
+
+Make sure the recommendation engine does not return completed exercies
+	-Exercieses are not required to belong to an exercise set. This needs to be
+	 evaluated. It causes a nil reference exception in exercise.update_stats. It
+	 tries to save the exercise set info, but the info could be nil. I'm going
+	 to have it check for nil first.
+
 Add a basic 'conectivity' scenario for grading, and then one to test every exercise
 
 Finish the first exercise. Create the timing test, have it return a real grade, ...

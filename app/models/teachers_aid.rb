@@ -5,6 +5,8 @@ class TeachersAid
     @grade_sheet  = grade_sheet
     @exercise_set = grade_sheet.exercise.exercise_set
     @exercise     = grade_sheet.exercise
+    
+    raise "Can't record grade without enough info! #{grade_sheet.errors.full_messages}" if grade_sheet.invalid?
 
     add_grade_sheet_to_exercise
     add_set_grade_sheet_to_exercise_set if @grade_sheet.complete_set?
