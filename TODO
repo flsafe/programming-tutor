@@ -12,13 +12,9 @@
 #Add the exercise prototypes and handle the unit tests and syntax checks
 #Unit tests and executables should communicate through stdin and pipes
 #Fix the unit test grade sheet it is not returning the correct results
+#Make sure the recommendation engine does not return completed exercies
 
-
-Make sure the recommendation engine does not return completed exercies
-	-Exercieses are not required to belong to an exercise set. This needs to be
-	 evaluated. It causes a nil reference exception in exercise.update_stats. It
-	 tries to save the exercise set info, but the info could be nil. I'm going
-	 to have it check for nil first.
+Add grade sheet display and page flow (view tutorial, view class grade_sheets, go home)
 
 Add a basic 'conectivity' scenario for grading, and then one to test every exercise
 
