@@ -16,6 +16,10 @@
 
 Add grade sheet display and page flow (view tutorial, view class grade_sheets, go home)
 
+Remove, 'status' from the tutor controller and replace with 'message' ?
+
+Keep the tutor syntax check and grading DRY ?
+
 Add a basic 'conectivity' scenario for grading, and then one to test every exercise
 
 Finish the first exercise. Create the timing test, have it return a real grade, ...
