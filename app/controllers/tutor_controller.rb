@@ -27,7 +27,7 @@ class TutorController < ApplicationController
       @status = :exercise_dne
     end
     respond_to do |f|
-      f.js
+      f.html
     end
   end
   
