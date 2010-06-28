@@ -24,7 +24,15 @@
 					<tr>
 						<th>Final Grade: <%=h results[:grade] %></th>
 					</tr>
-			</table>
+			</table><br/>
+			
+			<span id="recomendation">
+				<% if results[:grade] > @exercise.average_grade %>
+					<%= "Nice! You scored higher than the average!" %>
+				<% else %>
+					<%= "Shucks! You scored lower than the average grade! Check out the tutorial for some neat hints!" %>
+				<% end %>
+			</span>
 			
 	<% else   %>
 		Oops! An unexpected error occurred! Try again a little later.
