@@ -2,5 +2,5 @@
 
 <%= periodically_call_remote(:update=>:message,
 														 :url=>{:action=>'grade_status', :id=>@exercise.id}, 
-														 :condition=>"$('message').innerHTML == 'grading...'") %>
+														 :condition=>"/grading/.test($('message').innerHTML)") %>
 
