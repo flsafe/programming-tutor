@@ -1,27 +1,31 @@
-<%if @status == :job_in_progrress%>
-	grading...
-<%elsif @status == :job_error %>
-	Oops! An error occured! Try again a bit later
-<% elsif @status == :job_done %>
-	<table id="grade_sheet">
-		<tr>
-			<th>Unit Test</th>
-			<th>Expected Output</th>
-			<th>Got</th>
-			<th>Points</th>
-		</tr>
-		<% results = YAML.load(@grade_sheet.unit_test_results) %>
-		<% tests   = results[:tests] %>
-			<% tests.each_pair do |test_title, test_results| %>
+<%if @status == :job_in_progress%>
+			grading...
+		<%elsif @status == :job_error %>
+			Oops! An error occured! Try again a bit later
+		<% elsif @status == :job_done %>
+		
+			<table id="grade_sheet">
 				<tr>
-					<td> <%=h test_title%></td> 
-					<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%> </td>
-					<td> <%=h test_results[:got].blank? ? '""' : test_results[:got] %>            </td>
-					<td> <%=h test_results[:points] %>                                          </td>
+					<th>Unit Test</th>
+					<th>Expected Output</th>
+					<th>Got</th>
+					<th>Points</th>
 				</tr>
-			<% end %>
-			<tr>
-				<th>Final Grade: <%=h results[:grade] %></th>
-			</tr>
-	</table>
+				<% results = YAML.load(@grade_sheet.unit_test_results) %>
+				<% tests   = results[:tests] %>
+					<% tests.each_pair do |test_title, test_results| %>
+						<tr>
+							<td> <%=h test_title%></td> 
+							<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%> </td>
+							<td> <%=h test_results[:got].blank? ? '""' : test_results[:got] %>            </td>
+							<td> <%=h test_results[:points] %>                                          </td>
+						</tr>
+					<% end %>
+					<tr>
+						<th>Final Grade: <%=h results[:grade] %></th>
+					</tr>
+			</table>
+			
+	<% else   %>
+		Oops! An unexpected error occurred! Try again a little later.
 <%end%>
