@@ -5,10 +5,10 @@ class User < ActiveRecord::Base
   acts_as_authentic
   
   has_many :grade_sheets
-  has_many :completed_exercises, :through=>:grade_sheets, :source=>:exercise
+  has_many :completed_exercises, :through=>:grade_sheets, :source=>:exercise, :uniq=>true
   
   has_many :set_grade_sheets
-  has_many :completed_exercise_sets, :through=>:set_grade_sheets, :source=>:exercise_set
+  has_many :completed_exercise_sets, :through=>:set_grade_sheets, :source=>:exercise_set, :uniq=>true
   
   attr_protected :roles_mask
   
