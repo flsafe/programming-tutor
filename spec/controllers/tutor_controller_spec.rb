@@ -128,7 +128,7 @@ describe TutorController do
       
       it "renders the grade status rjs" do
         post :grade_status, :id=>stub_exercise.id
-        response.should render_template('tutor/grade_status')
+        response.should render_template('tutor/_grade_sheet')
       end
     end
     

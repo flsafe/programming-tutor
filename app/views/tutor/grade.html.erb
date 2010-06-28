@@ -1,6 +1,6 @@
-
 <div id="message">grading...</div>
 
-<%= periodically_call_remote(:url=>{:action=>'grade_status', :id=>@exercise.id}, 
+<%= periodically_call_remote(:update=>:message,
+														 :url=>{:action=>'grade_status', :id=>@exercise.id}, 
 														 :condition=>"$('message').innerHTML == 'grading...'") %>
 

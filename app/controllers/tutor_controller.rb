@@ -43,7 +43,7 @@ class TutorController < ApplicationController
       @status = :job_done
     end
     respond_to do |f|
-      f.js
+      f.html {render :partial=>'grade_sheet', :layout=>false}
     end
   end
   

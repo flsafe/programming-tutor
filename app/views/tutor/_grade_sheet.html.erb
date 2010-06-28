@@ -1,0 +1,7 @@
+<%if @status == :job_in_progrress%>
+	grading...
+<%elsif @status == :job_error %>
+	Oops! An error occured! Try again a bit later
+<% elsif @status == :job_done %>
+	<%=h @grade_sheet.unit_test_results %>
+<%end%>
