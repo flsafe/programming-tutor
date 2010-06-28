@@ -19,7 +19,7 @@ int main(){
 /*start_prototype*/
 void remove_char(char c, char str[]){
   
-  /*Your code goes here*/
+  /*your code here*/
   
 }
 /*end_prototype*/

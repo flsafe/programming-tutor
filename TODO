@@ -32,7 +32,9 @@ Add a limit to the amount of times the client will poll for results
 
 The rescue's should log the exceptions
 
-Make compiler use pipes instead of files to use the compiler
+Make compiler use pipes instead of files to use the compiler (Maybe faster? less code)
+
+
 
 
 Don't run raw commands using `` instead move into some object
@@ -43,12 +45,15 @@ Get rid of the string literals in UnitTestSpec
 Implement the following convention for UnitTest.run_on
 	- results = {:error=>[a standard list of errors], 
 							 ? :error_message=>"A description of the error", ?
-							 :grade=>[the grade], 
-							 :tests=>{:unit_test_name=>:points}
+							
+							 :grade=>'the grade', 
+							
+							 :tests=>{{:unit_test_name=>{:expected=>'expected', :got=>'got', :points=>'points'}},
+												{:unit_test_name=>{:expected=>'expected, :got=>'got', :points=>'points'}}}
+												
 							 :run_times=>{:linear_size=>[size1, size2, ...],
-														:linear_time=>[time1, time2, ...]
-														}
-							}
+														:linear_time=>[time1, time2, ...]}
+					    }
 							
 Should GradeSolutionResult and SyntaxCheckResult be consolidated somehow?
 

@@ -5,7 +5,8 @@ class RemoveLetterUnitTest
   attr_accessor :results
   
   def initialize()
-    @results = {}
+    @results = { :tests     => {},
+                 :run_times => {} }
   end
   
   def start
@@ -14,7 +15,17 @@ class RemoveLetterUnitTest
     test_last_letter_removed
     test_no_letters_removed
     test_empty_string
-    add('grade', 100)
+    
+    results[:grade] = count_points
+  end
+  
+  def count_points
+    tests  = results[:tests]
+    points = 0
+    tests.each_pair do |test_name, test_results|
+      points += test_results[:points]
+    end
+    points
   end
   
   def test_all_letters_removed
@@ -49,10 +60,14 @@ class RemoveLetterUnitTest
     if p 
       p.write(input)
       p.close_write
-  
+      
       Thread.new(p.pid, 2) do |pid, wait_for|
         sleep(wait_for)
-        Process.kill('KILL', pid)
+        begin
+          Process.kill('KILL', pid)
+        rescue
+          #If the process has already quit, do nothing
+        end
       end
   
       result = p.read()
@@ -66,14 +81,16 @@ class RemoveLetterUnitTest
   def run_with_and_expect(input, expected, title, points)
    result = run_with(input)
    if result.lstrip.chomp == expected.lstrip.chomp
-     add(title, points)
+     add(:tests, title, :expected=>expected, :got=>result, :points=>points)
    else
-     add(title, 0)
+     add(:tests, title, :expected=>expected, :got=>result, :points=>0)
    end
   end
   
-  def add(title, points)
-    results[title] = points
+  def add(category, test_name = '',  info = {})
+    if not test_name == ''
+      results[category][test_name] = info
+    end
   end
 end
   
