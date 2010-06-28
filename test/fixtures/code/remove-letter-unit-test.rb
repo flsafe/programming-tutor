@@ -29,7 +29,7 @@ class RemoveLetterUnitTest
   end
   
   def test_all_letters_removed
-    title = "Remove all leters: remove('c', 'ccc')"
+    title = "Remove all letters: remove('c', 'ccc')"
     run_with_and_expect('c ccc', '', title, 20)
   end
   
