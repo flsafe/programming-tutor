@@ -33,6 +33,16 @@ class ExercisesController < ApplicationController
       format.xml  { render :xml => @exercise }
     end
   end
+  
+  def show_tutorial
+    @exercise      = Exercise.find(params[:id])
+    @tutorial_html = @exercise.tutorial
+    
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @exercise }
+    end
+  end
 
   # GET /exercises/new
   # GET /exercises/new.xml

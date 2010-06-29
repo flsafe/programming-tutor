@@ -32,8 +32,9 @@
 				<% else %>
 					<%= "Shucks! You scored lower than the average grade! Check out the tutorial for some neat hints!" %>
 				<% end %>
-			</span>
+			</span><br/><br/>
 			
+			<%= link_to "Read Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>@exercise %>
 	<% else   %>
 		Oops! An unexpected error occurred! Try again a little later.
 <%end%>
