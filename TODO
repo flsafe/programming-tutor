@@ -13,6 +13,7 @@
 #Unit tests and executables should communicate through stdin and pipes
 #Fix the unit test grade sheet it is not returning the correct results
 #Make sure the recommendation engine does not return completed exercies
+#Finish the first exercise. Create the timing test, have it return a real grade, ...
 
 Add grade sheet display and page flow (view tutorial, view class grade_sheets, go home)
 
@@ -25,7 +26,7 @@ Refactor syntax_status: Don't use the rjs template! It is too complicated, see t
 
 ? Add a basic 'conectivity' scenario for grading, and then one to test every exercise
 
-Finish the first exercise. Create the timing test, have it return a real grade, ...
+
 
 Write a unit test frame work so that there is no duplication between unit tests
 
