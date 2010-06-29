@@ -16,6 +16,7 @@ class TutorController < ApplicationController
       if not job_running? :grade_solution_job
         enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
         @status = :job_enqueued
+        flash[:notice] = "We are grading your solution! Please wait a moment."
       else
         @status = :duplicate_job
       end
@@ -38,6 +39,7 @@ class TutorController < ApplicationController
       else
         @grade_sheet = GradeSheet.find_by_id(@result.grade_sheet_id)
         @status = :job_done
+        flash[:notice] = "Here is your grade!"
       end
     else
       @status = :job_error
