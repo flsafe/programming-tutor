@@ -83,6 +83,27 @@ class TutorController < ApplicationController
     end
   end
   
+  def get_time_remaining
+    start_time      = session[:exercise_start_time]
+    exercise        = Exercise.find_by_id params[:id], :select=>'minutes'
+    @time_remaining = "00:00"
+    
+    if start_time && exercise
+      alloted_time    = exercise.minutes.to_i * 60
+      elapsed_time    = Time.now.to_i - start_time.to_i
+      
+      @time_remaining = [alloted_time - elapsed_time, 0].max
+      
+      minutes_remain  = @time_remaining / 60
+      seconds_remain  = @time_remaining % 60
+      @time_remaining = "#{'0' if minutes_remain < 10}#{minutes_remain}:#{'0' if seconds_remain < 10}#{seconds_remain}"
+    end
+    
+    respond_to do |f|
+      f.html {render :text=>@time_remaining}
+    end
+  end
+  
   protected
   
   def job_running?(job_name)

@@ -275,4 +275,40 @@ describe TutorController do
       end
     end
   end
+  
+  describe "get time_remaining" do
+    
+    before(:each) do
+      Time.stub(:now).and_return(Time.parse("7:50"))
+      session[:exercise_start_time] = Time.parse("7:00")
+      Exercise.stub(:find_by_id).and_return(stub_model(Exercise, :minutes=>60))
+    end
+    
+    it "returns the amount of time that is remainging in MM::SS form" do
+      get :get_time_remaining, :id=>stub_exercise
+      assigns[:time_remaining].should == "10:00"
+    end
+    
+    it "returns 00:00 if the elapsed time is over the alloted time" do
+      Time.stub(:now).and_return(Time.parse("8:30"))
+      get :get_time_remaining, :id=>stub_exercise
+      assigns[:time_remaining].should == "00:00"
+    end
+    
+    context "when the exercise does not exist" do
+      it "returns 00:00" do
+        Exercise.stub(:find_by_id).and_return nil
+        get :get_time_remaining
+        assigns[:time_remaining].should == "00:00"
+      end
+    end
+    
+    context "when a start time was not set for the exercise" do
+        it "returns 00:00" do
+        session[:exercise_start_time] = nil
+        get :get_time_remaining
+        assigns[:time_remaining].should == "00:00"
+      end
+    end
+  end
 end

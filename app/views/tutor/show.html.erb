@@ -2,8 +2,14 @@
 
 <div id="exercise_problem_text"><%=@exercise.problem%></div><br/>
 
+Time Remaining: <span id="timer"></span><br/>
+<%= periodically_call_remote :update=>:timer,
+			:frequency=>2,
+ 			:url=>{:action=>:get_time_remaining, :id=>@exercise}%>
+
 <div id="hints"></div>
 <%= render :partial=>'hint', :collection=>@exercise.hints %>
+
 <%
  templates = @exercise.solution_templates.written_in('c')
  prototype = templates.first.prototype if templates.first
