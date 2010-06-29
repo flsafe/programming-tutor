@@ -35,6 +35,9 @@ The rescue's should log the exceptions
 
 Make compiler use pipes instead of files to use the compiler (Maybe faster? less code)
 
+Most likely makes sense to make tutorials their own objects. 
+ -Also do the figures really need to be part of the exercise? The figures should be their own objects
+ - intended to be displayed in problem text, or tutorials, or hints, or user profile pics, not just exercises.
 
 
 
