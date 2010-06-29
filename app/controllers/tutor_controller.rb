@@ -10,10 +10,6 @@ class TutorController < ApplicationController
     @exercise = Exercise.find_by_id params[:id]
   end
   
-  def show_grade_sheet
-    @grade_sheet = GradeSheet.find_by_id params[:id]
-  end
-  
   def grade
     @exercise = Exercise.find_by_id params[:id]
     if @exercise
@@ -45,7 +41,7 @@ class TutorController < ApplicationController
       end
     else
       @status = :job_error
-  end
+    end
     respond_to do |f|
       f.html {render :partial=>'grade_sheet', :layout=>false}
     end
