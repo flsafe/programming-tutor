@@ -9,6 +9,15 @@ Feature: Do exercise
 	And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 	And I am viewing the tutor page for "RemoveChar"
 	Then the "textarea_1" field within "#editor" should contain "void remove_char\(char c, char str\[\]\)"
+	
+	@javascript
+	Scenario: The user sees a timer representing the amount of time they have to complete the exercise
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
+		And the exercise "RemoveChar" takes "60" minutes to complete
+		And I am viewing the tutor page for "RemoveChar"
+		Then I should see "60:00" within "#timer"
 			
 	@javascript
 	@start_delayed_job

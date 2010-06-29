@@ -27,6 +27,12 @@ Given /^the exercise "([^\"]*)" has the solution template "([^\"]*)" and the uni
   exercise.unit_tests.create! :src_code=>unit_test, :src_language=>'rb'
 end
 
+Given /^the exercise "([^\"]*)" takes "([^\"]*)" minutes to complete$/ do |exercise_title, minutes|
+  exercise = Exercise.find_by_title exercise_title
+  exercise.minutes = minutes.to_i
+  exercise.save
+end
+
 When /^I view exercise "([^\"]*)"$/ do |title|
   exercise = Exercise.find_by_title title
   visit exercise_path(exercise)
