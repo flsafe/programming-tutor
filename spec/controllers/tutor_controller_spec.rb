@@ -54,7 +54,7 @@ describe TutorController do
       it "redirects if show exercise that is not the current exercise" do
         controller.stub('current_user_doing_exercise?').and_return('100')
         get 'show', :id=>1001
-        response.should render_template('tutor/already_doing_exercise')
+        response.should redirect_to(:action=>:already_doing_exercise, :id=>100)
       end
       
       it "does not redirect if there is no current exercise" do

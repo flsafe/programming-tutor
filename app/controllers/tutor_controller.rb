@@ -13,7 +13,7 @@ class TutorController < ApplicationController
         set_current_exercise(@exercise.id, Time.now) unless current_user_doing_exercise?
       end
     else
-      render :template=>'tutor/already_doing_exercise'
+      redirect_to :action=>'already_doing_exercise', :id=>current_exercise_id
     end
   end
   
@@ -108,6 +108,10 @@ class TutorController < ApplicationController
     respond_to do |f|
       f.html {render :text=>@time_remaining}
     end
+  end
+  
+  def already_doing_exercise
+    
   end
   
   protected
