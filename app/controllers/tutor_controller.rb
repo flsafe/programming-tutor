@@ -105,7 +105,6 @@ class TutorController < ApplicationController
       seconds_remain  = @time_remaining % 60
       @time_remaining = "#{'0' if minutes_remain < 10}#{minutes_remain}:#{'0' if seconds_remain < 10}#{seconds_remain}"
     end
-    
     respond_to do |f|
       f.html {render :text=>@time_remaining}
     end

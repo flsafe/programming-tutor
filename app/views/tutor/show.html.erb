@@ -5,7 +5,8 @@
 Time Remaining: <span id="timer"></span><br/>
 <%= periodically_call_remote :update=>:timer,
 			:frequency=>2,
- 			:url=>{:action=>:get_time_remaining, :id=>@exercise}%>
+ 			:url=>{:action=>:get_time_remaining, :id=>@exercise},
+			:condition=>"!(/00:00/.test($('timer').innerHTML))"%>
 
 <div id="hints"></div>
 <%= render :partial=>'hint', :collection=>@exercise.hints %>
