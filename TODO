@@ -1,3 +1,58 @@
+
+#-------- Next TODO --------#
+
+Make sure the navigation menu doesn't show up while doing an exercise or viewing the exercise grades
+
+Write 2 real exercises, Write a unit test frame work so that there is no duplication between unit tests
+
+Add a limit to the amount of times the client will poll for results
+
+Implement the following convention for UnitTest.run_on
+	- results = {:error=>[a standard list of errors], 
+							 ? :error_message=>"A description of the error", ?
+							
+							 :grade=>'the grade', 
+							
+							 :tests=>{{:unit_test_name=>{:expected=>'expected', :got=>'got', :points=>'points'}},
+												{:unit_test_name=>{:expected=>'expected, :got=>'got', :points=>'points'}}}
+												
+							 :run_times=>{:linear_size=>[size1, size2, ...],
+														:linear_time=>[time1, time2, ...]}
+					    }
+					
+					
+#-------- Refactor ----------#
+	
+Refactor syntax_status: Don't use the rjs template! It is too complicated, see that way I did
+	grading. Have 'call_remote_periodically' check the condition 'checking...'		
+	
+Get rid of the string literals in UnitTestSpec
+
+Don't run raw commands using `` instead move into some object
+ so that I can change the way this stuff runs on heroku
+
+The rescue's should log the exceptions
+
+Make compiler use pipes instead of files to use the compiler (Maybe faster? less code)
+
+
+#-------- Debatable ---------#		
+				
+? Should GradeSolutionResult and SyntaxCheckResult be consolidated somehow?
+
+? Remove, 'status' from the tutor controller and replace with 'message' ?
+
+? Keep the tutor syntax check and grading DRY ?
+
+? Add a basic 'conectivity' scenario for grading, and then one to test every exercise
+
+? Most likely makes sense to make tutorials their own objects. 
+ -Also do the figures really need to be part of the exercise? The figures should be their own objects
+ - intended to be displayed in problem text, or tutorials, or hints, or user profile pics, not just exercises.
+
+
+#------- Finished -------------#
+
 #Rewrite the user specs to use factory stubs
 #if the solution does not compile, then should that not be part of the unit test object, not the job object
 #The grade sheet specs are all fucked, rewrite using factory specs
@@ -14,53 +69,4 @@
 #Fix the unit test grade sheet it is not returning the correct results
 #Make sure the recommendation engine does not return completed exercies
 #Finish the first exercise. Create the timing test, have it return a real grade, ...
-
-Add grade sheet display and page flow (view tutorial, view class grade_sheets, go home)
-
-Refactor syntax_status: Don't use the rjs template! It is too complicated, see that way I did
-	gradeing. Have 'call_remote_periodically' check the condition 'checking...'
-
-? Remove, 'status' from the tutor controller and replace with 'message' ?
-
-? Keep the tutor syntax check and grading DRY ?
-
-? Add a basic 'conectivity' scenario for grading, and then one to test every exercise
-
-
-
-Write a unit test frame work so that there is no duplication between unit tests
-
-Add a limit to the amount of times the client will poll for results
-
-The rescue's should log the exceptions
-
-Make compiler use pipes instead of files to use the compiler (Maybe faster? less code)
-
-Most likely makes sense to make tutorials their own objects. 
- -Also do the figures really need to be part of the exercise? The figures should be their own objects
- - intended to be displayed in problem text, or tutorials, or hints, or user profile pics, not just exercises.
-
-
-
-Don't run raw commands using `` instead move into some object
- so that I can change the way this stuff runs on heroku
-
-Get rid of the string literals in UnitTestSpec
-
-Implement the following convention for UnitTest.run_on
-	- results = {:error=>[a standard list of errors], 
-							 ? :error_message=>"A description of the error", ?
-							
-							 :grade=>'the grade', 
-							
-							 :tests=>{{:unit_test_name=>{:expected=>'expected', :got=>'got', :points=>'points'}},
-												{:unit_test_name=>{:expected=>'expected, :got=>'got', :points=>'points'}}}
-												
-							 :run_times=>{:linear_size=>[size1, size2, ...],
-														:linear_time=>[time1, time2, ...]}
-					    }
-							
-Should GradeSolutionResult and SyntaxCheckResult be consolidated somehow?
-
-
-
+#Add grade sheet display and page flow (view tutorial, view class grade_sheets, go home)
