@@ -280,7 +280,7 @@ describe TutorController do
     
     before(:each) do
       Time.stub(:now).and_return(Time.parse("7:50"))
-      session[:exercise_start_time] = Time.parse("7:00")
+      session[:current_exercise_start_time] = Time.parse("7:00")
       Exercise.stub(:find_by_id).and_return(stub_model(Exercise, :minutes=>60))
     end
     
@@ -305,7 +305,7 @@ describe TutorController do
     
     context "when a start time was not set for the exercise" do
         it "returns 00:00" do
-        session[:exercise_start_time] = nil
+        session[:current_exercise_start_time] = nil
         get :get_time_remaining
         assigns[:time_remaining].should == "00:00"
       end

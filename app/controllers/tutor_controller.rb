@@ -84,7 +84,7 @@ class TutorController < ApplicationController
   end
   
   def get_time_remaining
-    start_time      = session[:exercise_start_time]
+    start_time      = current_exercise_start_time
     exercise        = Exercise.find_by_id params[:id], :select=>'minutes'
     @time_remaining = "00:00"
     
