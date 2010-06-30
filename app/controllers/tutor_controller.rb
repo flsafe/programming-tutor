@@ -47,7 +47,6 @@ class TutorController < ApplicationController
       else
         @grade_sheet = GradeSheet.find_by_id(@result.grade_sheet_id)
         @status = :job_done
-        flash[:notice] = "Here is your grade!"
       end
     else
       @status = :job_error
