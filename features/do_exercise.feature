@@ -18,6 +18,15 @@ Feature: Do exercise
 		And the exercise "RemoveChar" takes "60" minutes to complete
 		And I am viewing the tutor page for "RemoveChar"
 		Then I should see "59:56" within "#timer"
+		
+	@javascript
+	Scenario: The user is redirected to the incomplete page
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
+		And the exercise "RemoveChar" takes "0" minutes to complete
+		And I am viewing the tutor page for "RemoveChar"
+		Then I should see "You didn't finish on time!"
 			
 	@javascript
 	@start_delayed_job
