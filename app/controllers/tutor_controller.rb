@@ -121,7 +121,7 @@ class TutorController < ApplicationController
   end
   
   def enqueue_job(name, job)
-    delayed_job = Delayed::Job.enqueue job
+    delayed_job   = Delayed::Job.enqueue job
     session[name] = delayed_job.id
   end
   
