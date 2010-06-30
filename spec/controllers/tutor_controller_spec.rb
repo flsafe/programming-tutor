@@ -80,6 +80,11 @@ describe TutorController do
       post :grade, :code=>code, :id=>stub_exercise.id
     end
     
+    it "enqueues the grade job" do
+      controller.should_receive(:enqueue_job)
+      post :grade, :code=>code, :id=>stub_exercise
+    end
+    
     it "clears the current exercise" do
       controller.should_receive(:clear_current_exercise)
       post :grade, :code=>code, :id=>stub_exercise
