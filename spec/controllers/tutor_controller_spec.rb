@@ -347,4 +347,36 @@ describe TutorController do
       end
     end
   end
+  
+  describe "post did_not_finish" do
+    
+    before(:each) do
+      @mock_ta = mock_model(TeachersAid, :record_grade=>true)
+      TeachersAid.stub(:new).and_return(@mock_ta)
+    end
+    
+    it "clears the current exercise" do
+      controller.should_receive(:clear_current_exercise)
+      post :did_not_finish, :id=>stub_exercise
+    end
+    
+    it "Creates a new grade sheet that identifies an incomplete exercise" do
+      GradeSheet.should_receive(:new).with(:grade=>0, 
+        :user=>current_user,
+        :exercise=>stub_exercise, 
+        :unit_test_results=>'dnf',
+        :src_code=>'dnf')
+        post :did_not_finish
+    end
+    
+    it "Saves the grade sheet" do
+      @mock_ta.should_receive(:record_grade)
+      post :did_not_finish
+    end
+    
+    it "renders did_not_finish" do
+      post :did_not_finish
+      response.should render_template('tutor/did_not_finish')
+    end
+  end
 end

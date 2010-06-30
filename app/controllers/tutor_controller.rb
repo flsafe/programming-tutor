@@ -115,6 +115,17 @@ class TutorController < ApplicationController
     
   end
   
+  def did_not_finish
+    exercise = Exercise.find_by_id(current_exercise_id)
+    clear_current_exercise
+    
+    if exercise
+      gs = GradeSheet.new :grade=>0, :user=>current_user, :exercise=>exercise, :unit_test_results=>"dnf", :src_code=>"dnf"
+      ta = TeachersAid.new
+      ta.record_grade(gs)
+    end
+  end
+  
   protected
   
   def job_running?(job_name)
