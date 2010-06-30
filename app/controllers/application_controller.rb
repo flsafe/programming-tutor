@@ -37,4 +37,22 @@ class ApplicationController < ActionController::Base
     return @current_user if defined?(@current_user)
     @current_user = current_user_session && current_user_session.user
   end
+  
+  def current_user_doing_exercise?
+    session[:current_exercise_id]
+  end
+  
+  def current_exercise_start_time
+    session[:current_exercise_start_time]
+  end
+  
+  def set_current_exercise(exercise_id, exercise_start_time)
+    session[:current_exercise_id]         = exercise_id
+    session[:current_exercise_start_time] = exercise_start_time
+  end
+  
+  def clear_current_exercise
+    session[:current_exercise_id] = nil
+    session[:current_exercise_start_time] = nil
+  end
 end
