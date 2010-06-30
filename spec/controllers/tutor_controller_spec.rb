@@ -80,6 +80,11 @@ describe TutorController do
       post :grade, :code=>code, :id=>stub_exercise.id
     end
     
+    it "clears the current exercise" do
+      controller.should_receive(:clear_current_exercise)
+      post :grade, :code=>code, :id=>stub_exercise
+    end
+    
     it "associates the job with the current session" do
       post :grade, :code=>code, :id=>stub_exercise.id
       session[:grade_solution_job].should == @delayed_job.id
