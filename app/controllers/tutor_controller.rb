@@ -7,7 +7,14 @@ class TutorController < ApplicationController
   end
   
   def show
-    @exercise = Exercise.find_by_id params[:id]
+    if no_current_exercise_or_show_current_exercise?
+      @exercise = Exercise.find_by_id params[:id]
+      if @exercise
+        set_current_exercise(@exercise.id, Time.now) unless current_user_doing_exercise?
+      end
+    else
+      render :template=>'tutor/already_doing_exercise'
+    end
   end
   
   def grade
@@ -113,5 +120,9 @@ class TutorController < ApplicationController
   def enqueue_job(name, job)
     delayed_job = Delayed::Job.enqueue job
     session[name] = delayed_job.id
+  end
+  
+  def no_current_exercise_or_show_current_exercise?
+    !(current_user_doing_exercise?) || current_exercise_id.to_i == params[:id].to_i
   end
 end

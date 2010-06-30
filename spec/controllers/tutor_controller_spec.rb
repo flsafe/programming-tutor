@@ -27,15 +27,41 @@ describe TutorController do
   end
   
   describe "get show" do
-    
+
     it "assigns the exercise to be displayed to the user" do
       get 'show'
       assigns[:exercise].should == stub_exercise
     end
     
+    it "sets the current exercise" do
+      Time.stub(:now).and_return(Time.parse('7:00'))
+      controller.should_receive(:set_current_exercise).with(stub_exercise.id, Time.now)
+      get 'show'
+    end
+    
     it "renders the show template" do
       get 'show'
       response.should render_template('show')
+    end
+    
+    context "the current user is already doing an exercise" do
+      it "does not set the current exercise" do
+        controller.stub('current_user_doing_exercise?').and_return('100')
+        controller.should_not_receive(:set_current_exercise)
+        get 'show'
+      end
+      
+      it "redirects if show exercise that is not the current exercise" do
+        controller.stub('current_user_doing_exercise?').and_return('100')
+        get 'show', :id=>1001
+        response.should render_template('tutor/already_doing_exercise')
+      end
+      
+      it "does not redirect if there is no current exercise" do
+        controller.stub('current_user_doing_exercise?').and_return(nil)
+        get 'show', :id=>stub_exercise
+        response.should_not render_template('tutor/already_doing_exercise')
+      end
     end
   end
   
