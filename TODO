@@ -1,13 +1,22 @@
 
 #-------- Next TODO --------#
 
+The review exercise page should let you get more info on an exercise.
+	-View the grade sheet, view the exercise, retake the exercise, etc.
+
 Make sure the navigation menu doesn't show up while doing an exercise or viewing the exercise grades
+	-The tutorials for each exercise should have the navigation menu. The 'exercises' menu should
+	 be selected.
 
 Write 2 real exercises, Write a unit test frame work so that there is no duplication between unit tests
 
+Learn to deploy app
+	-Implement amazon S# store for images
+	-Use google CDN for javascript libraries
+	
 Add a limit to the amount of times the client will poll for results
 
-Implement the following convention for UnitTest.run_on
+Implement the following convention for all unit tests
 	- results = {:error=>[a standard list of errors], 
 							 ? :error_message=>"A description of the error", ?
 							
