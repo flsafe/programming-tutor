@@ -17,7 +17,7 @@ Feature: Do exercise
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And the exercise "RemoveChar" takes "60" minutes to complete
 		And I am viewing the tutor page for "RemoveChar"
-		Then I should see "59:56" within "#timer"
+		Then I should see /59:\d\d/
 		
 	@javascript
 	Scenario: The user is redirected to the incomplete page
