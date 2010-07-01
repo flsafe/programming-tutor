@@ -27,6 +27,14 @@ Feature: Browse Completed Exercises
 		And "basics 1" has the grades "91 92"
 		When I am on my exercises page
 		Then I should see "91" within ".exercise_statistics"
+		
+	Scenario: The user reviews their grade sheet for an exercise they completed
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "Basics" with "basics 1" and "basics 2"
+		And I have finished "basics 1" with a "90"
+		When I am on my exercises page
+		And I follow "Gradesheet"
+		Then I should see "Final Grade:" within "#grade_sheet"
 
 
 
