@@ -8,11 +8,11 @@ Make sure the navigation menu doesn't show up while doing an exercise or viewing
 	-The tutorials for each exercise should have the navigation menu. The 'exercises' menu should
 	 be selected.
 
-Write 2 real exercises, Write a unit test frame work so that there is no duplication between unit tests
-
 Learn to deploy app
 	-Implement amazon S# store for images
 	-Use google CDN for javascript libraries
+
+Write 2 real exercises, Write a unit test frame work so that there is no duplication between unit tests
 	
 Add a limit to the amount of times the client will poll for results
 
@@ -31,7 +31,12 @@ Implement the following convention for all unit tests
 					
 					
 #-------- Refactor ----------#
+
+Add a scenario that checks for errors during grading. The view should display a message
+	like: "Oh no! an error occured!"
 	
+Clean up tutor_controller#grade_status. Yuck! Do this after the new test above is added
+
 Refactor syntax_status: Don't use the rjs template! It is too complicated, see that way I did
 	grading. Have 'call_remote_periodically' check the condition 'checking...'		
 	
