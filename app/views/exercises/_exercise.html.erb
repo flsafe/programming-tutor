@@ -1,8 +1,11 @@
 <li class= <%= to_class(exercise) %> >
-	<%= link_to exercise.title, {:controller=>:tutor, :action=>:confirm, :id=>exercise}, :class=>"exercise_title"%><br/>
-	<span class="exercise_description"><%=exercise.description%></span><br/>
+	<span class="exercise_title"> <%=h exercise.title %></span><br/>
+	<span class="exercise_description"><%=h exercise.description%></span><br/>
 	<span class="exercise_statistics">
-		<%=h exercise.completed_users.count%> users, <%=h exercise.average_grade %> avg grade My Grade: <%= current_user.grade_for?(exercise) %>
-	</span>
+		<%=h exercise.completed_users.count%> Users, Average Grade: <%=h exercise.average_grade %>, My Grade: <%= current_user.grade_for?(exercise) %>
+	</span><br/>
+	<%= link_to "Retake", :controller=>:tutor, :action=>:confirm, :id=>exercise %> |
+	<%= link_to "Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>exercise %> |
+	<%= link_to "Gradesheet", :controller=>:exercises, :action=>:show_grade_sheet, :id=>exercise %>
 </li>
 
