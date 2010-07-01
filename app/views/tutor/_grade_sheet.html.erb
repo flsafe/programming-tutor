@@ -1,41 +1,32 @@
-<%if @status == :job_in_progress%>
-			grading...
-		<%elsif @status == :job_error %>
-			Oops! An error occured! Try again a bit later
-		<% elsif @status == :job_done %>
-		
-			<table id="grade_sheet">
-				<tr>
-					<th>Unit Test</th>
-					<th>Expected Output</th>
-					<th>Got</th>
-					<th>Points</th>
-				</tr>
-				<% results = YAML.load(@grade_sheet.unit_test_results) %>
-				<% tests   = results[:tests] %>
-					<% tests.each_pair do |test_title, test_results| %>
-						<tr>
-							<td> <%=h test_title%></td> 
-							<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%> </td>
-							<td> <%=h test_results[:got].blank? ? '""' : test_results[:got] %>            </td>
-							<td> <%=h test_results[:points] %>                                          </td>
-						</tr>
-					<% end %>
-					<tr>
-						<th>Final Grade: <%=h results[:grade] %></th>
-					</tr>
-			</table><br/>
-			
-			<span id="recomendation">
-				<% if results[:grade] > @exercise.average_grade %>
-					<%= "Nice! You scored higher than the average!" %>
-				<% else %>
-					<%= "Shucks! You scored lower than the average grade! Check out the tutorial for some neat hints!" %>
-				<% end %>
-			</span><br/><br/>
-			
-			<%= link_to "Read Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>@exercise %> | 
-			<%= link_to "Home", :controller=>:school %>
-	<% else   %>
-		Oops! An unexpected error occurred! Try again a little later.
-<%end%>
+<table id="grade_sheet">
+	<tr>
+		<th>Unit Test</th>
+		<th>Expected Output</th>
+		<th>Got</th>
+		<th>Points</th>
+	</tr>
+	<% results = YAML.load(@grade_sheet.unit_test_results) %>
+	<% tests   = results[:tests] %>
+		<% tests.each_pair do |test_title, test_results| %>
+			<tr>
+				<td> <%=h test_title%></td> 
+				<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%> </td>
+				<td> <%=h test_results[:got].blank? ? '""' : test_results[:got] %>            </td>
+				<td> <%=h test_results[:points] %>                                          </td>
+			</tr>
+		<% end %>
+		<tr>
+			<th>Final Grade: <%=h results[:grade] %></th>
+		</tr>
+</table><br/>
+
+<span id="recomendation">
+	<% if results[:grade] > @exercise.average_grade %>
+		<%= "Nice! You scored higher than the average!" %>
+	<% else %>
+		<%= "You scored lower than the average grade! Check out the tutorial for some neat hints!" %>
+	<% end %>
+</span><br/><br/>
+
+<%= link_to "Read Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>@exercise %> | 
+<%= link_to "Home", :controller=>:school %>

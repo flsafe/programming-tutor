@@ -51,8 +51,19 @@ class TutorController < ApplicationController
     else
       @status = :job_error
     end
+    
     respond_to do |f|
-      f.html {render :partial=>'grade_sheet', :layout=>false}
+      f.html do 
+        if @status == :job_in_progress
+          render :text=>'grading...'
+        elsif @status == :job_error
+          render :text=>'Oops! an error occured! Try again a bit later.'
+        elsif @status == :job_done
+          render :partial=>'grade_sheet', :layout=>false
+        else
+          render :text=>"Oh no! This wasn't supposed to happen! We encountered an error, try again a bit later."
+        end
+      end
     end
   end
   
