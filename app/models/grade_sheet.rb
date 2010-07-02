@@ -20,6 +20,10 @@ class GradeSheet < ActiveRecord::Base
     return [] unless grade_sheets
     filter_retakes(grade_sheets)
   end
+  
+  def unit_test_results_hash
+    @hash ||= YAML.load(unit_test_results).with_indifferent_access
+  end
 
   protected
   

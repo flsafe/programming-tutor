@@ -1,4 +1,4 @@
-<% results = YAML.load(@grade_sheet.unit_test_results).with_indifferent_access %>
+<% results = @grade_sheet.unit_test_results_hash %>
 
 <table id="grade_sheet">
 	<tr>
