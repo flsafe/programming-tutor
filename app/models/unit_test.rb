@@ -57,10 +57,12 @@ class UnitTest < ActiveRecord::Base
     #the unit test crashing and returning
     #nonsense.
     case results
-      when !results               then true
-      when results.blank?         then true 
-      when !results[:grade]       then true
-      when results[:grade].blank? then true
+      when !results                then true
+      when results.blank?          then true 
+      when !results[:grade]        then true
+      when results[:grade].blank?  then true
+      when !results[:tests]        then true
+      when results[:tests].blank?  then true
     end
   end
   
