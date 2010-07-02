@@ -36,6 +36,9 @@ Implement the following convention for all unit tests
 					
 #-------- Refactor ----------#
 
+All the code in GradeSolutionJob, is shit! There are
+	messages all over the place, they are never even displayed to the user.
+
 Add a scenario that checks for errors during grading. The view should display a message
 	like: "Oh no! an error occured!"
 	
