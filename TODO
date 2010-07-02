@@ -36,6 +36,8 @@ Implement the following convention for all unit tests
 					
 #-------- Refactor ----------#
 
+I shouldn't have to run unit_test_results through YAML, the method should do it itself.
+
 All the code in GradeSolutionJob, is shit! There are
 	messages all over the place, they are never even displayed to the user.
 
