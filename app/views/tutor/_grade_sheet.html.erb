@@ -37,13 +37,6 @@
 		<% end %>
 </table><br/>
 
-<span id="recomendation">
-	<% if results[:grade] > @exercise.average_grade %>
-		<%= "Nice! You scored higher than the average!" %>
-	<% else %>
-		<%= "You scored lower than the average grade! Check out the tutorial for some neat hints!" %>
-	<% end %>
-</span><br/><br/>
+<%= render :partial=>'tutor/recommendation', :locals=>{:grade_sheet=>@grade_sheet, :exercise=>@exercise}  %>
 
-<%= link_to "Read Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>@exercise %> | 
-<%= link_to "Home", :controller=>:school %>
+
