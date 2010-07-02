@@ -1,29 +1,23 @@
 <% results = YAML.load(@grade_sheet.unit_test_results).with_indifferent_access %>
+
 <table id="grade_sheet">
-	
-	<%if valid_result?(results) %>
-	
-		<tr>
-			<th>Unit Test</th>
-			<th>Expected Output</th>
-			<th>Got</th>
-			<th>Points</th>
-		</tr>
-			<% results[:tests].each_pair do |test_title, test_results| %>
-				<tr>
-					<td> <%=h test_title%></td> 
-					<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%>  </td>
-					<td> <%=h test_results[:got].blank? ? '""' : test_results[:got] %>           </td>
-					<td> <%=h test_results[:points] %>                                           </td>
-				</tr>
-			<% end %>
+	<tr>
+		<th>Unit Test</th>
+		<th>Expected Output</th>
+		<th>Got</th>
+		<th>Points</th>
+	</tr>
+		<% results[:tests].each_pair do |test_title, test_results| %>
 			<tr>
-				<th>Final Grade: <%=h results[:grade] %></th>
+				<td> <%=h test_title%></td> 
+				<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%>  </td>
+				<td> <%=h test_results[:got].blank? ? '""' : test_results[:got] %>           </td>
+				<td> <%=h test_results[:points] %>                                           </td>
 			</tr>
-			
-		<% else %>
-			Oops! An error occurred. Please try again a little later!
 		<% end %>
+		<tr>
+			<th>Final Grade: <%=h results[:grade] %></th>
+		</tr>
 </table><br/>
 
 <%= render :partial=>'tutor/recommendation', :locals=>{:grade_sheet=>@grade_sheet, :exercise=>@exercise}  %>
