@@ -1,7 +1,5 @@
-<span id="recommendation">
-	<% if grade_sheet.grade > exercise.average_grade %>
-		<%= "Nice! You scored higher than the average!" %>
-	<% else %>
-		<%= "Oh no! You scored lower than the average grade! Check out the tutorial for some neat hints!" %>
-	<% end %>
-</span>
+<% if grade_sheet.grade > exercise.average_grade %>
+	<span class="good_recommendation"><%= "Nice! You scored higher than the average!" %></span>
+<% else %>
+	<span class="bad_recommendation"><%= "Oh no! You scored lower than the average grade! Check out the tutorial for some neat hints!" %></span>
+<% end %>
