@@ -1,6 +1,8 @@
 
 #-------- Next TODO --------#
 
+The grade sheets should show the solution source code.
+
 The review exercise page should let you get more info on an exercise.
 	-View the grade sheet, view the exercise, retake the exercise, etc.
 
@@ -36,10 +38,11 @@ Implement the following convention for all unit tests
 					
 #-------- Refactor ----------#
 
-I shouldn't have to run unit_test_results through YAML, the method should do it itself.
-
 All the code in GradeSolutionJob, is shit! There are
 	messages all over the place, they are never even displayed to the user.
+	-The rescue's should log the exceptions
+	
+Same as above but for UnitTest
 
 Add a scenario that checks for errors during grading. The view should display a message
 	like: "Oh no! an error occured!"
@@ -54,7 +57,7 @@ Get rid of the string literals in UnitTestSpec
 Don't run raw commands using `` instead move into some object
  so that I can change the way this stuff runs on heroku
 
-The rescue's should log the exceptions
+
 
 Make compiler use pipes instead of files to use the compiler (Maybe faster? less code)
 
