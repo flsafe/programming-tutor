@@ -7,6 +7,10 @@ The review exercise page should let you get more info on an exercise.
 Make sure the navigation menu doesn't show up while doing an exercise or viewing the exercise grades
 	-The tutorials for each exercise should have the navigation menu. The 'exercises' menu should
 	 be selected.
+	
+Going back to the grade page, causes a hang. This is because
+	retrieving the grade results with "#grade_status" destroys the grade results
+	from the db. Maybe we can simply display the grade sheet if one exists?
 
 Learn to deploy app
 	-Implement amazon S# store for images
