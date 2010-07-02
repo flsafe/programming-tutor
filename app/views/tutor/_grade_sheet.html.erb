@@ -1,18 +1,7 @@
-<% 
-	puts "***" * 100
-	
-	results = YAML.load(@grade_sheet.unit_test_results).with_indifferent_access
-	
-	p results
-	
-	if results and results[:grade] and results[:tests]
-		@valid_results = true
-	end
-%>
-
+<% results = YAML.load(@grade_sheet.unit_test_results).with_indifferent_access %>
 <table id="grade_sheet">
 	
-	<%if @valid_results %>
+	<%if valid_result?(results) %>
 	
 		<tr>
 			<th>Unit Test</th>
