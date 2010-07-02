@@ -1,6 +1,8 @@
-<div id="message">grading...</div>
+<div id="message">grading...</div><br/>
+
+<%= link_to "Read Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>@exercise %> | 
+<%= link_to "Home", :controller=>:school %>
 
 <%= periodically_call_remote(:update=>:message,
 														 :url=>{:action=>'grade_status', :id=>@exercise.id}, 
 														 :condition=>"/grading/.test($('message').innerHTML)") %>
-
