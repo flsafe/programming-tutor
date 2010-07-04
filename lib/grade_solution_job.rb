@@ -6,36 +6,28 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     
       template  = SolutionTemplate.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'c']
       unless template
-        raise "Could not find the template solution template associated with this exercise!"
+        raise "Solution template not found"
       end
 
       unit_test = UnitTest.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'rb']
       unless unit_test
-        raise "Could not find the unit test associated with this exercise!"
+        raise "Unit test not found"
       end
     
       solution_code = template.fill_in(code)
       results       = unit_test.run_on(solution_code)
 
       if results[:error]
-        post_result(humanize(results[:error]), nil)
+        post_result(results[:error], nil)
       else
         gs_id   = save_grade_sheet(results, code)
         post_result(nil, gs_id)
       end
     rescue Exception => e
-      post_result("My codes have failed! An error occured while preparing the grade your solution. Sorry about that, I'm working on it. Try again a little later!")
+      post_result("An error occured, could not grade solution")
     end
   end
-  
-  def humanize(error_message)
-    case error_message
-      when :did_not_compile     then "Your solution did not compile! Check your syntax"
-      when :no_result_returned  then "My codes have failed! An error occured while grading your solution. I'm working on it. Try again later!"
-      else error_message.to_s
-    end
-  end
-  
+
   protected
   
    def post_result(error_message = nil, grade_sheet_id = nil)
