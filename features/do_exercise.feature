@@ -57,5 +57,15 @@ Feature: Do exercise
 		Then I should see "Remove all letters:" within "#grade_sheet"
 		Then I should see "Final Grade: 100" within "#grade_sheet"
 
-			
+	@javascript
+	@start_delayed_job
+	Scenario: The user submits a solution to an exercise, but the solution template crashes
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		And the exercise "RemoveChar" has the solution template "crap.c" and the unit test "remove-letter-unit-test.rb"
+		And I am viewing the tutor page for "RemoveChar"
+		When I fill in the text editor with "void remove_char(char c, char str[]){ int write_index = 0; int read_index  = 0; char curr_char; do{ curr_char = str[read_index]; if(curr_char != c){ str[write_index] = str[read_index]; write_index++;} read_index++; }while(curr_char);}"
+		And I press "Submit"
+		Then I should see "grading..."
+		Then I should see "error"
 			
