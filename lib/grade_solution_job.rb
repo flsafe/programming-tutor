@@ -5,14 +5,10 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       FileUtils.mkdir_p(APP_CONFIG['work_dir'])
     
       template  = SolutionTemplate.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'c']
-      unless template
-        raise "Solution template not found"
-      end
+      raise "Solution template not found" unless template
 
       unit_test = UnitTest.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'rb']
-      unless unit_test
-        raise "Unit test not found"
-      end
+      raise "Unit test not found" unless unit_test
     
       solution_code = template.fill_in(code)
       results       = unit_test.run_on(solution_code)
