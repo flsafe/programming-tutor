@@ -4,7 +4,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     begin
       FileUtils.mkdir_p(APP_CONFIG['work_dir'])
     
-      template  = SolutionTemplate.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'c']
+      template  = SolutionTemplate.for_exercise(exercise_id).written_in('c').first
       raise "Solution template not found" unless template
 
       unit_test = UnitTest.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'rb']
@@ -20,7 +20,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
         post_result(nil, gs_id)
       end
     rescue Exception => e
-      post_result("An error occured, could not grade solution")
+      post_result(e.message)
     end
   end
 

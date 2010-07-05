@@ -3,7 +3,9 @@ class SolutionTemplate < ActiveRecord::Base
   
   validates_presence_of :src_language, :src_code
   
-  named_scope :written_in, lambda {|lang| {:limit=>1, :conditions=>{:src_language=>lang}}}
+  named_scope :written_in, lambda {|lang| {:conditions=>{:src_language=>lang}}}
+  
+  named_scope :for_exercise, lambda{|exercise_id| {:conditions=>{:exercise_id=>exercise_id}}}
   
   attr_reader :filled_in_src_code
   

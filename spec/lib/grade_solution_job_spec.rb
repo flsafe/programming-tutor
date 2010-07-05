@@ -41,7 +41,7 @@ describe GradeSolutionJob do
   describe "#perform" do
     
     before(:each) do
-      SolutionTemplate.stub(:find).and_return(template)
+      SolutionTemplate.stub_chain(:for_exercise, :written_in).and_return([template])
       UnitTest.stub(:find).and_return(unit_test)
       
       unit_test.stub(:run_on).and_return({:error => nil})
@@ -56,7 +56,9 @@ describe GradeSolutionJob do
     end
     
     it "gets the solution template associated with the exercise" do
-      SolutionTemplate.should_receive(:find).with(:first, {:conditions=>['exercise_id=? AND src_language=?', exercise.id, 'c']}).and_return(template)
+      SolutionTemplate.stub_chain(:for_exercise, :written_in).and_return([])
+      SolutionTemplate.should_receive(:for_exercise).with(exercise.id).and_return(@mock = mock("scope"))
+      @mock.should_receive(:written_in).with('c')
       job.perform
     end
     
@@ -95,14 +97,14 @@ describe GradeSolutionJob do
       job.perform
     end
     
-    context "when the unit test results include a :did_not_compile error message" do
+    context "when the unit test resultls includes an error, it posts an error result to the db" do
       it "it posts an error message" do
         #these are the two errors the unit test can return
         errors = [{:error=>:did_not_compile}, {:error=>:no_result_returned}]
           errors.each do |r|
           unit_test.stub(:run_on).and_return(r)
           job.stub(:post_result)
-          job.should_receive(:post_result).with(r[:error], nil)
+          job.should_receive(:post_result)
           job.perform
         end
       end
