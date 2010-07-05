@@ -43,9 +43,6 @@ All the code in GradeSolutionJob, is shit! There are
 	-The rescue's should log the exceptions
 	
 Same as above but for UnitTest
-
-Add a scenario that checks for errors during grading. The view should display a message
-	like: "Oh no! an error occured!"
 	
 Clean up tutor_controller#grade_status. Yuck! Do this after the new test above is added
 
@@ -96,3 +93,5 @@ Make compiler use pipes instead of files to use the compiler (Maybe faster? less
 #Make sure the recommendation engine does not return completed exercies
 #Finish the first exercise. Create the timing test, have it return a real grade, ...
 #Add grade sheet display and page flow (view tutorial, view class grade_sheets, go home)
+#Add a scenario that checks for errors during grading. The view should display a message
+#	like: "Oh no! an error occured!"
