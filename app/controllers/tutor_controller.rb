@@ -77,8 +77,16 @@ class TutorController < ApplicationController
     else
       @status = :exercise_dne
     end    
+    
     respond_to do |f| 
-      f.js
+      f.html do
+         message = case @status
+          when :job_enqueued  then "checking..."
+          when :duplicate_job then "already checking!"
+          when :exercise_dne  then "an error occured!"
+        end
+        render :text=>message
+      end
     end
   end
   
@@ -94,8 +102,16 @@ class TutorController < ApplicationController
     else
       @status = :exercise_dne
     end
+    
     respond_to do |f|
-      f.js
+      f.html do
+        message = case @status
+          when :job_done        then @result.message
+          when :job_in_progress then "checking..."
+          when :exercise_dne    then "an error occured"
+        end
+        render :text=>message
+      end
     end
   end
   

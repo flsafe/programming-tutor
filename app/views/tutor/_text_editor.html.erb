@@ -12,10 +12,17 @@
 <% end %>
 
 <% form_tag url_for(:action=>:grade, :id=>@exercise), :id=>'editor' do %>
+
 	<%= text_area_tag :textarea_1, editor_content || "", :name=>"code", :rows=>18, :cols=>80 %>
 	
-	<%= submit_to_remote "check_syntax",'Check Syntax', :url=>{:action=>'check_syntax', :id=>@exercise}, 
-				:before=>"$('textarea_1').setValue(editAreaLoader.getValue('textarea_1'))" %>
-				
+	<%= submit_to_remote "check_syntax",'Check Syntax', 
+				:update=>:message,
+				:url=>{:action=>'check_syntax', :id=>@exercise},
+				:before=>"$('textarea_1').setValue(editAreaLoader.getValue('textarea_1'))"%>
+
 	<%= submit_tag "Submit Solution" %>
 <% end %>
+
+<%= periodically_call_remote :update=>:message,
+														 :url=>{:action=>'syntax_status', :id=>@exercise.id}, 
+														 :condition=>"/checking/.test( $('message').innerHTML )"%>

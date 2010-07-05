@@ -223,11 +223,6 @@ describe TutorController do
       session[:syntax_check_job].should == @delayed_job.id
     end
     
-     it "renders check_syntax" do
-      post :check_syntax
-      response.should render_template('tutor/check_syntax')
-    end
-    
     context "when the given exercise id is not in the database" do
       before(:each) do
         Exercise.stub(:find_by_id).and_return(nil)
@@ -285,11 +280,6 @@ describe TutorController do
       SyntaxCheckResult.stub(:find).and_return(syntax_check_result)
       get :syntax_status, :id=>stub_exercise
       assigns[:status].should == :job_done
-    end
-    
-    it "renders the syntax message template" do
-      get :syntax_status, :id=>stub_exercise.id
-      response.should render_template('tutor/syntax_status')
     end
     
     context "when there are not associated syntax job results in the database" do
