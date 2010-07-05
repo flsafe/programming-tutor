@@ -45,9 +45,6 @@ All the code in GradeSolutionJob, is shit! There are
 Same as above but for UnitTest
 	
 Clean up tutor_controller#grade_status. Yuck! Do this after the new test above is added
-
-Refactor syntax_status: Don't use the rjs template! It is too complicated, see that way I did
-	grading. Have 'call_remote_periodically' check the condition 'checking...'		
 	
 Get rid of the string literals in UnitTestSpec
 
@@ -57,6 +54,8 @@ Don't run raw commands using `` instead move into some object
 
 
 Make compiler use pipes instead of files to use the compiler (Maybe faster? less code)
+	-You should also do the same thing for running unit tests! Open a pipe to the
+	-ruby interpreter and feed it the unit test src code using stdin
 
 
 #-------- Debatable ---------#		
@@ -95,3 +94,5 @@ Make compiler use pipes instead of files to use the compiler (Maybe faster? less
 #Add grade sheet display and page flow (view tutorial, view class grade_sheets, go home)
 #Add a scenario that checks for errors during grading. The view should display a message
 #	like: "Oh no! an error occured!"
+#Refactor syntax_status: Don't use the rjs template! It is too complicated, see that way I did
+#	grading. Have 'call_remote_periodically' check the condition 'checking...'		
