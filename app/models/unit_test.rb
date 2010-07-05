@@ -5,6 +5,10 @@ class UnitTest < ActiveRecord::Base
   
   validates_presence_of :src_language, :src_code
   
+  named_scope :written_in, lambda {|lang| {:conditions=>{:src_language=>lang}}}
+  
+  named_scope :for_exercise, lambda {|exercise_id| {:conditions=>{:exercise_id=>exercise_id}}}
+  
   def run_on(solution_code = nil)
     begin
       user_program_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')

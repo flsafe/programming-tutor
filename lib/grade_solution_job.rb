@@ -7,7 +7,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       template  = SolutionTemplate.for_exercise(exercise_id).written_in('c').first
       raise "Solution template not found" unless template
 
-      unit_test = UnitTest.find :first, :conditions=>['exercise_id=? AND src_language=?', exercise_id, 'rb']
+      unit_test = UnitTest.for_exercise(exercise_id).written_in('rb').first
       raise "Unit test not found" unless unit_test
     
       solution_code = template.fill_in(code)

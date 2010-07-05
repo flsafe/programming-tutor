@@ -42,7 +42,7 @@ describe GradeSolutionJob do
     
     before(:each) do
       SolutionTemplate.stub_chain(:for_exercise, :written_in).and_return([template])
-      UnitTest.stub(:find).and_return(unit_test)
+      UnitTest.stub_chain(:for_exercise, :written_in).and_return([unit_test])
       
       unit_test.stub(:run_on).and_return({:error => nil})
 
@@ -68,7 +68,9 @@ describe GradeSolutionJob do
     end
     
     it "gets the unit test associated with the exercise" do
-      UnitTest.should_receive(:find).with(:first, {:conditions=>['exercise_id=? AND src_language=?', exercise.id, 'rb']})
+      UnitTest.stub_chain(:for_exercise, :written_in).and_return([])
+      UnitTest.should_receive(:for_exercise).with(exercise.id).and_return(@mock = mock('scope'))
+      @mock.should_receive(:written_in).with('rb')
       job.perform
     end
     
