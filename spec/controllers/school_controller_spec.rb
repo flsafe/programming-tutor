@@ -20,7 +20,7 @@ describe SchoolController, "GET index" do
     
     it 'assigns a welcome message' do
       get :index
-      assigns[:welcome_message].should contain('To start things off')
+      assigns[:welcome_message].should =~ /to start things off/i
     end
   end
 end
