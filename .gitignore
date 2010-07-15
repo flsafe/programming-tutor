@@ -5,3 +5,4 @@ db/test.sqlite3-journal
 public/system/images
 *.log
 out-*
+.DS_Store
