@@ -1,5 +1,6 @@
 source "http://rubygems.org"
-gem 'rails'
+
+gem 'rails', '2.3.5'
 gem 'bundler'
 gem 'rspec'
 gem 'rspec-rails'
@@ -20,5 +21,3 @@ gem 'easy_roles'
 gem 'paperclip'
 gem 'ruby-debug'
 gem 'delayed_job'
-
-#gem 'webrat'
