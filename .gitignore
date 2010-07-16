@@ -6,3 +6,4 @@ public/system/images
 *.log
 out-*
 .DS_Store
+db/production.sqlite3

@@ -23,6 +23,8 @@ require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links wi
 # steps to use the XPath syntax.
 Capybara.default_selector = :css
 
+Capybara.default_wait_time = 18
+
 # If you set this to false, any error raised from within your app will bubble 
 # up to your step definition and out to cucumber unless you catch it somewhere
 # on the way. You can make Rails rescue errors and render error pages on a
@@ -33,11 +35,6 @@ Capybara.default_selector = :css
 # default production environment. It's not recommended to do this for all
 # of your scenarios, as this makes it hard to discover errors in your application.
 ActionController::Base.allow_rescue = false
-
-
-#Wait time
-Capybara.default_wait_time = 18
-
 
 # If you set this to true, each scenario will run in a database transaction.
 # You can still turn off transactions on a per-scenario basis, simply tagging 
@@ -52,12 +49,11 @@ Capybara.default_wait_time = 18
 # subsequent scenarios. If you do this, we recommend you create a Before
 # block that will explicitly put your database in a known state.
 Cucumber::Rails::World.use_transactional_fixtures = true
+
 # How to clean your database when transactions are turned off. See
 # http://github.com/bmabey/database_cleaner for more info.
-if defined?(ActiveRecord::Base)
-  begin
-    require 'database_cleaner'
-    DatabaseCleaner.strategy = :truncation
-  rescue LoadError => ignore_if_database_cleaner_not_present
-  end
-end
+require 'database_cleaner'
+DatabaseCleaner.strategy = :truncation
+
+
+
