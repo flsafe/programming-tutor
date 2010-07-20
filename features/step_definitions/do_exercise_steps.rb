@@ -8,6 +8,10 @@ When /^I fill in the text editor with "([^\"]*)"$/ do |code|
   fill_in("textarea_1", :with => code)
 end
 
+When /^The task is finished$/ do
+  Delayed::Worker.new.work_off 
+end
+
 Then /^I should see my code$/ do
   within(:css, "#frame_textarea_1") do
     page.should have_content(@code)
