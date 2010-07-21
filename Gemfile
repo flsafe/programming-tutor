@@ -3,6 +3,7 @@ source "http://rubygems.org"
 gem 'acts-as-taggable-on'
 gem 'authlogic'
 gem 'bundler'
+gem 'capistrano'
 gem 'capybara'
 gem 'cucumber', '0.6.2'         #Newer cucumber doesn't load all the gems
 gem 'cucumber-rails', '0.2.4'
