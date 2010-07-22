@@ -54,7 +54,7 @@ end
 namespace :gems do
   task :bundle_install, :roles=>:app do
     gems.symlink_shared_gems
-    run "cd #{release_path} && bundle install #{release_path}/vendor/gems"
+    run "cd #{release_path} && bundle install"
   end
   
   task :symlink_shared_gems, :roles=>:app do
