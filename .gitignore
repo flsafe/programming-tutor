@@ -7,3 +7,4 @@ public/system/images
 out-*
 .DS_Store
 db/production.sqlite3
+.bundle/environment.rb

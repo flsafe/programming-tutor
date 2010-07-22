@@ -117,3 +117,32 @@ Test gcc vs some smaller faster compiler
 #	like: "Oh no! an error occured!"
 #Refactor syntax_status: Don't use the rjs template! It is too complicated, see that way I did
 #	grading. Have 'call_remote_periodically' check the condition 'checking...'		
+
+
+#----- Using the site----#
+
+Exercise Set tags should be an aggregation of all the exercise tags
+
+Make sure you make the difference between a solution template and unit test. It to easy
+to put the .rb file in the solution template or the .c file in the unit test.
+
+The admin/show exercise page sucks. It is hard to read and the admin doesn't want to see
+the description they instead would like to see the set, and the set and exercise statistcs.
+
+The Overview page has an empty 'avg grade'. If there is no average grade, don't show that.
+
+The show/exercise page displays the discription twice! WTF?
+
+There is no text formatting in tutor/show. I can't read shit! Make sure that I can use either straight HTML
+or markup.
+
+The work deamon needs to be turned on by a capistrano task
+
+Delayed job failure "Could not generate tmp file for syntax check"
+ - Make sure that the tmp dir is writeable, maybe use /tmp instead? I think so
+ - Make sure the code creates the tmp/work dir if it does not exist
+
+Grade job solution returns an error, there is no logging describing why, need to add more logging
+
+#Use ree instead of 1.8.6
+# -followed the instructions in ree installer
