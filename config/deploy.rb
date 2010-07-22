@@ -53,7 +53,6 @@ end
 # Tasks that maintain the app gems between deployments
 namespace :gems do
   task :bundle_install, :roles=>:app do
-    gems.symlink_shared_gems
     run "cd #{release_path} && bundle install"
   end
   
