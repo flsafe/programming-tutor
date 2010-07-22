@@ -1,17 +1,9 @@
-#---
-# Excerpted from "Agile Web Development with Rails, 3rd Ed.",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material, 
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose. 
-# Visit http://www.pragmaticprogrammer.com/titles/rails3 for more book information.
-#---
-
 #-- User Names
-# deploy_user: The username used to login to the deploy server
+# user: the user on the server to login with
+# db_user: The app database user name
 #--
-set :db_user,     'blueberrytree'
-set :deploy_user, 'flicea'
+set :db_user, 'blueberrytree'
+set :user,    'flicea'
 
 #-- Repository info
 # scm_domain: Where is the repo located?
@@ -25,7 +17,7 @@ set :repository,    "#{scm_domain}:#{scm_user}/#{project_name}.git"
 #-- Where the application will be deployed
 set :domain, 'blueberrytree.ws'
 set :application_name, 'blueberrytree'
-set :deploy_to, "/home/#{deploy_user}/#{application_name}" 
+set :deploy_to, "/home/#{user}/#{application_name}" 
 
 # distribute your applications across servers (the instructions below put them
 # all on the same server, defined above as 'domain', adjust as necessary)
@@ -58,10 +50,33 @@ namespace :deploy do
   end
 end
 
+# Tasks that maintain the app gems between deployments
+namespace :gems do
+  task :bundle_install, :roles=>:app do
+    gems.symlink_shared_gems
+    run "bundle install #{release_path}/vendor/gems"
+  end
+  
+  task :symlink_shared_gems, :roles=>:app do
+    gems.create_gem_dir
+    run <<-CMD
+      rm -rf #{release_path}/vendor/gems &&
+      ln -nsf #{shared_path}/gems #{release}/vendor/gems
+    CMD
+  end
+  
+  task :create_gem_dir, :roles=>:app do
+    run "mkdir -p #{shared_path}/gems"
+  end
+end
+
+after "deploy:update_code", "gems:bundle_install"
+
+
 # optional task to reconfigure databases -- Not being used for now
-# after "deploy:update_code", :configure_database
-# desc "copy database.yml into the current release path"
-# task :configure_database, :roles => :app do
-#   db_config = "#{deploy_to}/config/database.yml"
-#   run "cp #{db_config} #{release_path}/config/database.yml"
-# end
+ # after "deploy:update_code", :configure_database
+ # desc "copy database.yml into the current release path"
+ # task :configure_database, :roles => :app do
+ #   db_config = "#{deploy_to}/config/database.yml"
+ #   run "cp #{db_config} #{release_path}/config/database.yml"
+ # end
