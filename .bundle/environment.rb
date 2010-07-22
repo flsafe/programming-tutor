@@ -175,7 +175,7 @@ module Bundler
   ENV_LOADED   = true
   LOCKED_BY    = '0.9.26'
   FINGERPRINT  = "f749945dc4e00ff83917615f359e8e905a8442f2"
-  HOME         = '/Users/flicea/.rvm/gems/ree-1.8.7-2010.02@rails2.3.5-ocuc/bundler'
+  HOME         = '/Users/flicea/Projects/blueberryrow/vendor/gems/bundler'
   AUTOREQUIRES = {:default=>[["ZenTest", false], ["rack", false], ["acts-as-taggable-on", false], ["authlogic", false], ["bundler", false], ["capistrano", false], ["capybara", false], ["cucumber", false], ["cucumber-rails", false], ["daemons", false], ["database_cleaner", false], ["delayed_job", false], ["easy_roles", false], ["factory_girl", false], ["nifty-generators", false], ["paperclip", false], ["rails", false], ["rspec", false], ["rspec-rails", false], ["ruby-debug", false], ["selenium-client", false], ["sqlite3-ruby", false], ["test-unit", false]]}
   SPECS        = [
         {:load_paths=>["/Users/flicea/.rvm/gems/ree-1.8.7-2010.02@global/gems/rake-0.8.7/lib"], :loaded_from=>"/Users/flicea/.rvm/gems/ree-1.8.7-2010.02@global/specifications/rake-0.8.7.gemspec", :name=>"rake"},
