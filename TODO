@@ -145,5 +145,7 @@ Delayed job failure "Could not generate tmp file for syntax check"
 
 Grade job solution returns an error, there is no logging describing why, need to add more logging
 
+Setup a mysql db for production
+
 #Use ree instead of 1.8.6
 # -followed the instructions in ree installer
