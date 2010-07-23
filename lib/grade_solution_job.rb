@@ -14,6 +14,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       results       = unit_test.run_on(solution_code)
 
       if results[:error]
+        Rails.logger.error(results[:error])
         post_result(results[:error], nil)
       else
         gs_id   = save_grade_sheet(results, code)
