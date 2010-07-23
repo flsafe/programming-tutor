@@ -33,8 +33,9 @@ role :db, domain, :primary => true
 # if (for example) you have locally installed gems or applications.  Note:
 # this needs to contain the full values for the variables set, not simply
 # the deltas.
-# default_environment['PATH']='<your paths>:/usr/local/bin:/usr/bin:/bin'
 # default_environment['GEM_PATH']='<your paths>:/usr/lib/ruby/gems/1.8'
+
+default_environment['PATH']='/usr/local/rvm/bin:/usr/local/bin:/usr/bin:/bin'
 
 # miscellaneous options
 set :deploy_via, :remote_cache
@@ -50,13 +51,6 @@ namespace :deploy do
   end
 end
 
-# Install gems 
-namespace :gems do
-  task :bundle_install, :roles=>:app do
-    run "cd #{release_path} && bundle install"
-  end
-end
-
 # Create a work directory were solutions and unit tests
 # are executed
 namespace :deploy do
@@ -66,9 +60,30 @@ namespace :deploy do
   end
 end
 
-after "deploy:update_code", "gems:bundle_install"
-after "deploy:update_code", "deploy:create_tmp"
 
+# Start the delayed_job daemon with
+# the same ruby that passenger is using
+namespace :deploy do
+  task :start_daemon do
+    run <<-CMD
+      cd #{release_path}      &&
+      killall delayed_job     &&
+      rvm ree-1.8.7           &&
+      RAILS_ENV=production script/delayed_job start
+    CMD
+  end
+end
+
+# Install gems 
+namespace :gems do
+  task :bundle_install, :roles=>:app do
+    run "cd #{release_path} && bundle install"
+  end
+end
+
+after "deploy:update_code", "deploy:create_tmp"
+after "deploy:update_code", "gems:bundle_install"
+after "deploy:update_code", "deploy:start_daemon"
 
 # optional task to reconfigure databases -- Not being used for now
  # after "deploy:update_code", :configure_database
