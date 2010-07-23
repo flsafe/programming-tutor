@@ -11,17 +11,17 @@ class UnitTest < ActiveRecord::Base
   
   def run_on(solution_code = nil)
     begin
-      user_program_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
-      unless Compiler.compile_to(solution_code, user_program_path)
+      exec_file_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
+      unless Compiler.compile_to(solution_code, exec_file_path)
         return {:error=>"The solution code did not compile"}
       end
     
-      unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, user_program_path)
-      unit_test_path     = user_program_path + '-unit-test'
+      unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, exec_file_path)
+      unit_test_path     = exec_file_path + '-unit-test'
       write_unit_test(unit_test_src_code, unit_test_path)
 
-      results_str  = execute_file(unit_test_path)
-      results_hash = YAML.load(results_str || "")
+      results_str        = execute_file(unit_test_path)
+      results_hash       = YAML.load(results_str || "")
       if error_results?(results_hash)
         return {:error=>"The solution template did not return a YAML result"}
       end
