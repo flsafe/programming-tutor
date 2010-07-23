@@ -35,9 +35,9 @@ Feature: Do exercise
 		And I am viewing the tutor page for "Pointer intro"
 		When I fill in the text editor with <code>
 		And I press "Check Syntax"
-		And The task is finished
 		Then I should see "checking..."
-		Then I should see <message> within "#message"
+		And The task is finished
+		And I should see <message> within "#message"
 		
 	Examples:
 		| code                           | message                     |
@@ -52,10 +52,10 @@ Feature: Do exercise
 		And I am viewing the tutor page for "RemoveChar"
 		When I fill in the text editor with "void remove_char(char c, char str[]){ int write_index = 0; int read_index  = 0; char curr_char; do{ curr_char = str[read_index]; if(curr_char != c){ str[write_index] = str[read_index]; write_index++;} read_index++; }while(curr_char);}"
 		And I press "Submit"
-		And The task is finished
 		Then I should see "grading..."
-		Then I should see "Remove all letters:" within "#grade_sheet"
-		Then I should see "Final Grade: 100" within "#grade_sheet"
+		And The task is finished
+		And I should see "Remove all letters:" within "#grade_sheet"
+		And I should see "Final Grade: 100" within "#grade_sheet"
 
 	@javascript
 	Scenario: The user submits a solution to an exercise, but the solution template crashes
@@ -65,7 +65,7 @@ Feature: Do exercise
 		And I am viewing the tutor page for "RemoveChar"
 		When I fill in the text editor with "void remove_char(char c, char str[]){ int write_index = 0; int read_index  = 0; char curr_char; do{ curr_char = str[read_index]; if(curr_char != c){ str[write_index] = str[read_index]; write_index++;} read_index++; }while(curr_char);}"
 		And I press "Submit"
-		And The task is finished
 		Then I should see "grading..."
-		Then I should see "Error"
+		And The task is finished
+		And I should see "Error"
 			

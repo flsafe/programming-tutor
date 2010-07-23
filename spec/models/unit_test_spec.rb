@@ -52,19 +52,19 @@ describe UnitTest do
     end
     
     context "the solution could not be compiled" do
-      it "returns the error message :did_not_compile" do
+      it "returns the error message describing the solution did not compile" do
         Compiler.stub(:compile_to).and_return(false)
         result = unit_test.run_on('code')
-        result[:error].should == :did_not_compile
+        result[:error].should =~ /did not compile/i
       end
     end
     
-    context "executing the unit test returns an empty string" do
+    context "the unit test returns an invalid YML result string" do
       it "returns the error message :no_result_returned" do
         ['shit#%$#$%crap', nil, false, ""].each do |t|
           unit_test.stub(:execute_file).and_return(t)
           result = unit_test.run_on('code')
-          result[:error].should == :no_result_returned
+          result[:error].should =~ /did not return/i
         end
       end
     end
@@ -73,7 +73,7 @@ describe UnitTest do
       it "returns the error message :no_result_returned" do
         unit_test.should_receive(:write_unit_test).and_raise("A Mock Exception")
         result = unit_test.run_on('code')
-        result[:error].should == :no_result_returned
+        result[:error].should =~ /exception/i
       end
     end
   end

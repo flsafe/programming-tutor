@@ -13,22 +13,22 @@ class UnitTest < ActiveRecord::Base
     begin
       user_program_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
       unless Compiler.compile_to(solution_code, user_program_path)
-        return {:error=>:did_not_compile}
+        return {:error=>"The solution code did not compile"}
       end
     
       unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, user_program_path)
       unit_test_path     = user_program_path + '-unit-test'
       write_unit_test(unit_test_src_code, unit_test_path)
 
-      results      = execute_file(unit_test_path)
-      results_hash = YAML.load(results).with_indifferent_access
+      results_str  = execute_file(unit_test_path)
+      results_hash = YAML.load(results_str || "")
       if error_results?(results_hash)
-        raise "The unit test did not return any valid results!"
+        return {:error=>"The solution template did not return a YAML result"}
       end
-   
-      results_hash
-    rescue
-      return {:error=>:no_result_returned}
+      
+      results_hash.with_indifferent_access
+    rescue Exception => e
+      return {:error=>"Unexpected exception: #{e.message}"}
     end
   end
   
@@ -57,17 +57,11 @@ class UnitTest < ActiveRecord::Base
   end
   
   def error_results?(results)
-    #These are exceptional cases caused by
-    #the unit test crashing and returning
-    #nonsense.
-    case results
-      when !results                then true
-      when results.blank?          then true 
-      when !results[:grade]        then true
-      when results[:grade].blank?  then true
-      when !results[:tests]        then true
-      when results[:tests].blank?  then true
-    end
+    not valid_results?(results)
+  end
+  
+  def valid_results?(results)
+    results && ( not results[:grade].blank?) && ( not results[:tests].blank?)
   end
   
    def work_dir
