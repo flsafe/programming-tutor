@@ -141,6 +141,7 @@ The work deamon needs to be turned on by a capistrano task
 Delayed job failure "Could not generate tmp file for syntax check"
  - Make sure that the tmp dir is writeable, maybe use /tmp instead? I think so
  - Make sure the code creates the tmp/work dir if it does not exist
+ - Have capistrano create the work dir, and set the correct priviliages
 
 Grade job solution returns an error, there is no logging describing why, need to add more logging
 
