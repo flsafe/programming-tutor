@@ -50,26 +50,24 @@ namespace :deploy do
   end
 end
 
-# Tasks that maintain the app gems between deployments
+# Install gems 
 namespace :gems do
   task :bundle_install, :roles=>:app do
     run "cd #{release_path} && bundle install"
   end
-  
-  task :symlink_shared_gems, :roles=>:app do
-    gems.create_gem_dir
-    run <<-CMD
-      rm -rf #{release_path}/vendor/gems &&
-      ln -nsf #{shared_path}/gems #{release_path}/vendor/gems
-    CMD
-  end
-  
-  task :create_gem_dir, :roles=>:app do
-    run "mkdir -p #{shared_path}/gems"
+end
+
+# Create a work directory were solutions and unit tests
+# are executed
+namespace :deploy do
+  task :create_tmp, :roles=>:app do
+    run "mkdir -p #{release_path}/tmp/work"
+    run "chmod -R o+rwx #{release_path}/tmp"
   end
 end
 
 after "deploy:update_code", "gems:bundle_install"
+after "deploy:update_code", "deploy:create_tmp"
 
 
 # optional task to reconfigure databases -- Not being used for now
