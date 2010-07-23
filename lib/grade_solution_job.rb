@@ -20,6 +20,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
         post_result(nil, gs_id)
       end
     rescue Exception => e
+      Rails.logger.error(e.message)
       post_result(e.message)
     end
   end
