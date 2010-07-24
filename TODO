@@ -1,6 +1,15 @@
 
 #-------- Next TODO --------#
 
+Exercises aren't being removed from the overview after they are done.
+
+Grading an exercise that does not compile returns an error. It should
+ instead describe that the solution did not compile. 
+
+Can't access the tutorials.
+
+Get rid of the flashes, they don't work right
+
 Write an exercise to show off
 
 UnitTest needs to make sure to execute the user solutions in a sandbox
@@ -136,16 +145,19 @@ The show/exercise page displays the discription twice! WTF?
 There is no text formatting in tutor/show. I can't read shit! Make sure that I can use either straight HTML
 or markup.
 
-The work deamon needs to be turned on by a capistrano task
 
-Delayed job failure "Could not generate tmp file for syntax check"
- - Make sure that the tmp dir is writeable, maybe use /tmp instead? I think so
- - Make sure the code creates the tmp/work dir if it does not exist
- - Have capistrano create the work dir, and set the correct priviliages
-
-Grade job solution returns an error, there is no logging describing why, need to add more logging
 
 Setup a mysql db for production
 
 #Use ree instead of 1.8.6
 # -followed the instructions in ree installer
+
+
+#The work deamon needs to be turned on by a capistrano task
+
+#Delayed job failure "Could not generate tmp file for syntax check"
+# - Make sure that the tmp dir is writeable, maybe use /tmp instead? I think so
+# - Make sure the code creates the tmp/work dir if it does not exist
+# - Have capistrano create the work dir, and set the correct priviliages
+
+#Grade job solution returns an error, there is no logging describing why, need to add more logging
