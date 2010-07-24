@@ -47,7 +47,7 @@ set :scm, 'git'
 set :branch, 'master'
 set :scm_verbose, true
 set :use_sudo, false
-set :dj_ruby_path, 
+set :dj_ruby_path, '/opt/ruby-enterprise-1.8.7-2010.02/bin/'
 set :rails_env, 'production'
 
 # task which causes Passenger to initiate a restart
