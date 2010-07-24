@@ -12,6 +12,8 @@ Get rid of the flashes, they don't work right
 
 Write an exercise to show off
 
+Organize the gems into groups
+
 UnitTest needs to make sure to execute the user solutions in a sandbox
  - Should throw some exception if the sandbox is not present
  - Dont' forget to add tests to make sure a sandbox is being used.
