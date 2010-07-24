@@ -1,3 +1,5 @@
+#Based on 'Agile Web Development With Ruby On Rails'
+
 #-- User Names
 # user: the user on the server to login with
 # db_user: The app database user name
@@ -33,9 +35,11 @@ role :db, domain, :primary => true
 # if (for example) you have locally installed gems or applications.  Note:
 # this needs to contain the full values for the variables set, not simply
 # the deltas.
+
+# We are using bundler for the gem dependencies.
 # default_environment['GEM_PATH']='<your paths>:/usr/lib/ruby/gems/1.8'
 
-default_environment['PATH']='/usr/local/rvm/bin:/usr/local/bin:/usr/bin:/bin'
+default_environment['PATH']='/usr/local/bin:/usr/bin:/bin'
 
 # miscellaneous options
 set :deploy_via, :remote_cache
@@ -43,6 +47,8 @@ set :scm, 'git'
 set :branch, 'master'
 set :scm_verbose, true
 set :use_sudo, false
+set :dj_ruby_path, 
+set :rails_env, 'production'
 
 # task which causes Passenger to initiate a restart
 namespace :deploy do
@@ -52,7 +58,7 @@ namespace :deploy do
 end
 
 # Create a work directory were solutions and unit tests
-# are executed
+# are executed.
 namespace :deploy do
   task :create_tmp, :roles=>:app do
     run "mkdir -p #{release_path}/tmp/work"
@@ -60,30 +66,44 @@ namespace :deploy do
   end
 end
 
-
-# Start the delayed_job daemon with
-# the same ruby that passenger is using
-namespace :deploy do
-  task :start_daemon do
-    run <<-CMD
-      cd #{release_path}      &&
-      killall delayed_job     &&
-      rvm ree-1.8.7           &&
-      RAILS_ENV=production script/delayed_job start
-    CMD
-  end
-end
-
-# Install gems 
+# Install gems using bundler
 namespace :gems do
   task :bundle_install, :roles=>:app do
     run "cd #{release_path} && bundle install"
   end
 end
 
-after "deploy:update_code", "deploy:create_tmp"
+# Start delayed_job in the context of the
+# bundler gems.
+namespace :delayed_job do
+  desc "Start delayed_job process" 
+  task :start, :roles => :app do
+    # Only one delayed job daemon at a time. Kill the
+    # daemons that may be running from the previous deployment.
+    run "( pidof delayed_job && kill `pidof delayed_job`) || true"
+    
+    # Run delayed job with the same ruby as Passenger.
+    run "cd #{current_path}; bundle exec env RAILS_ENV=#{rails_env} #{dj_ruby_path}/ruby script/delayed_job start" 
+  end
+
+  desc "Stop delayed_job process" 
+  task :stop, :roles => :app do
+    run "cd #{current_path}; RAILS_ENV=#{rails_env} script/delayed_job stop" 
+  end
+
+  desc "Restart delayed_job process" 
+  task :restart, :roles => :app do
+    delayed_job.stop
+    delayed_job.start
+  end
+end
+
+after "deploy:start", "delayed_job:start" 
+after "deploy:stop", "delayed_job:stop" 
+after "deploy:restart", "delayed_job:restart" 
+
 after "deploy:update_code", "gems:bundle_install"
-after "deploy:update_code", "deploy:start_daemon"
+after "deploy:update_code", "deploy:create_tmp"
 
 # optional task to reconfigure databases -- Not being used for now
  # after "deploy:update_code", :configure_database
