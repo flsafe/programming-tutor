@@ -1,7 +1,7 @@
 class ExercisesController < ApplicationController
   
   before_filter :authorize
-  before_filter :check_current_user_is_admin, :except=>[:show, :user_index]
+  before_filter :check_current_user_is_admin, :except=>[:show, :show_tutorial, :user_index]
   
   # GET /exercises
   # GET /exercises.xml
