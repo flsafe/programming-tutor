@@ -3,10 +3,7 @@
 
 Exercises aren't being removed from the overview after they are done.
 
-Grading an exercise that does not compile returns an error. It should
- instead describe that the solution did not compile. 
-
-Can't access the tutorials.
+Navigation menu is shown when 'create user' fails
 
 Get rid of the flashes, they don't work right
 
@@ -161,3 +158,8 @@ Setup a mysql db for production
 # - Have capistrano create the work dir, and set the correct priviliages
 
 #Grade job solution returns an error, there is no logging describing why, need to add more logging
+
+# Grading an exercise that does not compile returns an error. It should
+# instead describe that the solution did not compile. 
+
+# Can't access the tutorials.
