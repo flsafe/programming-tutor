@@ -55,7 +55,7 @@ class TutorController < ApplicationController
         if @status == :job_in_progress
           render :text=>'grading...'
         elsif @status == :job_error
-          render :text=> Rails.env.production? ? "Oh no! An error occured! Try again a bit later!" : "Error: #{@result.error_message}"
+          render :text=> "Oops! Error: #{@result.error_message}"
         elsif @status == :job_done
           render :partial=>'grade_sheet', :layout=>false
         else
