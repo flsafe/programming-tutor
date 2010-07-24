@@ -145,13 +145,11 @@ The show/exercise page displays the discription twice! WTF?
 There is no text formatting in tutor/show. I can't read shit! Make sure that I can use either straight HTML
 or markup.
 
-
-
 Setup a mysql db for production
+
 
 #Use ree instead of 1.8.6
 # -followed the instructions in ree installer
-
 
 #The work deamon needs to be turned on by a capistrano task
 
