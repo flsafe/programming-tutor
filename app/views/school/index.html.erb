@@ -7,7 +7,7 @@
 				<span class="exercise_set_statistics">
 					<%=h "#{ex.completed_users.count} users, #{ex.average_grade} avg grade"%>
 				</span>
-					<%= "My Grade #{current_user.grade_for? ex}" if current_user.grade_for?(ex)%>
+					<%=h "My Grade #{current_user.grade_for? ex}" if current_user.grade_for?(ex)%>
 			</li>
 		<% end %>
 	</ul>

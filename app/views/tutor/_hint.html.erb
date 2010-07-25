@@ -1,4 +1,4 @@
 <%= link_to_function "Show Hint #{hint_counter + 1}", :id=>"hint#{hint_counter}" do |page| 
-		page.insert_html :bottom, "hints", "<p>#{h(hint.text)}</p>"
+		page.insert_html :bottom, "hints", "#{ hint.text }"
 		page.remove "hint#{hint_counter}"
-end %>
+end %>&nbsp;&nbsp;&nbsp;
