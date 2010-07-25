@@ -1,11 +1,13 @@
 
 #-------- Next TODO --------#
 
-Exercises aren't being removed from the overview after they are done.?
+? Exercises aren't being removed from the overview after they are done. ?
+
+Setup a production db
 
 Navigation menu is shown when 'create user' fails
 
-Get rid of the flashes, they don't work right
+
 
 Write an exercise to show off
 
@@ -163,3 +165,5 @@ Setup a mysql db for production
 # instead describe that the solution did not compile. 
 
 # Can't access the tutorials.
+
+#Get rid of the flashes, they don't work right

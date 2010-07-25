@@ -24,7 +24,6 @@ class TutorController < ApplicationController
         enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
         @status = :job_enqueued
         clear_current_exercise
-        flash[:notice] = "We are grading your solution! Please wait a moment."
       else
         @status = :duplicate_job
       end
