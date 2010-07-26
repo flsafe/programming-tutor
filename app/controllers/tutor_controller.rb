@@ -2,10 +2,6 @@ class TutorController < ApplicationController
   
   before_filter :authorize
   
-  def confirm
-    @exercise = Exercise.find_by_id(params[:id])
-  end
-  
   def show
     if no_current_exercise_or_show_current_exercise?
       @exercise = Exercise.find_by_id params[:id]

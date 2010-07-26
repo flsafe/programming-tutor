@@ -6,5 +6,5 @@
 	<%=h @exercise.completed_users.count%> users, <%=h @exercise.average_grade %> avg grade, My Grade: <%= current_user.grade_for?(@exercise) %>
 </span><br/>
 
-<%= link_to "Start Exercise", {:controller=>:tutor, :action=>:confirm, :id=>@exercise}%> | 
+<%= link_to "Start Exercise", :controller=>:tutor, :action=>:show, :id=>@exercise%> | 
 <%= link_to 'Edit', edit_exercise_path(@exercise) %>

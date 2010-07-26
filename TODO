@@ -5,6 +5,8 @@
 
 Setup a production db
 
+Add spinner
+
 Navigation menu is shown when 'create user' fails
 
 Write an exercise to show off
@@ -24,7 +26,6 @@ Don't be lazy with your model associations. You don't have a delete policy in th
 
 The website is slow
 	-Don't include prototype and text_edit_area in every page!
-
 
 The grade sheets should show the solution source code.
 
