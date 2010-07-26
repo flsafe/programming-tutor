@@ -66,6 +66,8 @@ Implement the following convention for all unit tests
 					
 #-------- Refactor ----------#
 
+Split sytax check and submit buttons from the text editor
+
 ? Should GradeSolutionResult and SyntaxCheckResult be consolidated somehow?
  - Place SyntaxCheckResult#get_result into SyntaxCheckJob.get_result
  - Place GradeSolutionResult#get_result into GradeSolutionJob.get_result

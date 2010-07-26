@@ -4,4 +4,5 @@ module ApplicationHelper
   def spinner
     image_tag 'loading.gif', :id=>'spinner', :style=>"display:none;"
   end
+
 end

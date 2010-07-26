@@ -23,9 +23,9 @@
 				          $('textarea_1').setValue(editAreaLoader.getValue('textarea_1'));"%>
 				
 	<%= periodically_call_remote :update=>:message,
-														 :url=>{:action=>'syntax_status', :id=>@exercise.id}, 
-														 :condition=>"/checking/.test( $('message').innerHTML )",
-														 :after=>"Element.hide('spinner')"%>
+				:url=>{:action=>'syntax_status', :id=>@exercise.id}, 
+				:condition=>"/checking/.test( $('message').innerHTML )",
+				:complete=>"Element.hide('spinner')"%>
 
 	<%= submit_tag "Submit Solution" %>
 <% end %>
