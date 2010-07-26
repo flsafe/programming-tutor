@@ -1,11 +1,13 @@
 
 #-------- Next TODO --------#
 
+UnitTest needs to make sure to execute the user solutions in a sandbox
+ - Should throw some exception if the sandbox is not present
+ - Dont' forget to add tests to make sure a sandbox is being used.
+
 ? Exercises aren't being removed from the overview after they are done. ?
 
 Setup a production db
-
-Add spinner
 
 Navigation menu is shown when 'create user' fails
 
@@ -13,9 +15,7 @@ Write an exercise to show off
 
 Organize the gems into groups
 
-UnitTest needs to make sure to execute the user solutions in a sandbox
- - Should throw some exception if the sandbox is not present
- - Dont' forget to add tests to make sure a sandbox is being used.
+
 
 Some of the user executable stdout stuff is eventually displayed to the in the
 	html. Make sure that the user output is always escaped in the view and in the
@@ -168,3 +168,5 @@ Setup a mysql db for production
 # Can't access the tutorials.
 
 #Get rid of the flashes, they don't work right
+
+#Add spinner
