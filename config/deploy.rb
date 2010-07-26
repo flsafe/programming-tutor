@@ -39,7 +39,7 @@ role :db, domain, :primary => true
 # We are using bundler for the gem dependencies.
 # default_environment['GEM_PATH']='<your paths>:/usr/lib/ruby/gems/1.8'
 
-default_environment['PATH']='/usr/local/bin:/usr/bin:/bin'
+default_environment['PATH']='/sbin/:/usr/local/bin:/usr/bin:/bin'
 
 # miscellaneous options
 set :deploy_via, :remote_cache
