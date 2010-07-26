@@ -8,5 +8,4 @@
 <%= periodically_call_remote :update=>:message,
 			:url=>{:action=>'grade_status', :id=>@exercise.id}, 
 			:condition=>"/grading/i.test($('message').innerHTML)",
-			:complete=>"Element.hide('bar');
-			            Element.show('tutorial')"%>
+			:complete=>"if( ! xhr.resultText.match(/grading/i) ){ Element.hide('bar'); Element.show('tutorial');}"%>
