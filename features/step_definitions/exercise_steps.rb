@@ -14,11 +14,11 @@ Given /^"([^\"]*)" has the grades "([^\"]*)"$/ do |exercise_title, grades|
 end
 
 Given /^the exercise "([^\"]*)" has the solution template "([^\"]*)" and the unit test "([^\"]*)"$/ do |exercise_title, template, unit_test|
-  f = File.open("test/fixtures/code/#{template}", 'r')
+  f = File.open("content/#{template}", 'r')
   template = f.read
   f.close
   
-  f = File.open("test/fixtures/code/#{unit_test}", 'r')
+  f = File.open("content/#{unit_test}", 'r')
   unit_test = f.read
   f.close
   

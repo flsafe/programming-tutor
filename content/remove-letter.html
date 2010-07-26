@@ -1,0 +1,66 @@
+
+<p>
+Have you ever used a string replace function?
+Or a string replace in your favorite programming language? Lets write a simple version of that
+function to get warmed up.
+</p>
+
+<p>
+Consider a function that takes two arguments. The first argument is a char 'c'. The second is a
+char array 'str'. The function we are trying to write deletes all instances of 'c' in 'str'.
+</p>
+
+<p>For example:</p>
+<pre>
+	<b>Function Prototype:</b>
+	void remove_char(char, str);
+
+	<b>Example input/output:</b>
+	remove_char('c', 'acacac') => 'aaa'
+
+	remove_char('c', 'aaaac')  => 'aaaa'
+	
+	remove_char('c', 'abab')   => 'abab'
+</pre>
+
+<p>
+Not too bad eh? Well here is an extra constraint: The function 'remove_char' returns
+'void'. So your function must modify its second parameter 'str'. Good luck!
+</p>
+
+
+Hint 1:
+<p> Most people on their first try come up with an algorithm like this:</p>
+	  <pre>
+		for each letter L in str
+			if L equals C
+				shift everything to the right of L to the left by one
+		</pre>
+<p>
+	This is very inefficient and is O(n^2) in the worst case. You can do better! 
+	In fact how could you do this in linear time?
+</p>
+	
+	
+Hint 2:
+	<p>
+	Okay you say, how do I do it in linear time? Well... that's the subject
+	of the tutorial at the end of the exercise! But here is a hint:
+	</p>
+	
+		<p>Lets say you could allocate another array. Then the algorithm would be something like:</p>
+		<pre>
+			allocate array str_new
+			
+			for each letter L in str
+				if L is not equal to C
+					copy L into str_new
+		</pre>
+		
+		<p>			
+		Believe it or not you could do the same thing with only 'str'. In other words,
+		you can design an algorithm like the one above were 'str_new' is actually
+		just 'str'. No need for another array!
+		Can you figure out how?
+		</p>
+	    
