@@ -74,7 +74,7 @@ class RemoveLetterUnitTest
       p.close
       result
     else
-      exec("./<EXEC_NAME>")
+      exec("sandbox ./<EXEC_NAME>")
     end   
   end
   
