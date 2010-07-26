@@ -18,11 +18,16 @@
 	<%= submit_to_remote "check_syntax",'Check Syntax', 
 				:update=>:message,
 				:url=>{:action=>'check_syntax', :id=>@exercise},
-				:before=>"$('message').innerHTML = 'checking...';$('textarea_1').setValue(editAreaLoader.getValue('textarea_1'))"%>
+				:before=>"Element.show('spinner');
+									$('message').innerHTML = 'checking...';
+				          $('textarea_1').setValue(editAreaLoader.getValue('textarea_1'));"%>
+				
+	<%= periodically_call_remote :update=>:message,
+														 :url=>{:action=>'syntax_status', :id=>@exercise.id}, 
+														 :condition=>"/checking/.test( $('message').innerHTML )",
+														 :after=>"Element.hide('spinner')"%>
 
 	<%= submit_tag "Submit Solution" %>
 <% end %>
 
-<%= periodically_call_remote :update=>:message,
-														 :url=>{:action=>'syntax_status', :id=>@exercise.id}, 
-														 :condition=>"/checking/.test( $('message').innerHTML )"%>
+

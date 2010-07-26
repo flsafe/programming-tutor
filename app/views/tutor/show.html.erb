@@ -12,13 +12,15 @@ Time Remaining: <span id="timer">retrieving time...</span><br/>
 <div id="hints"></div>
 <%= render :partial=>'hint', :collection=>@exercise.hints %>
 
-<%
- templates = @exercise.solution_templates.written_in('c')
- prototype = templates.first.prototype if templates.first
-%>
+<% templates = @exercise.solution_templates.written_in('c')
+   prototype = templates.first.prototype if templates.first %>
 <%= render :partial => 'text_editor', :locals=>{:editor_content=>prototype} %>
 
-<div id="message"></div>
+
+<span id="message"></span>
+<%= spinner %>
+
+
 
 <!-- Polling for the grade results or syntax-->
 <div id="syntax_polling"></div> 

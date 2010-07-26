@@ -24,15 +24,6 @@ Feature: Exercise Set Recommendation
 		When I follow "ex1"
 		And I should see "Start Exercise"
 		
-	Scenario: A user follows an exercise in a recommended exercise set
-		Given I am logged in as the user "frank"
-		And there exists an exercise set "Linked List Basics" with "ex1" and "ex2"
-		And I am on my home page
-		And I follow "ex1"
-		And I follow "Start Exercise"
-		Then I should see "Are you sure you want to do this"
-		And I should see "Bring It On!"
-		
 		
 		
 
