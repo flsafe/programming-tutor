@@ -1,6 +1,6 @@
 <div id="message">Grading your solution...</div><br/>
 
-<%= image_tag 'grading.gif', :id=>'bar' %><br/><br/>
+<%= image_tag 'bar.gif', :id=>'bar' %><br/><br/>
 
 <%= link_to "Read Tutorial", {:controller=>:exercises, :action=>:show_tutorial, :id=>@exercise}, :id=>'tutorial', :style=>'display: none;' %> &nbsp;
 <%= link_to "Home", :controller=>:school %>
@@ -8,4 +8,4 @@
 <%= periodically_call_remote :update=>:message,
 			:url=>{:action=>'grade_status', :id=>@exercise.id}, 
 			:condition=>"/grading/i.test($('message').innerHTML)",
-			:complete=>"if( ! xhr.resultText.match(/grading/i) ){ Element.hide('bar'); Element.show('tutorial');}"%>
+			:complete=>"if( ! /grading/i.test($('message').innerHTML )){ Element.hide('bar');Element.show('tutorial'); }"%>

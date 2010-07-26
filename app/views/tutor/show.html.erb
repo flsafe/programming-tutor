@@ -16,5 +16,5 @@ Time Remaining: <span id="timer">retrieving time...</span><br/>
    prototype = templates.first.prototype if templates.first %>
 <%= render :partial => 'text_editor', :locals=>{:editor_content=>prototype} %>
 
-<span id="message"></span> <%= spinner %>
+<span id="message"></span> <%= image_tag 'spinner.gif', :id=>'spinner', :style=>"display:none;" %>
 

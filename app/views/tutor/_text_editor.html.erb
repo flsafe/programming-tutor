@@ -25,7 +25,7 @@
 	<%= periodically_call_remote :update=>:message,
 				:url=>{:action=>'syntax_status', :id=>@exercise.id}, 
 				:condition=>"/checking/.test( $('message').innerHTML )",
-				:complete=>"Element.hide('spinner')"%>
+				:complete=>"if( ! /checking/.test($('message').innerHTML) ){ Element.hide('spinner'); }"%>
 
 	<%= submit_tag "Submit Solution" %>
 <% end %>
