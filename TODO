@@ -4,6 +4,7 @@
 UnitTest needs to make sure to execute the user solutions in a sandbox
  - Should throw some exception if the sandbox is not present
  - Dont' forget to add tests to make sure a sandbox is being used.
+ - Write a sandbox unit test that should be tested on the 'test production' system
 
 ? Exercises aren't being removed from the overview after they are done. ?
 
