@@ -3,11 +3,11 @@ class Exercise < ActiveRecord::Base
   acts_as_taggable_on :algorithms, :data_structures
 
   has_many :figures
-  has_many :hints  
-  has_many :solution_templates
-  has_many :unit_tests
+  has_many :hints, :dependent=>:destroy
+  has_many :solution_templates, :dependent=>:destroy
+  has_many :unit_tests, :dependent=>:destroy
   has_many :completed_users, :through=>:grade_sheets, :source=>:user, :uniq=>true
-  has_many :grade_sheets, :after_add=>:update_stats
+  has_many :grade_sheets, :after_add=>:update_stats, :dependent=>:destroy
 
   belongs_to :exercise_set  
   
