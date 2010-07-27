@@ -11,7 +11,7 @@ gem 'daemons', '1.0.10'                               #Newer daemons crashes on 
 gem 'database_cleaner', :group=>:test
 gem 'delayed_job'
 gem 'easy_roles'
-gem 'factory_girl', :group=>:test
+gem 'factory_girl', :group=>[:test, :cucumber]
 gem 'mysql'
 gem 'nifty-generators', :group=>:development
 gem 'paperclip'
