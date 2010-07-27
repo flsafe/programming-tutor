@@ -2,13 +2,12 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
-    <title><%= h(yield(:title) || "Blueberry Row") %></title>
+    <title><%= h(yield(:title) || "Blueberry Tree") %></title>
     <%= stylesheet_link_tag 'application' %>
     <%= yield(:head) %>
   </head>
   <body>
     <div id="container">
-			<%= request.request_uri %>
 			<%= render :partial=>'layouts/menu' %>
       <%- flash.each do |name, msg| -%>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
