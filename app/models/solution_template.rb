@@ -10,7 +10,8 @@ class SolutionTemplate < ActiveRecord::Base
   attr_reader :filled_in_src_code
   
   def fill_in(solution_code)
-    @filled_in_src_code = src_code.sub(/\/\*start_prototype\*\/(.*)\/\*end_prototype\*\//m, solution_code)
+    solution_code = solution_code.gsub(/\\/, '\\\\\\\\')
+    @filled_in_src_code = src_code.gsub(/\/\*start_prototype\*\/(.*)\/\*end_prototype\*\//m, solution_code)
   end
   
   def prototype
