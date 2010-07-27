@@ -1,3 +1,7 @@
+<% content_for :head do %>
+	<%= javascript_include_tag 'prototype' %>
+<% end %>
+
 <% form_for(exercise, :html=>{:multipart=>true}) do |f| %>
 			
   <%= f.error_messages %>
