@@ -50,7 +50,7 @@ Feature: Do exercise
 		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And I am viewing the tutor page for "RemoveChar"
-		When I fill in the text editor with "void remove_char(char c, char str[]){ int write_index = 0; int read_index  = 0; char curr_char; do{ curr_char = str[read_index]; if(curr_char != c){ str[write_index] = str[read_index]; write_index++;} read_index++; }while(curr_char);}"
+		When I fill in the text editor with the solution "remove-letter-solution.c"
 		And I press "Submit"
 		Then I should see "grading..."
 		And The task is finished
@@ -63,7 +63,7 @@ Feature: Do exercise
 		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
 		And the exercise "RemoveChar" has the solution template "crap.c" and the unit test "remove-letter-unit-test.rb"
 		And I am viewing the tutor page for "RemoveChar"
-		When I fill in the text editor with "void remove_char(char c, char str[]){ int write_index = 0; int read_index  = 0; char curr_char; do{ curr_char = str[read_index]; if(curr_char != c){ str[write_index] = str[read_index]; write_index++;} read_index++; }while(curr_char);}"
+		When I fill in the text editor with the solution "remove-letter-solution.c"
 		And I press "Submit"
 		Then I should see "grading..."
 		And The task is finished

@@ -1,3 +1,5 @@
+require 'eregex'
+
 Given /^I am viewing the tutor page for "([^\"]*)"$/ do | title |
   ex = Exercise.find_by_title title
   visit "/tutor/show/#{ex.id}"
@@ -7,6 +9,14 @@ When /^I fill in the text editor with "([^\"]*)"$/ do |code|
   uncheck('edit_area_toggle_checkbox_textarea_1')
   fill_in("textarea_1", :with => code)
 end
+
+When /^I fill in the text editor with the solution "([^\"]*)"$/ do |filename|
+  f    = open("content/#{filename}", 'r')
+  uncheck('edit_area_toggle_checkbox_textarea_1')
+  fill_in("textarea_1", :with => f.read)
+  f.close
+end
+
 
 When /^The task is finished$/ do
   Delayed::Worker.new.work_off 
