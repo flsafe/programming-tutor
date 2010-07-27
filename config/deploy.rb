@@ -69,7 +69,7 @@ end
 # Install gems using bundler
 namespace :gems do
   task :bundle_install, :roles=>:app do
-    run "cd #{release_path} && bundle install"
+    run "cd #{release_path} && bundle install --without test --without development"
   end
 end
 

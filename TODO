@@ -1,11 +1,7 @@
 
 #-------- Next TODO --------#
 
-Add delemiter to denote what part of stdout to take into account
- - I no longer show what the user's solution returns.
- - Some of the user executable stdout stuff is eventually displayed to the in the
-	 html. Make sure that the user output is always escaped in the view and in the
-	 appropriate model. 
+SELINUX into enforceing mode
 
 UnitTest needs to make sure to execute the user solutions in a sandbox
  - Should throw some exception if the sandbox is not present
@@ -22,9 +18,6 @@ Organize the gems into groups
 
 Don't be lazy with your model associations. You don't have a delete policy in the
  models when deleting things like gradesheets, exercises, exercise sets, etc...
-
-The website is slow
-	-Don't include prototype and text_edit_area in every page!
 
 The grade sheets should show the solution source code.
 
@@ -171,3 +164,12 @@ Setup a mysql db for production
 #Add spinner
 
 #Setup a production db
+
+#The website is slow
+#	-Don't include prototype and text_edit_area in every page!
+
+#Add delemiter to denote what part of stdout to take into account
+# - I no longer show what the user's solution returns.
+# - Some of the user executable stdout stuff is eventually displayed to the in the
+#	 html. Make sure that the user output is always escaped in the view and in the
+#	 appropriate model. 
