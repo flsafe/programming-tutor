@@ -2,6 +2,10 @@
 #-------- Next TODO --------#
 
 Add delemiter to denote what part of stdout to take into account
+ - I no longer show what the user's solution returns.
+ - Some of the user executable stdout stuff is eventually displayed to the in the
+	 html. Make sure that the user output is always escaped in the view and in the
+	 appropriate model. 
 
 UnitTest needs to make sure to execute the user solutions in a sandbox
  - Should throw some exception if the sandbox is not present
@@ -10,17 +14,11 @@ UnitTest needs to make sure to execute the user solutions in a sandbox
 
 ? Exercises aren't being removed from the overview after they are done. ?
 
-
-
 Navigation menu is shown when 'create user' fails
 
 Write an exercise to show off
 
 Organize the gems into groups
-
-Some of the user executable stdout stuff is eventually displayed to the in the
-	html. Make sure that the user output is always escaped in the view and in the
-	appropriate model. 
 
 Don't be lazy with your model associations. You don't have a delete policy in the
  models when deleting things like gradesheets, exercises, exercise sets, etc...
