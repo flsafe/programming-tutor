@@ -3,15 +3,15 @@
 <table id="grade_sheet">
 	<tr>
 		<th>Unit Test</th>
-		<th>Expected Output</th>
-		<th>Got</th>
+		<th>Expected</th>
+		<th>Result</th>
 		<th>Points</th>
 	</tr>
 		<% results[:tests].each_pair do |test_title, test_results| %>
 			<tr>
 				<td> <%=h test_title%></td> 
 				<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%>  </td>
-				<td> <%=h test_results[:got].blank? ? '""' : test_results[:got] %>           </td>
+				<td><%=h test_results[:points] != 0 ? "Nice!" : "Oops" %></td>
 				<td> <%=h test_results[:points] %>                                           </td>
 			</tr>
 		<% end %>

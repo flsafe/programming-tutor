@@ -10,7 +10,7 @@ UnitTest needs to make sure to execute the user solutions in a sandbox
 
 ? Exercises aren't being removed from the overview after they are done. ?
 
-Setup a production db
+
 
 Navigation menu is shown when 'create user' fails
 
@@ -171,3 +171,5 @@ Setup a mysql db for production
 #Get rid of the flashes, they don't work right
 
 #Add spinner
+
+#Setup a production db
