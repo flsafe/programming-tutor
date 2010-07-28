@@ -2,6 +2,7 @@
 #-------- Next TODO --------#
 
 SELINUX into enforceing mode
+	- Do this right before going public to get as much into the audit log as possible
 
 UnitTest needs to make sure to execute the user solutions in a sandbox
  - Should throw some exception if the sandbox is not present
@@ -13,9 +14,6 @@ UnitTest needs to make sure to execute the user solutions in a sandbox
 Navigation menu is shown when 'create user' fails
 
 Write an exercise to show off
-
-Don't be lazy with your model associations. You don't have a delete policy in the
- models when deleting things like gradesheets, exercises, exercise sets, etc...
 
 The grade sheets should show the solution source code.
 
@@ -132,13 +130,13 @@ the description they instead would like to see the set, and the set and exercise
 
 The Overview page has an empty 'avg grade'. If there is no average grade, don't show that.
 
-The show/exercise page displays the discription twice! WTF?
 
-There is no text formatting in tutor/show. I can't read shit! Make sure that I can use either straight HTML
-or markup.
+#The show/exercise page displays the discription twice! WTF?
 
-Setup a mysql db for production
+#There is no text formatting in tutor/show. I can't read shit! Make sure that I can use either straight HTML
+#or markup.
 
+#Setup a mysql db for production
 
 #Use ree instead of 1.8.6
 # -followed the instructions in ree installer
@@ -173,3 +171,6 @@ Setup a mysql db for production
 #	 appropriate model. 
 
 #Organize the gems into groups
+
+#Don't be lazy with your model associations. You don't have a delete policy in the
+# models when deleting things like gradesheets, exercises, exercise sets, etc...
