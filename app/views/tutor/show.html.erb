@@ -5,16 +5,9 @@
 <% title 'Blueberry Tree - You can do it!' %>
 
 <div id="content">
-	
-	<div id="exercise_problem_text" class="">
-		<h3><%= @exercise.title %></h3>	
-		<%=@exercise.problem%>
-		<div id="hints"></div>
-		<%= render :partial=>'hint', :collection=>@exercise.hints %>
-	</div>
+		Time Remaining: <span id="timer">retrieving time...</span><br/>	
+		<div id="left_content">
 
-	<div id="right_content">
-		Time Remaining: <span id="timer">retrieving time...</span><br/>
 		<%= periodically_call_remote :update=>:timer,
 					:frequency=>2,
 		 			:url=>{:action=>:get_time_remaining, :id=>@exercise},
@@ -27,8 +20,12 @@
 
 		<span id="message"></span> <%= image_tag 'spinner.gif', :id=>'spinner', :style=>"display:none;" %>
 	</div> <!-- end right content -->
-	
-	<div id="footer">
-        <p>Copyright &copy; CozySystems LLC</p>
-   </div>
+
+	<div id="exercise_problem_text" class="">
+		<h3><%= @exercise.title %></h3>	
+		<%= link_to_function "Show In Separate Window", "window.open('#{url_for :action=>:show_exercise_text, :id=>@exercise}','#{@exercise.title}', 'width=500,height=600,toolbar=no,location=no,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes'); Element('exercise_problem_text').hide()" %>
+		<%=@exercise.problem%>
+		<div id="hints"></div>
+		<%= render :partial=>'hint', :collection=>@exercise.hints %>
+	</div>
 </div> <!-- end content -->

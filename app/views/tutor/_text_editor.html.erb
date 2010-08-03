@@ -14,7 +14,7 @@
 
 <% form_tag url_for(:action=>:grade, :id=>@exercise), :id=>'editor' do %>
 
-	<%= text_area_tag :textarea_1, editor_content || "", :name=>"code", :rows=>34, :cols=>81 %>
+	<%= text_area_tag :textarea_1, editor_content || "", :name=>"code", :rows=>34, :cols=>74 %>
 	
 	<%= submit_to_remote "check_syntax",'Check Syntax', 
 				:update=>:message,

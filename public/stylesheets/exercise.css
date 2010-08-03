@@ -1,29 +1,28 @@
 #wrap{
-
+  margin-bottom: 10px;
 }
 
 #wrap h1{
-  margin:0px;
   width: 100%;
   border-bottom: 4px solid #555;
   color: black;
+  font-size: 14px;
 }
 
 #exercise_problem_text {
-  width: 30%;
-  height: 575px;
+  width: auto;
+  height: 488px;
+  padding:2px;
   border:1px solid #ccc;
   background:#f2f2f2;
-  padding:5px;
   overflow:auto;
-  float: left;
 }
 
-#right_content{
-  margin-left:330px;
-  margin-top: 10px;
+#left_content{
+  float: left;
 }
 
 #footer{
   text-align:center;
+  margin-top: 50px;
 }

@@ -13,6 +13,10 @@ class TutorController < ApplicationController
     end
   end
   
+  def show_exercise_text
+    @exercise = Exercise.find_by_id(params[:id])
+  end
+  
   def grade
     @exercise = Exercise.find_by_id params[:id]
     if @exercise

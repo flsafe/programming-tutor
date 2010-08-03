@@ -45,14 +45,16 @@ describe TutorController do
     end
     
     context "the current user is already doing an exercise" do
-      it "does not set the current exercise" do
+      before(:each) do
         controller.stub('current_user_doing_exercise?').and_return('100')
+      end
+      
+      it "does not set the current exercise" do
         controller.should_not_receive(:set_current_exercise)
         get 'show'
       end
       
       it "redirects if show exercise that is not the current exercise" do
-        controller.stub('current_user_doing_exercise?').and_return('100')
         get 'show', :id=>1001
         response.should redirect_to(:action=>:already_doing_exercise, :id=>100)
       end
@@ -62,6 +64,19 @@ describe TutorController do
         get 'show', :id=>stub_exercise
         response.should_not render_template('tutor/already_doing_exercise')
       end
+    end
+  end
+  
+  describe "get show_exercise_text" do
+    
+    it "assigns the exercise to show the problem text for" do
+      get 'show_exercise_text', :id=>stub_exercise
+      assigns[:exercise].should == stub_exercise
+    end
+    
+    it "renders the exercise text" do
+      get 'show_exercise_text'
+      response.should render_template 'show_exercise_text'
     end
   end
   

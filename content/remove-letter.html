@@ -16,6 +16,7 @@ char array 'str'. The function we are trying to write deletes all instances of '
 <code>void remove_char(char,str);</code>
 
 <h5>Example input/output:</h5>
+<pre>
 <code>
 remove_char('c', 'acacac') => 'aaa'
 
@@ -23,7 +24,7 @@ remove_char('c', 'aaaac')  => 'aaaa'
 	
 remove_char('c', 'abab')   => 'abab'
 </code>
-
+<pre>
 
 <p>
 Not too bad eh? Well here is an extra constraint: The function 'remove_char' returns
@@ -31,17 +32,16 @@ Not too bad eh? Well here is an extra constraint: The function 'remove_char' ret
 </p>
 
 
-
 <h4>Hint 1:</h4>
 <p> Most people on their first try come up with an algorithm like this:</p>
 
-<code>
 <pre>
+<code>
 for each letter L in str
  if L equals C
   shift everything to the right of L to the left by one
-</pre>
 </code>
+</pre>
 
 <p>
 This is very inefficient and is O(n^2) in the worst case. You can do better!
