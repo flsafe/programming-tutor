@@ -71,10 +71,36 @@ ul {
   text-align: center;
 }
 
+#blurb{
+  margin-top: 10px;
+}
+
+#blurb h2{
+  margin-bottom:5px;
+}
+
 #testimonials ul li img{
   border: 5px solid #bbb;
 }
 
+#sidbar{
+}
+
+#sidebar h3{
+  margin-top: 10px;
+}
+
+#sidebar h5{
+  margin: 0px;
+  padding:0px;
+}
+
+#sidebar p{
+  margin-bottom: 10px;
+}
+
+#sidebar img{
+}
 
 #footer{
   margin-left: auto;
