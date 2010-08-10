@@ -20,6 +20,11 @@ ul {
   padding: 0;
 }
 
+p{
+  color:rgb(60,60,60);
+  font-size:1.1em;
+}
+
 #header{
   margin: 0;
   padding: 0;
@@ -65,7 +70,19 @@ ul {
   padding: 0px 0px 10px 0;
   list-style-type: none;
   font-size: 1.2em;
-  font-weight: bold;
+  background: url('/images/checkmark.png') left center no-repeat;
+  padding-left: 30px;
+  padding-top: 5px;
+}
+
+#pitch ul li p{
+  margin-bottom: 10px;
+  padding-top: 5px;
+  line-height:14px;
+}
+
+#pitch p{
+  font-size: 1em;
 }
 
 #pitch p a img{
@@ -78,6 +95,7 @@ ul {
 
 #blurb h2{
   margin-bottom:5px;
+  font-size:1.5em;
 }
 
 #testimonials ul li img{
@@ -92,16 +110,21 @@ ul {
   text-align:center;
 }
 
+#sidebar li{
+  background: url('/images/star.png') left top no-repeat;
+}
+
 #sidebar h3{
 }
 
 #sidebar h5{
-  margin: 0px;
-  padding:0px;
+  margin:  0px;
+  padding: 0px 0px 0px 24px;
 }
 
 #sidebar p{
   margin-bottom: 10px;
+  padding-left: 24px;
 }
 
 #sidebar img{
