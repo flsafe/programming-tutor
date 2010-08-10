@@ -54,6 +54,7 @@ ul {
 
 #pitch{
   background: white;
+  margin-top:10px;
 }
 
 #pitch ul{
@@ -72,7 +73,7 @@ ul {
 }
 
 #blurb{
-  margin-top: 10px;
+  margin-top: 40px;
 }
 
 #blurb h2{
@@ -83,7 +84,8 @@ ul {
   border: 5px solid #bbb;
 }
 
-#sidbar{
+#sidebar{
+  margin-top:10px;
 }
 
 #caption{
@@ -91,7 +93,6 @@ ul {
 }
 
 #sidebar h3{
-  margin-top: 10px;
 }
 
 #sidebar h5{
