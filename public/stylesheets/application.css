@@ -86,6 +86,10 @@ ul {
 #sidbar{
 }
 
+#caption{
+  text-align:center;
+}
+
 #sidebar h3{
   margin-top: 10px;
 }
