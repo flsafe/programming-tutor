@@ -1,42 +1,49 @@
-#header{
-  margin: 0;
-  padding: 0;
-  background: rgb(50, 50, 50);
+
+h2, h3, h5{
+  color: rgb(22, 22, 59);
 }
 
-#header h1{
-  color: white;
-  padding: 10px 0 0 0;
-  font-weight: bold;
+#header{
+  margin: 0px 0px 25px 0px;
+  padding: 0px;
+  background-color: rgb(50, 50, 50);
+  height:40px;
+}
+
+#app-name{
+  font-size:1.8em;
+  color: rgb(240, 240, 240);
 }
 
 #nav{
-  height: 50px;
 }
 
 #nav ul{
   float: right;
+  margin-top:15px;
 }
 
 #nav ul li{
   list-style-type: none;
-  padding: 15px;
+  padding: 0px 15px 0px 0px;
   float:left;
 }
 
 #nav ul li a{
   padding: 15px;
-  font-size: 1.2em;
-  color: rgb(255, 255, 255);
+  color: rgb(240, 250, 250);
 }
 
 #pitch{
-  background: white;
-  margin-top:10px;
+  margin: 0px 0px 40px 0px;
+}
+
+#pitch h2{
+  color: rgb(194, 61, 61);
 }
 
 #pitch ul{
-  margin: 0px;
+  margin-top: 0px;
 }
 
 #pitch ul li{
@@ -45,25 +52,30 @@
   font-size: 1.2em;
   background: url('/images/checkmark.png') left center no-repeat;
   padding-left: 30px;
-  padding-top: 5px;
+  padding-top: 0px;
+}
+
+#signup{
+  font-size: 1em;
+  color: rgb(14, 117, 43);
 }
 
 #pitch ul li p{
   margin-bottom: 10px;
-  padding-top: 5px;
+  padding-top: 8px;
   line-height:14px;
-}
-
-#pitch p{
-  font-size: 1em;
 }
 
 #pitch p a img{
   text-align: center;
 }
 
+#screenshot{
+}
+
 #blurb{
   margin-top: 5px;
+  padding:4px;
 }
 
 #blurb h2{
@@ -76,7 +88,9 @@
 }
 
 #sidebar{
+  background-color: rgb(245, 245, 245);
   margin-top:5px;
+  padding: 4px;
 }
 
 #caption{
