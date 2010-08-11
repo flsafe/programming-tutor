@@ -4,11 +4,12 @@
 <head>
   <title>BlueberryTree - Ace your next programming interview</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/screen.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/screen.css" />
   <!--[if IE]>
       <link rel="stylesheet" href="stylesheets/ie.css" type="text/css" media="screen, projection">
   <![endif]-->
-  <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/application.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/application.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/landing.css"/>
 </head>
 <body>
     <div id="wrap" class="container">
@@ -22,11 +23,11 @@
 							<li> <a href='/login'>Login</a> </li>
 						</ul>
 					</div>
-        </div>
+        </div><!-- end header-->
 
-        <div id="content" class="column span-16 colborder last">
+        <div id="content" class="column span-24 colborder last">
 	
-					<div id="pitch" class="column span-16 last">
+					<div id="pitch" class="column span-24">
 						<h2>Ace Your Next Programming Interview</h2>
 						<div class="column span-11 last">
 							<ul>
@@ -34,12 +35,16 @@
 								<li><p>Get feedback, improve your solutions, track your progress</p></li>
 								<li><p>Improve your programming skills</p></li>
 							</ul>
-					  </div>
-						<div class="column span-5 last">
 								<p>Sign up free with a username, password and email!
 									<a href="#"> <img alt="sign up free" src="/images/sign-up.png"> </a></p>
+					  </div>
+					
+						<div class="column span-13 last">
+							<img alt="Screen Shot" src="/images/screenshot.png" width="275"/>
 						</div>
 					</div><!-- end pitch -->
+					
+					<hr/>
 
 					<div id="blurb" class="column span-16 colborder last">
 						<h2>Quickly, Tell Me What Blueberry Tree Is</h2>
@@ -54,33 +59,30 @@
 							 							
 						<p>We are the programming interview that is on <em>your</em> side! Sign up is free so
 							 you can start improving your skills right now!</p>
-					</div>
+							
+							<hr/>
+							
+						<div id="testimonials" class="">
+							<ul>
+								<li>
+									<div class="column span-4 last"><img alt="CozySystems LLC Developer" src="/images/frank.jpg" width="125" height="90"/> </div>
+									<p>
+										<blockquote>
+											Blueberry Tree lets me practice programming everyday. The exercises challenge me
+											in a fair way and I don't know how to do an exercises, the tutorials are fun to read.</blockquote> 
+										-Frank Licea, Developer, CozySystems</p></li>
+								<li>
+									<div class="column span-4 last"> <img alt="developer" src="images/rails.png" width="125" height="90"/> </div>
+									<p>
+										<blockquote>
+											I couldn't have gotten into my dream job without the help of BlueberryTree</blockquote>
+										-Developer</p></li>
+							</ul>
+						</div> <!-- end testimonials-->
+					</div> <!-- end blurb -->
 					
-					<hr>
-					
-					<div id="testimonials" class="column span-16 colborder last">
-						<ul>
-							<li>
-								<div class="column span-4 last"><img alt="CozySystems LLC Developer" src="/images/frank.jpg" width="125" height="90"/> </div>
-								<p>
-									<blockquote>
-										Blueberry Tree lets me practice programming everyday. The exercises challenge me
-										in a fair way and I don't know how to do an exercises, the tutorials are fun to read.</blockquote> 
-									-Frank Licea, Developer, CozySystems</p></li>
-							<li>
-								<div class="column span-4 last"> <img alt="developer" src="images/rails.png" width="125" height="90"/> </div>
-								<p>
-									<blockquote>
-										I couldn't have gotten into my dream job without the help of BlueberryTree</blockquote>
-									-Developer</p></li>
-						</ul>
-					</div> <!-- end testimonials-->
-        </div><!-- end content-->
-
 				<div id="sidebar" class="column span-7 last">
 					<h3>How Is Blueberry Tree Going To Help Me?</h3>
-					<img alt="Screen Shot" src="/images/screenshot.png" width="275"/>
-					<span id="caption"><p>screenshot</p></span>
 					<ul>
 						<li><h5>Lots Of Exercises</h5>
 								<p>We add new interview questions regularly so you can
@@ -96,8 +98,9 @@
 									 progressively harder or easier exercises in areas where you need practice.</p></li>
 					</ul>
 				</div><!-- end sidebar -->
-				
-    </div>
+      </div><!-- end content-->
+    </div><!--end wrap-->
+
     <div id="footer">
         <p>Copyright &copy; CozySystems LLC</p>
     </div>

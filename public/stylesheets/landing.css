@@ -1,0 +1,110 @@
+#header{
+  margin: 0;
+  padding: 0;
+  background: rgb(50, 50, 50);
+}
+
+#header h1{
+  color: white;
+  padding: 10px 0 0 0;
+  font-weight: bold;
+}
+
+#nav{
+  height: 50px;
+}
+
+#nav ul{
+  float: right;
+}
+
+#nav ul li{
+  list-style-type: none;
+  padding: 15px;
+  float:left;
+}
+
+#nav ul li a{
+  padding: 15px;
+  font-size: 1.2em;
+  color: rgb(255, 255, 255);
+}
+
+#pitch{
+  background: white;
+  margin-top:10px;
+}
+
+#pitch ul{
+  margin: 0px;
+}
+
+#pitch ul li{
+  padding: 0px 0px 10px 0;
+  list-style-type: none;
+  font-size: 1.2em;
+  background: url('/images/checkmark.png') left center no-repeat;
+  padding-left: 30px;
+  padding-top: 5px;
+}
+
+#pitch ul li p{
+  margin-bottom: 10px;
+  padding-top: 5px;
+  line-height:14px;
+}
+
+#pitch p{
+  font-size: 1em;
+}
+
+#pitch p a img{
+  text-align: center;
+}
+
+#blurb{
+  margin-top: 40px;
+}
+
+#blurb h2{
+  margin-bottom:5px;
+  font-size:1.5em;
+}
+
+#testimonials ul li img{
+  border: 5px solid #bbb;
+}
+
+#sidebar{
+  margin-top:10px;
+}
+
+#caption{
+  text-align:center;
+}
+
+#sidebar li{
+  background: url('/images/star.png') left top no-repeat;
+}
+
+#sidebar h3{
+}
+
+#sidebar h5{
+  margin:  0px;
+  padding: 0px 0px 0px 24px;
+}
+
+#sidebar p{
+  margin-bottom: 10px;
+  padding-left: 24px;
+}
+
+#sidebar img{
+}
+
+#footer{
+  margin-left: auto;
+  text-align: center;
+  clear: both;
+}
