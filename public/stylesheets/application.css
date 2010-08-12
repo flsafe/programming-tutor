@@ -2,7 +2,7 @@ body{
   margin: 0;
   padding: 0;
   font-size: small;
-  background: rgb(230, 230, 230);
+  background: rgb(37, 58, 89);
 }
 
 #wrap{
@@ -10,7 +10,6 @@ body{
 }
 
 #content{
-  padding: 0px 0px 0px 8px;
 }
 
 a {
@@ -26,6 +25,18 @@ ul {
 p{
   color:rgb(80, 80, 80);
   font-size:1.1em;
+  padding-left:4px;
+}
+
+h1, h2, h3, h4, h5{
+  padding-left: 4px;
+}
+
+.rounded-corners {
+     -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
 }
 
 #footer{
