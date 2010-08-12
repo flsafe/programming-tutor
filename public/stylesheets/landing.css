@@ -98,6 +98,10 @@ h2, h3, h5{
   border: 5px solid #bbb;
 }
 
+#testimonials p{
+  margin-bottom: 35px;
+}
+
 #sidebar{
   background-color: rgb(241, 255, 193);
   margin-top:5px;
