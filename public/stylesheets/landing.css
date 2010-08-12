@@ -54,7 +54,7 @@ h2, h3, h5{
   font-size: 1.2em;
   background: url('/images/checkmark.png') left center no-repeat;
   padding-left: 30px;
-  padding-top: 0px;
+  padding-bottom: 5px;
 }
 
 #pitch ul li p{
@@ -81,6 +81,7 @@ h2, h3, h5{
 }
 
 #screenshot{
+  padding-left:4px;
 }
 
 #blurb{

@@ -4,7 +4,6 @@
 
   <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title><%= h(yield(:title) || "Blueberry Tree") %></title>
     <%= yield(:head) %>
   </head>
 
@@ -20,7 +19,10 @@
 			
       <%= yield %>
 
-    </div><br/>
+    </div> <!-- end wrap -->
+
+		<br/>
+
 		<div id="footer">
         <p>Copyright &copy; CozySystems LLC</p>
    </div>

@@ -1,12 +1,22 @@
-#wrap{
-  margin-bottom: 10px;
+body{
+  background-color: rgb(245, 245, 245);
+  font-size: medium;
+  font-family: Arial, "MS Trebuchet", sans-serif;
 }
 
-#wrap h1{
-  width: 100%;
-  border-bottom: 4px solid #555;
-  color: black;
-  font-size: 14px;
+p code h1 h2 h3 h4 h5 h6{
+  color: rgb(90, 90, 90);
+}
+
+#wrap{
+  margin:0px;
+}
+
+#header{
+  background: url('/images/header.png') repeat-x top;
+  margin: 0px;
+  padding: 0px;
+  height: 50px;
 }
 
 #exercise_problem_text {
@@ -14,7 +24,7 @@
   height: 488px;
   padding:2px;
   border:1px solid #ccc;
-  background:#f2f2f2;
+  background:rgb(255, 255, 255);
   overflow:auto;
 }
 
