@@ -1,16 +1,20 @@
-Login
+<div id="login" class="column span-24 last">
+	
+	<div id="header">
+		<h2><%= link_to "Blueberry Tree", "/" %></h2>
+	</div>
 
-<% form_for @user_session do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :username %><br />
-    <%= f.text_field :username %>
-  </p>
-  <p>
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </p>
-  <p><%= f.submit "Submit" %></p>
-<% end %>
+	<% form_for @user_session do |f| %>
+	  <%= f.error_messages %>
+		
+	    <%= f.label :username %><br/>
+	    <%= f.text_field :username %><br/>
 
+	    <%= f.label :password %><br/>
+	    <%= f.password_field :password %></br>
+		<br/>
+	  <%= f.submit "Login" %> <br/>
+	<% end %>
+	
 
+</div>

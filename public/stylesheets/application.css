@@ -44,6 +44,28 @@ h1, h2, h3, h4, h5{
     border-radius: 20px;
 }
 
+#header{
+  margin: 0px 0px 0px 0px;
+  background: url('/images/header.png') repeat-x top;
+  height:50px;
+}
+
+#header h2{
+  color: rgb(240, 240, 240);
+}
+
+#header h2 a{
+  color: rgb(240, 240, 240);
+}
+
+#login{
+  background: url('/images/pitch-bg.png');
+}
+
+#login form{
+  padding: 10px;
+}
+
 #footer{
   margin-left: auto;
   text-align: center;
