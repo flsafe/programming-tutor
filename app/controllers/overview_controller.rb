@@ -1,4 +1,4 @@
-class SchoolController < ApplicationController
+class OverviewController < ApplicationController
   
   before_filter :authorize
   

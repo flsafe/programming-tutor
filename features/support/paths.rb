@@ -12,7 +12,7 @@ module NavigationHelpers
       '/'
       
     when /my home\s?page/
-      '/school'
+      '/overview'
       
     when /login\s?page/
         '/login'

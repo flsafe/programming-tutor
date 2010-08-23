@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SchoolController, "GET index" do
+describe OverviewController, "GET index" do
   
   context 'GET index a newly registered user browses their home page' do
     

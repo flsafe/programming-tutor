@@ -8,7 +8,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       session = UserSession.find
-      redirect_to :controller=>:school
+      redirect_to :controller=>:overview
     else
       render :action => 'new'
     end

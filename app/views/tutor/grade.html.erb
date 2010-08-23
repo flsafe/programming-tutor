@@ -7,7 +7,7 @@
 <%= image_tag 'bar.gif', :id=>'bar' %><br/><br/>
 
 <%= link_to "Read Tutorial", {:controller=>:exercises, :action=>:show_tutorial, :id=>@exercise}, :id=>'tutorial', :style=>'display: none;' %> &nbsp;
-<%= link_to "Home", :controller=>:school %>
+<%= link_to "Home", :controller=>:overview %>
 
 <%= periodically_call_remote :update=>:message,
 			:url=>{:action=>'grade_status', :id=>@exercise.id}, 

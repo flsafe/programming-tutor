@@ -45,7 +45,7 @@ describe UsersController do
       user = stub_model(User, :save=>true).as_null_object
       User.stub(:new).and_return(user)
       post :create, :user=> user.attributes
-      response.should redirect_to :controller=>'school'
+      response.should redirect_to :controller=>:overview
     end
   end
 end
