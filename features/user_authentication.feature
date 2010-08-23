@@ -10,7 +10,7 @@ Feature: User Authentication
 		And I am on the login page
 		When I fill in "Username" with "frank"
 		And I fill in "Password" with "password"
-		And I press "Submit"
+		And I press "Login"
 		Then I should be on my home page
 		
 	Scenario: The user creates an account

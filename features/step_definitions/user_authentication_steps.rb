@@ -13,7 +13,7 @@ Given /^I am logged in as the user "([^\"]*)"$/ do |username|
     And I am on the login page
 		When I fill in "Username" with "frank"
 		And I fill in "Password" with "password"
-		And I press "Submit"
+		And I press "Login"
   }
 end
 
