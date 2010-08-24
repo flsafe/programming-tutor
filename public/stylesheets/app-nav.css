@@ -1,3 +1,20 @@
+#header ul{
+  float: right;
+}
+
+#header ul li{
+  float: left;
+  padding: 10px;
+}
+
+#header ul li:hover{
+  background-color: rgb(50, 50, 50);
+}
+
+#header ul li a{
+  color: rgb(240,240, 240);
+}
+
 #nav {
   background-color: rgb(89, 115, 48);
   background: rgb(89, 115, 48) url('/images/nav-bg.png') repeat-x top;
