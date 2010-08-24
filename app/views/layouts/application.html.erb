@@ -10,15 +10,21 @@
     <![endif]-->
 		<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/forms.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/application.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/app-nav.css"/>
     <%= yield(:head) %>
   </head>
   <body>
 	
     <div id="wrap" class="container">
+	
 			<div id="header" class="column span-24 last">
 				<h2><%= link_to "Blueberry Tree", "/" %></h2>
+			</div>
+			
+			<div id="nav" class="column span-24 last">
 				<%= render :partial=>'layouts/menu' %>
 			</div>
+
 
       <%- flash.each do |name, msg| -%>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
@@ -30,6 +36,6 @@
       
       <%= yield %>
 
-    </div>
+    </div><!-- end wrap -->
   </body>
 </html>
