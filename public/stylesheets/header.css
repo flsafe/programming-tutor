@@ -1,0 +1,39 @@
+#app-name{
+  font-size:1.8em;
+  color: rgb(240, 240, 240);
+  padding-top:5px;
+}
+
+#header{
+  margin: 0px 0px 0px 0px;
+  background: url('/images/header.png') repeat-x top;
+  height:50px;
+}
+
+#header h2{
+  color: rgb(240, 240, 240);
+}
+
+#header h2 a{
+  color: rgb(240, 240, 240);
+}
+
+#header-nav ul{
+  float: right;
+}
+
+#header-nav ul li{
+  list-style-type: none;
+  padding: 15px;
+  float:left;
+}
+
+#header-nav ul li:hover{
+  background-color: rgb(50, 50, 50);
+}
+
+#header-nav ul li a{
+  padding: 10px;
+  color: white;
+}
+

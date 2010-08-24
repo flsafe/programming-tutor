@@ -1,23 +1,6 @@
-#header ul{
-  float: right;
-}
-
-#header ul li{
-  float: left;
-  padding: 10px;
-}
-
-#header ul li:hover{
-  background-color: rgb(50, 50, 50);
-}
-
-#header ul li a{
-  color: rgb(240,240, 240);
-}
-
 #nav {
-  background-color: rgb(89, 115, 48);
   background: rgb(89, 115, 48) url('/images/nav-bg.png') repeat-x top;
+  border-top: 1px solid rgb(30, 30, 30);
 }
 
 #nav ul{
@@ -26,7 +9,7 @@
 #nav ul li{
   list-style-type: none;
   float:left;
-  padding: 2px;
+  padding: 2px 2px 2px 0px;
 }
 
 #nav ul li:hover{

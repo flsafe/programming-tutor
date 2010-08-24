@@ -10,6 +10,7 @@
     <![endif]-->
 		<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/forms.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/application.css" />
+   	<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/header.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/app-nav.css"/>
     <%= yield(:head) %>
   </head>
@@ -17,14 +18,14 @@
 	
     <div id="wrap" class="container">
 	
-			<div id="header" class="column span-24 last">
+			<div id="header" class="column span-24">
 				<div class="column span-16 last">
-					<h2><%= link_to "Blueberry Tree", "/" %></h2>
+					<h2 id="app-name"><%= link_to "Blueberry Tree", "/" %></h2>
 				</div>
-				<div class="column span-8 last">
+				<div id="header-nav" class="column span-8 last">
 					<ul>
-						<li><%= link_to "#{current_user.username}" %></li>
-						<li><%= link_to "Logout", logout_path %></li>
+						<li><%= link_to("#{current_user.username}", :controller=>:users, :action=>:show, :id=>current_user.id) if current_user %></li>
+						<li><%= link_to("Logout", logout_path) if current_user %></li>
 					</ul>
 				</div>
 			</div>
@@ -32,7 +33,6 @@
 			<div id="nav" class="column span-24 last">
 				<%= render :partial=>'layouts/menu' %>
 			</div>
-
 
       <%- flash.each do |name, msg| -%>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>

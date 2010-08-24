@@ -8,33 +8,6 @@ h2, h3, h5{
   background: url('/images/header.png') repeat-x top;
 }
 
-#app-name{
-  font-size:1.8em;
-  color: rgb(240, 240, 240);
-}
-
-#nav{
-}
-
-#nav ul{
-  float: right;
-}
-
-#nav ul li{
-  list-style-type: none;
-  padding: 15px;
-  float:left;
-}
-
-#nav ul li:hover{
-  background-color: rgb(50, 50, 50);
-}
-
-#nav ul li a{
-  padding: 10px;
-  color: white;
-}
-
 #pitch{
   background: url('/images/pitch-bg.png') repeat-x top;
   margin-bottom: 15px;
