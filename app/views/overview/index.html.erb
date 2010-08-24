@@ -1,5 +1,5 @@
-<h3>Hey there <%=h current_user.username %>! To start things off here are some sample exercise sets you can try out!</h3>
-<div id="recommended_exercise_sets">
+<div id="recommended_exercises" class="column spand-15 colborder last">
+	<p>Test text</p>
 	<ul>
 		<% @exercises.each do |ex| %>
 			<li class=<%= to_class(ex) %>>
@@ -13,6 +13,8 @@
 	</ul>
 </div>
 
-<table>
-	<tr><td>Exercises Completed: <%=h current_user.completed_exercises.count %></td></tr>
-<table>
+<div class="column span-7 last">
+	<table>
+		<tr><td>Exercises Completed: <%=h current_user.completed_exercises.count %></td></tr>
+	<table>
+</div>
