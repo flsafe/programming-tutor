@@ -9,7 +9,7 @@
 #nav ul li{
   list-style-type: none;
   float:left;
-  padding: 2px 2px 2px 0px;
+  padding: 3px 3px 3px 0px;
 }
 
 #nav ul li:hover{
@@ -17,6 +17,6 @@
 }
 
 #nav ul li a{
-  padding: 10px;
+  padding: 5px;
   color: white;
 }

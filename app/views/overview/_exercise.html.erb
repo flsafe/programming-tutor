@@ -1,13 +1,15 @@
-<div class="column span-10 last recommended-exercise rounded-corners">
-	<%= link_to exercise.title, exercise %>
-	<p class="exercise-description">
-		<%=h exercise.description %>
-	</p>
+<div class="column span-16 last recommended-exercise rounded-corners">
+	<div class="column span-10">
+		<%= link_to exercise.title, exercise %>
+		<p class="exercise-description">
+			<%=h exercise.description %>
+		</p>
+	</div>
+	
+	<div class="column span-4 recommendation random rounded-corners">
+		<h4 class="recommendation-type">Random Recommendation</h4>
+		<p>To get things started, here is an interesting exercise to try out.</p>
+	</div>
+
 		<%=h "My Grade #{current_user.grade_for? exercise}" if current_user.grade_for?(exercise)%>
 </div>
-
-<div class="column span-6 recommendation random rounded-corners">
-	<h4 class="recommendation-type">Random Recommendation</h4>
-	<p>To get things started, here is an interesting exercise to try out.</p>
-</div>
-<hr>
