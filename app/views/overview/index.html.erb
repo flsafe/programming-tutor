@@ -1,19 +1,10 @@
-<div id="recommended_exercises" class="column spand-15 colborder last">
-	<p>Test text</p>
-	<ul>
-		<% @exercises.each do |ex| %>
-			<li class=<%= to_class(ex) %>>
-				<%= link_to ex.title, ex %>
-				<span class="exercise_set_statistics">
-					<%=h "#{ex.completed_users.count} users, #{ex.average_grade} avg grade"%>
-				</span>
-					<%=h "My Grade #{current_user.grade_for? ex}" if current_user.grade_for?(ex)%>
-			</li>
-		<% end %>
-	</ul>
-</div>
+<div id="recommended_exercises" class="column span-17 colborder last">
+	
+	<%= render :partial=>'exercise', :collection=>@exercises %>
 
-<div class="column span-7 last">
+</div><!-- end recommended exercises -->
+
+<div class="column span-6 last">
 	<table>
 		<tr><td>Exercises Completed: <%=h current_user.completed_exercises.count %></td></tr>
 	<table>
