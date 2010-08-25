@@ -42,6 +42,11 @@ h1, h2, h3, h4, h5{
   padding-left: 4px;
 }
 
+.page-title{
+  color: rgb(27, 58, 89);
+  padding: 10px;
+}
+
 .rounded-corners {
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -82,7 +87,6 @@ h1, h2, h3, h4, h5{
 ************************/
 
 #recommended-exercises{
-  margin-top: 20px;
 }
 
 .recommended-exercise{

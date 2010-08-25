@@ -1,10 +1,11 @@
-<div id="recommended-exercises" class="column span-16 colborder last">
-	
-	<%= render :partial=>'exercise', :collection=>@exercises %>
+<h3 class="column span-16 last page-title">Exercises To Help You Practice</h3>
 
+<div id="recommended-exercises" class="column span-16 colborder last">
+	<%= render :partial=>'exercise', :collection=>@exercises %>
 </div><!-- end recommended exercises -->
 
 <div class="column span-6 last">
+	<h4>Your Stats</h4>
 	<table>
 		<tr><td>Exercises Completed: <%=h current_user.completed_exercises.count %></td></tr>
 	<table>

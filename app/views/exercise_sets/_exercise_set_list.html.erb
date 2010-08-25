@@ -6,7 +6,7 @@
   </tr>
 
 	<% exercise_sets.each do |exercise_set| %>
-		<tr class=<%= to_class exercise_set %>>
+		<tr>
 			<td> <%= link_to exercise_set.title, exercise_set %> </td>
 			<td> <%= exercise_set.completed_users.count %> </td>
 			<td> <%= exercise_set.average_grade %></td>
