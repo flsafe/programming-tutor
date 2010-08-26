@@ -1,6 +1,6 @@
 <% results = @grade_sheet.unit_test_results_hash %>
 
-<table id="grade_sheet">
+<table id="gradesheet">
 	<tr>
 		<th>Unit Test</th>
 		<th>Expected</th>
@@ -11,7 +11,7 @@
 			<tr>
 				<td> <%=h test_title%></td> 
 				<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%>  </td>
-				<td><%=h test_results[:points] != 0 ? "Nice!" : "Oops" %></td>
+				<td><%=h test_results[:points] != 0 ? "Nice!" : "Oops" %>                    </td>
 				<td> <%=h test_results[:points] %>                                           </td>
 			</tr>
 		<% end %>

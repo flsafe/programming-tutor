@@ -52,7 +52,7 @@ class TutorController < ApplicationController
     respond_to do |f|
       f.html do 
         if @status == :job_in_progress
-          render :text=>'grading...'
+          render :text=>'Still grading...'
         elsif @status == :job_error
           render :text=> "Oops! Error: #{@result.error_message}"
         elsif @status == :job_done
