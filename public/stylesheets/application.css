@@ -111,7 +111,7 @@ h1, h2, h3, h4, h5{
 }
 
 .recommendation{
-  background: url('/images/recommendation-bg.png') repeat-x bottom;
+  background: url('/images/recommendation-rec-bg.png') repeat-x bottom;
   padding: 5px;
   height: 100px;
   width: 205px;
@@ -132,6 +132,33 @@ h1, h2, h3, h4, h5{
   color: rgb(100, 100, 100);
   margin: 0px 0px 5px, 0px;
   padding: 0px;
+}
+
+/************************
+* Completed exercise page (exercises/user_index)
+************************/
+
+.completed-exercise{
+  background-color: rgb(240, 240, 240);
+  border: 1px solid #999;
+}
+
+.completed-exercise-title a{
+  font-weight: bold;
+  font-size: 1.3em;
+  color: rgb(52, 99 ,163);
+  padding: 5px;
+}
+
+.grade{
+  margin: 10px;
+  padding: 5px;
+  text-align: center;
+  color: white;
+}
+
+.grade-a{
+  background-color: green;
 }
 
 /************************
