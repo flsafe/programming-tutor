@@ -3,7 +3,7 @@ class TutorController < ApplicationController
   before_filter :authorize
   
   def show
-    if no_current_exercise_or_show_current_exercise?
+    if no_current_exercise?
       @exercise = Exercise.find_by_id params[:id]
       if @exercise
         set_current_exercise(@exercise.id, Time.now) unless current_user_doing_exercise?
@@ -160,7 +160,7 @@ class TutorController < ApplicationController
     session[name] = delayed_job.id
   end
   
-  def no_current_exercise_or_show_current_exercise?
+  def no_current_exercise?
     !(current_user_doing_exercise?) || current_exercise_id.to_i == params[:id].to_i
   end
 end

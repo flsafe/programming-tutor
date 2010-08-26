@@ -18,6 +18,10 @@ body{
 
 a {
   text-decoration: none;
+  padding:5px;
+}
+
+a:hover{
 }
 
 ul {
@@ -141,6 +145,7 @@ h1, h2, h3, h4, h5{
 .completed-exercise{
   background-color: rgb(240, 240, 240);
   border: 1px solid #999;
+  margin: 0px 10px 15px 5px;
 }
 
 .completed-exercise-title a{

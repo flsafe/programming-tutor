@@ -1,9 +1,11 @@
-<div class="column span-24 completed-exercise rounded-corners">
-	<div class="column span-15 completed-exercise-title"> <%= link_to exercise.title, :action=>:show, :id=>exercise.id %></div>
-	<div class="column span-8 grade grade-a rounded-corners"><%=h current_user.grade_for?(exercise) %></div>
+<div class="column span-16 completed-exercise rounded-corners">
+	<div class="column span-9 completed-exercise-title"> <%= link_to exercise.title, :action=>:show, :id=>exercise.id %></div>
+	<div class="column span-6 grade grade-a rounded-corners"><%=h current_user.grade_for?(exercise) %></div>
+	<div class="column span-9">
+		<%= link_to "Retake", :controller=>:tutor, :action=>:show, :id=>exercise %> |
+		<%= link_to "Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>exercise %> |
+		<%= link_to "Gradesheet", :controller=>:grade_sheets, :action=>:show_user_grade_sheet, :id=>exercise %>
+	</div>
 </div>
 
-<!--<%= link_to "Retake", :controller=>:tutor, :action=>:show, :id=>exercise %> |
-	<%= link_to "Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>exercise %> |
-	<%= link_to "Gradesheet", :controller=>:grade_sheets, :action=>:show_user_grade_sheet, :id=>exercise %> -->
 
