@@ -43,8 +43,8 @@ h1, h2, h3, h4, h5{
 }
 
 .page-title{
-  color: rgb(27, 58, 89);
   padding: 10px;
+  color: rgb(100, 100, 100);
 }
 
 .rounded-corners {
@@ -100,6 +100,11 @@ h1, h2, h3, h4, h5{
 .recommended-exercise a{
   font-weight: bold;
   font-size: 1.3em;
+  color: rgb(52, 99 ,163);
+}
+
+.recommended-exercise a:hover{
+  text-decoration: underline;
 }
 
 .recommended-exercise p{
