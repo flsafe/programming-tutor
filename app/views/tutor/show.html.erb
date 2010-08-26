@@ -4,7 +4,7 @@
 <%= stylesheet 'exercise' %>
 	
 <div id="content">
-		<p>Time Remaining: <span id="timer">retrieving time...</span></p>
+		<p id="time-remaining">Time Remaining: <span id="timer">retrieving time...</span></p>
 		<div id="left_content">
 
 			<%= periodically_call_remote :update=>:timer,

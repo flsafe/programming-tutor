@@ -1,11 +1,29 @@
 body{
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(240, 240, 240);
   font-size: medium;
   font-family: Arial, "MS Trebuchet", sans-serif;
 }
 
-p code h1 h2 h3 h4 h5 h6{
-  color: rgb(90, 90, 90);
+h1, h2, h3, h4, h5, h6{
+  color: rgb(89, 115, 48);
+}
+
+p{
+  color: rgb(80, 80, 80);
+}
+
+code{
+  color: rgb(50, 50, 50);
+}
+
+a{
+  text-decoration: none;
+  color:rgb(52, 99 ,163);
+  size: .90em;
+}
+
+a:hover{
+  text-decoration: underline;
 }
 
 #wrap{
