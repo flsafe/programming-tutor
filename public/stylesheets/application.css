@@ -35,10 +35,16 @@ li{
   padding: 0;
 }
 
+td{
+  padding: 0px;
+  width: 35px;
+}
+
 table, p{
   color:rgb(80, 80, 80);
-  font-size:1.1em;
+  font-size:.95em;
   padding-left:4px;
+  margin-top: 0px;
 }
 
 
@@ -156,7 +162,7 @@ h1, h2, h3, h4, h5{
 }
 
 .grade{
-  margin: 10px;
+  margin: 10px 10px 0px 0px;
   padding: 5px;
   text-align: center;
   color: white;
