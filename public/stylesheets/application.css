@@ -150,7 +150,7 @@ h1, h2, h3, h4, h5{
   margin: 0px 10px 15px 5px;
 }
 
-.completed-exercise-title a{
+.completed-exercise-title{
   font-weight: bold;
   font-size: 1.3em;
   color: rgb(52, 99 ,163);

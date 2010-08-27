@@ -39,7 +39,9 @@ When /^I view exercise "([^\"]*)"$/ do |title|
 end
 
 Then /^I should see exercise "([^\"]*)" with "([^\"]*)"$/ do |title, text|
-  page.should have_css ".exercise", :content=>title do |exercise_set|
-    exercise_set.should contain text
+  page.should have_css ".completed-exercise", :content=>title do |exercise_set|
+    exercise_set.should have_css ".grade" do |grade|
+      grade.should have_content text
+    end
   end
 end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe GradeSheet do
   before(:each) do
-    @user         = stub_model :user
+    @user         = Factory.create :user
     @exercise_set = Factory.create :complete_exercise_set
     @exercise_set.exercises.each {|e| e.update_attributes :exercise_set=>@exercise_set}
     @ex1, @ex2    = @exercise_set.exercises[0], @exercise_set.exercises[1]
@@ -74,12 +74,6 @@ describe GradeSheet do
          gs = @ex1.grade_sheets.create!( Factory.build(:grade_sheet, :grade=>g, :user=>@user, :exercise=>@ex1).attributes)
       end
       gs.grades_in_set.should == [90.0]
-    end
-  end
-  
-  describe "#recommendation" do
-    it "returns an encouraging message when the user scores higher than the average" do
-      
     end
   end
 end

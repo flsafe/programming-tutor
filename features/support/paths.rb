@@ -11,9 +11,6 @@ module NavigationHelpers
     when /the home\s?page/
       '/'
       
-    when /my home\s?page/
-      '/overview'
-      
     when /login\s?page/
         '/login'
         
