@@ -1,25 +1,28 @@
 <% results = @grade_sheet.unit_test_results_hash %>
 
-<table id="gradesheet">
-	<tr>
-		<th>Unit Test</th>
-		<th>Expected</th>
-		<th>Result</th>
-		<th>Points</th>
-	</tr>
-		<% results[:tests].each_pair do |test_title, test_results| %>
-			<tr>
-				<td> <%=h test_title%></td> 
-				<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%>  </td>
-				<td><%=h test_results[:points] != 0 ? "Nice!" : "Oops" %>                    </td>
-				<td> <%=h test_results[:points] %>                                           </td>
-			</tr>
-		<% end %>
+<div class="gradesheet">
+	<table class="tests">
 		<tr>
-			<th>Final Grade: <%=h results[:grade] %></th>
+			<th>Unit Test</th>
+			<th>Expected</th>
+			<th>Result</th>
+			<th>Points</th>
 		</tr>
-</table><br/>
+			<% results[:tests].each_pair do |test_title, test_results| %>
+				<tr>
+					<td> <%=h test_title%></td> 
+					<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%>  </td>
+					<td><%=h test_results[:points] != 0 ? "Nice!" : "Oops" %>                    </td>
+					<td> <%=h test_results[:points] %>                                           </td>
+				</tr>
+			<% end %>
+			<tr>
+				<th>Final Grade: <%=h results[:grade] %></th>
+			</tr>
+	</table>
 
-<%= render :partial=>'tutor/recommendation', :locals=>{:grade_sheet=>@grade_sheet, :exercise=>@exercise}  %>
+	<%= render :partial=>'tutor/recommendation', :locals=>{:grade_sheet=>@grade_sheet, :exercise=>@exercise}  %>
+	
+</div>
 
 

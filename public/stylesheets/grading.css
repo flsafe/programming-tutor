@@ -1,25 +1,16 @@
-#center{
+.gradesheet{
   text-align: center;
 }
 
-#center p{
-  font-size: 1.4em;
+.gradesheet-text p{
+  text-align: center;
 }
 
-#green-text p{
+.green-text{
   color: green;
   font-size: 1.4em;
 }
 
-#default{
-  
-}
-
-#gradesheet td{
+.tests td{
   font-size: 1.2em;
-}
-
-a{
-  font-size: 1.4em;
-  margin: 5px;
 }
