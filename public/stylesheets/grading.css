@@ -2,11 +2,18 @@
   text-align: center;
 }
 
-#good-recommendation p{
+#center p{
+  font-size: 1.4em;
+}
+
+#green-text p{
   color: green;
   font-size: 1.4em;
 }
 
+#default{
+  
+}
 
 #gradesheet td{
   font-size: 1.2em;
