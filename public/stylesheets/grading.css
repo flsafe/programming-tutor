@@ -1,3 +1,16 @@
+img{
+  margin: 10px;
+}
+
 #center{
   text-align: center;
+}
+
+#center p{
+  margin: 0px;
+}
+
+#center a{
+  font-size: 1.3em;
+  margin: 10px;
 }
