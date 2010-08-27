@@ -56,7 +56,7 @@ class TutorController < ApplicationController
         elsif @status == :job_error
           render :text=> "Oops! Error: #{@result.error_message}"
         elsif @status == :job_done
-          render :partial=>'grade_sheet', :layout=>false
+          render :partial=>'grade_sheets/grade_sheet', :layout=>false, :object=>@grade_sheet
         else
           render :text=>"Oh no! This wasn't supposed to happen! We encountered an error, try again a bit later."
         end

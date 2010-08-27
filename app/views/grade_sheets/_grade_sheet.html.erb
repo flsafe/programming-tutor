@@ -1,4 +1,4 @@
-<% results = @grade_sheet.unit_test_results_hash %>
+<% results = grade_sheet.unit_test_results_hash %>
 
 <div class="gradesheet">
 	<table class="tests">
@@ -21,7 +21,15 @@
 			</tr>
 	</table>
 
-	<%= render :partial=>'tutor/recommendation', :locals=>{:grade_sheet=>@grade_sheet, :exercise=>@exercise}  %>
+	<%= render :partial=>'grade_sheets/recommendation', :locals=>{:grade_sheet=>@grade_sheet, :exercise=>@exercise}  %>
+	
+	<table class="exercise-statistics">
+		<caption>Exercise Stats</caption>
+		<tr>
+			<td>Average Grade:</td>
+			<td><%=h grade_sheet.exercise.average_grade %></td>
+		</tr>
+	</table>
 	
 </div>
 

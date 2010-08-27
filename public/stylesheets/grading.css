@@ -6,11 +6,12 @@ img{
   text-align: center;
 }
 
-#center p{
-  margin: 0px;
+#center a{
+  font-size: 1.2em;
+  margin: 5px;
 }
 
-#center a{
-  font-size: 1.3em;
-  margin: 10px;
+#message, p{
+  margin: 0px;
+  font-size: 1.2;
 }

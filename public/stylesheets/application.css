@@ -178,6 +178,7 @@ h1, h2, h3, h4, h5{
 
 .gradesheet-text p{
   text-align: center;
+  margin: 0px;
 }
 
 .green-text{
@@ -187,6 +188,15 @@ h1, h2, h3, h4, h5{
 
 .tests td{
   font-size: 1.2em;
+}
+
+.exercise-statistics{
+  margin-top: 20px;
+}
+
+table.exercise-statistics caption, table.exercise-statistics{
+  font-size: 1.1em;
+  text-align: center;
 }
 
 /************************
