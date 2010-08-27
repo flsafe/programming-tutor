@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe GradeSheet do
   before(:each) do
-    @user         = Factory.create :user
+    @user         = stub_model :user
     @exercise_set = Factory.create :complete_exercise_set
     @exercise_set.exercises.each {|e| e.update_attributes :exercise_set=>@exercise_set}
     @ex1, @ex2    = @exercise_set.exercises[0], @exercise_set.exercises[1]
