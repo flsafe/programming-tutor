@@ -54,8 +54,8 @@ Feature: Do exercise
 		And I press "Submit"
 		Then I should see "grading..."
 		And The task is finished
-		And I should see "Remove all letters:" within "#grade_sheet"
-		And I should see "Final Grade: 100" within "#grade_sheet"
+		And I should see "Remove all letters:" within ".gradesheet"
+		And I should see "Final Grade: 100" within ".gradesheet"
 
 	@javascript
 	Scenario: The user submits a solution to an exercise, but the solution template crashes

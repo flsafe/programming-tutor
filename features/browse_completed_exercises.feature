@@ -18,7 +18,8 @@ Feature: Browse Completed Exercises
 		And there exists an exercise set "Basics" with "basics 1" and "basics 2"
 		And I have finished "basics 1" with a "91.1"
 		When I am on my exercises page
-		Then I should see "91.1" within ".exercise_statistics"
+		And I follow "Gradesheet"
+		Then I should see "91.1" within ".gradesheet"
 		
 	Scenario: Exercises show the user average grade for the exercise
 	  Given I am logged in as the user "frank"
@@ -26,7 +27,8 @@ Feature: Browse Completed Exercises
 		And I have finished "basics 1" with a "90"
 		And "basics 1" has the grades "91 92"
 		When I am on my exercises page
-		Then I should see "91" within ".exercise_statistics"
+		And I follow "Gradesheet"
+		Then I should see "91" within ".exercise-statistics"
 		
 	Scenario: The user reviews their grade sheet for an exercise they completed
 		Given I am logged in as the user "frank"
@@ -34,7 +36,7 @@ Feature: Browse Completed Exercises
 		And I have finished "basics 1" with a "90"
 		When I am on my exercises page
 		And I follow "Gradesheet"
-		Then I should see "Final Grade:" within "#grade_sheet"
+		Then I should see "90" within ".gradesheet"
 
 
 

@@ -177,9 +177,9 @@ describe TutorController do
         assigns[:status].should == :job_done
       end
       
-      it "renders the grade status rjs" do
+      it "renders the grade_sheet partial as a response" do
         post :grade_status, :id=>stub_exercise.id
-        response.should render_template('tutor/_grade_sheet')
+        response.should render_template('grade_sheets/_grade_sheet')
       end
     end
     
