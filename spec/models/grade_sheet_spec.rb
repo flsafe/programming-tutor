@@ -18,6 +18,7 @@ describe GradeSheet do
   end
   
   describe "#retake?" do
+    
     it "returns true if the user has other grade sheets for the associated exercise" do
       gs = nil
       [50, 51].each do | g |
@@ -37,6 +38,7 @@ describe GradeSheet do
   end
   
   describe "#complete_set?" do
+    
     it "return true if the there is a grade sheet for each exercise in the set" do
       gs1 = Factory.build(:grade_sheet, :user=>@user, :exercise=>@ex1)
       gs2 = Factory.build(:grade_sheet, :user=>@user, :exercise=>@ex2)
@@ -57,6 +59,7 @@ describe GradeSheet do
   end
   
   describe "#grades_in_set" do
+    
     it "returns the grades associated with the exercise set" do
       gs = @ex1.grade_sheets.create!( Factory.build(:grade_sheet, :grade=>90.0, :user=>@user, :exercise=>@ex1).attributes)
       gs.grades_in_set.should == [90.0]
@@ -71,6 +74,12 @@ describe GradeSheet do
          gs = @ex1.grade_sheets.create!( Factory.build(:grade_sheet, :grade=>g, :user=>@user, :exercise=>@ex1).attributes)
       end
       gs.grades_in_set.should == [90.0]
+    end
+  end
+  
+  describe "#recommendation" do
+    it "returns an encouraging message when the user scores higher than the average" do
+      
     end
   end
 end
