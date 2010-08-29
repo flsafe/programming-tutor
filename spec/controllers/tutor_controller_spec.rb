@@ -299,7 +299,7 @@ describe TutorController do
     
     context "when there are not associated syntax job results in the database" do
       before(:each) do
-        SyntaxCheckResult.stub(:find).and_return(nil)
+        SyntaxCheckJob.stub(:pop_result).and_return(nil)
       end
       
       it "assigns :job_in_progress to the status" do
