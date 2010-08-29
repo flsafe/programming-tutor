@@ -92,7 +92,8 @@ class TutorController < ApplicationController
   def syntax_status
     @exercise = Exercise.find_by_id params[:id]
     if @exercise
-      @result = SyntaxCheckResult.get_result(current_user.id, @exercise.id)
+      #@result = SyntaxCheckResult.get_result(current_user.id, @exercise.id)
+      @result = SyntaxCheckJob.pop_result(current_user.id, @exercise.id)
       if @result
         @status  = :job_done
       else
@@ -105,7 +106,7 @@ class TutorController < ApplicationController
     respond_to do |f|
       f.html do
         message = case @status
-          when :job_done        then @result.message
+          when :job_done        then @result
           when :job_in_progress then "checking..."
           when :exercise_dne    then "an error occured"
         end

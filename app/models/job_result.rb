@@ -4,14 +4,16 @@ class JobResult < ActiveRecord::Base
   
   def self.place_result(result)
     JobResult.clear_slot(result[:user_id], result[:exercise_id])
-    JobResult.create result
+    JobResult.create! result
   end
   
   def self.pop_result(conds)
     user_id     = conds[:user_id]
     exercise_id = conds[:exercise_id]
-    JobResult.clear_slot(user_id, exercise_id)
-    JobResult.find :first, :conditions=>{:user_id=>user_id, :exercise_id=>exercise_id}
+
+    result = JobResult.find :first, :conditions=>{:user_id=>user_id, :exercise_id=>exercise_id}
+    result.destroy if result
+    result
   end
   
   protected

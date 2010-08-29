@@ -16,7 +16,7 @@ describe JobResult do
     end
     
     it "inserts a job result object into the db with the param info(places a result in the slot)" do
-      JobResult.should_receive(:create).with(@example_result)
+      JobResult.should_receive(:create!).with(@example_result)
       JobResult.place_result(@example_result)
     end
   end

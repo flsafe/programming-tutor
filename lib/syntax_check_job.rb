@@ -9,8 +9,7 @@ class SyntaxCheckJob < Struct.new :code, :user_id, :exercise_id
     JobResult.place_result :user_id=>user_id, :exercise_id=>exercise_id, :data=>error_message
   end
   
-  def pop_result(conds)
-    user_id, exercise_id = conds[:user_id], conds[:exercise_id]
+  def self.pop_result(user_id, exercise_id)
     result = JobResult.pop_result(:user_id=>user_id, :exercise_id=>exercise_id)
     if result
       syntax_error?(result) 
@@ -19,7 +18,7 @@ class SyntaxCheckJob < Struct.new :code, :user_id, :exercise_id
   
   protected 
   
-  def syntax_error?(result)
-    result.data =~ /syntax\s+error/i ? result.data : 'No syntax error detected!'
+  def self.syntax_error?(result)
+    result.data =~ /syntax\s+error/i ? result.data : 'No syntax errors detected!'
   end
 end

@@ -277,13 +277,13 @@ describe TutorController do
     end
     
     it "retrieves the result of the syntax check" do
-      SyntaxCheckResult.should_receive(:get_result).with(current_user.id, stub_exercise.id)
+      SyntaxCheckJob.should_receive(:pop_result).with(current_user.id, stub_exercise.id)
       get :syntax_status, :id=>stub_exercise.id
     end
     
     it "assigns the SyntaxCheckResults" do
-      mock_result = mock_model(SyntaxCheckResult).as_null_object
-      SyntaxCheckResult.stub(:get_result).and_return(mock_result)
+      mock_result = mock_model(String).as_null_object
+      SyntaxCheckJob.stub(:pop_result).and_return(mock_result)
       
       post :syntax_status, :id=>stub_exercise.id
       
@@ -291,8 +291,8 @@ describe TutorController do
     end
     
     it "assigns sytntax check status" do
-      syntax_check_result = stub_model(SyntaxCheckResult, :error_message=>'syntax error', :destroy=>true)
-      SyntaxCheckResult.stub(:find).and_return(syntax_check_result)
+      syntax_check_result = "Syntax Error"
+      SyntaxCheckJob.stub(:pop_result).and_return(syntax_check_result)
       get :syntax_status, :id=>stub_exercise
       assigns[:status].should == :job_done
     end
