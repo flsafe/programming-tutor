@@ -40,6 +40,7 @@ class TutorController < ApplicationController
     raise "Exercise not found" unless @exercise
 
     @result   = GradeSolutionJob.pop_result(current_user.id, @exercise.id)
+    puts @result
     if @result.in_progress
       @status = :job_in_progress
     elsif  @result.error_message
