@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe TutorController do
   before(:each) do
-    Exercise.stub(:find_by_id).and_return(stub_exercise)
+    Exercise.stub(:find).and_return(stub_exercise)
     controller.stub(:current_user).and_return(current_user)
   end
   
@@ -193,7 +193,7 @@ describe TutorController do
     
     it 'assigns a message describing the job is in progress' do
       post :check_syntax, :code=>code, :id=>stub_exercise
-      assigns[:status].should == :job_enqueued
+      assigns[:message].should == 'checking...'
     end
     
     it 'stores the delayed job id in the session' do
@@ -201,26 +201,11 @@ describe TutorController do
       session[:syntax_check_job].should == @delayed_job.id
     end
     
-    context "when the given exercise id is not in the database" do
-      before(:each) do
-        Exercise.stub(:find_by_id).and_return(nil)
-      end
-      
-      it "does not start a new job" do
-        Delayed::Job.should_not_receive(:enqueue).with @syntax_job
-        post :check_syntax
-      end
-      
-      it "assigns :exercise_dne to the status" do
-        post :check_syntax
-        assigns[:status].should == :exercise_dne
-      end
-    end
-    
-    context "when the user posts check syntax a few times really fast but they already have a syntax job running" do
+    context "when the user posts check syntax while a syntax check job is running" do
       before(:each) do
         controller.stub(:job_running?).and_return(true)
       end
+      
       it "doesn't create a new syntax job if the user still has a syntax job in the db" do
         Delayed::Job.should_not_receive(:enqueue)
         post :check_syntax, :code=>code, :id=>stub_exercise
@@ -228,7 +213,7 @@ describe TutorController do
       
       it "assigns :duplicate_job to the status" do
         post :check_syntax
-        assigns[:status].should == :duplicate_job
+        assigns[:message].should == 'already checking!'
       end
     end
   end
@@ -244,38 +229,19 @@ describe TutorController do
       get :syntax_status, :id=>stub_exercise.id
     end
     
-    it "assigns the SyntaxCheckResults" do
-      mock_result = mock_model(String).as_null_object
-      SyntaxCheckJob.stub(:pop_result).and_return(mock_result)
-      
-      post :syntax_status, :id=>stub_exercise.id
-      
-      assigns[:result].should == mock_result
-    end
-    
-    it "assigns sytntax check status" do
+    it "assigns sytntax check message" do
       syntax_check_result = "Syntax Error"
       SyntaxCheckJob.stub(:pop_result).and_return(syntax_check_result)
       get :syntax_status, :id=>stub_exercise
-      assigns[:status].should == :job_done
+      assigns[:message].should == "Syntax Error"
     end
     
-    context "when there are not associated syntax job results in the database" do
-      before(:each) do
-        SyntaxCheckJob.stub(:pop_result).and_return(nil)
-      end
-      
-      it "assigns :job_in_progress to the status" do
-        post :syntax_status, :id=>stub_exercise
-        assigns[:status].should == :job_in_progress
-      end
-    end
-    
-    context "when the exercise does not exist" do
-      it "assigns :exercise_dne to the status" do
-        Exercise.stub(:find_by_id).and_return(nil)
-        post :syntax_status, :id => 0
-        assigns[:status].should == :exercise_dne
+    context "the syntax message is nil" do
+      it "assigns 'checkking...'" do
+         syntax_check_result = nil
+         SyntaxCheckJob.stub(:pop_result).and_return(syntax_check_result)
+         get :syntax_status, :id=>stub_exercise
+         assigns[:message].should == "checking..."
       end
     end
   end

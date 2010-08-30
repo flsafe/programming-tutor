@@ -4,7 +4,7 @@ class TutorController < ApplicationController
   
   def show
     if no_current_exercise?
-      @exercise = Exercise.find_by_id params[:id]
+      @exercise = Exercise.find params[:id]
       if @exercise
         set_current_exercise(@exercise.id, Time.now) unless current_user_doing_exercise?
       end
@@ -18,9 +18,10 @@ class TutorController < ApplicationController
   end
   
   def grade
-    @exercise = Exercise.find_by_id params[:id]
+    @exercise = Exercise.find params[:id]
+    raise "Exercise Not Found" unless @exercise
 
-    if not job_running? :grade_solution_job
+    unless job_running? :grade_solution_job
       enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
       clear_current_exercise
     else
@@ -29,7 +30,9 @@ class TutorController < ApplicationController
   end
   
   def grade_status
-    @exercise = Exercise.find_by_id params[:id]
+    @exercise = Exercise.find params[:id]
+    raise "Exercise Not Found" unless @exercise
+    
     result    = GradeSolutionJob.pop_result(current_user.id, @exercise.id)
       
     respond_to do |f|
@@ -48,51 +51,33 @@ class TutorController < ApplicationController
   end
   
   def check_syntax
-    @exercise = Exercise.find_by_id params[:id]
-    if @exercise
-      if not job_running? :syntax_check_job
-        enqueue_job :syntax_check_job, SyntaxCheckJob.new(params[:code], current_user.id.to_s, params[:id])
-        @status = :job_enqueued
-      else
-        @status = :duplicate_job
-      end
+    @exercise = Exercise.find params[:id]
+    raise "Exercise Not Found" unless @exercise
+
+    unless job_running? :syntax_check_job
+      enqueue_job :syntax_check_job, SyntaxCheckJob.new(params[:code], current_user.id.to_s, @exercise.id.to_s)
+      @message = 'checking...'
     else
-      @status = :exercise_dne
-    end    
+      @message = 'already checking!'
+    end
     
     respond_to do |f| 
       f.html do
-         message = case @status
-          when :job_enqueued  then "checking..."
-          when :duplicate_job then "already checking!"
-          when :exercise_dne  then "an error occured!"
-        end
-        render :text=>message
+        render :text=>@message
       end
     end
   end
   
   def syntax_status
-    @exercise = Exercise.find_by_id params[:id]
-    if @exercise
-      @result = SyntaxCheckJob.pop_result(current_user.id, @exercise.id)
-      if @result
-        @status  = :job_done
-      else
-        @status = :job_in_progress
-      end
-    else
-      @status = :exercise_dne
-    end
-    
+    @exercise = Exercise.find params[:id]
+    raise "Exercise Not Found" unless @exercise
+
+    @message = SyntaxCheckJob.pop_result(current_user.id, @exercise.id)
+    @message = @message || 'checking...'
+
     respond_to do |f|
       f.html do
-        message = case @status
-          when :job_done        then @result
-          when :job_in_progress then "checking..."
-          when :exercise_dne    then "an error occured"
-        end
-        render :text=>message
+        render :text=>@message
       end
     end
   end
