@@ -149,63 +149,63 @@ describe TutorController do
     end
   end
   
-  describe "get grade_status" do
-
-    context "if the grade solution job was a success" do
-      before(:each) do
-        GradeSolutionResult.stub(:get_result).and_return(grade_solution_result(:error_message=>nil, :grade_sheet_id=>1000))
-        GradeSheet.stub(:find_by_id).and_return(grade_sheet)
-      end
-      
-      it "retrieves the grade solution job result" do
-        GradeSolutionResult.should_receive(:get_result).with(current_user.id, stub_exercise.id)
-        post :grade_status, :id=>stub_exercise.id
-      end
-      
-      it "retrieves the grade sheet from the db" do
-        GradeSheet.should_receive(:find_by_id).with(grade_solution_result.grade_sheet_id)
-        post :grade_status, :id=>stub_exercise.id
-      end
-      
-      it "assigns the grade results from the grade sheet" do
-        post :grade_status, :id=>stub_exercise.id
-        assigns[:grade_sheet].should == grade_sheet
-      end
-      
-      it "assigns :grading_done" do
-        post :grade_status, :id=>stub_exercise
-        assigns[:status].should == :job_done
-      end
-      
-      it "renders the grade_sheet partial as a response" do
-        post :grade_status, :id=>stub_exercise.id
-        response.should render_template('grade_sheets/_grade_sheet')
-      end
-    end
-    
-    context "there is no grade solution result yet" do
-      before(:each) do
-        GradeSolutionResult.stub(:get_result).and_return(nil)
-      end
-      
-      it "assigns :job_in_progress to status" do
-        post :grade_status, :id=>stub_exercise.id
-        assigns[:status].should == :job_in_progress
-      end
-    end
-    
-    context "if the grade solution job was not successfull" do
-      before(:each) do
-        GradeSolutionResult.stub(:get_result).and_return(grade_solution_result(:error_message=>"error", :grade_sheet_id=>nil))
-      end
-      
-      it "assigns :job_error to status" do
-        post :grade_status, :id=>stub_exercise.id
-        assigns[:status].should == :job_error
-      end
-    end
-  end
-  
+  # describe "get grade_status" do
+  # 
+  #    context "if the grade solution job was a success" do
+  #      before(:each) do
+  #        GradeSolutionResult.stub(:get_result).and_return(grade_solution_result(:error_message=>nil, :grade_sheet_id=>1000))
+  #        GradeSheet.stub(:find_by_id).and_return(grade_sheet)
+  #      end
+  #      
+  #      it "retrieves the grade solution job result" do
+  #        GradeSolutionResult.should_receive(:get_result).with(current_user.id, stub_exercise.id)
+  #        post :grade_status, :id=>stub_exercise.id
+  #      end
+  #      
+  #      it "retrieves the grade sheet from the db" do
+  #        GradeSheet.should_receive(:find_by_id).with(grade_solution_result.grade_sheet_id)
+  #        post :grade_status, :id=>stub_exercise.id
+  #      end
+  #      
+  #      it "assigns the grade results from the grade sheet" do
+  #        post :grade_status, :id=>stub_exercise.id
+  #        assigns[:grade_sheet].should == grade_sheet
+  #      end
+  #      
+  #      it "assigns :grading_done" do
+  #        post :grade_status, :id=>stub_exercise
+  #        assigns[:status].should == :job_done
+  #      end
+  #      
+  #      it "renders the grade_sheet partial as a response" do
+  #        post :grade_status, :id=>stub_exercise.id
+  #        response.should render_template('grade_sheets/_grade_sheet')
+  #      end
+  #    end
+  #    
+  #    context "there is no grade solution result yet" do
+  #      before(:each) do
+  #        GradeSolutionResult.stub(:get_result).and_return(nil)
+  #      end
+  #      
+  #      it "assigns :job_in_progress to status" do
+  #        post :grade_status, :id=>stub_exercise.id
+  #        assigns[:status].should == :job_in_progress
+  #      end
+  #    end
+  #    
+  #    context "if the grade solution job was not successfull" do
+  #      before(:each) do
+  #        GradeSolutionResult.stub(:get_result).and_return(grade_solution_result(:error_message=>"error", :grade_sheet_id=>nil))
+  #      end
+  #      
+  #      it "assigns :job_error to status" do
+  #        post :grade_status, :id=>stub_exercise.id
+  #        assigns[:status].should == :job_error
+  #      end
+  #    end
+  #  end
+  #  
   describe "post check_syntax" do
     
     before(:each) do

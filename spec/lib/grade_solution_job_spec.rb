@@ -81,13 +81,16 @@ describe GradeSolutionJob do
       job.perform
     end
     
-    it "saves a grade solution result object to the database" do
-      GradeSheet.stub(:new).and_return(grade_sheet)
-      GradeSolutionResult.stub(:new).and_return(result)
-      
-      GradeSolutionResult.should_receive(:new).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message => nil, :grade_sheet_id=>grade_sheet.id)
-      result.should_receive(:save!)
+    it "places the job result in the db on successful save of the gradesheet" do
+      job.stub(:save_grade_sheet).and_return(1)
+      JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message => nil, :data=>'OK')
       job.perform 
+    end
+    
+    it "places a error result in the db on unsuccessful save of the gradesheeet" do
+      job.stub(:save_grade_sheet).and_return(nil)
+      JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message=>"Grade sheet could not be saved")
+      job.perform
     end
     
     it "saves the grade sheet to the database" do
@@ -99,14 +102,13 @@ describe GradeSolutionJob do
       job.perform
     end
     
-    context "when the unit test resultls includes an error, it posts an error result to the db" do
+    context "when the unit test returns an error, it places and error result in the db" do
       it "it posts an error message" do
         #these are the two errors the unit test can return
         errors = [{:error=>:did_not_compile}, {:error=>:no_result_returned}]
           errors.each do |r|
           unit_test.stub(:run_on).and_return(r)
-          job.stub(:post_result)
-          job.should_receive(:post_result)
+          JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message=>r[:error])
           job.perform
         end
       end
@@ -115,7 +117,7 @@ describe GradeSolutionJob do
     context "when an exception is thrown before the results are returned" do
       it "posts the error to the database" do
         SolutionTemplate.stub(:find).and_raise("A mock exception")
-        job.should_receive(:post_result)
+        JobResult.should_receive(:place_result)
         job.perform
       end
     end

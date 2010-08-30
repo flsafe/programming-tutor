@@ -15,24 +15,34 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
 
       if results[:error]
         Rails.logger.error(results[:error])
-        post_result(results[:error], nil)
+        JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :error_message=>results[:error])
       else
-        gs_id   = save_grade_sheet(results, code)
-        post_result(nil, gs_id)
+        raise "Grade sheet could not be saved" unless save_grade_sheet(results, code)
+        JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :data=>'OK', :error_message=>nil)
       end
     rescue Exception => e
       Rails.logger.error(e.message)
-      post_result(e.message)
+      JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :error_message=>e.message)
     end
+  end
+  
+  def self.pop_result(user_id, exercise_id)
+    r_struct     = Struct.new("GradeJobResult", :in_progress, :error_message, :grade_sheet)
+    grade_result = r_struct.new 
+    
+    r = JobResult.pop_result(:user_id=>user_id, :exercise_id=>exercise_id)
+    if r
+      grade_result.error_message = r.error_message
+      gs                         = GradeSheet.find :first, :conditions=>{:user_id=>user_id, :exercise_id=>exercise_id}, :order=>'created_at DESC'
+      grade_result.grade_sheet   = gs
+    else
+      grade_result.in_progress   = true      
+    end
+
+    grade_result
   end
 
   protected
-  
-   def post_result(error_message = nil, grade_sheet_id = nil)
-     GradeSolutionResult.delete_all ['user_id=? AND exercise_id=?', user_id, exercise_id]
-     grade_solution_result = GradeSolutionResult.new :user_id=>user_id, :exercise_id=>exercise_id, :error_message=>error_message, :grade_sheet_id=>grade_sheet_id
-     grade_solution_result.save!
-  end
   
   def save_grade_sheet(results, code)  
     grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code

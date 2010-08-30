@@ -39,13 +39,13 @@ class TutorController < ApplicationController
     @exercise = Exercise.find_by_id params[:id]
     raise "Exercise not found" unless @exercise
 
-    @result   = GradeSolutionResult.get_result(current_user.id, @exercise.id)
-    if not @result
+    @result   = GradeSolutionJob.pop_result(current_user.id, @exercise.id)
+    if @result.in_progress
       @status = :job_in_progress
-    elsif not @result.error_message.blank?
+    elsif  @result.error_message
       @status  = :job_error
     else
-      @grade_sheet = GradeSheet.find_by_id(@result.grade_sheet_id)
+      @grade_sheet = @result.grade_sheet
       @status = :job_done
     end
     
@@ -92,7 +92,6 @@ class TutorController < ApplicationController
   def syntax_status
     @exercise = Exercise.find_by_id params[:id]
     if @exercise
-      #@result = SyntaxCheckResult.get_result(current_user.id, @exercise.id)
       @result = SyntaxCheckJob.pop_result(current_user.id, @exercise.id)
       if @result
         @status  = :job_done
