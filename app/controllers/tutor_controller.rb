@@ -39,7 +39,7 @@ class TutorController < ApplicationController
         elsif result.error_message
           render :text=> "Oops! Error: #{result.error_message}"
         elsif result.grade_sheet
-          render :partial=>'grade_sheets/grade_sheet', :layout=>false, :locals=>{:grade_sheet=>result.grade_sheet, :exercise=>@exercise}
+          render :partial=>'grade_sheets/grade_sheet', :layout=>false, :object=>result.grade_sheet
         else
           render :text=>"Oh no! This wasn't supposed to happen! We encountered an error, try again a bit later."
         end

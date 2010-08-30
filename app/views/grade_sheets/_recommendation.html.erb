@@ -1,5 +1,5 @@
 <div class="gradesheet-text">
-	<% scored_higher_than_average = true if grade_sheet.grade > exercise.average_grade %>
+	<% scored_higher_than_average = true if grade_sheet.grade > grade_sheet.exercise.average_grade %>
 	<% style_class = scored_higher_than_average ? 'green-text' : 'default' %>
 
 	<% if scored_higher_than_average %>
@@ -17,6 +17,6 @@
 		</p>
 		
 		<p class="<%=h style_class  %>">
-			Average Grade: <%=h exercise.average_grade %>
+			Average Grade: <%=h grade_sheet.exercise.average_grade %>
 		</p>
 </div>
