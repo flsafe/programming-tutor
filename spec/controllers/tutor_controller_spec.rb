@@ -180,7 +180,7 @@ describe TutorController do
     
     context "there is no grade solution result yet" do
       before(:each) do
-        GradeSolutionResult.stub(:get_result).and_return(nil)
+        GradeSolutionJob.stub(:pop_result).and_return(grade_solution_result(:in_progress=>true))
       end
       
       it "assigns :job_in_progress to status" do
