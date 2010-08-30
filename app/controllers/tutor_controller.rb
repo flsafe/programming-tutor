@@ -19,44 +19,27 @@ class TutorController < ApplicationController
   
   def grade
     @exercise = Exercise.find_by_id params[:id]
-    if @exercise
-      if not job_running? :grade_solution_job
-        enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
-        @status = :job_enqueued
-        clear_current_exercise
-      else
-        @status = :duplicate_job
-      end
+
+    if not job_running? :grade_solution_job
+      enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
+      clear_current_exercise
     else
-      @status = :exercise_dne
-    end
-    respond_to do |f|
-      f.html
+      redirect_to :action=>:already_doing_exercise
     end
   end
   
   def grade_status
     @exercise = Exercise.find_by_id params[:id]
-    raise "Exercise not found" unless @exercise
-
-    @result   = GradeSolutionJob.pop_result(current_user.id, @exercise.id)
-    if @result.in_progress
-      @status = :job_in_progress
-    elsif  @result.error_message
-      @status  = :job_error
-    else
-      @grade_sheet = @result.grade_sheet
-      @status = :job_done
-    end
-    
+    result    = GradeSolutionJob.pop_result(current_user.id, @exercise.id)
+      
     respond_to do |f|
       f.html do 
-        if @status == :job_in_progress
+        if result.in_progress
           render :text=>'Still grading...'
-        elsif @status == :job_error
-          render :text=> "Oops! Error: #{@result.error_message}"
-        elsif @status == :job_done
-          render :partial=>'grade_sheets/grade_sheet', :layout=>false, :object=>@grade_sheet
+        elsif result.error_message
+          render :text=> "Oops! Error: #{result.error_message}"
+        elsif result.grade_sheet
+          render :partial=>'grade_sheets/grade_sheet', :layout=>false, :locals=>{:grade_sheet=>result.grade_sheet, :exercise=>@exercise}
         else
           render :text=>"Oh no! This wasn't supposed to happen! We encountered an error, try again a bit later."
         end

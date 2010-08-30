@@ -110,11 +110,6 @@ describe TutorController do
       session[:grade_solution_job].should == @delayed_job.id
     end
     
-    it "assigns a status message" do
-      post :grade, :code=>code, :id=>stub_exercise.id
-      assigns[:status].should == :job_enqueued
-    end
-    
     it "renders grading" do
       post :grade, :code=>code, :id=>stub_exercise.id
       response.should render_template 'tutor/grade'
@@ -127,24 +122,10 @@ describe TutorController do
         post :grade, :code=>code, :id=>stub_exercise.id
       end
       
-      it "assigns a duplicate job to the status" do
+      it "redirects to the 'already_doing_exercise' page" do
         controller.stub(:job_running?).and_return(true)
         post :grade, :code=>code, :id=>stub_exercise.id
-        assigns[:status].should == :duplicate_job
-      end
-    end
-    
-    context "the given exercise id does not exisit" do
-      it "does not create a new job" do
-        Exercise.stub(:find_by_id).and_return(nil)
-        GradeSolutionJob.should_not_receive(:new).with(code, current_user.id, stub_exercise.id)
-        post :grade, :code=>code, :id=>0
-      end
-      
-      it "assigns :no_exercise to the status" do
-        Exercise.stub(:find_by_id).and_return(nil)
-        post :grade, :code=>code, :id=>0
-        assigns[:status] = :exercise_dne
+        response.should redirect_to(:action=>'already_doing_exercise')
       end
     end
   end
@@ -162,17 +143,7 @@ describe TutorController do
         post :grade_status, :id=>stub_exercise.id
       end
       
-      it "assigns the grade results from the grade sheet" do
-        post :grade_status, :id=>stub_exercise.id
-        assigns[:grade_sheet].should == grade_sheet
-      end
-      
-      it "assigns :grading_done" do
-        post :grade_status, :id=>stub_exercise
-        assigns[:status].should == :job_done
-      end
-      
-      it "renders the grade_sheet partial as a response" do
+      it "renders the grade_sheet partial" do
         post :grade_status, :id=>stub_exercise.id
         response.should render_template('grade_sheets/_grade_sheet')
       end
@@ -183,17 +154,17 @@ describe TutorController do
         GradeSolutionJob.stub(:pop_result).and_return(grade_solution_result(:in_progress=>true))
       end
       
-      it "assigns :job_in_progress to status" do
+      it "renders an in-progress message" do
         post :grade_status, :id=>stub_exercise.id
-        assigns[:status].should == :job_in_progress
+        response.should have_text('Still grading...')
       end
     end
     
     context "if the grade solution job was not successfull" do
-      it "assigns :job_error to status" do
-        GradeSolutionJob.stub(:pop_result).and_return(grade_solution_result(:error_message=>:job_error, :in_progress=>nil))
+      it "renders an error message" do
+        GradeSolutionJob.stub(:pop_result).and_return(grade_solution_result(:error_message=>'job error', :in_progress=>nil))
         post :grade_status, :id=>stub_exercise.id
-        assigns[:status].should == :job_error
+        response.should have_text(/job error/i)
       end
     end
   end
