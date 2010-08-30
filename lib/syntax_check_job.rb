@@ -4,11 +4,11 @@ class SyntaxCheckJob < Struct.new :code, :user_id, :exercise_id
   
   def perform
     error_message = Compiler.check_syntax(code)
-    JobResult.place_result :user_id=>user_id, :exercise_id=>exercise_id, :data=>error_message
+    JobResult.place_result :user_id=>user_id, :exercise_id=>exercise_id, :data=>error_message, :job_type=>'syntax'
   end
   
   def self.pop_result(user_id, exercise_id)
-    result = JobResult.pop_result(:user_id=>user_id, :exercise_id=>exercise_id)
+    result = JobResult.pop_result(:user_id=>user_id, :exercise_id=>exercise_id, :job_type=>'syntax')
     if result
       syntax_error?(result) 
     end

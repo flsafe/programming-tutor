@@ -83,13 +83,13 @@ describe GradeSolutionJob do
     
     it "places the job result in the db on successful save of the gradesheet" do
       job.stub(:save_grade_sheet).and_return(1)
-      JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message => nil, :data=>'OK')
+      JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message => nil, :data=>'OK', :job_type=>'grade')
       job.perform 
     end
     
     it "places a error result in the db on unsuccessful save of the gradesheeet" do
       job.stub(:save_grade_sheet).and_return(nil)
-      JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message=>"Grade sheet could not be saved")
+      JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message=>"Grade sheet could not be saved", :job_type=>"grade")
       job.perform
     end
     
@@ -108,7 +108,7 @@ describe GradeSolutionJob do
         errors = [{:error=>:did_not_compile}, {:error=>:no_result_returned}]
           errors.each do |r|
           unit_test.stub(:run_on).and_return(r)
-          JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message=>r[:error])
+          JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message=>r[:error], :job_type=>'grade')
           job.perform
         end
       end
