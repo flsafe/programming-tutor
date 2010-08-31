@@ -1,7 +1,11 @@
 class UserSessionsController < ApplicationController
   
   def new
-    @user_session = UserSession.new
+    if current_user_session
+      redirect_to :controller=>:overview
+    else
+      @user_session = UserSession.new
+    end
   end
   
   def create
