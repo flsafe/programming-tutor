@@ -72,7 +72,8 @@ h1, h2, h3, h4, h5{
 ************************/
 
 #login{
-  background: url('/images/pitch-bg.png');
+  background: rgb(250, 250, 250);
+  padding: 10px;
 }
 
 #login label{
@@ -82,7 +83,7 @@ h1, h2, h3, h4, h5{
 
 #login form{
   padding: 20px;
-  width: 350px;
+  width: 275px;
   margin-left:auto;
   margin-right: auto;
   margin-top: 20px;
