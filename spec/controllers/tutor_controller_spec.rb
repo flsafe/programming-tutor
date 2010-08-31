@@ -298,8 +298,8 @@ describe TutorController do
       GradeSheet.should_receive(:new).with(:grade=>0, 
         :user=>current_user,
         :exercise=>stub_exercise, 
-        :unit_test_results=>'dnf',
-        :src_code=>'dnf')
+        :unit_test_results=>{},
+        :src_code=>'')
         post :did_not_finish
     end
     

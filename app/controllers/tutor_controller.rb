@@ -111,7 +111,7 @@ class TutorController < ApplicationController
     clear_current_exercise
     
     if exercise
-      gs = GradeSheet.new :grade=>0, :user=>current_user, :exercise=>exercise, :unit_test_results=>"dnf", :src_code=>"dnf"
+      gs = GradeSheet.new :grade=>0, :user=>current_user, :exercise=>exercise, :unit_test_results=>{}, :src_code=>""
       ta = TeachersAid.new
       ta.record_grade(gs)
     end
