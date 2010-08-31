@@ -60,12 +60,20 @@ h1, h2, h3, h4, h5{
   border-radius: 10px;
 }
 
-#errorExplanation, #flash_notice{
+#errorExplanation{
   margin: 5px;
   color: red;
   border: 5px solid red;
   padding: 5px;
 }
+
+#flash_notice{
+  margin: 5px;
+  color: blue;
+  border: 5px solid rgb(37, 59 , 89);
+  padding: 5px;
+}
+
 
 /************************
 * Login Page
