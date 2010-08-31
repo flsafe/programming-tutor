@@ -294,20 +294,6 @@ describe TutorController do
       post :did_not_finish, :id=>stub_exercise
     end
     
-    it "Creates a new grade sheet that identifies an incomplete exercise" do
-      GradeSheet.should_receive(:new).with(:grade=>0, 
-        :user=>current_user,
-        :exercise=>stub_exercise, 
-        :unit_test_results=>{},
-        :src_code=>'')
-        post :did_not_finish
-    end
-    
-    it "Saves the grade sheet" do
-      @mock_ta.should_receive(:record_grade)
-      post :did_not_finish
-    end
-    
     it "renders did_not_finish" do
       post :did_not_finish
       response.should render_template('tutor/did_not_finish')
