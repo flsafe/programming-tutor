@@ -1,9 +1,9 @@
 module MenuHelper
 
   def show_menu?
-    @url_black_list    = [ /^\/$/]
+    @url_black_list    ||= [ /^\/$/]
     
-    @action_black_list = ['user_sessions:new',
+    @action_black_list ||= ['user_sessions:new',
                           'user_sessions:create',
                           'users:new',
                           'users:create']
