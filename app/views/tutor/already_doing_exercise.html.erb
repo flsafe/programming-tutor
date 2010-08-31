@@ -1,1 +1,11 @@
-You are already doing an exercise!
+<% stylesheet 'screen' %>
+<% stylesheet 'application'%>
+<% stylesheet 'header' %>
+
+<%= render :partial=>'layouts/header' %>
+	
+<div id="already-doing-exercise" class="column span-24">
+	<h2 class="page-title">You are already doing an exercise!</h1>
+	<%= link_to "Back", request.referer %> |
+	<%= link_to "Exercise In Progress", :action=>:show, :id=>@current_exercise %>
+</div>

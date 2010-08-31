@@ -218,6 +218,19 @@ table.exercise-statistics caption, table.exercise-statistics{
 }
 
 /************************
+* Already doing exercise
+************************/
+#already-doing-exercise{
+  text-align: center;
+}
+
+#already-doing-exercise a{
+  padding:5px;
+  font-size: 1.2em;
+}
+
+
+/************************
 * Footer
 ************************/
 

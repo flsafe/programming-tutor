@@ -103,7 +103,7 @@ class TutorController < ApplicationController
   end
   
   def already_doing_exercise
-    
+    @current_exercise = Exercise.find current_exercise_id
   end
   
   def did_not_finish
