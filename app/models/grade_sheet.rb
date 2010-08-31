@@ -2,7 +2,7 @@ class GradeSheet < ActiveRecord::Base
   belongs_to :user
   belongs_to :exercise
   
-  validates_presence_of :user, :grade, :exercise, :unit_test_results, :src_code
+  validates_presence_of :user, :grade, :exercise
   
   def retake?
     completed = GradeSheet.count_grade_sheets(user, exercise)
