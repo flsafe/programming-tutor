@@ -62,10 +62,9 @@ h1, h2, h3, h4, h5{
 
 #errorExplanation{
   margin: 5px;
-}
-
-#errorExplanation{
   color: red;
+  border: 5px solid red;
+  padding: 5px;
 }
 
 /************************
