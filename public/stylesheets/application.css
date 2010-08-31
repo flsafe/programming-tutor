@@ -60,6 +60,14 @@ h1, h2, h3, h4, h5{
   border-radius: 10px;
 }
 
+#errorExplanation{
+  margin: 5px;
+}
+
+#errorExplanation{
+  color: red;
+}
+
 /************************
 * Login Page
 ************************/
@@ -87,6 +95,8 @@ h1, h2, h3, h4, h5{
   -khtml-border-radius: 20px;
   border-radius: 20px;
 }
+
+
 
 /************************
 * Overview Page

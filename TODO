@@ -65,21 +65,6 @@ Implement the following convention for all unit tests
 					
 #-------- Refactor ----------#
 
-Split sytax check and submit buttons from the text editor
-
-
-? Keep the tutor syntax check and grading DRY ?
-
-All the code in GradeSolutionJob, is shit! There are
-	messages all over the place, they are never even displayed to the user.
-	-The rescue's should log the exceptions
-	
-Same as above but for UnitTest
-	
-Clean up tutor_controller#grade_status. Yuck! Do this after the new test above is added
-	
-Get rid of the string literals in UnitTestSpec
-
 Don't run raw commands using `` instead move into some object
  so that I can change the way this stuff runs on heroku
 
