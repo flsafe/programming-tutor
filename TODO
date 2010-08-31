@@ -67,11 +67,6 @@ Implement the following convention for all unit tests
 
 Split sytax check and submit buttons from the text editor
 
-? Should GradeSolutionResult and SyntaxCheckResult be consolidated somehow?
- - Place SyntaxCheckResult#get_result into SyntaxCheckJob.get_result
- - Place GradeSolutionResult#get_result into GradeSolutionJob.get_result
- - Make XXXResult into a SINGLE dumb object.
-   JobResult {job_type:string, job_error_msg:string, job_info:string }
 
 ? Keep the tutor syntax check and grading DRY ?
 
@@ -95,8 +90,6 @@ Make compiler use pipes instead of files to use the compiler (Maybe faster? less
 Test gcc vs some smaller faster compiler
 
 #-------- Debatable ---------#		
-
-? Remove, 'status' from the tutor controller and replace with 'message' ?
 
 ? Add a basic 'conectivity' scenario for grading, and then one to test every exercise
 
@@ -128,6 +121,11 @@ Test gcc vs some smaller faster compiler
 #Refactor syntax_status: Don't use the rjs template! It is too complicated, see that way I did
 #	grading. Have 'call_remote_periodically' check the condition 'checking...'		
 
+#? Should GradeSolutionResult and SyntaxCheckResult be consolidated somehow?
+ - Place SyntaxCheckResult#get_result into SyntaxCheckJob.get_result
+ - Place GradeSolutionResult#get_result into GradeSolutionJob.get_result
+ - Make XXXResult into a SINGLE dumb object.
+   JobResult {job_type:string, job_error_msg:string, job_info:string }
 
 
 
