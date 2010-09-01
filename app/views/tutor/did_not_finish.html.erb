@@ -1,3 +1,7 @@
-There is no time remaining for that exercise! No worries though, you can retake it!<br/>
-<br/>
-<%= link_to "Home", :controller=>:overview %>
+<% stylesheet 'screen' %>
+<% stylesheet 'application' %>
+
+<div id="time-is-up" class="column span-24">
+	<h2 class="page-title">Time Is Up For That Exercise!</h2>
+	<%= link_to "Home", :controller=>:overview %>
+</div>

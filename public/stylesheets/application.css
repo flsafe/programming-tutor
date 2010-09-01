@@ -224,6 +224,17 @@ table.exercise-statistics caption, table.exercise-statistics{
   text-align: center;
 }
 
+/************************
+* Time is up
+************************/
+#time-is-up{
+  text-align: center;
+}
+
+#time-is-up a{
+  font-size: 1.3em;
+}
+
 #already-doing-exercise a{
   padding:5px;
   font-size: 1.2em;
