@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe TutorController do
   before(:each) do
-    Exercise.stub(:find).and_return(stub_exercise)
+    Exercise.stub(:find).and_return(stub_exercise(:minutes=>60))
     controller.stub(:current_user).and_return(current_user)
   end
   
@@ -28,20 +28,28 @@ describe TutorController do
   
   describe "get show" do
 
-    it "assigns the exercise to be displayed to the user" do
-      get 'show'
-      assigns[:exercise].should == stub_exercise
-    end
+    context "when the user has no current exercise" do
+      it "assigns the exercise to be displayed to the user" do
+        get 'show'
+        assigns[:exercise].should == stub_exercise
+      end
     
-    it "sets the current exercise" do
-      Time.stub(:now).and_return(Time.parse('7:00'))
-      controller.should_receive(:set_current_exercise).with(stub_exercise.id, Time.now)
-      get 'show'
-    end
+      it "sets the current exercise" do
+        Time.stub(:now).and_return(Time.parse('7:00'))
+        controller.should_receive(:set_current_exercise).with(stub_exercise.id, Time.now)
+        get 'show'
+      end
     
-    it "renders the show template" do
-      get 'show'
-      response.should render_template('show')
+      it "renders the show template" do
+        get 'show'
+        response.should render_template('show')
+      end
+      
+      it "does not redirect" do
+        controller.stub('current_user_doing_exercise?').and_return(nil)
+        get 'show', :id=>stub_exercise
+        response.should_not render_template('tutor/already_doing_exercise')
+      end
     end
     
     context "the current user is already doing an exercise" do
@@ -54,15 +62,9 @@ describe TutorController do
         get 'show'
       end
       
-      it "redirects if show exercise that is not the current exercise" do
+      it "redirects" do
         get 'show', :id=>1001
         response.should redirect_to(:action=>:already_doing_exercise, :id=>100)
-      end
-      
-      it "does not redirect if there is no current exercise" do
-        controller.stub('current_user_doing_exercise?').and_return(nil)
-        get 'show', :id=>stub_exercise
-        response.should_not render_template('tutor/already_doing_exercise')
       end
     end
   end
@@ -120,12 +122,6 @@ describe TutorController do
         controller.stub(:job_running?).and_return(true)
         GradeSolutionJob.should_not_receive(:new).with(code, current_user.id, stub_exercise.id)
         post :grade, :code=>code, :id=>stub_exercise.id
-      end
-      
-      it "redirects to the 'already_doing_exercise' page" do
-        controller.stub(:job_running?).and_return(true)
-        post :grade, :code=>code, :id=>stub_exercise.id
-        response.should redirect_to(:action=>'already_doing_exercise')
       end
     end
   end
@@ -251,26 +247,19 @@ describe TutorController do
     before(:each) do
       Time.stub(:now).and_return(Time.parse("7:50"))
       session[:current_exercise_start_time] = Time.parse("7:00")
-      Exercise.stub(:find_by_id).and_return(stub_model(Exercise, :minutes=>60))
+      @stub_exercise = stub_model(Exercise, :minutes=>'60')
+      Exercise.stub(:find).and_return(@stub_exercise)
     end
     
-    it "returns the amount of time that is remainging in MM::SS form" do
-      get :get_time_remaining, :id=>stub_exercise
+    it "returns the amount of time that is remaining in MM::SS form" do
+      get :get_time_remaining, :id=>@stub_exercise
       assigns[:time_remaining].should == "10:00"
     end
     
     it "returns 00:00 if the elapsed time is over the alloted time" do
       Time.stub(:now).and_return(Time.parse("8:30"))
-      get :get_time_remaining, :id=>stub_exercise
+      get :get_time_remaining, :id=>@stub_exercise
       assigns[:time_remaining].should == "00:00"
-    end
-    
-    context "when the exercise does not exist" do
-      it "returns 00:00" do
-        Exercise.stub(:find_by_id).and_return nil
-        get :get_time_remaining
-        assigns[:time_remaining].should == "00:00"
-      end
     end
     
     context "when a start time was not set for the exercise" do
