@@ -1,3 +1,5 @@
+<h2 class="page-title">My Info</h2>
+
 <p>
   <b>Username:</b>
   <%=h @user.username %>
@@ -13,6 +15,4 @@
   <%=h @user.email %>
 </p>
 
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Back', request.referer %>

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   
   before_filter :authorize, :except=>[:new, :create]
-  before_filter :check_current_user_is_admin, :except=>[:new, :create]
+  before_filter :check_current_user_is_admin, :except=>[:new, :create, :show_me]
   
   # GET /users
   # GET /users.xml
@@ -22,6 +22,14 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @user }
+    end
+  end
+  
+  def show_me
+    @user = User.find(current_user.id)
+    
+    respond_to do |format|
+      format.html { render :action=>:show, :id=>current_user}
     end
   end
 

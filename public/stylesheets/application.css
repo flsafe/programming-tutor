@@ -75,6 +75,13 @@ h1, h2, h3, h4, h5{
 }
 
 
+#flash_error{
+  margin: 5px;
+  color: red;
+  border: 5px solid red;
+  padding: 5px;
+}
+
 /************************
 * Login Page
 ************************/
@@ -220,6 +227,7 @@ table.exercise-statistics caption, table.exercise-statistics{
 /************************
 * Already doing exercise
 ************************/
+
 #already-doing-exercise{
   text-align: center;
 }
