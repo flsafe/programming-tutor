@@ -26,7 +26,7 @@ Feature: Do exercise
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And the exercise "RemoveChar" takes "0" minutes to complete
 		And I am viewing the tutor page for "RemoveChar"
-		Then I should see "There is no time remaining for that exercise! No worries though, you can retake it!"
+		Then I should see "Time Is Up For That Exercise!"
 			
 	@javascript
 	Scenario Outline: The user performs a syntax check

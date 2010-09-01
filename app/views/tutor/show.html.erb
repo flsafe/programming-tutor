@@ -1,7 +1,5 @@
-<% content_for(:head) do%>
-	<%= javascript_include_tag 'prototype' %>
-<% end %>
-<%= stylesheet 'exercise' %>
+<% javascript 'prototype' %>
+<% stylesheet 'exercise' %>
 	
 <div id="content">
 		<p id="time-remaining">Time Remaining: <span id="timer">retrieving time...</span></p>
