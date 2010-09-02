@@ -4,6 +4,8 @@ check_if_installed(){
     type -P $1 &>/dev/null || { echo "$1 is required but not installed!.  Install it first!" >&2; return 1; }
 }
 
+echo "Checking Production Deploymet Requirements..."
+
 # Used by capistrano to 
 # deploy new instances
 check_if_installed git
@@ -42,3 +44,6 @@ check_if_installed rvm
 # when deploying.
 check_if_installed pidof
 check_if_installed kill
+
+# Used to highlight syntax solution code
+check_if_installed pygmentize

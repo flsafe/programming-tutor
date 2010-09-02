@@ -21,11 +21,15 @@ dependencies:
     - :development
     - :test
     version: ">= 0"
-  authlogic: 
+  highlight: 
     group: 
     - :default
     version: ">= 0"
   easy_roles: 
+    group: 
+    - :default
+    version: ">= 0"
+  authlogic: 
     group: 
     - :default
     version: ">= 0"
@@ -37,11 +41,11 @@ dependencies:
     group: 
     - :test
     version: ">= 0"
-  delayed_job: 
+  acts-as-taggable-on: 
     group: 
     - :default
     version: ">= 0"
-  acts-as-taggable-on: 
+  delayed_job: 
     group: 
     - :default
     version: ">= 0"
@@ -57,15 +61,15 @@ dependencies:
     group: 
     - :default
     version: ">= 0"
+  cucumber-rails: 
+    group: 
+    - :test
+    version: = 0.2.4
   factory_girl: 
     group: 
     - :test
     - :cucumber
     version: ">= 0"
-  cucumber-rails: 
-    group: 
-    - :test
-    version: = 0.2.4
   paperclip: 
     group: 
     - :default
@@ -74,14 +78,14 @@ dependencies:
     group: 
     - :default
     version: ">= 0"
-  daemons: 
-    group: 
-    - :default
-    version: = 1.0.10
   cucumber: 
     group: 
     - :test
     version: = 0.6.2
+  daemons: 
+    group: 
+    - :default
+    version: = 1.0.10
   selenium-client: 
     group: 
     - :test
@@ -90,19 +94,19 @@ dependencies:
     group: 
     - :development
     version: ">= 0"
-  capistrano: 
-    group: 
-    - :default
-    version: ">= 0"
   capybara: 
     group: 
     - :test
+    version: ">= 0"
+  capistrano: 
+    group: 
+    - :default
     version: ">= 0"
 specs: 
 - rake: 
     version: 0.8.7
 - ZenTest: 
-    version: 4.3.3
+    version: 4.4.0
 - activesupport: 
     version: 2.3.5
 - rack: 
@@ -118,7 +122,7 @@ specs:
 - acts-as-taggable-on: 
     version: 2.0.6
 - authlogic: 
-    version: 2.1.5
+    version: 2.1.6
 - builder: 
     version: 2.1.2
 - bundler: 
@@ -128,29 +132,29 @@ specs:
 - net-ssh: 
     version: 2.0.23
 - net-scp: 
-    version: 1.0.2
+    version: 1.0.3
 - net-sftp: 
-    version: 2.0.4
+    version: 2.0.5
 - net-ssh-gateway: 
     version: 1.0.1
 - capistrano: 
     version: 2.5.19
 - culerity: 
-    version: 0.2.10
+    version: 0.2.12
 - mime-types: 
     version: "1.16"
 - nokogiri: 
-    version: 1.4.2
+    version: 1.4.3.1
 - rack-test: 
     version: 0.5.4
 - ffi: 
     version: 0.6.3
 - json_pure: 
-    version: 1.4.3
+    version: 1.4.6
 - rubyzip: 
     version: 0.9.4
 - selenium-webdriver: 
-    version: 0.0.27
+    version: 0.0.28
 - capybara: 
     version: 0.3.9
 - columnize: 
@@ -176,11 +180,13 @@ specs:
 - easy_roles: 
     version: 1.0.0
 - factory_girl: 
-    version: 1.3.1
+    version: 1.3.2
+- highlight: 
+    version: 1.1.2
 - rubyforge: 
     version: 2.0.4
 - hoe: 
-    version: 2.6.1
+    version: 2.6.2
 - linecache: 
     version: "0.43"
 - mysql: 
@@ -205,7 +211,7 @@ specs:
     version: 1.3.1
 - test-unit: 
     version: 1.2.3
-hash: 1b107fab3542a0c985c22cbf22b8ac031fc9b91f
+hash: e04f0d0405f030c0569d624084fe6249c4f77e3a
 sources: 
 - Rubygems: 
     uri: http://rubygems.org
