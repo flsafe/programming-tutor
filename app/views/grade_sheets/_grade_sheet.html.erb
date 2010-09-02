@@ -1,7 +1,7 @@
 <% results = grade_sheet.unit_test_results_hash %>
 
 <div class="gradesheet">
-	<table class="tests">
+	<table class="column span-24 tests">
 		<tr>
 			<th>Unit Test</th>
 			<th>Expected</th>
@@ -23,7 +23,7 @@
 
 	<%= render :partial=>'grade_sheets/recommendation', :locals=>{:grade_sheet=>grade_sheet}  %>
 	
-	<table class="exercise-statistics">
+	<table class="column span-24 exercise-statistics">
 		<caption>Exercise Stats</caption>
 		<tr>
 			<td>Average Grade:</td>
@@ -31,10 +31,10 @@
 		</tr>
 	</table>
 	
-	<code>
-		<%= highlight_code(:c, grade_sheet.src_code) %>
-	</code>
 	
+	<pre class="column span-23 solution-code">
+		<%= highlight_code(:c, grade_sheet.src_code) %>
+	</pre>
 </div>
 
 

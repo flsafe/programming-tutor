@@ -224,6 +224,13 @@ table.exercise-statistics caption, table.exercise-statistics{
   text-align: center;
 }
 
+.solution-code{
+  text-align: left;
+  border: 10px solid rgb(230, 230, 230);
+  padding: 5px;
+  margin: 2px;
+}
+
 /************************
 * Already doing exercise
 ************************/
