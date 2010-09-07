@@ -22,10 +22,6 @@ describe GradeSolutionJob do
     @unit_test ||= mock_model(UnitTest).as_null_object
   end
   
-  def grade_sheet
-    @grade_sheet ||= mock_model(GradeSheet).as_null_object
-  end
-  
   def result
     @result ||= mock_model(GradeSolutionResult).as_null_object
   end
@@ -94,11 +90,13 @@ describe GradeSolutionJob do
     end
     
     it "saves the grade sheet to the database" do
-      GradeSheet.stub(:new).and_return(grade_sheet)
-      unit_test.stub(:run_on).and_return(reslt = {'error' => nil, 'grade' => 100, 'test1' => '20 points'}.with_indifferent_access)
+      reslt            = {'error' => nil, 'grade' => 100, 'test1' => '20 points'}.with_indifferent_access
+      stub_grade_sheet = stub_model(GradeSheet, :user_id => current_user.id, :exercise_id => exercise.id, :src_code => code, :unit_test_results => reslt, :grade => reslt['grade'])
       
-      GradeSheet.should_receive(:new).with(:user_id => current_user.id, :exercise_id => exercise.id, :src_code => code, :unit_test_results => reslt, :grade => reslt['grade'])
-      ta.should_receive(:record_grade).with(grade_sheet)
+      GradeSheet.stub(:new).and_return(stub_grade_sheet)
+      unit_test.stub(:run_on).and_return(reslt)
+      
+      ta.should_receive(:record_grade).with(stub_grade_sheet)
       job.perform
     end
     
