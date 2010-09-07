@@ -30,8 +30,12 @@ describe GradeSolutionJob do
     @ta ||= mock_model(TeachersAid).as_null_object
   end
   
+  def minutes
+    30
+  end
+  
   def job
-    @job ||= GradeSolutionJob.new code, current_user.id, exercise.id
+    @job ||= GradeSolutionJob.new minutes, code, current_user.id, exercise.id
   end
   
   describe "#perform" do
@@ -52,9 +56,9 @@ describe GradeSolutionJob do
     end
     
     it "gets the solution template associated with the exercise" do
-      SolutionTemplate.stub_chain(:for_exercise, :written_in).and_return([])
-      SolutionTemplate.should_receive(:for_exercise).with(exercise.id).and_return(@mock = mock("scope"))
-      @mock.should_receive(:written_in).with('c')
+      SolutionTemplate.stub_chain(:for_exercise, :written_in)
+      SolutionTemplate.should_receive(:for_exercise).with(exercise.id).and_return(@mock_scope = mock("scope_scope"))
+      @mock_scope.should_receive(:written_in).with('c')
       job.perform
     end
     
@@ -64,16 +68,16 @@ describe GradeSolutionJob do
     end
     
     it "gets the unit test associated with the exercise" do
-      UnitTest.stub_chain(:for_exercise, :written_in).and_return([])
-      UnitTest.should_receive(:for_exercise).with(exercise.id).and_return(@mock = mock('scope'))
-      @mock.should_receive(:written_in).with('rb')
+      UnitTest.stub_chain(:for_exercise, :written_in)
+      UnitTest.should_receive(:for_exercise).with(exercise.id).and_return(@mock_scope = mock('mock_scope'))
+      @mock_scope.should_receive(:written_in).with('rb')
       job.perform
     end
     
     it "runs the unit test on the solution template" do
       solution_code = "solution code"
       template.stub(:fill_in).and_return(solution_code)
-      unit_test.should_receive(:run_on).with(solution_code).and_return({})
+      unit_test.should_receive(:run_on).with(solution_code)
       job.perform
     end
     
@@ -89,13 +93,16 @@ describe GradeSolutionJob do
       job.perform
     end
     
-    it "saves the grade sheet to the database" do
-      reslt            = {'error' => nil, 'grade' => 100, 'test1' => '20 points'}.with_indifferent_access
-      stub_grade_sheet = stub_model(GradeSheet, :user_id => current_user.id, :exercise_id => exercise.id, :src_code => code, :unit_test_results => reslt, :grade => reslt['grade'])
+    it "creates a new grade sheet" do
+      unit_test.stub(:run_on).and_return(rslt = {'error' => nil, 'grade' => 100, 'test1' => '20 points'}.with_indifferent_access)
       
+      GradeSheet.should_receive(:new).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :src_code=>code, :grade=>rslt[:grade], :unit_test_results=>rslt, :minutes=>minutes)
+      job.perform
+    end
+    
+    it "saves a grade sheet to the db" do
+      stub_grade_sheet = stub_model(GradeSheet)
       GradeSheet.stub(:new).and_return(stub_grade_sheet)
-      unit_test.stub(:run_on).and_return(reslt)
-      
       ta.should_receive(:record_grade).with(stub_grade_sheet)
       job.perform
     end
