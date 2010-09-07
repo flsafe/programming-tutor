@@ -30,13 +30,14 @@ Feature: Browse Completed Exercises
 		And I follow "Gradesheet"
 		Then I should see "91" within ".exercise-statistics"
 		
-	Scenario: The user reviews their grade sheet for an exercise they completed
+	Scenario: The user reviews the grade sheet for an exercise they completed
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Basics" with "basics 1" and "basics 2"
-		And I have finished "basics 1" with a "90"
+		And I have finished "basics 1" with a "90" in "15" minutes
 		When I am on my exercises page
 		And I follow "Gradesheet"
 		Then I should see "90" within ".gradesheet"
+		And I should see "15" within ".gradesheet"
 		
 	Scenario: The user reviews the gradesheets that belong to the other users
 		Given I am logged in as the user "frank"

@@ -4,6 +4,12 @@ Given /^I have finished "([^\"]*)" with a "([^\"]*)"$/ do |title, grade|
   ta.record_grade(Factory.build :grade_sheet, :user=>@current_user, :exercise=>exercise, :grade=>grade)
 end
 
+Given /^I have finished "([^\"]*)" with a "([^\"]*)" in "([^\"]*)" minutes$/ do |title, grade, minutes|
+  ta = TeachersAid.new
+  exercise = Exercise.find_by_title title
+  ta.record_grade(Factory.build :grade_sheet, :user=>@current_user, :exercise=>exercise, :grade=>grade, :minutes=>minutes)
+end
+
 Given /^"([^\"]*)" has the grades "([^\"]*)"$/ do |exercise_title, grades|
   exercise = Exercise.find_by_title exercise_title
   ta = TeachersAid.new
