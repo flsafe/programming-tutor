@@ -13,4 +13,10 @@ module CozyTimeUtils
     
     "#{'0' if minutes_remain < 10}#{minutes_remain}:#{'0' if seconds_remain < 10}#{seconds_remain}"
   end
+  
+  def self.elapsed_minutes(start_t)
+    start_time_in_seconds   = start_t.to_i
+    current_time_in_seconds = Time.now().to_i
+    (current_time_in_seconds - start_time_in_seconds) / 60
+  end
 end

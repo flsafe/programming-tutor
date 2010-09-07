@@ -20,7 +20,8 @@ class TutorController < ApplicationController
     @exercise = Exercise.find params[:id]
 
     unless job_running? :grade_solution_job
-      enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
+      elapsed_minutes = CozyTimeUtils.elapsed_minutes(current_exercise_start_time)
+      enqueue_job :grade_solution_job, GradeSolutionJob.new(elapsed_minutes, params[:code], current_user.id, @exercise.id)
       clear_current_exercise
     end
   end
