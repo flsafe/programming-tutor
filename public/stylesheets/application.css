@@ -36,16 +36,26 @@ li{
   padding: 0;
 }
 
+caption{
+  text-align: center;
+  font-size: 1.3em;
+  border: 1px solid #999;
+}
+
+table{
+  border: 1px solid #999;
+}
+
 table, p{
   color:rgb(80, 80, 80);
   font-size:.95em;
-  padding-left:4px;
   margin-top: 0px;
 }
 
 
 h1, h2, h3, h4, h5{
   padding-left: 4px;
+  color: rgb(100, 100, 100);
 }
 
 .page-title{
@@ -197,13 +207,13 @@ h1, h2, h3, h4, h5{
 * Gradesheet
 ************************/
 
-.gradesheet{
-  text-align: center;
+.gradesheet-text p{
+  font-size: 1.2em;
+  margin: 0px;
 }
 
-.gradesheet-text p{
-  text-align: center;
-  margin: 0px;
+.gradesheet{
+  padding: 4px;
 }
 
 .green-text{
@@ -226,9 +236,11 @@ table.exercise-statistics caption, table.exercise-statistics{
 
 .solution-code{
   text-align: left;
-  border: 10px solid rgb(230, 230, 230);
-  padding: 5px;
+  border: 1px solid #999;
   margin: 2px;
+  padding: 3px;
+  font-family:  monospace;
+  font-size: 1.1em;
 }
 
 /************************

@@ -1,40 +1,52 @@
 <% results = grade_sheet.unit_test_results_hash %>
 
 <div class="gradesheet">
-	<table class="column span-24 tests">
-		<tr>
-			<th>Unit Test</th>
-			<th>Expected</th>
-			<th>Result</th>
-			<th>Points</th>
-		</tr>
-			<% results[:tests].each_pair do |test_title, test_results| %>
+	
+	<div class="column span-24">
+		<div class="column span-15 colborder test">
+			<table class="column span-15 colborder tests">
+				<caption>Unit Tests</caption>
 				<tr>
-					<td> <%=h test_title%></td> 
-					<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%>  </td>
-					<td><%=h test_results[:points] != 0 ? "Nice!" : "Oops" %>                    </td>
-					<td> <%=h test_results[:points] %>                                           </td>
+					<th>Unit Test</th>
+					<th>Expected</th>
+					<th>Result</th>
+					<th>Points</th>
+				</tr> 
+					<% results[:tests].each_pair do |test_title, test_results| %>
+						<tr>
+							<td> <%=h test_title%></td> 
+							<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%>  </td>
+							<td><%=h test_results[:points] != 0 ? "Nice!" : "Oops" %>                    </td>
+							<td> <%=h test_results[:points] %>                                           </td>
+						</tr>
+					<% end %>
+					<tr>
+						<th>Final Grade: <%=h results[:grade] %></th>
+					</tr>
+			</table>
+			
+			<h3>Source Code</h3>
+			<pre class="column span-15 colborder solution-code">
+				<%= highlight_code(:c, grade_sheet.src_code) %>
+			</pre>
+			
+		</div> <!-- End left content -->
+		
+		<div class="column span-7">
+			<div class="column span-7">
+				<%= render :partial=>'grade_sheets/recommendation', :locals=>{:grade_sheet=>grade_sheet}  %>
+			</div>
+		
+			<table class="column span-7 exercise-statistics">
+				<caption>Exercise Stats</caption>
+				<tr>
+					<td>Average Grade:</td>
+					<td><%=h grade_sheet.exercise.average_grade %></td>
 				</tr>
-			<% end %>
-			<tr>
-				<th>Final Grade: <%=h results[:grade] %></th>
-			</tr>
-	</table>
-
-	<%= render :partial=>'grade_sheets/recommendation', :locals=>{:grade_sheet=>grade_sheet}  %>
+			</table>
+		 </div><!-- End right content -->
+	</div><!-- End span-24 wrapper -->
 	
-	<table class="column span-24 exercise-statistics">
-		<caption>Exercise Stats</caption>
-		<tr>
-			<td>Average Grade:</td>
-			<td><%=h grade_sheet.exercise.average_grade %></td>
-		</tr>
-	</table>
-	
-	
-	<pre class="column span-23 solution-code">
-		<%= highlight_code(:c, grade_sheet.src_code) %>
-	</pre>
-</div>
+</div><!-- End gradesheet -->
 
 

@@ -7,7 +7,7 @@
 #header{
   margin: 0px 0px 0px 0px;
   background: url('/images/header.png') repeat-x top;
-  height:50px;
+  height:45px;
 }
 
 #header h2{
@@ -24,7 +24,7 @@
 
 #header-nav ul li{
   list-style-type: none;
-  padding: 15px;
+  padding: 12px;
   float:left;
 }
 
