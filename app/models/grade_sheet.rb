@@ -2,7 +2,7 @@ class GradeSheet < ActiveRecord::Base
   belongs_to :user
   belongs_to :exercise
   
-  validates_presence_of :user, :grade, :exercise, :unit_test_results, :src_code
+  validates_presence_of :user, :grade, :exercise, :unit_test_results, :src_code, :minutes
   
   def retake?
     completed = GradeSheet.count_grade_sheets(user, exercise)
@@ -16,7 +16,7 @@ class GradeSheet < ActiveRecord::Base
   end
   
   def grades_in_set
-    grade_sheets = GradeSheet.grade_sheets(user, exercise)
+    grade_sheets = GradeSheet.sibling_grade_sheets(user, exercise)
     return [] unless grade_sheets
     filter_retakes(grade_sheets)
   end
@@ -62,7 +62,7 @@ class GradeSheet < ActiveRecord::Base
     GradeSheet.count :conditions=>["user_id=? AND exercise_id IN (?)", user.id, GradeSheet.sibling_ids(exercise)], :select=>"distinct grade_sheets.exercise_id"
   end
   
-  def self.grade_sheets(user, exercise)
+  def self.sibling_grade_sheets(user, exercise)
     GradeSheet.find :all, :conditions=>["user_id=? AND exercise_id IN (?)", user.id, GradeSheet.sibling_ids(exercise)]
   end
 end

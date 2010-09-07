@@ -39,7 +39,7 @@ describe GradeSheet do
   
   describe "#complete_set?" do
     
-    it "return true if the there is a grade sheet for each exercise in the set" do
+    it "return true if the user has a grade sheet for each exercise in the set" do
       gs1 = Factory.build(:grade_sheet, :user=>@user, :exercise=>@ex1)
       gs2 = Factory.build(:grade_sheet, :user=>@user, :exercise=>@ex2)
       @ta.record_grade gs1
@@ -60,11 +60,13 @@ describe GradeSheet do
   
   describe "#grades_in_set" do
     
-    it "returns the grades associated with the exercise set" do
-      gs = @ex1.grade_sheets.create!( Factory.build(:grade_sheet, :grade=>90.0, :user=>@user, :exercise=>@ex1).attributes)
+    it "returns an array containing the user's grade for completed exercises within the set" do
+      @ex1.grade_sheets.create!( Factory.build(:grade_sheet, :grade=>90.0, :user=>@user, :exercise=>@ex1).attributes)
+      gs = GradeSheet.find :first, :conditions=>{:exercise_id=>@ex1.id}
       gs.grades_in_set.should == [90.0]
       
-      gs = @ex1.grade_sheets.create! :grade=>100.0, :user=>@user, :exercise=>@ex2, :unit_test_results=>results, :src_code=>code #TODO Using the factory causes this example to crash
+      @ex2.grade_sheets.create!( Factory.build(:grade_sheet, :grade=>100.0, :user=>@user, :exercise=>@ex2).attributes ) #TODO Using the factory causes this example to crash
+      gs = GradeSheet.find :first, :conditions=>{:exercise_id=>@ex1.id}
       gs.grades_in_set.should == [90.0, 100.0]
     end
     
