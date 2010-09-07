@@ -5,4 +5,10 @@ class GradeSheetsController < ApplicationController
     @exercise    = Exercise.find(params[:id])
     @grade_sheet = GradeSheet.find(:first, :conditions=>['exercise_id=? AND user_id=?', @exercise.id, current_user.id], :order=>'created_at DESC')
   end
+  
+  def show_all
+    @exercise     = Exercise.find(params[:id])
+    @grade_sheets = GradeSheet.find(:all, :conditions=>['exercise_id=?', @exercise.id], :order=>'grade DESC')
+  end
+  
 end

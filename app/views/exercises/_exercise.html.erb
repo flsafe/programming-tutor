@@ -7,7 +7,8 @@
 	<div class="column span-9">
 		<%= link_to "Retake", :controller=>:tutor, :action=>:show, :id=>exercise %> |
 		<%= link_to "Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>exercise %> |
-		<%= link_to "Gradesheet", :controller=>:grade_sheets, :action=>:show_user_grade_sheet, :id=>exercise %>
+		<%= link_to "Gradesheet", :controller=>:grade_sheets, :action=>:show_user_grade_sheet, :id=>exercise %> | 
+		<%= link_to "All Gradesheets", :controller=>:grade_sheets, :action=>:show_all, :id=>exercise  %>
 	</div>
 	
 </div>

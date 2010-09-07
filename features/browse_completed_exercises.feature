@@ -37,8 +37,16 @@ Feature: Browse Completed Exercises
 		When I am on my exercises page
 		And I follow "Gradesheet"
 		Then I should see "90" within ".gradesheet"
-
-
+		
+	Scenario: The user reviews the gradesheets that belong to the other users
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "Basics" with "basics 1" and "basics 2"
+		And "basics 1" has the grades "91 92 93"
+		When I am on my exercises page
+		And I follow "All Gradesheets"
+		Then I should see "91" within ".gradesheet"
+		Then I should see "92" within ".gradesheet"
+		Then I should see "93" within ".gradesheet"
 
 
 
