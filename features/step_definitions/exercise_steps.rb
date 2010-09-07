@@ -19,6 +19,15 @@ Given /^"([^\"]*)" has the grades "([^\"]*)"$/ do |exercise_title, grades|
   end
 end
 
+Given /^"([^\"]*)" has the times "([^\"]*)"$/ do |exercise_title, times|
+  exercise = Exercise.find_by_title exercise_title
+  ta       = TeachersAid.new
+  times.split.collect! {|t| t.to_i}
+  times.each do |t|
+    ta.record_grade(Factory.build :grade_sheet, :exercise=>exercise, :grade=>100, :minutes=>t)
+  end
+end
+
 Given /^the exercise "([^\"]*)" has the solution template "([^\"]*)" and the unit test "([^\"]*)"$/ do |exercise_title, template, unit_test|
   f = File.open("content/#{template}", 'r')
   template = f.read

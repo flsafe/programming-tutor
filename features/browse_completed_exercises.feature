@@ -30,6 +30,15 @@ Feature: Browse Completed Exercises
 		And I follow "Gradesheet"
 		Then I should see "91" within ".exercise-statistics"
 		
+	Scenario: Exercises show the user average grade for the exercise
+	  Given I am logged in as the user "frank"
+		And there exists an exercise set "Basics" with "basics 1" and "basics 2"
+		And I have finished "basics 1" with a "90"
+		And "basics 1" has the times "30 31 32"
+		When I am on my exercises page
+		And I follow "Gradesheet"
+		Then I should see "31" within ".exercise-statistics"
+		
 	Scenario: The user reviews the grade sheet for an exercise they completed
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Basics" with "basics 1" and "basics 2"
