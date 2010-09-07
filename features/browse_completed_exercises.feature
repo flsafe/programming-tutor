@@ -37,7 +37,7 @@ Feature: Browse Completed Exercises
 		When I am on my exercises page
 		And I follow "Gradesheet"
 		Then I should see "90" within ".gradesheet"
-		And I should see "15" within ".gradesheet"
+		And I should see "15 minutes" within ".gradesheet"
 		
 	Scenario: The user reviews the gradesheets that belong to the other users
 		Given I am logged in as the user "frank"
