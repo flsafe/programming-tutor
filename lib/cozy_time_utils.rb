@@ -1,10 +1,6 @@
 module CozyTimeUtils
   
   def self.time_remaining(start_t, alloted_minutes)
-    puts "*" * 10
-    puts "start time: #{start_t}"
-    puts "end time: #{alloted_minutes}"
-    
     time_remaining  = "00:00"
     
     alloted_seconds = alloted_minutes * 60
