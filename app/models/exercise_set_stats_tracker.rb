@@ -1,5 +1,6 @@
 #TODO ExerciseSetTracker and ExerciseTracker violate DRY
 class ExerciseSetStatsTracker < StatsTracker
+  
   def update(set_grade_sheet)
     return if set_grade_sheet.retake?
     @grade_sheet  = set_grade_sheet

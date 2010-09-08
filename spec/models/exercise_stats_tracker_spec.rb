@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe ExerciseStatsTracker do
+  
   describe "#update_stats" do
     before(:each) do
       @user       = Factory.create :user

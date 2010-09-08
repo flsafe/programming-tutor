@@ -1,4 +1,4 @@
-class GradeSolutionJob < Struct.new :completion_time_in_minutes, :code, :user_id, :exercise_id
+class GradeSolutionJob < Struct.new :time_taken_in_seconds, :code, :user_id, :exercise_id
   
   def perform
     begin
@@ -17,7 +17,7 @@ class GradeSolutionJob < Struct.new :completion_time_in_minutes, :code, :user_id
         Rails.logger.error(results[:error])
         JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :error_message=>results[:error], :job_type=>'grade')
       else
-        raise "Grade sheet could not be saved" unless save_grade_sheet(completion_time_in_minutes, results, code)
+        raise "Grade sheet could not be saved" unless save_grade_sheet(results)
         JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :data=>'OK', :error_message=>nil, :job_type=>'grade')
       end
     rescue Exception => e
@@ -44,8 +44,8 @@ class GradeSolutionJob < Struct.new :completion_time_in_minutes, :code, :user_id
 
   protected
   
-  def save_grade_sheet(completion_time_in_minutes, results, code)  
-    grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code, :minutes=>completion_time_in_minutes
+  def save_grade_sheet(results)
+    grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code, :time_taken=>time_taken_in_seconds
     ta          = TeachersAid.new    
     ta.record_grade grade_sheet
     grade_sheet.id

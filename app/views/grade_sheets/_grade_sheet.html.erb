@@ -45,7 +45,11 @@
 				</tr>
 				<tr>
 					<td>Completion Time:</td>
-					<td><%=h grade_sheet.minutes%> minutes</td>
+					<td><%=h grade_sheet.time_taken / 60 %> minutes</td>
+				</tr>
+				<tr>
+					<td>Average Completion Time:</td>
+					<td><%=h grade_sheet.exercise.average_seconds / 60 %> minutes</td>
 				</tr>
 			</table>
 		 </div><!-- span-7 End right content -->

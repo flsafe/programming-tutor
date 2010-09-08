@@ -6,7 +6,7 @@
 		<%=h grade_sheet_li.grade  %>
 	</td>
 	<td>
-		<%=h grade_sheet_li.minutes %> minutes
+		<%=h grade_sheet_li.time_taken / 60 %> minutes
 	</td>
 	<td>
 		<%= link_to "View", :controller=>:grade_sheets, :action=>:show, :id=>grade_sheet_li %>

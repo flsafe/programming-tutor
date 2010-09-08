@@ -95,12 +95,12 @@ describe TutorController do
     it "creates a new grade job for the user, with the given code, the current exercise and the minutes it took to complete the exercise" do
       start_time      = Time.parse("1:00")
       end_time        = Time.parse("1:30")
-      minutes_elapsed = (end_time.to_i - start_time.to_i) / 60
+      seconds_elapsed = end_time.to_i - start_time.to_i
       
       controller.stub(:current_exercise_start_time).and_return(start_time)
       Time.stub(:now).and_return(end_time)
       
-      GradeSolutionJob.should_receive(:new).with(minutes_elapsed, code, current_user.id, stub_exercise.id).once
+      GradeSolutionJob.should_receive(:new).with(seconds_elapsed, code, current_user.id, stub_exercise.id).once
       post :grade, :code=>code, :id=>stub_exercise.id
     end
     

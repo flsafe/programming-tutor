@@ -31,7 +31,7 @@ describe GradeSolutionJob do
   end
   
   def minutes
-    30
+    Time.parse('00:30')
   end
   
   def job
@@ -96,7 +96,7 @@ describe GradeSolutionJob do
     it "creates a new grade sheet" do
       unit_test.stub(:run_on).and_return(rslt = {'error' => nil, 'grade' => 100, 'test1' => '20 points'}.with_indifferent_access)
       
-      GradeSheet.should_receive(:new).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :src_code=>code, :grade=>rslt[:grade], :unit_test_results=>rslt, :minutes=>minutes)
+      GradeSheet.should_receive(:new).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :src_code=>code, :grade=>rslt[:grade], :unit_test_results=>rslt, :time_taken=>minutes)
       job.perform
     end
     

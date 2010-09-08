@@ -7,7 +7,7 @@ end
 Given /^I have finished "([^\"]*)" with a "([^\"]*)" in "([^\"]*)" minutes$/ do |title, grade, minutes|
   ta = TeachersAid.new
   exercise = Exercise.find_by_title title
-  ta.record_grade(Factory.build :grade_sheet, :user=>@current_user, :exercise=>exercise, :grade=>grade, :minutes=>minutes)
+  ta.record_grade(Factory.build :grade_sheet, :user=>@current_user, :exercise=>exercise, :grade=>grade, :time_taken=>Time.parse("00:#{minutes.to_i}"))
 end
 
 Given /^"([^\"]*)" has the grades "([^\"]*)"$/ do |exercise_title, grades|
@@ -15,16 +15,16 @@ Given /^"([^\"]*)" has the grades "([^\"]*)"$/ do |exercise_title, grades|
   ta = TeachersAid.new
   grades   = grades.split.collect {|g| g.to_f}
   0.upto(grades.count - 1) do |n|
-    ta.record_grade(Factory.create :grade_sheet, :exercise=>exercise, :grade=>grades[n])
+    ta.record_grade(Factory.build :grade_sheet, :exercise=>exercise, :grade=>grades[n])
   end
 end
 
 Given /^"([^\"]*)" has the times "([^\"]*)"$/ do |exercise_title, times|
   exercise = Exercise.find_by_title exercise_title
   ta       = TeachersAid.new
-  times.split.collect! {|t| t.to_i}
+  times = times.split.collect {|t| t.to_i}
   times.each do |t|
-    ta.record_grade(Factory.build :grade_sheet, :exercise=>exercise, :grade=>100, :minutes=>t)
+    ta.record_grade(Factory.build :grade_sheet, :exercise=>exercise, :grade=>100, :time_taken=>Time.parse("00:#{t.to_i}"))
   end
 end
 

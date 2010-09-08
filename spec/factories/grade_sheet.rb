@@ -13,7 +13,7 @@ Factory.define :grade_sheet do |gs|
   gs.grade 100.0
   gs.unit_test_results unit_test_results
   gs.src_code "int main(){return 0;}"
-  gs.minutes 15
+  gs.time_taken 15
 end
 
 Factory.define :set_grade_sheet do |gs|
