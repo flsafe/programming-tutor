@@ -2,6 +2,8 @@ class TutorController < ApplicationController
   
   before_filter :authorize
   
+  after_filter :dispatch_to_observer
+  
   def show
     @exercise = Exercise.find params[:id]
     
@@ -108,5 +110,10 @@ class TutorController < ApplicationController
   def can_show_exercise?(exercise)
     ( not current_user_doing_exercise?)         || 
     ( exercise.id == current_exercise_id.to_i )
+  end
+  
+  def dispatch_to_observer
+    @user_action_observer ||= UserActionObserver.new
+    @user_action_observer.observe(self)
   end
 end
