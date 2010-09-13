@@ -1,8 +1,6 @@
 class TutorController < ApplicationController
   
-  before_filter :authorize
-  
-  after_filter :dispatch_to_observer
+  before_filter :authorize, :dispatch_to_observer
   
   def show
     @exercise = Exercise.find params[:id]

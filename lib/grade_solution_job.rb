@@ -21,6 +21,7 @@ class GradeSolutionJob < Struct.new :time_taken_in_seconds, :code, :user_id, :ex
         JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :data=>'OK', :error_message=>nil, :job_type=>'grade')
       end
     rescue Exception => e
+      puts e.message if Rails.env == "development"
       Rails.logger.error(e.message)
       JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :error_message=>e.message, :job_type=>'grade')
     end
@@ -45,7 +46,8 @@ class GradeSolutionJob < Struct.new :time_taken_in_seconds, :code, :user_id, :ex
   protected
   
   def save_grade_sheet(results)
-    grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code, :time_taken=>time_taken_in_seconds
+    time_stat = PerformanceStatistic.pop_performance_stats(user_id, ['time_taken'])[0]
+    grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code, :time_taken=>time_stat.value.to_i
     ta          = TeachersAid.new    
     ta.record_grade grade_sheet
     grade_sheet.id
