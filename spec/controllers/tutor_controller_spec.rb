@@ -55,7 +55,8 @@ describe TutorController do
     
     context "the current user is already doing an exercise" do
       before(:each) do
-        controller.session[:current_exercise_id] = 0
+        @curr_exercise = 0
+        controller.session[:current_exercise_id] = @curr_exercise
       end
       
       it "does not set the current exercise" do
@@ -65,7 +66,7 @@ describe TutorController do
       
       it "redirects" do
         get 'show', :id=>1001
-        response.should redirect_to(:action=>:already_doing_exercise, :id=>0)
+        response.should redirect_to(:action=>:already_doing_exercise, :id=>@curr_exercise)
       end
     end
   end

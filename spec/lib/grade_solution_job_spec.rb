@@ -38,8 +38,9 @@ describe GradeSolutionJob do
     
     before(:each) do
       # The user's performance stats associated with the exercise
-      stub_stat = stub("Stat", :name=>'time_taken', :value=>1.0)
-      PerformanceStatistic.stub(:pop_performance_stats).and_return([stub_stat])
+      @seconds_taken = 1.0
+      stub_stat = stub("Stat", :name=>'time_taken', :value=>@seconds_taken)
+      PerformanceStatistic.stub(:get_latest_stats).and_return([stub_stat])
       
       # The solution template file to substitute the user's solution into
       SolutionTemplate.stub_chain(:for_exercise, :written_in).and_return([template])
@@ -85,7 +86,7 @@ describe GradeSolutionJob do
     end
     
     it "retrieves the time taken to complete the exercise from PerformanceStatistics" do
-      PerformanceStatistic.should_receive(:pop_performance_stats).with(current_user.id, 'time_taken').and_return(stub("Stat", :name=>'time_taken', :value=>5.0))
+      PerformanceStatistic.should_receive(:get_latest_stats).with(current_user.id, 'time_taken').and_return(stub("Stat", :name=>'time_taken', :value=>5.0))
       job.perform
     end
     
@@ -104,7 +105,7 @@ describe GradeSolutionJob do
     it "creates a new grade sheet" do
       unit_test.stub(:run_on).and_return(rslt = {'error' => nil, 'grade' => 100, 'test1' => '20 points'}.with_indifferent_access)
       
-      GradeSheet.should_receive(:new).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :src_code=>code, :grade=>rslt[:grade], :unit_test_results=>rslt, :time_taken=>1.0.to_i)
+      GradeSheet.should_receive(:new).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :src_code=>code, :grade=>rslt[:grade], :unit_test_results=>rslt, :time_taken=>@seconds_taken.to_i)
       job.perform
     end
     

@@ -7,7 +7,7 @@ class PerformanceStatistic < ActiveRecord::Base
     PerformanceStatistic.create! :user_id=>user_id, :exercise_id=>exercise_id, :name=>name, :value=>value
   end
   
-   def self.pop_performance_stats(user_id, names)
+   def self.get_latest_stats(user_id, names)
      stats = PerformanceStatistic.find(:all, :conditions=>{:user_id=>user_id, :name=>names}, :order=>"created_at DESC", :select=>'name, value', :group=>:name)
      stats
   end
