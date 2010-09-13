@@ -30,22 +30,25 @@ describe GradeSolutionJob do
     @ta ||= mock_model(TeachersAid).as_null_object
   end
   
-  def minutes
-    Time.parse('00:30')
-  end
-  
   def job
-    @job ||= GradeSolutionJob.new minutes, code, current_user.id, exercise.id
+    @job ||= GradeSolutionJob.new 1, code, current_user.id, exercise.id
   end
   
   describe "#perform" do
     
     before(:each) do
+      # The user's performance stats associated with the exercise
+      stub_stat = stub("Stat", :name=>'time_taken', :value=>1.0)
+      PerformanceStatistic.stub(:pop_performance_stats).and_return([stub_stat])
+      
+      # The solution template file to substitute the user's solution into
       SolutionTemplate.stub_chain(:for_exercise, :written_in).and_return([template])
       UnitTest.stub_chain(:for_exercise, :written_in).and_return([unit_test])
       
+      # The unit test that will test the user's solution
       unit_test.stub(:run_on).and_return({:error => nil})
 
+      # The TA incorporates grade sheet saving logic
       TeachersAid.stub(:new).and_return(ta)
     end
     
@@ -81,6 +84,11 @@ describe GradeSolutionJob do
       job.perform
     end
     
+    it "retrieves the time taken to complete the exercise from PerformanceStatistics" do
+      PerformanceStatistic.should_receive(:pop_performance_stats).with(current_user.id, 'time_taken').and_return(stub("Stat", :name=>'time_taken', :value=>5.0))
+      job.perform
+    end
+    
     it "places the job result in the db on successful save of the gradesheet" do
       job.stub(:save_grade_sheet).and_return(1)
       JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message => nil, :data=>'OK', :job_type=>'grade')
@@ -96,7 +104,7 @@ describe GradeSolutionJob do
     it "creates a new grade sheet" do
       unit_test.stub(:run_on).and_return(rslt = {'error' => nil, 'grade' => 100, 'test1' => '20 points'}.with_indifferent_access)
       
-      GradeSheet.should_receive(:new).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :src_code=>code, :grade=>rslt[:grade], :unit_test_results=>rslt, :time_taken=>minutes)
+      GradeSheet.should_receive(:new).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :src_code=>code, :grade=>rslt[:grade], :unit_test_results=>rslt, :time_taken=>1.0.to_i)
       job.perform
     end
     

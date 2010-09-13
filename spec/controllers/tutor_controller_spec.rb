@@ -4,6 +4,7 @@ describe TutorController do
   before(:each) do
     Exercise.stub(:find).and_return(stub_exercise(:minutes=>60))
     controller.stub(:current_user).and_return(current_user)
+    controller.session[:current_exercise_id] = stub_exercise.id
   end
   
   def current_user(stubs={})
@@ -54,7 +55,7 @@ describe TutorController do
     
     context "the current user is already doing an exercise" do
       before(:each) do
-        controller.stub('current_user_doing_exercise?').and_return('100')
+        controller.session[:current_exercise_id] = 0
       end
       
       it "does not set the current exercise" do
@@ -64,7 +65,7 @@ describe TutorController do
       
       it "redirects" do
         get 'show', :id=>1001
-        response.should redirect_to(:action=>:already_doing_exercise, :id=>100)
+        response.should redirect_to(:action=>:already_doing_exercise, :id=>0)
       end
     end
   end
