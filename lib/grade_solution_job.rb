@@ -1,4 +1,4 @@
-class GradeSolutionJob < Struct.new :time_taken_in_seconds, :code, :user_id, :exercise_id
+class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   
   def perform
     begin

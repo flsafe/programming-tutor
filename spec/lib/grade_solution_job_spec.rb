@@ -31,7 +31,7 @@ describe GradeSolutionJob do
   end
   
   def job
-    @job ||= GradeSolutionJob.new 1, code, current_user.id, exercise.id
+    @job ||= GradeSolutionJob.new code, current_user.id, exercise.id
   end
   
   describe "#perform" do
