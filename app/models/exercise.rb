@@ -7,7 +7,7 @@ class Exercise < ActiveRecord::Base
   has_many :solution_templates, :dependent=>:destroy
   has_many :unit_tests, :dependent=>:destroy
   has_many :completed_users, :through=>:grade_sheets, :source=>:user, :uniq=>true
-  has_many :grade_sheets, :after_add=>:update_stats, :dependent=>:destroy
+  has_many :grade_sheets, :dependent=>:destroy
 
   belongs_to :exercise_set  
   
@@ -104,10 +104,5 @@ class Exercise < ActiveRecord::Base
   
   def self.clamp(v, min, max)
     [[v, max].min, min].max
-  end
-
-  def update_stats(gs)
-    stats = ExerciseStatsTracker.new
-    stats.update(gs)
   end
 end
