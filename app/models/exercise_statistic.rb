@@ -8,6 +8,12 @@ class ExerciseStatistic < ActiveRecord::Base
   end
   
   def self.save_stat(name, value, exercise_id)
-    ExerciseStatistic.create! :name=>name, :value=>value, :exercise_id=>exercise_id
+    stat = ExerciseStatistic.find :first, :conditions=>{:name=>name, :exercise_id=>exercise_id}
+    if stat
+      stat.value = value
+      stat.save
+    else
+      ExerciseStatistic.create! :name=>name, :value=>value, :exercise_id=>exercise_id
+    end
   end
 end

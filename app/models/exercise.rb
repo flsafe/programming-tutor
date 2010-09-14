@@ -61,6 +61,10 @@ class Exercise < ActiveRecord::Base
     existing_attributes_for(:unit_tests, unit_test_attributes)
   end
   
+  def get_stat(name)
+    ExerciseStatistic.get_stat(name, self.id)
+  end
+  
   protected
     
   def new_attributes_for(association, attributes)

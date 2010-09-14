@@ -41,7 +41,7 @@
 				<caption>Exercise Stats</caption>
 				<tr>
 					<td>Average Grade:</td>
-					<td><%=h grade_sheet.exercise.average_grade %></td>
+					<td><%=h grade_sheet.exercise.get_stat('average_grade') %></td>
 				</tr>
 				<tr>
 					<td>Completion Time:</td>
@@ -49,12 +49,17 @@
 				</tr>
 				<tr>
 					<td>Average Completion Time:</td>
-					<td><%=h grade_sheet.exercise.average_seconds / 60 %> minutes</td>
+					<td><%=h grade_sheet.exercise.get_stat('average_time_taken') / 60%> minutes</td>
 				</tr>
 			</table>
 		 </div><!-- span-7 End right content -->
 	</div><!-- End span-24 wrapper -->
 	
 </div><!-- End gradesheet -->
+
+<% 
+	puts "average_grade: #{grade_sheet.exercise.get_stat('average_grade')}"
+	puts "average time taken: #{grade_sheet.exercise.get_stat('average_time_taken') / 60}"
+ %>
 
 

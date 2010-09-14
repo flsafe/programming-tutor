@@ -28,7 +28,7 @@ Feature: Browse Completed Exercises
 		And "basics 1" has the grades "91 92"
 		When I am on my exercises page
 		And I follow "Gradesheet"
-		Then I should see "91" within ".exercise-statistics"
+		Then I should see "91.0" within ".exercise-statistics"
 		
 	Scenario: Exercises show the user average completion time in minutes
 	  Given I am logged in as the user "frank"
@@ -37,7 +37,7 @@ Feature: Browse Completed Exercises
 		And "basics 1" has the times "30 31 32"
 		When I am on my exercises page
 		And I follow "Gradesheet"
-		Then I should see "30 minutes" within ".exercise-statistics"
+		Then I should see "30.5" within ".exercise-statistics"
 		
 	Scenario: The user reviews the grade sheet for an exercise they completed
 		Given I am logged in as the user "frank"
