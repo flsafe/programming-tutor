@@ -1,7 +1,6 @@
 class GradeSheetObserver < ActiveRecord::Observer
 
   def after_save(grade_sheet)
-    
     return if grade_sheet.retake?
     
     @exercise    = grade_sheet.exercise
