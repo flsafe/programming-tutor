@@ -3,10 +3,10 @@
 		<%=h grade_sheet_li.user.username %>
 	</td>
 	<td>
-		<%=h grade_sheet_li.grade  %>
+		<%=h "%.2f" % grade_sheet_li.grade  %>
 	</td>
 	<td>
-		<%=h grade_sheet_li.time_taken / 60 %> minutes
+		<%=h "%.2f" % (grade_sheet_li.time_taken / 60.0) %> minutes
 	</td>
 	<td>
 		<%= link_to "View", :controller=>:grade_sheets, :action=>:show, :id=>grade_sheet_li %>
