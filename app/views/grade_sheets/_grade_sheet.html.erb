@@ -41,15 +41,15 @@
 				<caption>Exercise Stats</caption>
 				<tr>
 					<td>Average Grade:</td>
-					<td><%=h grade_sheet.exercise.get_stat('average_grade') %></td>
+					<td><%=h "%.2f" % grade_sheet.exercise.get_stat('average_grade') %></td>
 				</tr>
 				<tr>
 					<td>Completion Time:</td>
-					<td><%=h grade_sheet.time_taken / 60 %> minutes</td>
+					<td><%=h "%.2f" % (grade_sheet.time_taken / 60.0) %> mins</td>
 				</tr>
 				<tr>
 					<td>Average Completion Time:</td>
-					<td><%=h grade_sheet.exercise.get_stat('average_time_taken') / 60%> minutes</td>
+					<td><%=h "%.2f" % (grade_sheet.exercise.get_stat('average_time_taken') / 60.0)%> mins</td>
 				</tr>
 			</table>
 		 </div><!-- span-7 End right content -->
