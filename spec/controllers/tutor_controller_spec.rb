@@ -282,11 +282,6 @@ describe TutorController do
   
   describe "post did_not_finish" do
     
-    before(:each) do
-      @mock_ta = mock_model(TeachersAid, :record_grade=>true)
-      TeachersAid.stub(:new).and_return(@mock_ta)
-    end
-    
     it "clears the current exercise" do
       controller.should_receive(:clear_current_exercise)
       post :did_not_finish, :id=>stub_exercise

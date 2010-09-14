@@ -6,7 +6,6 @@ describe GradeSheet do
     @exercise_set = Factory.create :complete_exercise_set
     @exercise_set.exercises.each {|e| e.update_attributes :exercise_set=>@exercise_set}
     @ex1, @ex2    = @exercise_set.exercises[0], @exercise_set.exercises[1]
-    @ta           = TeachersAid.new
   end
   
   def code
@@ -42,14 +41,13 @@ describe GradeSheet do
     it "return true if the user has a grade sheet for each exercise in the set" do
       gs1 = Factory.build(:grade_sheet, :user=>@user, :exercise=>@ex1)
       gs2 = Factory.build(:grade_sheet, :user=>@user, :exercise=>@ex2)
-      @ta.record_grade gs1
-      @ta.record_grade gs2
+      gs1.save
+      gs2.save
       gs1.complete_set?.should == true
     end
     
     it "returns false if the @user has not finished the exercise set" do
-      gs = Factory.build(:grade_sheet, :grade=>90.0, :user=>@user, :exercise=>@ex1)
-      @ta.record_grade gs
+      gs = Factory.create(:grade_sheet, :grade=>90.0, :user=>@user, :exercise=>@ex1)
       gs.complete_set?.should == false
       
       jim = Factory.create :user

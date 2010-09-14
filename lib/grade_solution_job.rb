@@ -48,8 +48,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   def save_grade_sheet(results)
     time_stat   = PerformanceStatistic.get_latest_stats(user_id, 'time_taken')[0]
     grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code, :time_taken=>time_stat.value.to_i
-    ta          = TeachersAid.new    
-    ta.record_grade grade_sheet
+    grade_sheet.save
     grade_sheet.id
   end
 end

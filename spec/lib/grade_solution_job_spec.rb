@@ -26,10 +26,6 @@ describe GradeSolutionJob do
     @result ||= mock_model(GradeSolutionResult).as_null_object
   end
   
-  def ta
-    @ta ||= mock_model(TeachersAid).as_null_object
-  end
-  
   def job
     @job ||= GradeSolutionJob.new code, current_user.id, exercise.id
   end
@@ -48,9 +44,6 @@ describe GradeSolutionJob do
       
       # The unit test that will test the user's solution
       unit_test.stub(:run_on).and_return({:error => nil})
-
-      # The TA incorporates grade sheet saving logic
-      TeachersAid.stub(:new).and_return(ta)
     end
     
     it "creates a work directory where the solution will be compiled and the unit test executed" do
@@ -112,7 +105,7 @@ describe GradeSolutionJob do
     it "saves a grade sheet to the db" do
       stub_grade_sheet = stub_model(GradeSheet)
       GradeSheet.stub(:new).and_return(stub_grade_sheet)
-      ta.should_receive(:record_grade).with(stub_grade_sheet)
+      stub_grade_sheet.should_receive(:save)
       job.perform
     end
     
