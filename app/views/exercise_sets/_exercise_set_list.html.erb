@@ -9,7 +9,7 @@
 		<tr>
 			<td> <%= link_to exercise_set.title, exercise_set %> </td>
 			<td> <%= exercise_set.completed_users.count %> </td>
-			<td> <%= exercise_set.average_grade %></td>
+			<td> <%= exercise_set.get_stat('average_grade') %></td>
 	    <td> <%= link_to 'Edit', edit_exercise_set_path(exercise_set) %></td>
 	    <td> <%= link_to 'Destroy', exercise_set, :confirm => 'Are you sure?', :method => :delete %></td>
 		</tr>

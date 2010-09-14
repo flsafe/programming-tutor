@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100913215356) do
+ActiveRecord::Schema.define(:version => 20100914165603) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -48,10 +48,8 @@ ActiveRecord::Schema.define(:version => 20100913215356) do
     t.text     "tutorial"
     t.text     "hints"
     t.integer  "minutes"
-    t.float    "average_grade"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "average_seconds"
   end
 
   create_table "figures", :force => true do |t|

@@ -3,7 +3,7 @@
 	<%= @exercise_set.description %><br/>
 
 	users completed: <%= @exercise_set.completed_users ? @exercise_set.completed_users.count : '' %><br/>
-	average grade: <%= @exercise_set.average_grade %><br/>
+	average grade: <%= @exercise_set.get_stat('average_grade') %><br/>
 	<ul id="exercise_list">
 		<%=  render :partial=>'exercises/exercise', :collection=>@exercise_set.exercises%>
 	</ul>
