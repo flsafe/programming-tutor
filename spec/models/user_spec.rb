@@ -28,12 +28,5 @@ describe User do
         @current_user.grade_for?(@exercise).should == nil
       end
     end
-    
-    context "when given an exercise set" do
-      it "returns the average grade for the associated exercise set" do
-        @exercise_set.set_grade_sheets.create! Factory.build(:set_grade_sheet, :grade=>91.1, :user=>@current_user, :exercise_set=>@exercise_set).attributes
-        @current_user.grade_for?(@exercise_set).should == 91.1
-      end
-    end
   end
 end
