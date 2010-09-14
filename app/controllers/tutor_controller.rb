@@ -20,7 +20,6 @@ class TutorController < ApplicationController
     @exercise = Exercise.find params[:id]
 
     unless job_running? :grade_solution_job
-      elapsed_seconds = Time.now.to_i - current_exercise_start_time.to_i
       enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
       clear_current_exercise
     end

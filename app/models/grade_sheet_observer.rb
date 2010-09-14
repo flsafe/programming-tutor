@@ -1,3 +1,7 @@
+# TODO: I need a pattern here. There
+# Is several stats that need to be calculated here 
+# but I can't have a method for each kind.
+# 
 class GradeSheetObserver < ActiveRecord::Observer
 
   def after_save(grade_sheet)

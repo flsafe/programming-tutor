@@ -3,7 +3,7 @@
 <span class="exercise_description"><%= @exercise.description %></span><br/>
 
 <span class="exercise_statistics">
-	<%=h @exercise.completed_users.count%> users, <%=h @exercise.average_grade %> avg grade, My Grade: <%= current_user.grade_for?(@exercise) %>
+	<%=h @exercise.completed_users.count%> users, <%=h @exercise.get_stat('average_grade') %> avg grade, My Grade: <%= current_user.grade_for?(@exercise) %>
 </span><br/>
 
 <%= link_to "Start Exercise", :controller=>:tutor, :action=>:show, :id=>@exercise%> | 
