@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100914165603) do
+ActiveRecord::Schema.define(:version => 20100914193535) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -93,14 +93,6 @@ ActiveRecord::Schema.define(:version => 20100914165603) do
     t.integer  "exercise_id"
     t.string   "name"
     t.float    "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "set_grade_sheets", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "exercise_set_id"
-    t.float    "grade"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
