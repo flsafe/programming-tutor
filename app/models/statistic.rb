@@ -3,7 +3,7 @@ class Statistic < ActiveRecord::Base
   validates_presence_of :model_id, :model_name, :name,  :value
   
   def self.get_stat(name, model_name, model_id)
-    stat = Statistic.find :first, :conditions=>{:name=>name, :model_name=>model_name, :model_id=>model_id}, :select=>:value
+    stat = Statistic.find :first, :conditions=>{:name=>name, :model_name=>model_name, :model_id=>model_id}, :select=>:value, :order=>'created_at DESC'
     stat && stat.value
   end
   
