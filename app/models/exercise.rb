@@ -62,7 +62,7 @@ class Exercise < ActiveRecord::Base
   end
   
   def get_stat(name)
-    ExerciseStatistic.get_stat(name, self.id)
+    Statistic.get_stat(name, 'exercise', self.id)
   end
   
   protected
