@@ -12,7 +12,7 @@ class UserActionObserver
     current_user    = tutor_controller.send(:current_user)
     exercise_id     = tutor_controller.send(:current_exercise_id)
     
-    PerformanceStatistic.place_stat(current_user.id, exercise_id, 'time_taken', elapsed_seconds)
+    Statistic.save_stat('time_taken', elapsed_seconds, 'performance_statistic', current_user.id)
   end
  
 end 

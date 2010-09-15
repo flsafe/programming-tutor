@@ -36,7 +36,7 @@ describe GradeSolutionJob do
       # The user's performance stats associated with the exercise
       @seconds_taken = 1.0
       stub_stat = stub("Stat", :name=>'time_taken', :value=>@seconds_taken)
-      PerformanceStatistic.stub(:get_latest_stats).and_return([stub_stat])
+      Statistic.stub(:get_stat).and_return(@seconds_taken)
       
       # The solution template file to substitute the user's solution into
       SolutionTemplate.stub_chain(:for_exercise, :written_in).and_return([template])
@@ -79,7 +79,7 @@ describe GradeSolutionJob do
     end
     
     it "retrieves the time taken to complete the exercise from PerformanceStatistics" do
-      PerformanceStatistic.should_receive(:get_latest_stats).with(current_user.id, 'time_taken').and_return(stub("Stat", :name=>'time_taken', :value=>5.0))
+      Statistic.should_receive(:get_stat).with('time_taken', 'performance_statistic', current_user.id).and_return(5.0)
       job.perform
     end
     
