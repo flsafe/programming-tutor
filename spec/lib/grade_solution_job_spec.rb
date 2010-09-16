@@ -79,7 +79,7 @@ describe GradeSolutionJob do
     end
     
     it "retrieves the time taken to complete the exercise from PerformanceStatistics" do
-      Statistic.should_receive(:get_stat).with('time_taken', 'performance_statistic', current_user.id).and_return(5.0)
+      Statistic.should_receive(:get_stat).with('user.time_taken', current_user.id).and_return(5.0)
       job.perform
     end
     

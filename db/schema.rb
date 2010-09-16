@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100915160108) do
+ActiveRecord::Schema.define(:version => 20100916001027) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -103,7 +103,6 @@ ActiveRecord::Schema.define(:version => 20100915160108) do
     t.integer  "model_id"
     t.string   "name"
     t.float    "value"
-    t.string   "model_name"
     t.datetime "created_at"
   end
 
