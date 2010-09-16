@@ -2,20 +2,20 @@
 <% stylesheet 'exercise' %>
 	
 <div id="content">
-		<p id="time-remaining">Time Remaining: <span id="timer">retrieving time...</span></p>
-		<div id="left_content">
 
-			<%= periodically_call_remote :update=>:timer,
+	<p id="time-remaining">Time Remaining: <span id="timer">retrieving time...</span></p>
+		<%= periodically_call_remote :update=>:timer,
 						:frequency=>2,
 			 			:url=>{:action=>:get_time_remaining, :id=>@exercise},
 						:condition=>"!(/00:00/.test($('timer').innerHTML))",
 						:complete=>"if(/00:00/.test($('timer').innerHTML)){window.location.href = '#{url_for :action=>:did_not_finish}'}"%>
 
-			<% templates = @exercise.solution_templates.written_in('c')
-			   prototype = templates.first.prototype if templates.first %>
-			<%= render :partial => 'text_editor', :locals=>{:editor_content=>prototype} %>
-			<span id="message"></span> <%= image_tag 'spinner.gif', :id=>'spinner', :style=>"display:none;" %>
-	</div> <!-- content -->
+	<div id="left_content">
+		<% templates = @exercise.solution_templates.written_in('c')
+		   prototype = templates.first.prototype if templates.first %>
+		<%= render :partial => 'text_editor', :locals=>{:editor_content=>prototype} %>
+		<span id="message"></span> <%= image_tag 'spinner.gif', :id=>'spinner', :style=>"display:none;" %>
+	</div>
 
 	<div id="exercise_problem_text" class="">
 		<h3><%= @exercise.title %></h3>	
@@ -24,4 +24,5 @@
 		<div id="hints"></div>
 		<%= render :partial=>'hint', :collection=>@exercise.hints %>
 	</div>
+	
 </div> <!-- end content -->
