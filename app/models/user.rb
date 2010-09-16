@@ -19,6 +19,6 @@ class User < ActiveRecord::Base
   end
   
   def get_stat(name)
-    Statistic.get_stat(name, self.id) || 0
+    Statistic.get_stat("user.#{name}", self.id) || 0
   end
 end
