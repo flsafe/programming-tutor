@@ -39,5 +39,4 @@ class GradeSheetObserver < ActiveRecord::Observer
     old_average ||= 0
     old_average + ((new_value - old_average) / new_count.to_f)
   end
-  
 end
