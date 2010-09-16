@@ -4,9 +4,13 @@
 	<%= render :partial=>'exercise', :collection=>@exercises %>
 </div><!-- end recommended exercises -->
 
-<div class="column span-6 last">
+<div class="column span-6 last user-statistics">
 	<table>
 		<caption>Your Statistics</caption>
-		<tr><td>Exercises Completed: <%=h current_user.completed_exercises.count %></td></tr>
+		<tr><td>Exercises Completed:</td><td> <%=h current_user.completed_exercises.count %></td></tr>
+		<tr><td>Total Practice Time:</td><td><%=h "%.2f hours" % (current_user.get_stat('user.total_time_taken') * 3600)%></td></tr>
+		<tr><td>Average Grade:</td><td><%=h "%.2f" % current_user.get_stat('user.average_grade') %></td></tr>
 	</table>
 </div>
+<%= puts "*" * 20 %>
+<%= puts current_user.get_stat('user.total_time_taken') * 3600%>

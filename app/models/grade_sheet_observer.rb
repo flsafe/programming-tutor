@@ -15,6 +15,9 @@ class GradeSheetObserver < ActiveRecord::Observer
     
     avg_secs = update_exercise_average_time_taken
     Statistic.save_stat('exercise.average_time_taken',@exercise.id, avg_secs)
+    
+    total_time_taken = update_total_time_taken
+    Statistic.save_stat('user.total_time_taken', @grade_sheet.user_id, total_time_taken)
   end
   
   def update_exercise_average_grade
@@ -31,6 +34,12 @@ class GradeSheetObserver < ActiveRecord::Observer
     new_count = @exercise.completed_users.count
     
     new_average(old_avg, new_value, new_count)
+  end
+  
+  def update_total_time_taken
+    new_value     = @grade_sheet.time_taken
+    current_value = Statistic.get_stat('user.total_time_taken', @grade_sheet.user_id) || 0
+    current_value + new_value
   end
   
   def new_average(old_average, new_value, new_count)

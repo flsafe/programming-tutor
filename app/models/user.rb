@@ -17,4 +17,8 @@ class User < ActiveRecord::Base
     gs    = GradeSheet.find(:first, :conditions=>conds, :order=>'created_at DESC')
     gs.grade if gs
   end
+  
+  def get_stat(name)
+    Statistic.get_stat(name, self.id) || 0
+  end
 end

@@ -2,7 +2,7 @@
 # exercise.average_grade
 # exercise.average_time_taken
 # user.time_taken
-#
+# user.total_time_taken
 
 class Statistic < ActiveRecord::Base
   
@@ -17,7 +17,7 @@ class Statistic < ActiveRecord::Base
     stat = Statistic.find :first, :conditions=>{:name=>name, :model_id=>model_id}
     if stat
       stat.value = value
-      stat.save
+      stat.save!
     else
       Statistic.create! :name=>name, :value=>value, :model_id=>model_id
     end
