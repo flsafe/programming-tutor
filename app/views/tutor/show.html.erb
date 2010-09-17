@@ -1,14 +1,31 @@
 <% javascript 'prototype' %>
 <% stylesheet 'exercise' %>
 	
+<script type='text/javascript' charset='utf-8'>
+	function update_time() {
+	  now     = new Date();
+	  kickoff = new Date.parse("<%= @target_end_time.to_s %>");
+	  diff    = kickoff - now;
+
+	  mins    = Math.floor( diff / (1000*60) );
+	  secs    = Math.floor( diff / 1000 );
+	  secs    = secs % 60;
+
+		if(secs < 0){
+			window.location.href = '<%= url_for :action=>:did_not_finish %>';
+		}
+		else{
+	  	document.getElementById("timer")
+				.innerHTML = mins + ':' + secs ;
+		}
+	}
+
+	setInterval('update_time()', 1000 );
+</script>
+	
 <div id="content">
 
 	<p id="time-remaining">Time Remaining: <span id="timer">retrieving time...</span></p>
-		<%= periodically_call_remote :update=>:timer,
-						:frequency=>2,
-			 			:url=>{:action=>:get_time_remaining, :id=>@exercise},
-						:condition=>"!(/00:00/.test($('timer').innerHTML))",
-						:complete=>"if(/00:00/.test($('timer').innerHTML)){window.location.href = '#{url_for :action=>:did_not_finish}'}"%>
 
 	<div id="left_content">
 		<% templates = @exercise.solution_templates.written_in('c')

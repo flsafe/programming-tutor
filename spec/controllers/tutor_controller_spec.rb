@@ -2,9 +2,13 @@ require 'spec_helper'
 
 describe TutorController do
   before(:each) do
+    Time.stub(:now).and_return(Time.parse('7:00'))
+    
     Exercise.stub(:find).and_return(stub_exercise(:minutes=>60))
+    
     controller.stub(:current_user).and_return(current_user)
     controller.session[:current_exercise_id] = stub_exercise.id
+    controller.session[:current_exercise_start_time] = Time.now
   end
   
   def current_user(stubs={})
@@ -30,20 +34,30 @@ describe TutorController do
   describe "get show" do
 
     context "when the user has no current exercise" do
+      before(:each) do
+        controller.session[:current_exercise_id] = nil
+        controller.session[:current_exercise_start_time] = nil
+      end
+      
       it "assigns the exercise to be displayed to the user" do
         get 'show'
         assigns[:exercise].should == stub_exercise
       end
     
       it "sets the current exercise" do
-        Time.stub(:now).and_return(Time.parse('7:00'))
-        controller.should_receive(:set_current_exercise).with(stub_exercise.id, Time.now)
         get 'show'
+        session[:current_exercise_id].should == stub_exercise.id
+        session[:current_exercise_start_time].should == Time.now
       end
     
       it "renders the show template" do
         get 'show'
         response.should render_template('show')
+      end
+      
+      it "assigns the target end time" do
+        get 'show'
+        assigns[:target_end_time].should == Time.now + stub_exercise.minutes * 60 #seconds per minute
       end
       
       it "does not redirect" do
@@ -67,6 +81,13 @@ describe TutorController do
       it "redirects" do
         get 'show', :id=>1001
         response.should redirect_to(:action=>:already_doing_exercise, :id=>@curr_exercise)
+      end
+      
+      context "The exercise the user wan'ts to see is the current exercise in the session"do
+        it "does not set the current_exercise in the session" do
+          controller.should_not_receive(:set_current_exercise)
+          get 'show', :id=>stub_exercise.id
+        end
       end
     end
   end
