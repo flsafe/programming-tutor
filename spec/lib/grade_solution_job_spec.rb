@@ -90,8 +90,9 @@ describe GradeSolutionJob do
     end
     
     it "places a error result in the db on unsuccessful save of the gradesheeet" do
-      job.stub(:save_grade_sheet).and_return(nil)
-      JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message=>"Grade sheet could not be saved", :job_type=>"grade")
+      job.stub(:save_grade_sheet).and_raise('Could not save the grade sheet!')
+
+      JobResult.should_receive(:place_result).with(:user_id=>current_user.id, :exercise_id=>exercise.id, :error_message=>"Could not save the grade sheet!", :job_type=>"grade")
       job.perform
     end
     
@@ -105,7 +106,7 @@ describe GradeSolutionJob do
     it "saves a grade sheet to the db" do
       stub_grade_sheet = stub_model(GradeSheet)
       GradeSheet.stub(:new).and_return(stub_grade_sheet)
-      stub_grade_sheet.should_receive(:save)
+      stub_grade_sheet.should_receive('save!')
       job.perform
     end
     
