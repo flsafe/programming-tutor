@@ -42,12 +42,12 @@ describe UnitTest do
     end
     
     it "writes the unit test code to a file" do
-      unit_test.should_receive(:write_unit_test).with("ruby ./#{@user_program_path}", @user_program_path+'-unit-test')
+      unit_test.should_receive(:write_unit_test_to_file)
       unit_test.run_on('code')
     end
     
     it "executes the unit test" do
-      unit_test.should_receive(:execute_file).with(@user_program_path+'-unit-test')
+      unit_test.should_receive(:execute_unit_test_file)
       unit_test.run_on('code')
     end
     
@@ -71,7 +71,7 @@ describe UnitTest do
     
     context "an exception is raised while attempting to run the unit test" do
       it "returns the error message :no_result_returned" do
-        unit_test.should_receive(:write_unit_test).and_raise("A Mock Exception")
+        unit_test.should_receive(:write_unit_test_to_file).and_raise("A Mock Exception")
         result = unit_test.run_on('code')
         result[:error].should =~ /exception/i
       end

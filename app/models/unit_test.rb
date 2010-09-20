@@ -11,17 +11,14 @@ class UnitTest < ActiveRecord::Base
   
   def run_on(solution_code = nil)
     begin
-      exec_file_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
-      unless Compiler.compile_to(solution_code, exec_file_path)
-        return {:error=>"The solution code did not compile"}
-      end
-    
-      unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, exec_file_path)
-      unit_test_path     = exec_file_path + '-unit-test'
-      write_unit_test(unit_test_src_code, unit_test_path)
+      initialize_unit_test_working_paths
+      substitute_executable_path_in_unit_test_code
+      
+      successfuly_compiled = Compiler.compile_to(solution_code, @exec_file_path)
+      return {:error=>"The solution code did not compile"} unless successfuly_compiled
 
-      results_str        = execute_file(unit_test_path)
-      results_hash       = YAML.load(results_str || "")
+      write_unit_test_to_file
+      results_hash = execute_unit_test_file
       if error_results?(results_hash)
         return {:error=>"The solution template did not return a YAML result"}
       end
@@ -45,14 +42,25 @@ class UnitTest < ActiveRecord::Base
   end
   
   protected
-
-  def execute_file(file)
-    `ruby #{file}`
+  
+  
+  def initialize_unit_test_working_paths
+    @exec_file_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
+    @unit_test_path = @exec_file_path + '-unit-test'      
   end
   
-  def write_unit_test(src_code, path)
-    f = File.open(path, 'w')
-    f.write(src_code)
+  def substitute_executable_path_in_unit_test_code
+    @unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, @exec_file_path)
+  end
+
+  def execute_unit_test_file
+    result_yaml = `ruby #{@unit_test_path}`
+    YAML.load(result_yaml || "")
+  end
+  
+  def write_unit_test_to_file
+    f = File.open(@unit_test_path, 'w')
+    f.write(@unit_test_src_code)
     f.close
   end
   
