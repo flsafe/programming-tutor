@@ -1,3 +1,6 @@
+# TODO: A pattern is going to be needed here as I add stats. For now 
+# here is a simple implementation for stats tracking
+
 class GradeSheetObserver < ActiveRecord::Observer
 
   def after_save(grade_sheet)

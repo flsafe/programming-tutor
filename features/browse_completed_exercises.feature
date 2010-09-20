@@ -2,7 +2,7 @@ Feature: Browse Completed Exercises
 
 	So that I can review all the exercises I've completed and track my progress
 	As a user
-	I want to view the exercises I've completed and the grades I got
+	I want to view the exercises I've completed and the the stats associated with them
 
 	Scenario: The user sees the titles of the exercises they've completed
 		Given I am logged in as the user "frank"
@@ -58,10 +58,20 @@ Feature: Browse Completed Exercises
 		Then I should see "91" within ".all-grade-sheets"
 		Then I should see "92" within ".all-grade-sheets"
 		Then I should see "93" within ".all-grade-sheets"
+		
+		
+	Scenario: The user sees how many exercises they've completed
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "Linked List Basics" with "Ex1" and "Ex2"
+		And I have finished "Ex1" with a "90"
+		And I have finished "Ex2" with a "90"
+		And I am on my home page
+		Then I should see "2" within ".user-statistics"
 
-
-
-
-
-
-
+	Scenario: The user sees how much time they've spent solving exercises
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "Linked List Basics" with "Ex1" and "Ex2"
+		And I have finished "Ex1" with a "90" in "30" minutes
+		And I have finished "Ex2" with a "90" in "30" minutes
+		And I am on my home page
+		Then I should see "1" within ".user-statistics"

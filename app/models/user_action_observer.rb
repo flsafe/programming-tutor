@@ -1,3 +1,6 @@
+# TODO: As I add more user action stats I will need a pattern here
+# For now here is a quick implementation
+
 class UserActionObserver
 
   @@dispatch_table = {:grade=>:save_performance_stats}
