@@ -8,7 +8,7 @@ class SyntaxCheckJob < Struct.new :code, :user_id, :exercise_id
   end
   
   def self.pop_result(user_id, exercise_id)
-    result = JobResult.pop_result(:user_id=>user_id, :exercise_id=>exercise_id, :job_type=>'syntax')
+    result = JobResult.get_latest_result(:user_id=>user_id, :exercise_id=>exercise_id, :job_type=>'syntax')
     if result
       syntax_error?(result) 
     end

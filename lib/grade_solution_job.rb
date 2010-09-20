@@ -27,7 +27,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     r_struct     = Struct.new("GradeJobResult", :in_progress, :error_message, :grade_sheet)
     grade_result = r_struct.new 
     
-    job_result = JobResult.pop_result(:user_id=>user_id, :exercise_id=>exercise_id, :job_type=>'grade')
+    job_result = JobResult.get_latest_result(:user_id=>user_id, :exercise_id=>exercise_id, :job_type=>'grade')
     if job_result
       grade_result.error_message = job_result.error_message
       grade_sheet                = GradeSheet.find :first, :conditions=>{:user_id=>user_id, :exercise_id=>exercise_id}, :order=>'created_at DESC'

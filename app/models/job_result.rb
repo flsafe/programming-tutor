@@ -7,13 +7,12 @@ class JobResult < ActiveRecord::Base
     JobResult.create! result
   end
   
-  def self.pop_result(conds)
+  def self.get_latest_result(conds)
     user_id     = conds[:user_id]
     exercise_id = conds[:exercise_id]
     type        = conds[:job_type]
 
-    result = JobResult.find :first, :conditions=>{:user_id=>user_id, :exercise_id=>exercise_id, :job_type=>type}
-    result.destroy if result
+    result = JobResult.find :first, :conditions=>{:user_id=>user_id, :exercise_id=>exercise_id, :job_type=>type}, :order=>'created_at DESC'
     result
   end
   

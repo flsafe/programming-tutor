@@ -23,17 +23,11 @@ describe JobResult do
   end
   
   
-  describe "#pop_result" do
+  describe "#get_latest_result" do
     
-    it "retrieves a job result object with the given user_id and exercise_id type" do
-      JobResult.should_receive(:find).with(:first, :conditions=>{:user_id=>@stub_user.id, :exercise_id=>@stub_exercise.id, :job_type=>'grade'})
-      JobResult.pop_result(:user_id=>@stub_user.id, :exercise_id=>@stub_exercise.id, :job_type=>'grade')
+    it "retrieves latest job result object with the given user_id and exercise_id type" do
+      JobResult.should_receive(:find).with(:first, :conditions=>{:user_id=>@stub_user.id, :exercise_id=>@stub_exercise.id, :job_type=>'grade'}, :order=>'created_at DESC')
+      JobResult.get_latest_result(:user_id=>@stub_user.id, :exercise_id=>@stub_exercise.id, :job_type=>'grade')
     end
-    
-    it "deletes the record from the database (removes the result from the slot)" do
-      JobResult.should_receive(:delete_all).with(:user_id=>@stub_user.id, :exercise_id=>@stub_exercise.id, :job_type=>'grade')
-      JobResult.place_result(@example_result)
-    end
-    
   end
 end
