@@ -10,7 +10,6 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       results       = execute_unit_test_on_code(solution_code)
 
       if results[:error]
-        Rails.logger.error(results[:error])
         JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :error_message=>results[:error], :job_type=>'grade')
       else
         save_grade_sheet(results)
