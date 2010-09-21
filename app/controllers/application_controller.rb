@@ -20,6 +20,12 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def create_anonymous
+    unless current_user
+      
+    end
+  end
+  
   def check_current_user_is_admin
     unless current_user.is_admin?
       flash[:error] = "You don't have permission to do that!"

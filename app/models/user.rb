@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :set_grade_sheets, :dependent=>:destroy
   has_many :completed_exercise_sets, :through=>:set_grade_sheets, :source=>:exercise_set, :uniq=>true
   
-  attr_protected :roles_mask
+  attr_protected :roles_mask, :anonymous
   
   def grade_for?(exercise)
     conds = ['exercise_id=? AND user_id=?', exercise.id, self.id]
