@@ -13,19 +13,13 @@ class UnitTest < ActiveRecord::Base
     begin
       initialize_unit_test_working_paths
       substitute_executable_path_in_unit_test_code
-      
-      successfuly_compiled = Compiler.compile_to(solution_code, @exec_file_path)
-      return {:error=>"The solution code did not compile"} unless successfuly_compiled
 
-      write_unit_test_to_file
-      results_hash = execute_unit_test_file
-      if error_results?(results_hash)
-        return {:error=>"The solution template did not return a YAML result"}
-      end
+      Compiler.compile_to(solution_code, @exec_file_path)
       
-      results_hash.with_indifferent_access
+      write_unit_test_to_file
+      execute_unit_test_file
     rescue Exception => e
-      return {:error=>"Unexpected exception: #{e.message}"}
+      return {:error=>"#{e.message}"}
     end
   end
   
@@ -43,7 +37,6 @@ class UnitTest < ActiveRecord::Base
   
   protected
   
-  
   def initialize_unit_test_working_paths
     @exec_file_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
     @unit_test_path = @exec_file_path + '-unit-test'      
@@ -52,16 +45,23 @@ class UnitTest < ActiveRecord::Base
   def substitute_executable_path_in_unit_test_code
     @unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, @exec_file_path)
   end
-
-  def execute_unit_test_file
-    result_yaml = `ruby #{@unit_test_path}`
-    YAML.load(result_yaml || "")
-  end
   
   def write_unit_test_to_file
     f = File.open(@unit_test_path, 'w')
     f.write(@unit_test_src_code)
     f.close
+  end
+  
+  def execute_unit_test_file
+    result_yaml  = execute_file
+    results_hash = YAML.load(result_yaml || "")
+    raise 'The solution template did not return a valid YAML result' if error_results?(results_hash)
+
+    results_hash.with_indifferent_access
+  end
+  
+  def execute_file
+    `ruby #{@unit_test_path}`
   end
   
   def error_results?(results)

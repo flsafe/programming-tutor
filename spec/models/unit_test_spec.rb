@@ -18,8 +18,8 @@ describe UnitTest do
     @user_program_path = "#{work_dir}/executable_solution"
     
     CozyFileUtils.stub(:unique_file_in).and_return(@user_program_path)
-    Compiler.stub(:compile_to).and_return(true)
-    unit_test.stub(:execute_unit_test_file).and_return("---\n:error: nil\ngrade: 100")
+    Compiler.stub(:compile_to)
+    unit_test.stub(:execute_file).and_return("---\n:error: nil\ngrade: 100")
 
     unit_test.stub(:write_unit_test_to_file).and_return(true)
   end
@@ -52,14 +52,14 @@ describe UnitTest do
     
     context "the solution could not be compiled" do
       it "returns the error message describing the solution did not compile" do
-        Compiler.stub(:compile_to).and_return(false)
+        Compiler.stub(:compile_to).and_raise('Did not compile')
         result = unit_test.run_on('code')
-        result[:error].should =~ /did not compile/i
+        result[:error].should_not == nil
       end
     end
     
     context "the unit test returns an invalid YML result string" do
-      it "returns the error message :no_result_returned" do
+      it "Returns an error result" do
         ['shit#%$#$%crap', nil, false, ""].each do |t|
           unit_test.stub(:execute_file).and_return(t)
           result = unit_test.run_on('code')

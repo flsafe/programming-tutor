@@ -28,9 +28,10 @@ class Compiler
       f.write(code)
       f.flush
       out = `gcc -x c -o #{dest_path} #{code_file_path} 2>&1`
-      out =~ /error/i ? false : true
-    rescue
-      raise "Could not write the user's solution code to a tmp scratch file to be compiled!"
+      if out =~ /error/i
+        raise "Could not compile solution!"
+      end
+      true
     ensure
       f.close      
     end
