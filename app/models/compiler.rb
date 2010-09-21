@@ -22,8 +22,7 @@ class Compiler
   end
 
   def self.compile_to(code, dest_path)
-    work_dir       = APP_CONFIG['work_dir']
-    f              = Tempfile.new('exec', work_dir)
+    f              = Tempfile.new('exec', APP_CONFIG['work_dir'])
     code_file_path = f.path
     begin
       f.write(code)

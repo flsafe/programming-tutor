@@ -19,10 +19,9 @@ describe UnitTest do
     
     CozyFileUtils.stub(:unique_file_in).and_return(@user_program_path)
     Compiler.stub(:compile_to).and_return(true)
-    unit_test.stub(:execute_file).and_return("---\n:error: nil\ngrade: 100")
+    unit_test.stub(:execute_unit_test_file).and_return("---\n:error: nil\ngrade: 100")
 
-    unit_test.stub(:execute_file).and_return(true)
-    unit_test.stub(:write_unit_test).and_return(true)
+    unit_test.stub(:write_unit_test_to_file).and_return(true)
   end
   
   describe "#run_on" do
