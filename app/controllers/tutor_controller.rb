@@ -7,7 +7,7 @@ class TutorController < ApplicationController
     
     if can_show_exercise?(@exercise)
         set_current_exercise(@exercise.id, Time.now) unless current_user_doing_exercise? # Don't reset the current exercise if one is already set
-        @target_end_time = current_exercise_start_time + @exercise.minutes * 60          # secs per minute
+        calc_exercise_end_time
     else
       redirect_to :action=>'already_doing_exercise', :id=>current_exercise_id
     end
@@ -98,6 +98,10 @@ class TutorController < ApplicationController
   def can_show_exercise?(exercise)
     ( not current_user_doing_exercise?)         || 
     ( exercise.id == current_exercise_id.to_i )
+  end
+  
+  def calc_exercise_end_time
+    @target_end_time = current_exercise_start_time + @exercise.minutes * 60
   end
   
   def dispatch_to_observer
