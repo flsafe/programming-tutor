@@ -7,6 +7,7 @@ Feature: Try it now
 Scenario: The user does an exercise
 		Given there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
+		And the exercises "RemoveChar" are the demo exercises
 		And I am on the home page
 		When I follow "try-it-button"
 		And I follow "RemoveChar"
