@@ -1,7 +1,7 @@
 class UserSessionsController < ApplicationController
   
   def new
-    if current_user_session
+    if current_user_session_and_not_anonymous
       redirect_to :controller=>:overview
     else
       @user_session = UserSession.new

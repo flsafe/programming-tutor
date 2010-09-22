@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def authorize
-    unless user_session_and_user_is_not_anonymous
+    unless current_user_session_and_not_anonymous
       flash[:notice] = 'You have to be logged in to do that!'
       redirect_to login_url
     end
@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
     session[:current_exercise_start_time] = nil
   end
   
-  def user_session_and_user_is_not_anonymous
+  def current_user_session_and_not_anonymous
     current_user and not current_user.anonymous
   end
 end
