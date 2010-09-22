@@ -56,6 +56,12 @@ h2, h3, h5{
 #screenshot{
 }
 
+#try-it-button{
+  position: absolute;
+  top: 175px;
+  left: 675px;
+}
+
 #blurb{
   margin-top: 5px;
   padding:4px;
