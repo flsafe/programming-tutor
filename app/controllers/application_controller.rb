@@ -19,6 +19,15 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def require_user_or_create_anonymous
+    unless current_user_session
+      u = User.new_anonymous
+      u.save(false)
+      @current_user_session = UserSession.find
+      @current_user = current_user
+    end
+  end
+  
   def check_current_user_is_admin
     unless current_user.is_admin?
       flash[:error] = "You don't have permission to do that!"

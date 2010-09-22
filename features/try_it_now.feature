@@ -4,7 +4,8 @@ Feature: Try it now
 	As a user
 	I want to try this app out without filling out any stupid forms
 
-Scenario: The user does an exercise
+	@javascript
+	Scenario: The user does an exercise
 		Given there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And the exercises "RemoveChar" are the demo exercises

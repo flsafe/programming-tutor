@@ -22,13 +22,13 @@ class User < ActiveRecord::Base
     Statistic.get_stat("user.#{name}", self.id) || 0
   end
   
-  def new_anonymous
+  def self.new_anonymous
     user = User.new
     user.username = 'anonymous'
     user.anonymous = true
     user.crypted_password = ''
     user.password_salt = ''
-    user.persistance_token = ''
+    user.persistence_token = ''
     user.email = ''
     user
   end
