@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
     unless user_session_and_user_is_not_anonymous
       flash[:notice] = 'You have to be logged in to do that!'
       redirect_to login_url
-      false
     end
   end
   
@@ -24,7 +23,6 @@ class ApplicationController < ActionController::Base
     unless current_user.is_admin?
       flash[:error] = "You don't have permission to do that!"
       redirect_to login_path
-      false
     end
   end
 
@@ -59,8 +57,6 @@ class ApplicationController < ActionController::Base
     session[:current_exercise_id] = nil
     session[:current_exercise_start_time] = nil
   end
-  
-  protected
   
   def user_session_and_user_is_not_anonymous
     current_user and not current_user.anonymous
