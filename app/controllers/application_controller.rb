@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password, :password_confirmation
   
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user_session_and_not_anonymous, :current_user
   
   protected
 
@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
   
   def check_current_user_is_admin
-    unless current_user.is_admin?
+    unless current_user and current_user.is_admin?
       flash[:error] = "You don't have permission to do that!"
       redirect_to login_path
     end
