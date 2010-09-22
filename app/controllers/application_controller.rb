@@ -13,16 +13,10 @@ class ApplicationController < ActionController::Base
   protected
 
   def authorize
-    unless current_user
+    unless user_session_and_user_is_not_anonymous
       flash[:notice] = 'You have to be logged in to do that!'
       redirect_to login_url
       false
-    end
-  end
-  
-  def create_anonymous
-    unless current_user
-      
     end
   end
   
@@ -64,5 +58,11 @@ class ApplicationController < ActionController::Base
   def clear_current_exercise
     session[:current_exercise_id] = nil
     session[:current_exercise_start_time] = nil
+  end
+  
+  protected
+  
+  def user_session_and_user_is_not_anonymous
+    current_user and not current_user.anonymous
   end
 end
