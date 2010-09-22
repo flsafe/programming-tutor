@@ -57,9 +57,9 @@ h2, h3, h5{
 }
 
 #try-it-button{
-  position: absolute;
-  top: 175px;
-  left: 675px;
+  position: relative;
+  bottom: 130px;
+  left: 145px;
 }
 
 #blurb{
