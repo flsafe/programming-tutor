@@ -45,28 +45,6 @@ class ApplicationController < ActionController::Base
     @current_user = current_user_session && current_user_session.user
   end
   
-  def current_exercise_id
-    current_user_doing_exercise?
-  end
-  
-  def current_user_doing_exercise?
-    session[:current_exercise_id]
-  end
-  
-  def current_exercise_start_time
-    session[:current_exercise_start_time]
-  end
-  
-  def set_current_exercise(exercise_id, exercise_start_time)
-    session[:current_exercise_id]         = exercise_id
-    session[:current_exercise_start_time] = exercise_start_time
-  end
-  
-  def clear_current_exercise
-    session[:current_exercise_id] = nil
-    session[:current_exercise_start_time] = nil
-  end
-  
   def current_user_session_and_not_anonymous
     current_user and not current_user.anonymous?
   end

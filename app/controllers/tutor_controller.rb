@@ -8,10 +8,10 @@ class TutorController < ApplicationController
     
     if can_show_exercise?(@exercise)
       ExerciseSession.start_exercise_session(current_user.id, @exercise.id) unless ExerciseSession.session_in_progress?(current_user.id)
-      set_current_exercise(@exercise.id, Time.now) unless current_user_doing_exercise? # Don't reset the current exercise if one is already set
       calc_exercise_end_time
     else
-      redirect_to :action=>'already_doing_exercise', :id=>current_exercise_id
+      exercise_session_in_progress = ExerciseSession.session_in_progress?(current_user.id)
+      redirect_to :action=>'already_doing_exercise', :id=>exercise_session_in_progress.exercise_id
     end
   end
   
@@ -25,7 +25,6 @@ class TutorController < ApplicationController
     unless job_running? :grade_solution_job
       enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
       ExerciseSession.end_exercise_session(current_user.id)
-      clear_current_exercise
     end
   end
   
@@ -80,11 +79,13 @@ class TutorController < ApplicationController
   end
   
   def already_doing_exercise
-    @current_exercise = Exercise.find current_exercise_id
+    if(exercise_session = ExerciseSession.session_in_progress?(current_user.id))
+      @current_exercise = Exercise.find exercise_session.exercise_id
+    end
   end
   
   def did_not_finish
-    clear_current_exercise
+    ExerciseSession.end_exercise_session(current_user.id)
   end
   
   protected
@@ -99,8 +100,9 @@ class TutorController < ApplicationController
   end
   
   def can_show_exercise?(exercise)
-    ( not current_user_doing_exercise?)         || 
-    ( exercise.id == current_exercise_id.to_i )
+    exercise_session = ExerciseSession.session_in_progress?(current_user.id)
+    ( not exercise_session) || 
+    ( exercise.id == exercise_session.exercise_id )
   end
   
   def calc_exercise_end_time

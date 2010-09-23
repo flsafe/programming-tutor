@@ -141,7 +141,6 @@ describe TutorController do
     end
     
     it "clears the current exercise" do
-      controller.should_receive(:clear_current_exercise)
       ExerciseSession.should_receive(:end_exercise_session).with(current_user.id)
       post :grade, :code=>code, :id=>stub_exercise
     end
@@ -282,9 +281,12 @@ describe TutorController do
   end
   
   describe "post did_not_finish" do
+    before(:each) do
+      ExerciseSession.stub('session_in_progress?').and_return(stub_model(ExerciseSession, :destroy=>true))
+    end
     
     it "clears the current exercise" do
-      controller.should_receive(:clear_current_exercise)
+      ExerciseSession.should_receive('end_exercise_session').with(current_user.id)
       post :did_not_finish, :id=>stub_exercise
     end
     
