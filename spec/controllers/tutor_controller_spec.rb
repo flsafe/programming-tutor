@@ -60,30 +60,37 @@ describe TutorController do
       end
       
       it "does not redirect" do
-        controller.stub('current_user_doing_exercise?').and_return(nil)
+        ExerciseSession.stub('session_in_progress?').and_return(nil)
         get 'show', :id=>stub_exercise
         response.should_not render_template('tutor/already_doing_exercise')
       end
     end
     
-    context "the current user is already doing an exercise" do
+    context "the current wants to show an exercise that is not the current exercise" do
       before(:each) do
-        @curr_exercise = 0
-        controller.session[:current_exercise_id] = @curr_exercise
+        ExerciseSession.stub('session_in_progress?').and_return(@stub_ex_session = stub_model(ExerciseSession, :exercise_id=>1000))
+        controller.session[:current_exercise_id] = @stub_ex_session.exercise_id
       end
       
       it "does not set the current exercise" do
+        ExerciseSession.should_not_receive(:start_exercise_session)
         controller.should_not_receive(:set_current_exercise)
         get 'show'
       end
       
       it "redirects" do
         get 'show', :id=>1001
-        response.should redirect_to(:action=>:already_doing_exercise, :id=>@curr_exercise)
+        response.should redirect_to(:action=>:already_doing_exercise, :id=>@stub_ex_session.exercise_id)
       end
       
-      context "The exercise the user wan'ts to see is the current exercise in the session"do
+      context "The user wants to see and exercise that is the current exercise"do
+        before(:each) do
+          controller.session[:current_exercise_id] = stub_exercise.id
+          controller.session[:current_exercise_start_time] = Time.now
+        end
         it "does not set the current_exercise in the session" do
+          ExerciseSession.stub('session_in_progress?').and_return(stub_model(ExerciseSession, :exercise_id=>stub_exercise.id))
+          ExerciseSession.should_not_receive('start_exercise_session')
           controller.should_not_receive(:set_current_exercise)
           get 'show', :id=>stub_exercise.id
         end
@@ -107,6 +114,8 @@ describe TutorController do
   describe "post grade" do
     
     before(:each) do
+      ExerciseSession.stub('find').and_return(stub_model(ExerciseSession, :destroy=>true))
+      
       @grade_job = mock_model(GradeSolutionJob, :perform=>true)
       GradeSolutionJob.stub(:new).and_return(@grade_job).as_null_object
       
@@ -133,6 +142,7 @@ describe TutorController do
     
     it "clears the current exercise" do
       controller.should_receive(:clear_current_exercise)
+      ExerciseSession.should_receive(:end_exercise_session).with(current_user.id)
       post :grade, :code=>code, :id=>stub_exercise
     end
     

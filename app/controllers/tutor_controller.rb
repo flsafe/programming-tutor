@@ -7,7 +7,7 @@ class TutorController < ApplicationController
     @exercise = Exercise.find params[:id]
     
     if can_show_exercise?(@exercise)
-      ExerciseSession.start_exercise_session(current_user.id, @exercise.id)
+      ExerciseSession.start_exercise_session(current_user.id, @exercise.id) unless ExerciseSession.session_in_progress?(current_user.id)
       set_current_exercise(@exercise.id, Time.now) unless current_user_doing_exercise? # Don't reset the current exercise if one is already set
       calc_exercise_end_time
     else
@@ -24,6 +24,7 @@ class TutorController < ApplicationController
 
     unless job_running? :grade_solution_job
       enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
+      ExerciseSession.end_exercise_session(current_user.id)
       clear_current_exercise
     end
   end
@@ -103,7 +104,9 @@ class TutorController < ApplicationController
   end
   
   def calc_exercise_end_time
-    @target_end_time = current_exercise_start_time + @exercise.minutes * 60
+    if exercise_session = ExerciseSession.session_in_progress?(current_user.id)
+      @target_end_time = Time.parse(exercise_session.created_at.to_s) + @exercise.minutes * 60
+    end
   end
   
   def dispatch_to_observer

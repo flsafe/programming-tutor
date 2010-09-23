@@ -13,8 +13,8 @@ class ExerciseSession < ActiveRecord::Base
     ExerciseSession.find :first, :conditions=>{:user_id=>user_id}, :order=>'created_at DESC'
   end
   
-  def self.end_exercise_session(user_id, exercise_id)
-    session = ExerciseSession.find :first, :conditions=>{:user_id=>user_id, :exercise_id=>exercise_id}, :order=>'created_at DESC'
+  def self.end_exercise_session(user_id)
+    session = session_in_progress?(user_id)
     raise "The user has no session in progress!" unless session
     session.destroy
   end
