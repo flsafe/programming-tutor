@@ -68,6 +68,6 @@ class ApplicationController < ActionController::Base
   end
   
   def current_user_session_and_not_anonymous
-    current_user and not current_user.anonymous
+    current_user and not current_user.anonymous?
   end
 end
