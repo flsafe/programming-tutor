@@ -7,8 +7,9 @@ class TutorController < ApplicationController
     @exercise = Exercise.find params[:id]
     
     if can_show_exercise?(@exercise)
-        set_current_exercise(@exercise.id, Time.now) unless current_user_doing_exercise? # Don't reset the current exercise if one is already set
-        calc_exercise_end_time
+      ExerciseSession.start_exercise_session(current_user.id, @exercise.id)
+      set_current_exercise(@exercise.id, Time.now) unless current_user_doing_exercise? # Don't reset the current exercise if one is already set
+      calc_exercise_end_time
     else
       redirect_to :action=>'already_doing_exercise', :id=>current_exercise_id
     end

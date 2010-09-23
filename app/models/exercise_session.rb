@@ -4,8 +4,8 @@ class ExerciseSession < ActiveRecord::Base
   
   validates_presence_of :user_id, :exercise_id
   
-  def self.start_new_exercise_session(user_id, exercise_id)
-    raise "That user is already doing an exercise!" if session_in_progress?(user_id, exercise_id)
+  def self.start_exercise_session(user_id, exercise_id)
+    raise "That user is already doing an exercise!" if session_in_progress?(user_id)
     ExerciseSession.create! :user_id=>user_id, :exercise_id=>exercise_id
   end
   

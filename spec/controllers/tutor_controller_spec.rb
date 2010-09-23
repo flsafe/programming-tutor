@@ -45,9 +45,8 @@ describe TutorController do
       end
     
       it "sets the current exercise" do
+        ExerciseSession.should_receive('start_exercise_session').with(current_user.id, stub_exercise.id)
         get 'show'
-        session[:current_exercise_id].should == stub_exercise.id
-        session[:current_exercise_start_time].should == Time.now
       end
     
       it "renders the show template" do
