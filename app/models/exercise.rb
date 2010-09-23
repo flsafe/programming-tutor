@@ -6,8 +6,9 @@ class Exercise < ActiveRecord::Base
   has_many :hints, :dependent=>:destroy
   has_many :solution_templates, :dependent=>:destroy
   has_many :unit_tests, :dependent=>:destroy
-  has_many :completed_users, :through=>:grade_sheets, :source=>:user, :uniq=>true
+  has_many :completed_users, :through=>:grade_sheets, :source=>:user, :uniq=>true #todo: wtf does this imply?
   has_many :grade_sheets, :dependent=>:destroy
+  has_many :exercise_sessions
 
   belongs_to :exercise_set  
   

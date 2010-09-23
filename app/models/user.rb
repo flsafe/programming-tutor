@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
   acts_as_authentic
   
   has_many :grade_sheets, :dependent=>:destroy
-  has_many :completed_exercises, :through=>:grade_sheets, :source=>:exercise, :uniq=>true
+  has_many :completed_exercises, :through=>:grade_sheets, :source=>:exercise, :uniq=>true #todo: What does this mean?
+  has_many :exercise_sessions, :dependent=>:destroy
   
   attr_protected :roles_mask, :anonymous
   
