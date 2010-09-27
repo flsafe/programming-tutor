@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   
   protected
 
-  def authorize
+  def require_user
     unless current_user_session_and_not_anonymous
       flash[:error] = 'You have to be logged in to do that!'
       redirect_to login_url

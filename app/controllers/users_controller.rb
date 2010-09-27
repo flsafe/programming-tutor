@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   
-  before_filter :authorize, :except=>[:new, :create]
+  before_filter :require_user, :except=>[:new, :create]
   before_filter :check_current_user_is_admin, :except=>[:new, :create, :show_me]
   before_filter :destroy_anonymous, :only=>:create
   

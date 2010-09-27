@@ -1,5 +1,5 @@
 class GradeSheetsController < ApplicationController
-  before_filter :authorize
+  before_filter :require_user
   
   def show
     @grade_sheet = GradeSheet.find(params[:id])

@@ -1,6 +1,6 @@
 class OverviewController < ApplicationController
   
-  before_filter :authorize
+  before_filter :require_user
   
   def index
     @welcome_message = "Hey there #{current_user.username}! To start things off"

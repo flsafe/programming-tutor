@@ -1,6 +1,6 @@
 class ExerciseSetsController < ApplicationController
   
-  before_filter :authorize
+  before_filter :require_user
   before_filter :check_current_user_is_admin
   
   # GET /exercise_sets
