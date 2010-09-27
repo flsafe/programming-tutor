@@ -7,11 +7,11 @@ class TutorController < ApplicationController
     @exercise = Exercise.find params[:id]
     
     if can_show_exercise?(@exercise)
-      ExerciseSession.start_exercise_session(current_user.id, @exercise.id) unless ExerciseSession.session_in_progress?(current_user.id)
+      
+      current_user.start_exercise_session(@exercise.id) unless current_user.exercise_session_in_progress?
       calc_exercise_end_time
     else
-      exercise_session_in_progress = ExerciseSession.session_in_progress?(current_user.id)
-      redirect_to :action=>'already_doing_exercise', :id=>exercise_session_in_progress.exercise_id
+      redirect_to :action=>'already_doing_exercise', :id=>current_user.current_exercise
     end
   end
   
@@ -24,7 +24,7 @@ class TutorController < ApplicationController
 
     unless job_running? :grade_solution_job
       enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
-      ExerciseSession.end_exercise_session(current_user.id)
+      current_user.end_exercise_session
     end
   end
   
@@ -79,13 +79,11 @@ class TutorController < ApplicationController
   end
   
   def already_doing_exercise
-    if(exercise_session = ExerciseSession.session_in_progress?(current_user.id))
-      @current_exercise = Exercise.find exercise_session.exercise_id
-    end
+    @current_exercise = current_user.current_exercise
   end
   
   def did_not_finish
-    ExerciseSession.end_exercise_session(current_user.id)
+    current_user.end_exercise_session
   end
   
   protected
@@ -100,13 +98,13 @@ class TutorController < ApplicationController
   end
   
   def can_show_exercise?(exercise)
-    exercise_session = ExerciseSession.session_in_progress?(current_user.id)
+    exercise_session = current_user.exercise_session
     ( not exercise_session) || 
     ( exercise.id == exercise_session.exercise_id )
   end
   
   def calc_exercise_end_time
-    if exercise_session = ExerciseSession.session_in_progress?(current_user.id)
+    if exercise_session = current_user.exercise_session
       @target_end_time = Time.parse(exercise_session.created_at.to_s) + @exercise.minutes * 60
     end
   end

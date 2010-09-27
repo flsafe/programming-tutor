@@ -11,10 +11,12 @@ class UserActionObserver
   end
   
   def save_performance_stats(tutor_controller)
-    current_user    = tutor_controller.send(:current_user)
-    exercise_session = ExerciseSession.session_in_progress?(current_user.id)
+    current_user = tutor_controller.send(:current_user)
+    exercise_session = current_user.exercise_session
+    
     start_time = Time.parse(exercise_session.created_at.to_s)
-    elapsed_seconds = Time.now.to_i - start_time.to_i #Since we are an observer we can access protected methods and we won't be struct by lighting.
+    elapsed_seconds = Time.now.to_i - start_time.to_i
+    
     Statistic.save_stat('user.time_taken', current_user.id, elapsed_seconds)
   end
  
