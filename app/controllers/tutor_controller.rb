@@ -3,11 +3,11 @@ class TutorController < ApplicationController
   before_filter :require_user_or_create_anonymous
   before_filter :dispatch_to_observer
   before_filter :can_show_exercise?, :only=>:show
-  
+  before_filter :start_exercise_session, :only=>:show
+  after_filter :end_exercise_session, :only=>:grade
+
   def show
     @exercise = Exercise.find params[:id]
-          
-    current_user.start_exercise_session(@exercise.id) unless current_user.exercise_session_in_progress?
     calc_exercise_end_time
   end
   
@@ -20,7 +20,6 @@ class TutorController < ApplicationController
 
     unless job_running? :grade_solution_job
       enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
-      current_user.end_exercise_session
     end
   end
   
@@ -102,6 +101,18 @@ class TutorController < ApplicationController
       
     unless can_show
       redirect_to :action=>'already_doing_exercise', :id=>current_exercise_session.exercise_id
+    end
+  end
+  
+  def start_exercise_session
+    @exercise = Exercise.find params[:id]
+    current_user.start_exercise_session(@exercise.id) unless current_user.exercise_session_in_progress?
+    true
+  end
+  
+  def end_exercise_session
+    unless job_running? :grade_solution_job
+      current_user.end_exercise_session
     end
   end
   
