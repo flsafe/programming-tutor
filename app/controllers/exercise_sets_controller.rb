@@ -1,7 +1,7 @@
 class ExerciseSetsController < ApplicationController
   
   before_filter :require_user
-  before_filter :check_current_user_is_admin
+  before_filter :require_admin
   
   # GET /exercise_sets
   # GET /exercise_sets.xml

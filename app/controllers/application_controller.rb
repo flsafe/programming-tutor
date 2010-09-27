@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
     @current_user_session = UserSession.find
   end
   
-  def check_current_user_is_admin
+  def require_admin
     unless current_user and current_user.is_admin?
       flash[:error] = "You don't have permission to do that!"
       redirect_to login_path
