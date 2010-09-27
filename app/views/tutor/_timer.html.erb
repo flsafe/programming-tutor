@@ -2,7 +2,7 @@
 
 	function update_time() {
 	  now     = new Date();
-	  kickoff = new Date.parse("<%= @target_end_time.to_s %>");
+	  kickoff = Date.parse("<%= @target_end_time.to_s %>");
 	  diff    = kickoff - now;
 
 	  mins    = Math.floor( diff / (1000*60) );
