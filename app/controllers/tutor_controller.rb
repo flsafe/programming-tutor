@@ -1,9 +1,11 @@
 class TutorController < ApplicationController
   
   before_filter :require_user_or_create_anonymous
+  
   before_filter :dispatch_to_observer
-  before_filter :can_show_exercise?, :only=>:show
-  before_filter :start_exercise_session, :only=>:show
+  before_filter :can_show_exercise?, 
+                :start_exercise_session, :only=>:show
+                
   after_filter :end_exercise_session, :only=>:grade
 
   def show
@@ -17,7 +19,6 @@ class TutorController < ApplicationController
   
   def grade
     @exercise = Exercise.find params[:id]
-
     unless job_running? :grade_solution_job
       enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
     end
@@ -25,9 +26,7 @@ class TutorController < ApplicationController
   
   def grade_status
     @exercise = Exercise.find params[:id]
-    
     result    = GradeSolutionJob.pop_result(current_user.id, @exercise.id)
-      
     respond_to do |f|
       f.html do 
         if result.in_progress
@@ -45,7 +44,6 @@ class TutorController < ApplicationController
   
   def check_syntax
     @exercise = Exercise.find params[:id]
-
     unless job_running? :syntax_check_job
       enqueue_job :syntax_check_job, SyntaxCheckJob.new(params[:code], current_user.id.to_s, @exercise.id.to_s)
       @message = 'checking...'
@@ -62,10 +60,8 @@ class TutorController < ApplicationController
   
   def syntax_status
     @exercise = Exercise.find params[:id]
-
     @message = SyntaxCheckJob.pop_result(current_user.id, @exercise.id)
     @message = @message || 'checking...'
-
     respond_to do |f|
       f.html do
         render :text=>@message
