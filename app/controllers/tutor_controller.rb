@@ -2,17 +2,13 @@ class TutorController < ApplicationController
   
   before_filter :require_user_or_create_anonymous
   before_filter :dispatch_to_observer
+  before_filter :can_show_exercise?, :only=>:show
   
   def show
     @exercise = Exercise.find params[:id]
-    
-    if can_show_exercise?(@exercise)
-      
-      current_user.start_exercise_session(@exercise.id) unless current_user.exercise_session_in_progress?
-      calc_exercise_end_time
-    else
-      redirect_to :action=>'already_doing_exercise', :id=>current_user.current_exercise
-    end
+          
+    current_user.start_exercise_session(@exercise.id) unless current_user.exercise_session_in_progress?
+    calc_exercise_end_time
   end
   
   def show_exercise_text
@@ -97,10 +93,16 @@ class TutorController < ApplicationController
     session[name] = delayed_job.id
   end
   
-  def can_show_exercise?(exercise)
+  def can_show_exercise?
+    exercise = Exercise.find params[:id]
     exercise_session = current_user.exercise_session
-    ( not exercise_session) || 
-    ( exercise.id == exercise_session.exercise_id )
+    
+    can_show = ( not exercise_session) || 
+      (exercise.id == exercise_session.exercise_id)
+      
+    unless can_show
+      redirect_to :action=>'already_doing_exercise', :id=>exercise_session.exercise_id
+    end
   end
   
   def calc_exercise_end_time

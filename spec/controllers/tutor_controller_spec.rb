@@ -65,7 +65,7 @@ describe TutorController do
     
     context "when current user has an exercise session" do
       before(:each) do
-        current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession))
+        current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise_id=>stub_exercise.id))
         current_user.stub_chain(:exercise_session, :exercise).and_return(stub_exercise)
       end
       
@@ -75,15 +75,21 @@ describe TutorController do
       end
       
       it "redirects to the 'aready doing exercise' page" do
-        get 'show', :id=>666
+        Exercise.stub(:find).and_return(ex = stub_model(Exercise))
+        get 'show', :id=>ex.id
         response.should redirect_to(:action=>:already_doing_exercise, :id=>stub_exercise.id)
       end
       
-      context "when show the current exercise in the session"do
+      context "when show the exercise in the session"do
         it "does not set the current_exercise in the session" do
           current_user.stub('exercise_session_in_progress?').and_return(true)
           current_user.should_not_receive(:start_exercise_session)
           get 'show', :id=>stub_exercise.id
+        end
+        
+        it "does not redirect" do
+          get 'show', :id=>stub_exercise.id
+          response.should_not render_template('tutor/already_doing_exercise')
         end
       end
     end
