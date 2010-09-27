@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def authorize
     unless current_user_session_and_not_anonymous
-      flash[:notice] = 'You have to be logged in to do that!'
+      flash[:error] = 'You have to be logged in to do that!'
       redirect_to login_url
     end
   end
