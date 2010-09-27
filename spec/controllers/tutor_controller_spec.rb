@@ -79,7 +79,7 @@ describe TutorController do
         response.should redirect_to(:action=>:already_doing_exercise, :id=>stub_exercise.id)
       end
       
-      context "show the current exercise"do
+      context "when show the current exercise in the session"do
         it "does not set the current_exercise in the session" do
           current_user.stub('exercise_session_in_progress?').and_return(true)
           current_user.should_not_receive(:start_exercise_session)
@@ -118,8 +118,6 @@ describe TutorController do
       start_time      = Time.parse("1:00")
       end_time        = Time.parse("1:30")
       seconds_elapsed = end_time.to_i - start_time.to_i
-      
-      controller.stub(:current_exercise_start_time).and_return(start_time)
       Time.stub(:now).and_return(end_time)
       
       GradeSolutionJob.should_receive(:new).with(code, current_user.id, stub_exercise.id).once
@@ -273,7 +271,6 @@ describe TutorController do
   
   describe "post did_not_finish" do
     before(:each) do
-      #TODO: This is abuse! stub out the exercise session with :destroy to make it more clear
       current_user.stub_chain(:exercise_session, :destroy, :exercise).and_return(stub_exercise)
     end
     
