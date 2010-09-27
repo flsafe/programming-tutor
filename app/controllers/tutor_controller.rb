@@ -2,9 +2,10 @@ class TutorController < ApplicationController
   
   before_filter :require_user_or_create_anonymous
   
-  before_filter :dispatch_to_observer
   before_filter :can_show_exercise?, 
                 :start_exercise_session, :only=>:show
+                
+  before_filter :dispatch_to_observer
                 
   after_filter :end_exercise_session, :only=>:grade
 
