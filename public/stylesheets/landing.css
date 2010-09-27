@@ -10,7 +10,6 @@ h2, h3, h5{
 
 #pitch{
   background: url('/images/pitch-bg.png') repeat-x top;
-  margin-bottom: 15px;
 }
 
 #pitch h2{
@@ -37,6 +36,7 @@ h2, h3, h5{
 #signup{
   font-size: 1em;
   color: rgb(99 ,115, 48);
+  padding: 4px;
 }
 
 #signup-button{
@@ -59,11 +59,10 @@ h2, h3, h5{
 #try-it-button{
   position: relative;
   bottom: 130px;
-  left: 145px;
+  left: 155px;
 }
 
 #blurb{
-  margin-top: 5px;
   padding:4px;
 }
 
@@ -82,7 +81,6 @@ h2, h3, h5{
 
 #sidebar{
   background-color: rgb(241, 255, 193);
-  margin-top:5px;
   padding: 4px;
   border: 1px solid #999;
 }

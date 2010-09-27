@@ -5,7 +5,7 @@
 body{
   margin: 0;
   padding: 0;
-  font-size: small;
+  font-size: 14px;
   background: rgb(37, 58, 89);
 }
 
@@ -71,25 +71,25 @@ h1, h2, h3, h4, h5{
 }
 
 #errorExplanation{
-  margin: 5px;
+  margin: 1px;
   color: red;
-  border: 5px solid red;
-  padding: 5px;
+  border: 2px solid red;
+  padding: 2px;
 }
 
 #flash_notice{
-  margin: 5px;
+  margin: 1px;
   color: blue;
-  border: 5px solid rgb(37, 59 , 89);
-  padding: 5px;
+  border: 2px solid rgb(37, 59 , 89);
+  padding: 2px;
 }
 
 
 #flash_error{
-  margin: 5px;
+  margin: 1px;
   color: red;
-  border: 5px solid red;
-  padding: 5px;
+  border: 2px solid red;
+  padding: 2px;
 }
 
 /************************
