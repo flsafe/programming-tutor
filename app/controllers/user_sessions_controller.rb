@@ -1,5 +1,7 @@
 class UserSessionsController < ApplicationController
   
+  before_filter :destroy_anonymous, :only=>:create
+  
   def new
     if current_user_session_and_not_anonymous
       redirect_to :controller=>:overview

@@ -28,21 +28,29 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def destroy_anonymous
+    if current_user and current_user.anonymous?
+      current_user.destroy
+      current_user_session.destroy
+      @current_user_session = nil
+    end
+  end
+  
+  def current_user
+    return @current_user if defined?(@current_user)
+    @current_user = current_user_session && current_user_session.user
+  end
+  
+  def current_user_session
+    return @current_user_session if defined?(@current_user_session)
+    @current_user_session = UserSession.find
+  end
+  
   def check_current_user_is_admin
     unless current_user and current_user.is_admin?
       flash[:error] = "You don't have permission to do that!"
       redirect_to login_path
     end
-  end
-
-  def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
-  end
-
-  def current_user
-    return @current_user if defined?(@current_user)
-    @current_user = current_user_session && current_user_session.user
   end
   
   def current_user_session_and_not_anonymous
