@@ -7,7 +7,7 @@
 	<div id="header-nav" class="column span-16 last">
 		<ul>
 			<% if current_user_session_and_not_anonymous %>
-					<li><%= link_to("#{current_user.username}", :controller=>:users, :action=>:show_me, :id=>current_user)%></li>
+					<li><%= link_to("#{current_user.username}", :controller=>:users, :action=>:show_me)%></li>
 					<li><%= link_to("Logout", logout_path)%></li>
 				<% else %>
 					<li> <%= link_to 'Motivation', :controller=>:motivation %></li>

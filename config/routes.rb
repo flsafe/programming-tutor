@@ -5,11 +5,15 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :user_sessions
 
+  map.connect 'users/:action', :controller=>:users, :action=>:action
   map.resources :users
 
   map.resources :exercise_sets
   
+  map.connect 'exercises/:action', :controller=>:exercises, :action=>:action  
   map.resources :exercises
+
+  
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
