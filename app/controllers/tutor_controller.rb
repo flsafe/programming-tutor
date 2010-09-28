@@ -15,7 +15,7 @@ class TutorController < ApplicationController
   end
   
   def show_exercise_text
-    @exercise = Exercise.find_by_id(params[:id])
+    @exercise = Exercise.find params[:id]
   end
   
   def grade
@@ -44,7 +44,7 @@ class TutorController < ApplicationController
   end
   
   def check_syntax
-    @exercise = Exercise.find params[:id]
+    @exercise = current_user.exercise_session.exercise
     unless job_running? :syntax_check_job
       enqueue_job :syntax_check_job, SyntaxCheckJob.new(params[:code], current_user.id.to_s, @exercise.id.to_s)
       @message = 'checking...'

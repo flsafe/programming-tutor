@@ -201,6 +201,8 @@ describe TutorController do
   describe "post check_syntax" do
     
     before(:each) do
+      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise=>stub_exercise))
+      
       @syntax_job  = mock_model(SyntaxCheckJob, :perform=>true)
       SyntaxCheckJob.stub(:new).and_return(@syntax_job)
       
