@@ -208,7 +208,7 @@ h1, h2, h3, h4, h5{
 ************************/
 
 .gradesheet-text p{
-  font-size: 1.2em;
+  font-size: 1.1em;
   margin: 0px;
 }
 
@@ -222,7 +222,7 @@ h1, h2, h3, h4, h5{
 }
 
 .tests td{
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 .exercise-statistics{
@@ -230,7 +230,7 @@ h1, h2, h3, h4, h5{
 }
 
 table.exercise-statistics caption, table.exercise-statistics{
-  font-size: 1.1em;
+  font-size: 1em;
   text-align: center;
 }
 
@@ -240,7 +240,8 @@ table.exercise-statistics caption, table.exercise-statistics{
   margin: 2px;
   padding: 3px;
   font-family:  monospace;
-  font-size: 1.1em;
+  font-size: 1em;
+  overflow: auto;
 }
 
 /************************
