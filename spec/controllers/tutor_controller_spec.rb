@@ -163,12 +163,12 @@ describe TutorController do
 
     context "if the grade solution job was a success" do
       before(:each) do
-        GradeSolutionJob.stub(:pop_result).and_return(grade_solution_result(:error_message=>nil, :in_progress=>nil, :error_message=>nil, :grade_sheet=>grade_sheet))
+        GradeSolutionJob.stub(:get_latest_result).and_return(grade_solution_result(:error_message=>nil, :in_progress=>nil, :error_message=>nil, :grade_sheet=>grade_sheet))
         GradeSheet.stub(:find).and_return(grade_sheet)
       end
       
       it "retrieves the grade solution job result" do
-        GradeSolutionJob.should_receive(:pop_result).with(current_user.id, stub_exercise.id)
+        GradeSolutionJob.should_receive(:get_latest_result).with(current_user.id, stub_exercise.id)
         post :grade_status, :id=>stub_exercise.id
       end
       
@@ -180,7 +180,7 @@ describe TutorController do
     
     context "there is no grade solution result yet" do
       before(:each) do
-        GradeSolutionJob.stub(:pop_result).and_return(grade_solution_result(:in_progress=>true))
+        GradeSolutionJob.stub(:get_latest_result).and_return(grade_solution_result(:in_progress=>true))
       end
       
       it "renders an in-progress message" do
@@ -191,7 +191,7 @@ describe TutorController do
     
     context "if the grade solution job was not successfull" do
       it "renders an error message" do
-        GradeSolutionJob.stub(:pop_result).and_return(grade_solution_result(:error_message=>'job error', :in_progress=>nil))
+        GradeSolutionJob.stub(:get_latest_result).and_return(grade_solution_result(:error_message=>'job error', :in_progress=>nil))
         post :grade_status, :id=>stub_exercise.id
         response.should have_text(/job error/i)
       end
@@ -254,13 +254,13 @@ describe TutorController do
     end
     
     it "retrieves the result of the syntax check" do
-      SyntaxCheckJob.should_receive(:pop_result).with(current_user.id, stub_exercise.id)
+      SyntaxCheckJob.should_receive(:get_latest_result).with(current_user.id, stub_exercise.id)
       get :syntax_status, :id=>stub_exercise.id
     end
     
     it "assigns sytntax check message" do
       syntax_check_result = "Syntax Error"
-      SyntaxCheckJob.stub(:pop_result).and_return(syntax_check_result)
+      SyntaxCheckJob.stub(:get_latest_result).and_return(syntax_check_result)
       get :syntax_status, :id=>stub_exercise
       assigns[:message].should == "Syntax Error"
     end
@@ -268,7 +268,7 @@ describe TutorController do
     context "the syntax message is nil" do
       it "assigns 'checkking...'" do
          syntax_check_result = nil
-         SyntaxCheckJob.stub(:pop_result).and_return(syntax_check_result)
+         SyntaxCheckJob.stub(:get_latest_result).and_return(syntax_check_result)
          get :syntax_status, :id=>stub_exercise
          assigns[:message].should == "checking..."
       end

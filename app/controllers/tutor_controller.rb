@@ -27,7 +27,7 @@ class TutorController < ApplicationController
   
   def grade_status
     @exercise = Exercise.find params[:id]
-    result    = GradeSolutionJob.pop_result(current_user.id, @exercise.id)
+    result    = GradeSolutionJob.get_latest_result(current_user.id, @exercise.id)
     respond_to do |f|
       f.html do 
         if result.in_progress
@@ -61,7 +61,7 @@ class TutorController < ApplicationController
   
   def syntax_status
     @exercise = Exercise.find params[:id]
-    @message = SyntaxCheckJob.pop_result(current_user.id, @exercise.id)
+    @message = SyntaxCheckJob.get_latest_result(current_user.id, @exercise.id)
     @message = @message || 'checking...'
     respond_to do |f|
       f.html do

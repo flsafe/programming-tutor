@@ -22,7 +22,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     end
   end
   
-  def self.pop_result(user_id, exercise_id)
+  def self.get_latest_result(user_id, exercise_id)
     r_struct     = Struct.new("GradeJobResult", :in_progress, :error_message, :grade_sheet)
     grade_result = r_struct.new 
     
