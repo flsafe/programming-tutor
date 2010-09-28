@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :completed_exercises, :through=>:grade_sheets, :source=>:exercise, :uniq=>true #todo: What does this mean?
   has_many :exercise_sessions, :dependent=>:destroy, :before_add=>:limit_one_exercise_session
   
-  attr_protected :roles_mask, :anonymous
+  attr_protected :roles_mask, :anonymous, :password_salt, :persistence_token
   
   def grade_for?(exercise)
     conds = ['exercise_id=? AND user_id=?', exercise.id, self.id]
