@@ -1,5 +1,7 @@
 class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   
+  Result = Struct.new(:in_progress, :error_message, :grade_sheet) 
+  
   def perform
     begin
       FileUtils.mkdir_p(APP_CONFIG['work_dir'])
@@ -22,10 +24,9 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     end
   end
   
+
   def self.get_latest_result(user_id, exercise_id)
-    r_struct     = Struct.new("GradeJobResult", :in_progress, :error_message, :grade_sheet)
-    grade_result = r_struct.new 
-    
+    grade_result = Result.new 
     job_result = JobResult.get_latest_result(:user_id=>user_id, :exercise_id=>exercise_id, :job_type=>'grade')
     if job_result
       grade_result.error_message = job_result.error_message
