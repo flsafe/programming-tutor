@@ -5,18 +5,11 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   def perform
     begin
       FileUtils.mkdir_p(APP_CONFIG['work_dir'])
-    
       get_exercise_solution_template
       get_exercise_unit_test
       solution_code = fill_in_solution_template
       results       = execute_unit_test_on_code(solution_code)
-
-      if results[:error]
-        JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :error_message=>results[:error], :job_type=>'grade')
-      else
-        save_grade_sheet(results)
-        JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :data=>'OK', :error_message=>nil, :job_type=>'grade')
-      end
+      place_results(results)
     rescue Exception => e
       puts e.message if Rails.env == "development"
       Rails.logger.error(e.message)
@@ -24,7 +17,6 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     end
   end
   
-
   def self.get_latest_result(user_id, exercise_id)
     grade_result = Result.new 
     job_result = JobResult.get_latest_result(:user_id=>user_id, :exercise_id=>exercise_id, :job_type=>'grade')
@@ -55,12 +47,21 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     solution_code = @template.fill_in(code)
   end
   
-  def execute_unit_test_on_code(solution_code)
+  def fill_in_template_and_execute_unit_test
+    solution_code = @template.fill_in(code)
     @unit_test.run_on(solution_code)
   end
   
-  def fill_in_template_and_execute_unit_test
-    solution_code = @template.fill_in(code)
+  def place_results(results)
+    if results[:error]
+        JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :error_message=>results[:error], :job_type=>'grade')
+    else
+        save_grade_sheet(results)
+        JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :data=>'OK', :error_message=>nil, :job_type=>'grade')
+    end
+  end
+  
+  def execute_unit_test_on_code(solution_code)
     @unit_test.run_on(solution_code)
   end
   
