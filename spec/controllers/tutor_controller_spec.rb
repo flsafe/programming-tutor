@@ -252,6 +252,7 @@ describe TutorController do
   describe "get syntax_status" do
     
     before(:each) do
+      current_user.stub(:current_exercise).and_return(stub_exercise)
       Exercise.stub(:find).and_return stub_exercise
     end
     

@@ -19,7 +19,7 @@ class TutorController < ApplicationController
   end
   
   def grade
-    @exercise = current_user.exercise_session.exercise
+    @exercise = current_user.current_exercise
     unless job_running? :grade_solution_job
       enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
     end
@@ -44,7 +44,7 @@ class TutorController < ApplicationController
   end
   
   def check_syntax
-    @exercise = current_user.exercise_session.exercise
+    @exercise = current_user.current_exercise
     unless job_running? :syntax_check_job
       enqueue_job :syntax_check_job, SyntaxCheckJob.new(params[:code], current_user.id.to_s, @exercise.id.to_s)
       @message = 'checking...'
@@ -60,7 +60,7 @@ class TutorController < ApplicationController
   end
   
   def syntax_status
-    @exercise = Exercise.find params[:id]
+    @exercise = current_user.current_exercise
     @message = SyntaxCheckJob.get_latest_result(current_user.id, @exercise.id)
     @message = @message || 'checking...'
     respond_to do |f|
