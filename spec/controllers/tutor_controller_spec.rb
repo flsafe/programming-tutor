@@ -111,7 +111,7 @@ describe TutorController do
   describe "post grade" do
     
     before(:each) do
-      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :destroy=>true))
+      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise=>stub_exercise, :destroy=>true))
       
       @grade_job = mock_model(GradeSolutionJob, :perform=>true)
       GradeSolutionJob.stub(:new).and_return(@grade_job).as_null_object

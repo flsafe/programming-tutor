@@ -19,7 +19,7 @@ class TutorController < ApplicationController
   end
   
   def grade
-    @exercise = Exercise.find params[:id]
+    @exercise = current_user.exercise_session.exercise
     unless job_running? :grade_solution_job
       enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
     end
