@@ -14,7 +14,7 @@
 	<%= image_tag 'bar.gif', :id=>'bar' %><br/>
 
 	<%= link_to "Read Tutorial", {:controller=>:exercises, :action=>:show_tutorial, :id=>@exercise}, :id=>'tutorial', :style=>'display: none;' %> &nbsp;
-	<%= current_user_home %>
+	<%= Link_to "Home", current_user_home %>
 
 	<%= periodically_call_remote :update=>:message,
 				:url=>{:action=>'grade_status', :id=>@exercise.id}, 

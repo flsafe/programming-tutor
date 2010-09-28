@@ -2,13 +2,17 @@
 module ApplicationHelper
   
   def current_user_home
-    return if not current_user
-    
-    if current_user.anonymous?
-      link_to 'Home', root_url
+    if no_user_or_anonymous_user
+      return root_url
     else
-      link_to 'Home', :controller=>'overview'
+      return url_for :controller=>'overview'
     end
+  end
+  
+  protected
+  
+  def no_user_or_anonymous_user
+    not current_user or current_user.anonymous?
   end
   
 end
