@@ -59,7 +59,6 @@ Feature: Browse Completed Exercises
 		Then I should see "92" within ".all-grade-sheets"
 		Then I should see "93" within ".all-grade-sheets"
 		
-		
 	Scenario: The user sees how many exercises they've completed
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "Ex1" and "Ex2"
@@ -68,10 +67,10 @@ Feature: Browse Completed Exercises
 		And I am on my home page
 		Then I should see "2" within ".user-statistics"
 
-	Scenario: The user sees how much time they've spent solving exercises
+	Scenario: The user sees how much time they've spent solving exercises in hours
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "Ex1" and "Ex2"
-		And I have finished "Ex1" with a "90" in "30" minutes
-		And I have finished "Ex2" with a "90" in "30" minutes
+		And I have finished "Ex1" with a "90" in "15" minutes
+		And I have finished "Ex2" with a "90" in "45" minutes
 		And I am on my home page
-		Then I should see "1" within ".user-statistics"
+		Then I should see "1.00 hours" within ".user-statistics"

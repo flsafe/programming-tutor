@@ -1,8 +1,8 @@
 # STAT NAMES
 # exercise.average_grade
-# exercise.average_time_taken
+# exercise.average_time_taken (seconds)
 # user.time_taken
-# user.total_time_taken
+# user.total_time_taken (seconds)
 
 class Statistic < ActiveRecord::Base
   
