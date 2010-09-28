@@ -7,7 +7,7 @@ class TutorController < ApplicationController
                 
   before_filter :dispatch_to_observer
                 
-  after_filter :end_exercise_session, :only=>:grade
+  after_filter :end_exercise_session, :only=>[:grade, :did_not_finish]
 
   def show
     @exercise = Exercise.find params[:id]
@@ -75,7 +75,6 @@ class TutorController < ApplicationController
   end
   
   def did_not_finish
-    current_user.end_exercise_session
   end
   
   protected
