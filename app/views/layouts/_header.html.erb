@@ -1,11 +1,20 @@
 <div id="header" class="column span-24">
-	<div class="column span-16 last">
+	
+	<div class="column span-8 last">
 		<h2 id="app-name"><%= link_to "Blueberry Tree", "/" %></h2>
 	</div>
-	<div id="header-nav" class="column span-8 last">
+	
+	<div id="header-nav" class="column span-16 last">
 		<ul>
-				<li><%= link_to("#{current_user.username}", :controller=>:users, :action=>:show_me, :id=>current_user) if current_user_session_and_not_anonymous %></li>
-				<li><%= link_to("Logout", logout_path) if current_user_session_and_not_anonymous %></li>
+			<% if current_user_session_and_not_anonymous %>
+					<li><%= link_to("#{current_user.username}", :controller=>:users, :action=>:show_me, :id=>current_user)%></li>
+					<li><%= link_to("Logout", logout_path)%></li>
+				<% else %>
+					<li> <%= link_to 'Motivation', :controller=>:motivation %></li>
+					<li> <%= link_to 'Pricing And Signup', :controller=>:users, :action=>:new %> </li>
+					<li> <%= link_to 'Login', login_path %> </li>
+			<% end %>
 		</ul>
 	</div>
+	
 </div>
