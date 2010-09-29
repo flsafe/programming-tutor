@@ -20,28 +20,12 @@ UnitTest needs to make sure to execute the user solutions in a sandbox
  - Dont' forget to add tests to make sure a sandbox is being used.
  - Write a sandbox unit test that should be tested on the 'test production' system
 
-? Exercises aren't being removed from the overview after they are done. ?
-
-Navigation menu is shown when 'create user' fails
-
 Write an exercise to show off
-
-The grade sheets should show the solution source code.
-
-Keep track of average solve time for each exercise. Record how long it took the user to
- complete the exercise.
-
-The review exercise page should let you get more info on an exercise.
-	-View the grade sheet, view the exercise, retake the exercise, etc.
 	
 Implement amazon S# store for images. (Show images doesn't work yet)
 
 Use google CDN for javascript libraries
 
-Make sure the navigation menu doesn't show up while doing an exercise or viewing the exercise grades
-	-The tutorials for each exercise should have the navigation menu. The 'exercises' menu should
-	 be selected.
-	
 Going back to the grade page, causes a hang. This is because
 	retrieving the grade results with "#grade_status" destroys the grade results
 	from the db. Maybe we can simply display the grade sheet if one exists?
@@ -63,6 +47,9 @@ Implement the following convention for all unit tests
 														:linear_time=>[time1, time2, ...]}
 					    }
 					
+  - These validation rules shoud go into the results object
+
+
 #-------- Refactor ----------#
 
 Don't run raw commands using `` instead move into some object
@@ -81,79 +68,3 @@ Test gcc vs some smaller faster compiler
 ? Most likely makes sense to make tutorials their own objects. 
  -Also do the figures really need to be part of the exercise? The figures should be their own objects
  - intended to be displayed in problem text, or tutorials, or hints, or user profile pics, not just exercises.
-
-#------- Finished -------------#
-
-#Rewrite the user specs to use factory stubs
-#if the solution does not compile, then should that not be part of the unit test object, not the job object
-#The grade sheet specs are all fucked, rewrite using factory specs
-#add error message to the return result (*done but instead I added a different method that returns the error)
-#Write grade solution specs 
-#Get rid of the SyntaxChecker, use the Compile class instead
-#In unit_test and Compiler, consolidate the file manipulation stuff, to an external class
-#	that is responsible for generating unique file names.
-#The template class should not be responsibile for compiling it self or checking it self forsyntax errors. 
-#	Instead have the unit-test class be responsible for compiling the solution template and checking for syntax errors
-#The unit_test#run_on method doesn't need the entire template. Instead it just needs the filled in template code
-#Add the exercise prototypes and handle the unit tests and syntax checks
-#Unit tests and executables should communicate through stdin and pipes
-#Fix the unit test grade sheet it is not returning the correct results
-#Make sure the recommendation engine does not return completed exercies
-#Finish the first exercise. Create the timing test, have it return a real grade, ...
-#Add grade sheet display and page flow (view tutorial, view class grade_sheets, go home)
-#Add a scenario that checks for errors during grading. The view should display a message
-#	like: "Oh no! an error occured!"
-#Refactor syntax_status: Don't use the rjs template! It is too complicated, see that way I did
-#	grading. Have 'call_remote_periodically' check the condition 'checking...'		
-
-#? Should GradeSolutionResult and SyntaxCheckResult be consolidated somehow?
- - Place SyntaxCheckResult#get_result into SyntaxCheckJob.get_result
- - Place GradeSolutionResult#get_result into GradeSolutionJob.get_result
- - Make XXXResult into a SINGLE dumb object.
-   JobResult {job_type:string, job_error_msg:string, job_info:string }
-
-
-
-#The show/exercise page displays the discription twice! WTF?
-
-#There is no text formatting in tutor/show. I can't read shit! Make sure that I can use either straight HTML
-#or markup.
-
-#Setup a mysql db for production
-
-#Use ree instead of 1.8.6
-# -followed the instructions in ree installer
-
-#The work deamon needs to be turned on by a capistrano task
-
-#Delayed job failure "Could not generate tmp file for syntax check"
-# - Make sure that the tmp dir is writeable, maybe use /tmp instead? I think so
-# - Make sure the code creates the tmp/work dir if it does not exist
-# - Have capistrano create the work dir, and set the correct priviliages
-
-#Grade job solution returns an error, there is no logging describing why, need to add more logging
-
-# Grading an exercise that does not compile returns an error. It should
-# instead describe that the solution did not compile. 
-
-# Can't access the tutorials.
-
-#Get rid of the flashes, they don't work right
-
-#Add spinner
-
-#Setup a production db
-
-#The website is slow
-#	-Don't include prototype and text_edit_area in every page!
-
-#Add delemiter to denote what part of stdout to take into account
-# - I no longer show what the user's solution returns.
-# - Some of the user executable stdout stuff is eventually displayed to the in the
-#	 html. Make sure that the user output is always escaped in the view and in the
-#	 appropriate model. 
-
-#Organize the gems into groups
-
-#Don't be lazy with your model associations. You don't have a delete policy in the
-# models when deleting things like gradesheets, exercises, exercise sets, etc...
