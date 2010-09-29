@@ -1,7 +1,7 @@
 class ExercisesController < ApplicationController
   
   before_filter :require_user
-  before_filter :require_admin, :except=>[:show, :show_tutorial, :user_index]
+  before_filter :require_admin, :except=>[:user_index, :show, :show_tutorial]
   
   # GET /exercises
   # GET /exercises.xml
