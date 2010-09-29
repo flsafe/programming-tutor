@@ -5,12 +5,12 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :user_sessions
 
-  map.connect 'users/:action', :controller=>:users, :action=>:action
+  map.connect 'users/show_me', :controller=>'users', :action=>'show_me'
   map.resources :users
-
+  
   map.resources :exercise_sets
   
-  map.connect 'exercises/:action', :controller=>:exercises, :action=>:action  
+  map.connect 'exercises/user_index', :controller=>'exercises', :action=>'user_index'
   map.resources :exercises
 
   
