@@ -11,7 +11,7 @@ class UnitTest < ActiveRecord::Base
   
   def run_on(solution_code = nil)
     begin
-      initialize_unit_test_working_paths
+      initialize_unit_test_executable_paths
       substitute_executable_path_in_unit_test_code
 
       Compiler.compile_to(solution_code, @exec_file_path)
@@ -37,7 +37,7 @@ class UnitTest < ActiveRecord::Base
   
   protected
   
-  def initialize_unit_test_working_paths
+  def initialize_unit_test_executable_paths
     @exec_file_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
     @unit_test_path = @exec_file_path + '-unit-test'      
   end
