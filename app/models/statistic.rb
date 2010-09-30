@@ -10,7 +10,7 @@ class Statistic < ActiveRecord::Base
   
   def self.get_stat(name, model_id)
     stat = Statistic.find :first, :conditions=>{:name=>name, :model_id=>model_id}, :select=>:value, :order=>'created_at DESC'
-    stat && stat.value
+    stat.value || 0.0 if stat
   end
   
   def self.save_stat(name, model_id, value)
