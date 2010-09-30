@@ -13,7 +13,6 @@ class DemoController < ApplicationController
   
   def find_exercise_by_titles(demo_exercise_titles)
     exercises = Exercise.find :all, :conditions=>{:title=>demo_exercise_titles}
-    raise 'Could not find all the demo exercises' if exercises.size != demo_exercise_titles.size
     exercises
   end
 end
