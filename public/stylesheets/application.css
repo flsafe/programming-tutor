@@ -120,7 +120,40 @@ h1, h2, h3, h4, h5{
   border-radius: 20px;
 }
 
+/************************
+* Register Page
+************************/
+#register{
+  padding: 10px;
+}
 
+#register label{
+  color: rgb(89, 115, 48);
+  font-size: 1.5em;
+}
+
+/************************
+* Motivation Page
+************************/
+
+#motivation{
+  font-size: 1.2em;
+  padding: 10px;
+}
+
+#motivation h3{
+  color: rgb(89, 115, 48);
+}
+#my-name{
+  color: green;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+#my-title{
+    color: rgb(100, 150, 100);
+    font-style: italic;
+}
 
 /************************
 * Overview Page

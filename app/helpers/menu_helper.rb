@@ -1,7 +1,7 @@
 module MenuHelper
 
   # Urls that should not show menu  
-  @@url_black_list = [ /^\/$/]
+  @@url_black_list = [ /^\/$/, /^\/motivation$/]
   
   # Controller:action combos that should not show the menu    
   @@action_black_list = ['user_sessions:new',

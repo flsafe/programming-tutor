@@ -12,6 +12,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.connect 'exercises/user_index', :controller=>'exercises', :action=>'user_index'
   map.resources :exercises
+  
+  map.connect '/motivation', :controller=>'landing', :action=>'motivation'
 
   
   # The priority is based upon order of creation: first created -> highest priority.

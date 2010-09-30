@@ -4,4 +4,8 @@ class LandingController < ApplicationController
     
   end
   
+  def motivation
+    
+  end
+  
 end
