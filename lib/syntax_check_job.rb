@@ -17,6 +17,6 @@ class SyntaxCheckJob < Struct.new :code, :user_id, :exercise_id
   protected 
   
   def self.syntax_error?(result)
-    result.data =~ /syntax\s+error/i ? result.data : 'No syntax errors detected!'
+    result.data =~ /error/i ? result.data : 'No syntax errors detected!'
   end
 end
