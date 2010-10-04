@@ -36,10 +36,6 @@ check_if_installed apachectl
 # Database
 check_if_installed mysql
 
-# We use REE-1.8.7, easy to
-# install with rvm. 
-check_if_installed rvm
-
 # Used to kill delayed_job daemon
 # when deploying.
 check_if_installed pidof
