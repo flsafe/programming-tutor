@@ -274,6 +274,7 @@ table.exercise-statistics caption, table.exercise-statistics{
   font-family:  monospace;
   font-size: 1em;
   overflow: auto;
+  background-color: rgb(150,150,150);
 }
 
 /************************
