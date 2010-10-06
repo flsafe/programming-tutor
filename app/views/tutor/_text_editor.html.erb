@@ -1,20 +1,10 @@
-<% content_for :head do %>
-	<%= javascript_include_tag '/edit_area/edit_area/edit_area_full' %>
-	<script type="text/javascript">
-		editAreaLoader.init({
-		id : "textarea_1"		       
-		,syntax: "c"			         
-		,start_highlight: true		 
-		,allow_toggle: <%= ENV['RAILS_ENV'] != 'production' ? true : false %>
-		,toolbar: "undo, redo, help"
-		,replace_tab_by_spaces: 2
-	});
-	</script>
-<% end %>
+<%= javascript '/javascripts/edit_area/edit_area_full' %>
+<%= javascript '/javascripts/edit_area_setup' %>
+<%= javascript '/javascripts/edit_area_resizing'%>
 
 <% form_tag url_for(:action=>:grade), :id=>'editor' do %>
 
-	<%= text_area_tag :textarea_1, editor_content || "", :name=>"code", :rows=>34, :cols=>74 %><br/>
+	<%= text_area_tag :textarea_1, editor_content || "", :name=>"code" %><br/>
 	
 	<%= submit_to_remote "check_syntax",'Check Syntax', 
 				:update=>:message,
@@ -31,4 +21,4 @@
 	<%= submit_tag "Submit Solution" %>
 <% end %>
 
-
+<div id='dummy-unfocus-div'></div>

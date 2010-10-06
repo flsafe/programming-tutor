@@ -30,24 +30,12 @@ a:hover{
   margin:0px;
 }
 
-#header{
-  background: url('/images/header.png') repeat-x top;
-  margin: 0px;
-  padding: 0px;
-  height: 50px;
-}
-
 #exercise_problem_text {
-  width: auto;
-  height: 488px;
   padding:2px;
   border:1px solid #ccc;
   background:rgb(255, 255, 255);
-  overflow:auto;
-}
-
-#left_content{
-  float: left;
+  float: right;
+  width: 100px;
 }
 
 #footer{

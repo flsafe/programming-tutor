@@ -8,3 +8,5 @@ out-*
 .DS_Store
 db/production.sqlite3
 .bundle/environment.rb
+*.swp
+.swp

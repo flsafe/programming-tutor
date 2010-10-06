@@ -7,21 +7,14 @@
     <%= yield(:head) %>
   </head>
 
-  <body>
+  <body onload="resizeEditAreaDimensions();resizeExerciseTextDimensions()">
     <div id="wrap" class="container">
       <%- flash.each do |name, msg| -%>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <%- end -%>
       
-      <%- if show_title? -%>
-        <h1><%=h yield(:title) %></h1>
-      <%- end -%>
-			
       <%= yield %>
-
     </div> <!-- end wrap -->
-
-		<br/>
 
 		<div id="footer">
         <p>Copyright &copy; CozySystems LLC</p>
