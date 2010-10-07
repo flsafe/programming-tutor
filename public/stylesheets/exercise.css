@@ -1,5 +1,4 @@
 body{
-  background-color: rgb(240, 240, 240);
   font-size: medium;
   font-family: Arial, "MS Trebuchet", sans-serif;
 }
@@ -10,6 +9,7 @@ h1, h2, h3, h4, h5, h6{
 
 p{
   color: rgb(80, 80, 80);
+  margin: 5px;
 }
 
 code{
@@ -27,13 +27,13 @@ a:hover{
 }
 
 #wrap{
-  margin:0px;
+  margin:4px;
 }
 
 #exercise_problem_text {
-  padding:2px;
-  border:1px solid #ccc;
-  background:rgb(255, 255, 255);
+  padding: 3px;
+  border: 2px solid #ccc;
+  background: rgb(255, 255, 255);
   float: right;
   width: 100px;
 }
