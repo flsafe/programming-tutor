@@ -21,7 +21,7 @@ function resizeEditAreaDimensions(){
 }
 
 function resizeExerciseTextDimensions(){
-  width_offset = 0 
+  width_offset = 10 
 
   exercise_text = document.getElementById('exercise_problem_text')
   exercise_text.style.width = oneThirdWindowWidth(width_offset) 
@@ -42,6 +42,6 @@ function oneThirdWindowWidth(offset){
 }
 
 function calcHeight(){
-  height_offset = -200
+  height_offset = -175
   return window.innerHeight + height_offset + 'px'
 }
