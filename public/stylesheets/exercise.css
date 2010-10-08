@@ -5,7 +5,7 @@ body{
 
 h1, h2, h3, h4, h5, h6{
   color: rgb(89, 115, 48);
-  margin: 15px;
+  margin: 10px 0px 10px 0px;
   font-family: serif;
 }
 
@@ -16,26 +16,24 @@ h3 {
 
 p{
   color: rgb(80, 80, 80);
-  margin: 8px;
-  line-height: 25px;
+  line-height: 22px;
   font-size: .95em ;
+  margin: 10px 0px 10px 0px;
 }
 
-pre, code{
-  color: rgb(50, 50, 50);
-  margin: 10px;
-  padding: 5px;
+code{
+  color: rgb(40, 40, 40);
+  padding:0px
+}
+
+pre{
+  margin-bottom: 25px;
 }
 
 a{
   text-decoration: underline;
   color:rgb(52, 99 ,163);
   font-size: .80em;
-  margin: 10px;
-}
-
-a:hover{
-  text-decoration: underline;
 }
 
 #wrap{
@@ -49,6 +47,7 @@ a:hover{
   float: right;
   width: 100px;
   overflow: scroll;
+  padding-left: 8px;
 }
 
 #footer{
