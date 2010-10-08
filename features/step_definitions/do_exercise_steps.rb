@@ -17,7 +17,6 @@ When /^I fill in the text editor with the solution "([^\"]*)"$/ do |filename|
   f.close
 end
 
-
 When /^The task is finished$/ do
   Delayed::Worker.new.work_off 
 end

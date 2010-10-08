@@ -7,7 +7,7 @@
     <%= yield(:head) %>
   </head>
 
-  <body onload="resizeEditAreaDimensions();resizeExerciseTextDimensions()">
+  <body onload="<%=h yield(:onload) %>"
     <div id="wrap" class="container">
       <%- flash.each do |name, msg| -%>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
