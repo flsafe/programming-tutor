@@ -13,7 +13,7 @@ function unfocusEditArea(){
 }
 
 function resizeEditAreaDimensions(){
-  width_offset = -55
+  width_offset = -100
 
   edit_area = document.getElementById('textarea_1')
   edit_area.style.width = twoThirdsWindowWidth(width_offset) 
@@ -21,8 +21,7 @@ function resizeEditAreaDimensions(){
 }
 
 function resizeExerciseTextDimensions(){
-  width_offset = 10 
-
+  width_offset = 55 
   exercise_text = document.getElementById('exercise_problem_text')
   exercise_text.style.width = oneThirdWindowWidth(width_offset) 
   exercise_text.style.height = calcHeight(); 

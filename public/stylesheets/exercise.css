@@ -5,21 +5,33 @@ body{
 
 h1, h2, h3, h4, h5, h6{
   color: rgb(89, 115, 48);
+  margin: 15px;
+  font-family: serif;
+}
+
+h3 {
+ text-align: center;
+ font-size: 1.2em;
 }
 
 p{
   color: rgb(80, 80, 80);
-  margin: 5px;
+  margin: 8px;
+  line-height: 25px;
+  font-size: .95em ;
 }
 
-code{
+pre, code{
   color: rgb(50, 50, 50);
+  margin: 10px;
+  padding: 5px;
 }
 
 a{
-  text-decoration: none;
+  text-decoration: underline;
   color:rgb(52, 99 ,163);
-  size: .90em;
+  font-size: .80em;
+  margin: 10px;
 }
 
 a:hover{
@@ -31,11 +43,12 @@ a:hover{
 }
 
 #exercise_problem_text {
-  padding: 3px;
+  padding: 5px;
   border-left: 2px solid #ccc;
   background: rgb(255, 255, 255);
   float: right;
   width: 100px;
+  overflow: scroll;
 }
 
 #footer{
