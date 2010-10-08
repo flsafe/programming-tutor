@@ -1,12 +1,12 @@
 <div id="header" class="column span-24">
 	
 	<div class="column span-8 last">
-		<h2 id="app-name"><%= link_to "Blueberry Tree", current_user_home %></h2>
+		<h2 id="app-name"><%= link_to "Blueberry Tree", show_menu? ? current_user_home : root_url %></h2>
 	</div>
 	
 	<div id="header-nav" class="column span-16 last">
 		<ul>
-			<% if current_user_session_and_not_anonymous %>
+			<% if current_user_session_and_not_anonymous and show_menu?%>
 					<li><%= link_to("#{current_user.username}", :controller=>:users, :action=>:show_me)%></li>
 					<li><%= link_to("Logout", logout_path)%></li>
 				<% else%>
