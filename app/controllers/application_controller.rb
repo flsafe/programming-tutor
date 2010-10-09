@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password, :password_confirmation
   
-  helper_method :current_user_session, :current_user_session_and_not_anonymous, :current_user
+  helper_method :current_user_session, :current_user_session_and_not_anonymous, :current_user, :current_user_home
   
   protected
 
@@ -47,6 +47,14 @@ class ApplicationController < ActionController::Base
     return @current_user if defined?(@current_user)
     @current_user = current_user_session && current_user_session.user
   end
+
+  def current_user_home
+    if no_user_or_anonymous_user
+      return root_url
+    else
+      return url_for :controller=>'overview'
+    end
+  end
   
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
@@ -55,5 +63,9 @@ class ApplicationController < ActionController::Base
   
   def current_user_session_and_not_anonymous
     current_user and not current_user.anonymous?
+  end
+
+  def no_user_or_anonymous_user
+    not current_user or current_user.anonymous?
   end
 end

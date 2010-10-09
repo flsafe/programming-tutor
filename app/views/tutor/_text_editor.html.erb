@@ -8,7 +8,7 @@
     editAreaLoader.init({
       id : "textarea_1"		       
       ,syntax: "c"			         
-      ,start_highlight: false 
+      ,start_highlight: true 
       ,allow_toggle:  <%= Rails.env == 'production' ? 'false' : 'true' %>
       ,toolbar: "undo, redo, help"
       ,replace_tab_by_spaces: 2
@@ -36,6 +36,8 @@
 				:complete=>"if( ! /checking/.test($('message').innerHTML) ){ Element.hide('spinner'); }"%>
 
 	<%= submit_tag "Submit Solution" %>
+
+  <%= button_to_function "Quit", "window.location=\"#{url_for :action=>:quit}\"" %>
 <% end %>
 
 <div id='dummy-unfocus-div'></div>
