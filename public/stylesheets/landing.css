@@ -63,16 +63,18 @@ h2, h3, h5{
 }
 
 #blurb{
-  padding:4px;
+  padding: 8px;
 }
 
 #blurb p{
-  font-size: 14px;
+  font-size: 15px;
 }
 
 #blurb h2{
   margin-bottom:5px;
   font-size:1.5em;
+  margin: 0px;
+  padding: 0px;
 }
 
 #testimonials ul li img{
@@ -112,6 +114,7 @@ h2, h3, h5{
 #sidebar p{
   margin-bottom: 10px;
   padding-left: 24px;
+  font-size: 1.1em;
 }
 
 #sidebar img{
