@@ -5,7 +5,7 @@ class TutorController < ApplicationController
   before_filter :redirect_if_already_doing_exercise, 
                 :start_exercise_session, :only=>:show
 
-  before_filter :redirect_if_time_is_up, :only=>:show
+  before_filter :redirect_if_time_is_up, :only=>[:show, :grade]
                 
   before_filter :dispatch_to_observer
                 
@@ -124,7 +124,7 @@ class TutorController < ApplicationController
   
   def calc_exercise_end_time
     if exercise_session = current_user.exercise_session
-      @target_end_time = Time.parse(exercise_session.created_at.to_s) + @exercise.minutes * 60
+      @target_end_time = Time.parse(exercise_session.created_at.to_s) + exercise_session.exercise.minutes * 60
     end
   end
   
