@@ -44,10 +44,13 @@
 (defn top-matches [prefs person number sim-fn]
   (take number (sort #(> (:similarity %1) (:similarity %2)) 
          (for [other-person (keys prefs) :when (not (= other-person person))]
-          {:similarity (sim-fn prefs person other-person) :other-person other-person}))))
+          {:similarity (sim-fn prefs person other-person) 
+           :other-person other-person}))))
 
 (defn who-reviewed [prefs item]
-  (for [person (keys prefs) :when ((prefs person)item)] person))
+  (for [person (keys prefs) 
+        :when ((prefs person)item)] 
+    person))
 
 (defn sum-similarity*rating [prefs person item sim-fn]
   (reduce + (for [other-person (who-reviewed prefs item) 
@@ -61,7 +64,9 @@
               (max (sim-fn prefs person other-person) 0))))
 
 (defn not-reviewed-by [prefs person]
-  (let [item-set (set (for [person (keys prefs) item (keys (prefs person))] item))
+  (let [item-set (set (for [other-person (keys prefs) 
+                            item (keys (prefs other-person))] 
+                        item))
         items-reviewed-by-person (set (keys (prefs person)))]
     (difference item-set items-reviewed-by-person)))
 
