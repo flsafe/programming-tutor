@@ -50,11 +50,14 @@
   (for [person (keys prefs) :when ((prefs person)item)] person))
 
 (defn sum-similarity*rating [prefs person item sim-fn]
-  (reduce + (for [other-person (who-reviewed prefs item)]
-              (* (max (sim-fn prefs person other-person) 0) ((prefs other-person) item)))))
+  (reduce + (for [other-person (who-reviewed prefs item) 
+                  :when (not (= other-person person))]
+              (* (max (sim-fn prefs person other-person) 0) 
+                 (get (prefs other-person) item 0)))))
 
 (defn sum-similarity [prefs person item sim-fn]
-  (reduce + (for [other-person (who-reviewed prefs item)]
+  (reduce + (for [other-person (who-reviewed prefs item) 
+                  :when (not (= other-person person))]
               (max (sim-fn prefs person other-person) 0))))
 
 (defn not-reviewed-by [prefs person]
