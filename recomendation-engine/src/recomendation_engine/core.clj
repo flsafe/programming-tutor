@@ -5,8 +5,7 @@
 
 
 (defn rating-diff [prefs person1 person2 item] 
-  (- ((prefs person1) item)
-     ((prefs person2) item)))
+  (- ((prefs person1) item) ((prefs person2) item)))
 
 (defn reviewed-by-both [prefs person1 person2]
   (for [item (keys (prefs person1)) :when ((prefs person2) item)] item))
@@ -21,7 +20,7 @@
 (defn sum-ratings [prefs person1 items]
   (reduce + (for [item items] ((prefs person1) item))))
 
-(defn su-ratings**2 [prefs person1 items]
+(defn sum-ratings**2 [prefs person1 items]
   (reduce + (map #(expt % 2) (for [item items] ((prefs person1) item)))))
 
 (defn sum-rating*prod [prefs person1 person2]
@@ -32,8 +31,8 @@
   (let [common-items (reviewed-by-both prefs p1 p2)
         sum1 (sum-ratings prefs p1 common-items)
         sum2 (sum-ratings prefs p2 common-items)
-        sum1Sq (su-ratings**2 prefs p1 common-items)
-        sum2Sq (su-ratings**2 prefs p2 common-items)
+        sum1Sq (sum-ratings**2 prefs p1 common-items)
+        sum2Sq (sum-ratings**2 prefs p2 common-items)
         pSum (sum-rating*prod prefs p1 p2)
         common-count (count common-items)
 
@@ -48,12 +47,11 @@
           {:similarity (sim-fn prefs person other-person) :other-person other-person}))))
 
 (defn who-reviewed [prefs item]
-  (for [person (keys prefs) :when ((prefs person)item)]
-    person))
+  (for [person (keys prefs) :when ((prefs person)item)] person))
 
 (defn sum-similarity*rating [prefs person item sim-fn]
   (reduce + (for [other-person (who-reviewed prefs item)]
-              (* (max (sim-fn prefs person other-person) 0) (get (prefs other-person) item 0)))))
+              (* (max (sim-fn prefs person other-person) 0) ((prefs other-person) item)))))
 
 (defn sum-similarity [prefs person item sim-fn]
   (reduce + (for [other-person (who-reviewed prefs item)]
