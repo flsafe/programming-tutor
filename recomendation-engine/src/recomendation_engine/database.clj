@@ -8,4 +8,4 @@
 
 (defn print-in-db []
   (with-query-results res ["select * from users"]
-    res))
+    (doall res)))
