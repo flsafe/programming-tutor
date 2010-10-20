@@ -17,7 +17,6 @@ img{
 }
 
 .black-overlay{
-  display: none;
   position: absolute;
   top: 0%;
   left: 0%;
@@ -25,9 +24,9 @@ img{
   height: 100%;
   background-color: black;
   z-index:1001;
-  -moz-opacity: 0.8;
-  opacity:.80;
-  filter: alpha(opacity=80);
+  -moz-opacity: 0.65;
+  opacity:0.65;
+  filter: alpha(opacity=60);
 }
 
 .white-content {
