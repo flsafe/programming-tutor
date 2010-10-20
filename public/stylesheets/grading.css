@@ -16,7 +16,7 @@ img{
   font-size: 1.2;
 }
 
-.black_overlay{
+.black-overlay{
   display: none;
   position: absolute;
   top: 0%;
@@ -29,7 +29,8 @@ img{
   opacity:.80;
   filter: alpha(opacity=80);
 }
-.white_content {
+
+.white-content {
   display: none;
   position: absolute;
   top: 25%;
