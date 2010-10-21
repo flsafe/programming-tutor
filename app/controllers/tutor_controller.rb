@@ -113,7 +113,6 @@ class TutorController < ApplicationController
   def start_exercise_session
     @exercise = Exercise.find params[:id]
     current_user.start_exercise_session(@exercise.id) unless current_user.exercise_session_in_progress?
-    true
   end
   
   def end_exercise_session
