@@ -15,5 +15,5 @@ Feature: Rate Exercises
     And I should see "How did you find this exercise?"
     And I rate the exercise with "too-hard"
 		And The task is finished
-    Then I have one "too-hard" rating for the exercise
+    Then The exercise "RemoveChar" is rated "too-hard"
     And I should not see "How did you find this exercise?"
