@@ -3,3 +3,8 @@ work_dir: tmp/work
 demo_exercise_titles:
   - Test
   - t
+
+rating_values:
+  too_hard: 1
+  too_easy: 2
+  good_challenge: 3
