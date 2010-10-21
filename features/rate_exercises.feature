@@ -1,6 +1,6 @@
 
 Feature: Rate Exercises
-  So that I can be challenged fairly 
+  So that I can be challenged fairly on the subsequent exercises that I do
 	As a user
   I want to rate the exercises on how they challenged me
 		
@@ -16,3 +16,4 @@ Feature: Rate Exercises
     And I rate the exercise with "too-hard"
 		And The task is finished
     Then I have one "too-hard" rating for the exercise
+    And I should not see "How did you find this exercise?"
