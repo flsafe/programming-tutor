@@ -26,7 +26,9 @@
 <div id="fade" class="black-overlay"></div>
 <div id="rating-box" class="white-content">
   <h2>How did you find this exercise?</h2>
-  <%= link_to_function "Too Hard", "Element.hide('fade');Element.hide('rating-box')", :id=>'too-hard'%>
-  <%= link_to_function "Too Easy", :id=>'too-easy' %>
-  <%= link_to_function "Good Challenge!", :id=>'good-challenge'%>
+  <a id="too-hard" onclick="<%= remote_function(:url=>{:controller=>:ratings, 
+                                                :action=>:create,
+                                                :exercise_id=>@exercise.id, 
+                                                :rating=>'too_hard'})%>">
+    Too Hard</a>
 </div>
