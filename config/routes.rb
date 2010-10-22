@@ -15,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.connect '/motivation', :controller=>'landing', :action=>'motivation'
 
-  map.connect '/ratings/:exercise_id/:rating', :controller=>:ratings, :action=>'create'
+  map.connect '/ratings/:exercise_id/:rating', :controller=>'ratings', :action=>'create'
 
   
   # The priority is based upon order of creation: first created -> highest priority.
