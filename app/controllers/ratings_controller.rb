@@ -9,11 +9,4 @@ class RatingsController < ApplicationController
 
     render :text=>""
   end
-
-  protected
-
-  def rating_value
-    rating_str = params[:rating].sub(/\-/, '_')
-    rating = APP_CONFIG['rating_values'][rating_str]
-  end
 end
