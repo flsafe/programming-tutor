@@ -4,8 +4,11 @@
 <div id="rating-box" class="white-content">
 
   <h2>How did you find this exercise?</h2>
-  <a id="too-hard" href="#" onclick="<%= remote_function(:url=>{:controller=>:ratings, 
-                                                                :action=>:create,
-                                                                :exercise_id=>@exercise.id, 
-                                                                :rating=>'too_hard'})%>">
-    Too Hard</a>
+  <a id="too-hard" href="#" onclick="<%= remote_rate_function(exercise.id, 'too-hard')%>">
+    Too Hard
+  </a>
+
+  <a id="too-easy" href="#" onclick="<%= remote_rate_function(exercise.id, 'too-easy')%>">
+    Too Easy
+  </a>
+</div>
