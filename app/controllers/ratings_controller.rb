@@ -5,7 +5,7 @@ class RatingsController < ApplicationController
   def create
     Rating.create(:user_id=>current_user.id, 
                    :exercise_id=>params[:exercise_id],
-                   :rating=>rating_value)
+                   :rating=>Rating.to_value(params[:rating]))
 
     render :text=>""
   end

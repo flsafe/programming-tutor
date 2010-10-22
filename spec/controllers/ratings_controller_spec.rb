@@ -15,8 +15,7 @@ describe RatingsController do
   end
 
   def rating_value(rating_str)
-    rating_str = rating_str.sub(/\-/, '_')
-    rating = APP_CONFIG['rating_values'][rating_str]
+    Rating.to_value(rating_str)
   end
   
   describe "create" do
