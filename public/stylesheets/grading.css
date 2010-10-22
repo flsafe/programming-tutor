@@ -41,3 +41,25 @@ img{
   z-index:1002;
   overflow: auto;
 }
+
+#rating-labels{
+  height: 25px;
+}
+
+#rating-labels div{
+  float: left;
+  width: 120px;
+  text-align: center;
+  margin-right: 70px;
+}
+
+#rating-pics div{
+  float: left;
+  width: 120px;
+  margin: 0px 70px 0px 0px;
+  padding: 0px;
+}
+
+#rating-pics div img{
+margin: 0px;
+}

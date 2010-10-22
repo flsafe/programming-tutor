@@ -4,16 +4,15 @@
   <div class="white-content">
 
     <h2>How did you find this exercise?</h2>
-    <a id="too-hard" href="#" onclick="<%= remote_rate_function(exercise.id, 'too-hard')%>">
-      Too Hard
-    </a>
-
-    <a id="too-easy" href="#" onclick="<%= remote_rate_function(exercise.id, 'too-easy')%>">
-      Too Easy
-    </a>
-
-    <a id="good-challenge" href="#" onclick="<%= remote_rate_function(exercise.id, 'good-challenge')%>">
-      Good Challenge!
-    </a>
+    <div id="rating-labels">
+      <div> <a id="too-hard" href="#" onclick="<%= remote_rate_function(exercise.id, 'too-hard')%>">Too Hard</a></div>
+      <div> <a id="too-easy" href="#" onclick="<%= remote_rate_function(exercise.id, 'too-easy')%>">Too Easy</a></div>
+      <div> <a id="good-challenge" href="#" onclick="<%= remote_rate_function(exercise.id, 'good-challenge')%>">Good Challenge!</a></div>
+    </div>
+    <div id="rating-pics"/>
+      <div> <%= image_tag('too-hard.png', :size=>"120x120") %></div>
+      <div><%= image_tag('too-easy.png', :size=>"120x120") %></div>
+      <div><%= image_tag('good-challenge2.png', :size=>"120x120") %></div>
+    </div>
   </div>
 </div>
