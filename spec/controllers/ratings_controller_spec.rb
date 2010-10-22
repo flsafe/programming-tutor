@@ -33,19 +33,4 @@ describe RatingsController do
                      :rating=>'too-easy'
     end
   end
-
-  it "does not allow more than one rating for the same exercise" do
-    Rating.should_receive("create!").with(:user_id=>current_user.id,
-                                          :exercise_id=>stub_exercise.id.to_s,
-                                          :rating=>rating_value('too-easy')).once
-
-    post "create", :user_id=>current_user.id,
-                   :exercise_id=>stub_exercise.id,
-                   :rating=>'too-easy'
-
-    post "create", :user_id=>current_user.id,
-                   :exercise_id=>stub_exercise.id,
-                   :rating=>'too-easy'
-  end
-    
 end
