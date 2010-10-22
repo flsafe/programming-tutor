@@ -4,6 +4,7 @@ module RatingLayoutHelper
      remote_function(:url=>{:controller=>:ratings, 
                               :action=>:create,
                               :exercise_id=>exercise_id,
-                              :rating=>rating})
+                              :rating=>rating},
+                     :complete=>"Element.hide('rating-box')")
   end
 end

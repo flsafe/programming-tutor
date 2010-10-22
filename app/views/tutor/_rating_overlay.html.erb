@@ -1,18 +1,19 @@
+<div id="rating-box">
+  <div id="fade" class="black-overlay"></div>
 
-<div id="fade" class="black-overlay"></div>
+  <div class="white-content">
 
-<div id="rating-box" class="white-content">
+    <h2>How did you find this exercise?</h2>
+    <a id="too-hard" href="#" onclick="<%= remote_rate_function(exercise.id, 'too-hard')%>">
+      Too Hard
+    </a>
 
-  <h2>How did you find this exercise?</h2>
-  <a id="too-hard" href="#" onclick="<%= remote_rate_function(exercise.id, 'too-hard')%>">
-    Too Hard
-  </a>
+    <a id="too-easy" href="#" onclick="<%= remote_rate_function(exercise.id, 'too-easy')%>">
+      Too Easy
+    </a>
 
-  <a id="too-easy" href="#" onclick="<%= remote_rate_function(exercise.id, 'too-easy')%>">
-    Too Easy
-  </a>
-
-  <a id="good-challenge" href="#" onclick="<%= remote_rate_function(exercise.id, 'good-challenge')%>">
-    Good Challenge!
-  </a>
+    <a id="good-challenge" href="#" onclick="<%= remote_rate_function(exercise.id, 'good-challenge')%>">
+      Good Challenge!
+    </a>
+  </div>
 </div>
