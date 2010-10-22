@@ -12,8 +12,8 @@ Feature: Rate Exercises
 		And I am viewing the tutor page for "RemoveChar"
 		When I fill in the text editor with the solution "remove-letter-solution.c"
 		And I press "Submit"
-    And I should see "How did you find this exercise?"
-    And I rate the exercise with "too-hard"
+    And I should see "How did you find this exercise?" 
+    And I should see "Too Hard"
+    And I follow "Too Hard" 
 		And The task is finished
     Then The exercise "RemoveChar" is rated "too-hard"
-    And I should not see "How did you find this exercise?"

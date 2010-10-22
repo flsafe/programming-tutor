@@ -8,7 +8,7 @@
     <title> Practice Session</title>
   </head>
 
-  <body onload="<%=h yield(:onload) %>">
+  <body onload="<%=h yield(:onload) || 'javascript:void(0)'%>">
     <div id="wrap" class="container">
       <%- flash.each do |name, msg| -%>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
