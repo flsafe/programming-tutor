@@ -24,7 +24,7 @@ describe RatingsController do
     end
 
     it "creates a new rating" do
-      Rating.should_receive("create!").with(:user_id=>current_user.id,
+      Rating.should_receive("create").with(:user_id=>current_user.id,
                                             :exercise_id=>stub_exercise.id.to_s,
                                             :rating=>rating_value('too-easy'))
 
