@@ -3,7 +3,8 @@ class TutorController < ApplicationController
   before_filter :require_user_or_create_anonymous
   
   before_filter :redirect_if_already_doing_exercise, 
-                :start_exercise_session, :only=>:show
+                :start_exercise_session, 
+                :only=>:show
 
   before_filter :redirect_if_time_is_up, :only=>[:show, :grade]
                 
