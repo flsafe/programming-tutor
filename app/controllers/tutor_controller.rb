@@ -116,14 +116,14 @@ class TutorController < ApplicationController
   end
   
   def end_exercise_session
-    unless job_running? :grade_solution_job
       current_user.end_exercise_session
-    end
   end
   
   def calc_exercise_end_time
     if exercise_session = current_user.exercise_session
       @target_end_time = Time.parse(exercise_session.created_at.to_s) + exercise_session.exercise.minutes * 60
+    else
+     Time.now() - 3600 * 24
     end
   end
   
