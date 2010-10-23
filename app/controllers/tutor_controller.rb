@@ -3,8 +3,10 @@ class TutorController < ApplicationController
   before_filter :require_user_or_create_anonymous
   
   before_filter :redirect_if_already_doing_exercise, 
-                :start_exercise_session, 
-                :only=>:show
+                :start_exercise_session_if_none, 
+                :only=>[:show]
+
+  before_filter :redirect_if_no_exercise_session, :except=>[:grade_status]
 
   before_filter :redirect_if_time_is_up, :only=>[:show, :grade]
                 
@@ -111,7 +113,7 @@ class TutorController < ApplicationController
     redirect_to :action=>:did_not_finish if Time.now() > calc_exercise_end_time
   end
   
-  def start_exercise_session
+  def start_exercise_session_if_none
     @exercise = Exercise.find params[:id]
     current_user.start_exercise_session(@exercise.id) unless current_user.exercise_session_in_progress?
   end
@@ -131,5 +133,16 @@ class TutorController < ApplicationController
   def dispatch_to_observer
     @user_action_observer ||= UserActionObserver.new
     @user_action_observer.observe(self)
+  end
+
+  def redirect_if_no_exercise_session
+    bail_out = current_user.exercise_session_in_progress? ? false : true
+    if bail_out 
+      flash[:error] = "No exercise session in progress!"
+      respond_to do |format|
+        format.js {render :text=>"An error! Try again later" }
+        format.html{redirect_to({:controller=>'overview'})} 
+      end
+    end
   end
 end
