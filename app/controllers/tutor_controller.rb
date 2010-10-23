@@ -89,9 +89,9 @@ class TutorController < ApplicationController
     Delayed::Job.find_by_id session[job_name]
   end
   
-  def enqueue_job(name, job)
+  def enqueue_job(job_name, job)
     delayed_job   = Delayed::Job.enqueue job
-    session[name] = delayed_job.id
+    session[job_name] = delayed_job.id
   end
   
   def redirect_if_already_doing_exercise
