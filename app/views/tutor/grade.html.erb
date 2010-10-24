@@ -22,5 +22,5 @@
 
 <%= periodically_call_remote :update=>:message,
       :url=>{:action=>'grade_status', :id=>@exercise.id}, 
-        :condition=>"/grading/i.test($('message').innerHTML)",
-        :complete=>"if( ! /grading/i.test($('message').innerHTML )){ Element.hide('bar');Element.show('tutorial'); }"%>
+      :condition=>"/grading/i.test($('message').innerHTML)",
+      :complete=>"if( ! /grading/i.test($('message').innerHTML )){ Element.hide('bar');Element.show('tutorial'); }"%>
