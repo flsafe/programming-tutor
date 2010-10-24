@@ -7,8 +7,6 @@ describe TutorController do
     Exercise.stub(:find).and_return(stub_exercise(:minutes=>60))
     
     controller.stub(:current_user).and_return(current_user)
-    controller.session[:current_exercise_id] = stub_exercise.id
-    controller.session[:current_exercise_start_time] = Time.now
   end
   
   def current_user(stubs={})
@@ -33,38 +31,41 @@ describe TutorController do
   
   describe "get show" do
 
-    context "when the user has no current exercise" do
-      before(:each) do
-      end
-      
-      it "assigns the exercise to be displayed to the user" do
-        get 'show'
-        assigns[:exercise].should == stub_exercise
-      end
+    before(:each) do
+      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :user_id=>current_user.id, :exercise_id=>stub_exercise.id, :created_at=>Time.now().utc))
+    end
     
-      it "sets the current exercise" do
-        current_user.should_receive(:start_exercise_session).with(stub_exercise.id)
+    context "no current exercise session" do
+      it "starts an exercise session" do
+        current_user.stub(:exercise_session_in_progress?).and_return(false)
+        current_user.should_receive(:start_exercise_session)
         get 'show'
       end
+    end
+
+    it "assigns the exercise to be displayed to the user" do
+      get 'show'
+      assigns[:exercise].should == stub_exercise
+    end
+  
+    it "renders the show template" do
+      get 'show'
+      response.should render_template('show')
+    end
     
-      it "renders the show template" do
-        get 'show'
-        response.should render_template('show')
-      end
-      
-      it "assigns the target end time" do
-        get 'show'
-        assigns[:target_end_time].should == Time.now + stub_exercise.minutes * 60 #seconds per minute
-      end
-      
-      it "does not redirect" do
-        get 'show', :id=>stub_exercise
-        response.should_not render_template('tutor/already_doing_exercise')
-      end
+    it "assigns the exercise target end time" do
+      get 'show'
+      assigns[:target_end_time].should == Time.now + stub_exercise.minutes * 60 #seconds per minute
+    end
+    
+    it "does not redirect" do
+      get 'show', :id=>stub_exercise
+      response.should_not render_template('tutor/already_doing_exercise')
     end
     
     context "when current user has an exercise session" do
       before(:each) do
+        current_user.stub('exercise_session_in_progress?').and_return(true)
         current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise_id=>stub_exercise.id))
         current_user.stub_chain(:exercise_session, :exercise).and_return(stub_exercise)
       end
@@ -74,19 +75,15 @@ describe TutorController do
         get 'show'
       end
       
-      it "redirects to the 'aready doing exercise' page" do
-        Exercise.stub(:find).and_return(ex = stub_model(Exercise))
-        get 'show', :id=>ex.id
-        response.should redirect_to(:action=>:already_doing_exercise, :id=>stub_exercise.id)
+      context "when show exercise not in the exercise session" do
+        it "redirects to the 'aready doing exercise' page" do
+          Exercise.stub(:find).and_return(not_in_session_ex = stub_model(Exercise))
+          get 'show', :id=>not_in_session_ex.id
+          response.should redirect_to(:action=>:already_doing_exercise, :id=>stub_exercise.id)
+        end
       end
       
-      context "when show the exercise in the session"do
-        it "does not set the current_exercise in the session" do
-          current_user.stub('exercise_session_in_progress?').and_return(true)
-          current_user.should_not_receive(:start_exercise_session)
-          get 'show', :id=>stub_exercise.id
-        end
-        
+      context "when show the exercise currently in the exercise session"do
         it "does not redirect" do
           get 'show', :id=>stub_exercise.id
           response.should_not render_template('tutor/already_doing_exercise')
@@ -96,6 +93,9 @@ describe TutorController do
   end
   
   describe "get show_exercise_text" do
+    before(:each) do
+      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise=>stub_exercise, :destroy=>true))
+    end
     
     it "assigns the exercise to show the problem text for" do
       get 'show_exercise_text', :id=>stub_exercise
@@ -252,7 +252,7 @@ describe TutorController do
   describe "get syntax_status" do
     
     before(:each) do
-      current_user.stub(:current_exercise).and_return(stub_exercise)
+      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise=>stub_exercise))
       Exercise.stub(:find).and_return stub_exercise
     end
     

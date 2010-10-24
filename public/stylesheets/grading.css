@@ -15,3 +15,51 @@ img{
   margin: 0px;
   font-size: 1.2;
 }
+
+.black-overlay{
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index:1001;
+  -moz-opacity: 0.65;
+  opacity:0.65;
+  filter: alpha(opacity=60);
+}
+
+.white-content {
+  position: absolute;
+  top: 25%;
+  left: 20%;
+  width: 600px;
+  height: 50%;
+  padding: 16px;
+  border: 16px solid rgb(89, 115, 48);
+  background-color: white;
+  z-index:1002;
+  overflow: scroll;
+}
+
+#rating-labels{
+  height: 25px;
+}
+
+#rating-labels div{
+  float: left;
+  width: 120px;
+  text-align: center;
+  margin-right: 70px;
+}
+
+#rating-pics div{
+  float: left;
+  width: 120px;
+  margin: 0px 70px 0px 0px;
+  padding: 0px;
+}
+
+#rating-pics div img{
+margin: 0px;
+}

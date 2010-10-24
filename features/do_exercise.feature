@@ -18,7 +18,21 @@ Feature: Do exercise
 		And the exercise "RemoveChar" takes "60" minutes to complete
 		And I am viewing the tutor page for "RemoveChar"
 		Then I should see /59:\d\d/
-		
+
+  @javascript
+  Scenario Outline: The exercise timer is reset after the user completes the exercise
+    Given I am doing the exercise RemoveChar
+    When I press <button>
+    And The task is finished
+    And I wait for "5" seconds
+    And I am viewing the tutor page for "RemoveChar"
+    Then I should see /59:5[789]/
+
+  Examples:
+      | button   |
+      | "Submit" |
+      | "Quit"   |
+
 	@javascript
 	Scenario: The user is redirected to the incomplete page when the timer is up
 		Given I am logged in as the user "frank"
@@ -56,11 +70,7 @@ Feature: Do exercise
 		
 	@javascript
 	Scenario: The user submits a solution to an exercise and it gets graded
-		Given I am logged in as the user "frank"
-		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
-		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
-		And I am viewing the tutor page for "RemoveChar"
-		When I fill in the text editor with the solution "remove-letter-solution.c"
+    Given I am doing the exercise RemoveChar
 		And I press "Submit"
 		Then I should see "grading..."
 		And The task is finished

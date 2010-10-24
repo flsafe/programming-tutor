@@ -16,8 +16,11 @@
 	<%= link_to "Read Tutorial", {:controller=>:exercises, :action=>:show_tutorial, :id=>@exercise}, :id=>'tutorial', :style=>'display: none;' %> &nbsp;
 	<%= link_to "Home", current_user_home %>
 
-	<%= periodically_call_remote :update=>:message,
-				:url=>{:action=>'grade_status', :id=>@exercise.id}, 
-				:condition=>"/grading/i.test($('message').innerHTML)",
-				:complete=>"if( ! /grading/i.test($('message').innerHTML )){ Element.hide('bar');Element.show('tutorial'); }"%>
 </div>
+
+<%= render(:partial=>'rating_overlay', :locals=>{:exercise=>@exercise}) unless current_user.grade_for?(@exercise)%>
+
+<%= periodically_call_remote :update=>:message,
+      :url=>{:action=>'grade_status', :id=>@exercise.id}, 
+      :condition=>"/grading/i.test($('message').innerHTML)",
+      :complete=>"if( ! /grading/i.test($('message').innerHTML )){ Element.hide('bar');Element.show('tutorial'); }"%>

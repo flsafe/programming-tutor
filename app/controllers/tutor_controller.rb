@@ -3,7 +3,10 @@ class TutorController < ApplicationController
   before_filter :require_user_or_create_anonymous
   
   before_filter :redirect_if_already_doing_exercise, 
-                :start_exercise_session, :only=>:show
+                :start_exercise_session_if_none, 
+                :only=>[:show]
+
+  before_filter :redirect_if_no_exercise_session, :except=>[:grade_status]
 
   before_filter :redirect_if_time_is_up, :only=>[:show, :grade]
                 
@@ -89,9 +92,9 @@ class TutorController < ApplicationController
     Delayed::Job.find_by_id session[job_name]
   end
   
-  def enqueue_job(name, job)
+  def enqueue_job(job_name, job)
     delayed_job   = Delayed::Job.enqueue job
-    session[name] = delayed_job.id
+    session[job_name] = delayed_job.id
   end
   
   def redirect_if_already_doing_exercise
@@ -110,26 +113,36 @@ class TutorController < ApplicationController
     redirect_to :action=>:did_not_finish if Time.now() > calc_exercise_end_time
   end
   
-  def start_exercise_session
+  def start_exercise_session_if_none
     @exercise = Exercise.find params[:id]
     current_user.start_exercise_session(@exercise.id) unless current_user.exercise_session_in_progress?
-    true
   end
   
   def end_exercise_session
-    unless job_running? :grade_solution_job
       current_user.end_exercise_session
-    end
   end
   
   def calc_exercise_end_time
     if exercise_session = current_user.exercise_session
       @target_end_time = Time.parse(exercise_session.created_at.to_s) + exercise_session.exercise.minutes * 60
+    else
+     Time.now() - 3600 * 24
     end
   end
   
   def dispatch_to_observer
     @user_action_observer ||= UserActionObserver.new
     @user_action_observer.observe(self)
+  end
+
+  def redirect_if_no_exercise_session
+    bail_out = current_user.exercise_session_in_progress? ? false : true
+    if bail_out 
+      flash[:error] = "No exercise session in progress!"
+      respond_to do |format|
+        format.js {render :text=>"An error! Try again later" }
+        format.html{redirect_to({:controller=>'overview'})} 
+      end
+    end
   end
 end
