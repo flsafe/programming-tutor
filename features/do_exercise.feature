@@ -20,13 +20,18 @@ Feature: Do exercise
 		Then I should see /59:\d\d/
 
   @javascript
-  Scenario: The exercise timer is reset after the user completes the exercise
+  Scenario Outline: The exercise timer is reset after the user completes the exercise
     Given I am doing the exercise RemoveChar
-    When I press "Submit"
+    When I press <button>
     And The task is finished
     And I wait for "5" seconds
     And I am viewing the tutor page for "RemoveChar"
     Then I should see /59:5[789]/
+
+  Examples:
+      | button   |
+      | "Submit" |
+      | "Quit"   |
 
 	@javascript
 	Scenario: The user is redirected to the incomplete page when the timer is up
