@@ -18,7 +18,16 @@ Feature: Do exercise
 		And the exercise "RemoveChar" takes "60" minutes to complete
 		And I am viewing the tutor page for "RemoveChar"
 		Then I should see /59:\d\d/
-		
+
+  @javascript
+  Scenario: The exercise timer is reset after the user completes the exercise
+    Given I am doing the exercise RemoveChar
+    When I press "Submit"
+    And The task is finished
+    And I wait for "5" seconds
+    And I am viewing the tutor page for "RemoveChar"
+    Then I should see /59:5[789]/
+
 	@javascript
 	Scenario: The user is redirected to the incomplete page when the timer is up
 		Given I am logged in as the user "frank"

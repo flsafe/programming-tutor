@@ -7,3 +7,7 @@ Given /^I am doing the exercise RemoveChar$/ do
 		And I fill in the text editor with the solution "remove-letter-solution.c"
   }
 end
+
+When /^I wait for "([^\"]*)" seconds$/ do |secs|
+ sleep(secs.to_i)
+end
