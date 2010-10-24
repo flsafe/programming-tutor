@@ -18,7 +18,7 @@
 
 </div>
 
-<%= render :partial=>'rating_overlay', :locals=>{:exercise=>@exercise}%>
+<%= render(:partial=>'rating_overlay', :locals=>{:exercise=>@exercise}) unless current_user.grade_for?(@exercise)%>
 
 <%= periodically_call_remote :update=>:message,
       :url=>{:action=>'grade_status', :id=>@exercise.id}, 
