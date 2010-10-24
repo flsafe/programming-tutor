@@ -7,8 +7,6 @@ describe TutorController do
     Exercise.stub(:find).and_return(stub_exercise(:minutes=>60))
     
     controller.stub(:current_user).and_return(current_user)
-    controller.session[:current_exercise_id] = stub_exercise.id
-    controller.session[:current_exercise_start_time] = Time.now
   end
   
   def current_user(stubs={})
@@ -95,6 +93,9 @@ describe TutorController do
   end
   
   describe "get show_exercise_text" do
+    before(:each) do
+      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise=>stub_exercise, :destroy=>true))
+    end
     
     it "assigns the exercise to show the problem text for" do
       get 'show_exercise_text', :id=>stub_exercise
@@ -251,7 +252,7 @@ describe TutorController do
   describe "get syntax_status" do
     
     before(:each) do
-      current_user.stub(:current_exercise).and_return(stub_exercise)
+      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise=>stub_exercise))
       Exercise.stub(:find).and_return stub_exercise
     end
     
