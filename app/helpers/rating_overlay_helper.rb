@@ -1,4 +1,4 @@
-module RatingLayoutHelper 
+module RatingOverlayHelper
 
   def remote_rate_function(exercise_id, rating)
      remote_function(:url=>{:controller=>:ratings, 
