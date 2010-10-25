@@ -1,9 +1,20 @@
-(use 'ring.adapter.jetty)
+(ns recomendation-engine.server
+  (:use ring.adapter.jetty)
+  (:use ring.middleware.params)
+  (:use ring.middleware.stacktrace)
+  (:use ring.middleware.reload))
 
-(defn app [req]
+(defn new-rating [request]
   {:status  200
    :headers {"Content-Type" "text/html"}
-   :body    "Hello World from Ring"})
+   :body    "Cozy Recomendation Server Is Running: w00t!"})
 
-(run-jetty app {:port 8080})
+(def app
+  (-> #'new-rating
+    (wrap-reload '(recomendation-engine.server))
+    (wrap-params)
+    (wrap-stacktrace)))
+    
+(defn boot-server []
+  (run-jetty app {:port 8080}))
 
