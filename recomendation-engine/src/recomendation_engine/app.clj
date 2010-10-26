@@ -9,4 +9,11 @@
   (reset! *user-prefs* (assoc-in @*user-prefs* [user exercise] rating)))
 
 (defn handle-rating [rating]
-  (add-rating rating))
+  (add-rating rating)
+  (future
+    (let 
+      [recomendations (get-recomendations 
+                                    @*user-prefs* 
+                                    (:user_id rating) 
+                                    pearson-similarity)]
+      (save-recomendations (:user_id rating) recomendations))))
