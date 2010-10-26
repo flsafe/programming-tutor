@@ -8,34 +8,43 @@
          :subprotocol "sqlite"
          :subname "../db/development.sqlite3"})
 
-(defn get-ratings []
-  "Query the rating records in the db"
+(defn get-ratings 
+  "Returns a realized sequence of all ratings in the db"
+  []
   (with-query-results res ["select user_id, exercise_id, rating from ratings"]
                       (doall res)))
 
-(defn to-prefs [db-results]
-  "Collapse all the user's ratings into a map"
+(defn to-prefs
+  "Collapse all the user's ratings to a map mapping exercise_id to rating"
+  [db-results]
   (reduce (fn [prefs {user :user_id exercise :exercise_id rating :rating}]
             (assoc prefs user (assoc (prefs user) exercise rating)))
   {{}} db-results))
 
-(defn get-user-prefs []
-  "Return a map from user ids to another map of exercise id and rating"
+(defn get-user-prefs 
+  "Return a map mapping user_ids to a map of exercise id to rating"
+  []
   (with-connection db
     (to-prefs
       (get-ratings))))
 
 (defn now [] (java.sql.Timestamp. (.getTime (java.util.Date.)))) 
 
-(defn to-values [user_id rec-map-seq]
+(defn to-values 
+  "Return a commna delimited string containing
+   recomended exercise ids"
+  [rec-map-seq]
   (str-join "," (for [rec-map rec-map-seq] (:item rec-map))))
 
 ;TODO These updates should probably be queued up somehow
-(defn save-recomendations [user_id rec-map-seq]
+(defn save-recomendations 
+  "Save the recomendations to the database using
+   the given user_id and recomendation-map sequence"
+  [user_id rec-map-seq]
   (with-connection db 
     (let [timestamp (now)]
       (seq 
         (insert-values :recomendations
          [:user_id :exercise_recomendation_list   :created_at :updated_at]
-         [user_id  (to-values user_id rec-map-seq) timestamp  timestamp  ])))))
+         [user_id  (to-values rec-map-seq)        timestamp   timestamp  ])))))
 
