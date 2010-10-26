@@ -71,7 +71,9 @@
     (difference item-set items-reviewed-by-person)))
 
 (defn get-recomendations [prefs person sim-fn]
-  (for [item (not-reviewed-by prefs person)]
-    {:rating (/ (sum-similarity*rating prefs person item sim-fn) 
-                (sum-similarity prefs person item sim-fn))
-     :item item}))
+  (reverse
+    (sort-by :rating
+             (for [item (not-reviewed-by prefs person)]
+                {:rating (/ (sum-similarity*rating prefs person item sim-fn) 
+                            (sum-similarity prefs person item sim-fn))
+                 :item item}))))
