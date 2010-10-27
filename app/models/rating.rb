@@ -16,10 +16,11 @@ class Rating < ActiveRecord::Base
     Thread.new(user_id, exercise_id, rating) do |user_id, exercise_id, rating|
       uri = APP_CONFIG['recomendation_server_uri'][Rails.env]
       begin 
-        Net::HTTP.post_form(URI.parse(uri),
+        resp = Net::HTTP.post_form(URI.parse(uri),
                             "user_id"=>user_id, 
                             "exercise_id"=>exercise_id,
                             "rating"=>rating)
+        puts resp.body
       rescue Exception => e
         #nothing for now
         puts e.to_s
