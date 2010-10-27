@@ -8,3 +8,9 @@ rating_values:
   too_hard: 1
   too_easy: 2
   good_challenge: 3
+
+recomendation_server_uri:
+  production: production server addr not set
+  development: localhost:8080/
+  test: localhost:8080/
+  cucumber: localhost:8080/
