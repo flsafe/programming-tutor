@@ -1,16 +1,7 @@
 (ns recomendation-engine.database
   (:use [clojure.contrib.sql :only (with-connection with-query-results insert-values)])
   (:use [clojure.contrib.str-utils :only (str-join)])
-  (:require [clj-yaml.core :as yaml])
   (:import (java.sql DriverManager)))
-
-(def rails-env
-  (or (keyword (System/getenv "RAILS_ENV")) :development)) 
-
-(def rails-db-config
-  (rails-env
-    (yaml/parse-string 
-      (slurp "../config/database.yml"))))
 
 ;TODO Turn this in a funciton that return either dev or prod db creds
 (def db {:classname "org.sqlite.JDBC"
