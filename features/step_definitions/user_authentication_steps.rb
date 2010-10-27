@@ -2,6 +2,10 @@ Given /^I am the registered user "([^\"]*)"$/ do |username|
   @current_user = Factory.create :user, :username=>username
 end
 
+Given /^there exists a user with the username "([^\"]*)"$/ do |username|
+  Factory.create :user, :username=>username
+end
+
 Given /^I have admin privileges$/ do
   @current_user.add_role('admin')
   @current_user.save
