@@ -18,7 +18,6 @@ Feature: Rate Exercises
     Given I am doing the exercise RemoveChar
 		When I press "Submit"
     And I follow <rate-option>
-		And The task is finished
     Then The exercise "RemoveChar" is rated <rating>
 
   Examples:

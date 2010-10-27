@@ -22,6 +22,7 @@ class Rating < ActiveRecord::Base
                             "rating"=>rating)
       rescue Exception => e
         #nothing for now
+        puts e.to_s
         puts "No rec server connection"
       end
     end
