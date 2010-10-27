@@ -11,12 +11,13 @@ Feature: Blueberry recomends exercises
     And there exists a user with the username "user2"
 
     When the user "user1" rates "Ex1" as "good-challenge"
-    When the user "user1" rates "Ex2" as "good-challenge"
-    When the user "user1" rates "Ex3" as "good-challenge"
+    And the user "user1" rates "Ex2" as "good-challenge"
+    And the user "user1" rates "Ex3" as "good-challenge"
 
-    When the user "user2" rates "Ex1" as "good-challenge"
-    When the user "user2" rates "Ex2" as "good-challenge"
-    When the user "user2" rates "Ex3" as "good-challenge"
-    When the user "user2" rates "Ex4" as "good-challenge"
-
+    And the user "user2" rates "Ex1" as "good-challenge"
+    And the user "user2" rates "Ex2" as "good-challenge"
+    And the user "user2" rates "Ex3" as "good-challenge"
+    And the user "user2" rates "Ex4" as "good-challenge"
+    And I wait for "3" seconds
+    
     Then the recomendation for "user1" should be "Ex4"
