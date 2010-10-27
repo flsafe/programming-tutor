@@ -3,6 +3,9 @@
   (:use [clojure.contrib.str-utils :only (str-join)])
   (:import (java.sql DriverManager)))
 
+(def rails-env
+  (or (System/getenv "RAILS_ENV") "development")) 
+
 ;TODO Turn this in a funciton that return either dev or prod db creds
 (def db {:classname "org.sqlite.JDBC"
          :subprotocol "sqlite"
