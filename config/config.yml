@@ -10,7 +10,7 @@ rating_values:
   good_challenge: 3
 
 recomendation_server_uri:
-  production: production server addr not set
-  development: localhost:8080/
-  test: localhost:8080/
-  cucumber: localhost:8080/
+  production: "production server addr not set"
+  development: "http://127.0.0.1:8080/"
+  test: "http://127.0.01:8080/"
+  cucumber: "http://127.0.0.1:8080/"
