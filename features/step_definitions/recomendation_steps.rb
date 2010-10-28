@@ -1,9 +1,12 @@
-Then /^the recomendation for "([^\"]*)" should be "([^\"]*)"$/ do |username, exercise_id|
+Then /^the recomendation for "([^\"]*)" should be "([^\"]*)"$/ do |username, exercise_title|
   user = User.find_by_username(username)
-  exercise_id = exercise_id.to_i
-  recomendations = Recomendation.for(user.id)
+  exercise = Exercise.find_by_title(exercise_title)
 
-  has_exercise = recomendations.detect {|ex_id| exi_id == exercise_id}
+  recomendations = Recomendation.for(user.id)
+  has_exercise = recomendations.detect {|ex_id| ex_id == exercise.id}
+
+  puts "*" * 10
+  puts recomendations
     
   has_exercise.should == true
   recomendationsize.should == 1
