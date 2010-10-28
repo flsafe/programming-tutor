@@ -1,13 +1,13 @@
 (ns recomendation-engine.database
   (:use [clojure.contrib.sql :only (with-connection with-query-results insert-values)])
   (:use [clojure.contrib.str-utils :only (str-join)])
+  (:require [recomendation-engine.rails :as rails])
   (:import (java.sql DriverManager)))
 
-;TODO Turn this in a funciton that return either dev or prod db creds
-(def db {:classname "org.sqlite.JDBC"
-         :subprotocol "sqlite"
-         :subname "../db/development.sqlite3"})
-
+;TODO Turn this in a function that return either dev or prod db creds
+(def db 
+  (rails/db-config-to-jdbc)) 
+  
 (defn get-ratings 
   "Returns a realized sequence of all ratings in the db"
   []
