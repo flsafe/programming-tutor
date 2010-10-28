@@ -8,8 +8,8 @@
 
 (def expected-dev-jdbc-config
   {:classname   "org.sqlite.JDBC"
-   :subprotocol "sqlite3"
-   :subname     "///../db/development.sqlite3"
+   :subprotocol "sqlite"
+   :subname     "../db/development.sqlite3"
    :user        nil
    :password    nil})
   

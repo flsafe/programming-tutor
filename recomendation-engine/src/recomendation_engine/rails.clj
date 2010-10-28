@@ -14,7 +14,9 @@
   "Return a map with :subprotocol mapping
   to the rails db :adapter"
   [rails-db-config]
-  (:adapter rails-db-config))
+  (let [adapter-to-subprotocol {"sqlite3" "sqlite"}]
+    (adapter-to-subprotocol 
+      (:adapter rails-db-config))))
 
 (defn proj-relative
   "Returns true if the database name is
@@ -29,7 +31,7 @@
    //host/database"
   [rails-db-config]
   (if (proj-relative rails-db-config)
-    (str "//"  "/.." "/" (:database rails-db-config))
+    (str   ".." "/" (:database rails-db-config))
     (str "//" (:host rails-db-config) "/" (:database rails-db-config))))
 
 (defn classname
