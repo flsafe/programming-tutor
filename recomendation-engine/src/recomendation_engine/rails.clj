@@ -51,3 +51,9 @@
     :user        (:username db-config)
     :password    (:password db-config)})
 
+(defn db-config-to-jdbc
+  "Returns a map for use with clojure.contrib.sql/with-connection
+   parsed from <rails-proj-root>/config.database.sql and the
+   current value of RAILS_ENV"
+  []
+  (db-to-jdbc (db env) env))
