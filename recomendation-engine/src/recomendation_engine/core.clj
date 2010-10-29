@@ -1,6 +1,7 @@
 (ns recomendation-engine.core
   (:use [clojure.contrib.math :only [expt]])
   (:use [clojure.contrib.math :only [sqrt]])
+  (:use [clojure.contrib.seq  :only [indexed]])
   (:use [clojure.set :only [difference]]))
 
 
@@ -77,3 +78,39 @@
                 {:rating (/ (sum-similarity*rating prefs person item sim-fn) 
                             (sum-similarity prefs person item sim-fn))
                  :item item}))))
+
+(defn sum-sim [prefs person simfn]
+  (reduce +
+    (for [other-person  (keys prefs)
+          similarity   `(~(simfn prefs other-person person))
+          :when         (and (not= other-person person) (> similarity 0))]
+      similarity)))
+
+(defn item-difference [prefs person other-person]
+  (let [person-set       (set (keys (prefs person)))
+        other-person-set (set (keys (prefs other-person)))]
+    (difference person-set other-person-set)))
+
+(defn all-pairs [coll]
+  (let [vect (vec coll)]
+    (for [[idx elmt]  (indexed vect)
+           other-elmt (subvec vect (inc idx))]
+      (vector elmt other-elmt))))
+
+(defn merge-keys [map-sq]
+  (reduce 
+    #(merge-with merge %1 %2)
+    {{}}
+    map-sq))
+
+(defn build-similarity-map [prefs simfn]
+  (merge-keys
+    (for [[person other] (all-pairs (sort (keys prefs)))]
+      (assoc-in 
+        {} 
+        [person other] 
+        (simfn prefs person other)))))
+
+(defn get-similarity [sim-map person other]
+  (let [in-order (sort (vector person other))]
+    (get-in sim-map [(first in-order )(second in-order)] 0)))
