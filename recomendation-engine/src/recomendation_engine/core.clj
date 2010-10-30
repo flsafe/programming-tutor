@@ -2,8 +2,12 @@
   (:use [clojure.contrib.math :only [expt]])
   (:use [clojure.contrib.math :only [sqrt]])
   (:use [clojure.contrib.seq  :only [indexed]])
-  (:use [clojure.set :only [difference]]))
+  (:use [clojure.contrib.str-utils :only [str-join]])
+  (:use [clojure.pprint])
+  (:use [clojure.set :only [difference]])
+  (:require [clojure.pprint :as cljprint]))
 
+(def *similarity-map* {{}})
 
 (defn rating-diff [prefs person1 person2 item] 
   (- ((prefs person1) item) ((prefs person2) item)))
@@ -50,7 +54,7 @@
 
 (defn who-reviewed [prefs item]
   (for [person (keys prefs) 
-        :when ((prefs person)item)] 
+        :when (>= (get-in prefs [person item] 0) 0)] 
     person))
 
 (defn sum-similarity*rating [prefs person item sim-fn]
@@ -79,17 +83,8 @@
                             (sum-similarity prefs person item sim-fn))
                  :item item}))))
 
-(defn sum-sim [prefs person simfn]
-  (reduce +
-    (for [other-person  (keys prefs)
-          similarity   `(~(simfn prefs other-person person))
-          :when         (and (not= other-person person) (> similarity 0))]
-      similarity)))
+;; New way
 
-(defn item-difference [prefs person other-person]
-  (let [person-set       (set (keys (prefs person)))
-        other-person-set (set (keys (prefs other-person)))]
-    (difference person-set other-person-set)))
 
 (defn all-pairs [coll]
   (let [vect (vec coll)]
@@ -111,6 +106,29 @@
         [person other] 
         (simfn prefs person other)))))
 
-(defn get-similarity [sim-map person other]
+(defn get-similarity [person other]
   (let [in-order (sort (vector person other))]
-    (get-in sim-map [(first in-order )(second in-order)] 0)))
+    (pprint in-order)
+    (pprint *similarity-map*)
+    (get-in *similarity-map* [(first in-order )(second in-order)] 0)))
+
+(defn sum-sim [prefs person reviewers]
+  (reduce +
+    (for [other reviewers]
+      (do 
+        (println (str-join "," [person other]))
+        (get-similarity person other)))))
+
+(defn sum-sim*rating [prefs person reviewers item]
+  (reduce +
+    (for [other reviewers]
+      (* (get-similarity person other)
+         (get-in prefs [other item] 0)))))
+
+(defn get-recs [prefs person simfn]
+  (binding [*similarity-map* (build-similarity-map prefs simfn)]
+    (for [item  (not-reviewed-by prefs person)]
+      {:rating (/
+                 (sum-sim*rating prefs person (who-reviewed prefs item) item)
+                 (sum-sim        prefs person (who-reviewed prefs item)))
+       :item item})))
