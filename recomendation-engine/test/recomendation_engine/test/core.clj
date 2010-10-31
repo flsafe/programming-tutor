@@ -68,3 +68,10 @@
          items   [:x :y :z] 
          exp-sum 0]
      (is-sum-ratings prefs person items exp-sum)))
+
+(deftest test-pearson-recomendation
+  (is
+    (diff<=
+      allowed
+      (pearson-similarity prefs-test "Lisa Rose" "Gene Seymour")
+       0.396059017191)))

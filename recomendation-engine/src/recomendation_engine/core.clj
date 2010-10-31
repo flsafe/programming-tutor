@@ -27,5 +27,7 @@
 (defn pearson-similarity [prefs person other]
   (let [common (reviewed-by-both prefs person other)]
     (if (> 0 (count common))
-      (let [sum1 (sum-ratings prefs person common)]
-      0))))
+      (let [sum1 (sum-ratings prefs person common)
+            sum2 (sum-ratings prefs other  common)]
+        0)
+      0)))
