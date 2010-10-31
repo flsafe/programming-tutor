@@ -26,8 +26,28 @@
 
 (defn pearson-similarity [prefs person other]
   (let [common (reviewed-by-both prefs person other)]
-    (if (> 0 (count common))
+    (if (> (count common) 0)
       (let [sum1 (sum-ratings prefs person common)
-            sum2 (sum-ratings prefs other  common)]
-        0)
-      0)))
+            sum2 (sum-ratings prefs other  common)
+
+            sum1sq (reduce + (map #(expt (get-in prefs [person %] 0) 2) 
+                                  common))
+            sum2sq (reduce + (map #(expt (get-in prefs [other  %] 0) 2)
+                                  common))
+
+            psum   (reduce + (map #(* (get-in prefs [person %] 0) 
+                                      (get-in prefs [other  %] 0))
+                                  common))
+
+            numer    (- psum (/ (* sum1 sum2)
+                                (count common)))
+            denom    (sqrt (*
+                             (/ 
+                               (- sum1sq (expt  sum1 2))
+                               (count common))
+                             (/ 
+                               (- sum2sq (expt  sum2 2))
+                               (count common))))]
+        (println (str "sum1: " sum1 " sum2: " sum2 " sum1sq: " sum1sq " sum2sq: " sum2sq " psum: " psum " numer: " numer " denom: " denom))
+        (if (= denom 0) 0 (/ numer denom)))
+        0)))
