@@ -5,13 +5,17 @@
   (:use [clojure.contrib.str-utils :only [str-join]])
   (:use [clojure.pprint])
   (:use [clojure.set :only [difference]])
+  (:use [clojure.set :only [union]])
   (:require [clojure.pprint :as cljprint]))
 
-(defn rating-diff [prefs person1 person2 item] 
-  (- ((prefs person1) item) ((prefs person2) item)))
+(defn rating-diff [prefs person other item] 
+  (- (get-in prefs [person item] 0)
+     (get-in prefs [other item] 0)))
 
-(defn reviewed-by-both [prefs person1 person2]
-  (for [item (keys (prefs person1)) :when ((prefs person2) item)] item))
+(defn reviewed-by-both [prefs person other]
+  (let [person-items (set (for [item (keys (prefs person))] item))
+        other-items  (set (for [item (keys (prefs other))] item))]
+    (union person-items other-items)))
 
 (defn sum-diffs-squared [prefs person1 person2]
   (reduce + (map #(expt (rating-diff prefs person1 person2 %) 2)
