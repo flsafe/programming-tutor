@@ -52,5 +52,8 @@
           (if (= denom 0) 0 (/ numer denom)))
         0)))
 
+(defn not-reviewed-by [prefs person]
+  [])
+
 (defn get-recomendations [pefs person simfn]
   [{}])

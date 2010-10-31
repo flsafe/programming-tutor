@@ -61,3 +61,12 @@
   (is
     (equal-maps? (get-recomendations prefs-test "Toby" pearson-similarity)
                   expected-recomendations)))
+
+(deftest test-not-reviewed-by
+  (let [prefs {:a {:x 1 :y 1} :b {:x 1 :y 1 :z 1}}
+        expected [:y :z]]
+    (is 
+      (= (sort (not-reviewed-by prefs :a))
+         '(:z)))))
+    
+        
