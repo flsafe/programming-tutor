@@ -66,5 +66,6 @@
     
 (defn get-recomendations [prefs person simfn]
   (let [items (not-reviewed-by prefs person)
-        others (who-reviewed prefs items)]
+        others (filter #(= person %)
+                       (who-reviewed prefs items))]
     [{}]))
