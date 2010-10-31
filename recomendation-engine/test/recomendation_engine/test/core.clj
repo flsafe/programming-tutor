@@ -47,3 +47,8 @@
       allowed
       (pearson-similarity prefs-test "Lisa Rose" "Gene Seymour")
        0.396059017191)))
+
+(deftest test-pearson-recomendation-no-person
+  (is
+    (= 0
+       (pearson-similarity prefs-test "Lisa Rose" "I don't exisit"))))
