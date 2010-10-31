@@ -1,5 +1,6 @@
 (ns recomendation-engine.test.core
   (:use [recomendation-engine.core] :reload)
+  (:use [clojure.contrib.math :only [abs]])
   (:use [clojure.test]))
 
 (def prefs-test
@@ -31,12 +32,39 @@
     {:rating 2.461988486074374, :item "Just My Luck"} 
     {:rating 3.5002478401415877, :item "The Night Listener"}))
 
+(def allowed 0.000000001)
+
+(defn diff<= [delta n1 n2]
+  (<= (abs (- n1 n2)) delta))
+
 (defn equal-maps? [map-sequence1 map-sequence2]
   (let [matches (for [m1 map-sequence1 m2 map-sequence2 :when (= m1 m2)] m1)]
     (and (= (count map-sequence1) (count map-sequence2) (count matches)))))
 
-(deftest test-get-recomendations-pearson
-         (is (equal-maps? (get-recomendations prefs-test "Toby" pearson-similarity) expected-sim-pearson)))
+(defn is-sum-ratings [prefs person items exp-sum]
+  (is 
+   (diff<= 
+     allowed
+     exp-sum 
+     (sum-ratings prefs person items))))
 
-(deftest test-get-recomendations-distance
-         (is (equal-maps? (get-recomendations prefs-test "Toby" distance-similarity) expected-sim-distance))) 
+(deftest test-sum-ratings
+   (let [prefs   {:a {:x 1.3 :y 1.1 :z 1}}
+         person  :a
+         items   [:x :y :z] 
+         exp-sum 3.4]
+    (is-sum-ratings prefs person items exp-sum)))
+
+(deftest test-sum-ratings-item-not-rated
+   (let [prefs   {:a {:x 1.3 :y 1.1 :z 1}}
+         person  :a
+         items   [:x :y :z :q] 
+         exp-sum 3.4]
+    (is-sum-ratings prefs person items exp-sum)))
+
+(deftest test-sum-ratings-no-reviewer
+   (let [prefs   {:a {:x 1.3 :y 1.1 :z 1}}
+         person  :b
+         items   [:x :y :z] 
+         exp-sum 0]
+     (is-sum-ratings prefs person items exp-sum)))
