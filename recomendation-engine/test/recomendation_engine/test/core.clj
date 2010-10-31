@@ -68,5 +68,10 @@
     (is 
       (= (sort (not-reviewed-by prefs :a))
          '(:z)))))
-    
-        
+
+(deftest test-who-reviewed
+   (let [prefs {:a {:x 1 :y 1} :b {:x 1} :c {:y 1}}
+         expected [:a :b]]
+     (is 
+       (= (who-reviewed prefs :x)
+          expected))))
