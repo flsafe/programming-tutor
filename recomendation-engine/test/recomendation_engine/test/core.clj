@@ -32,6 +32,11 @@
     {:rating 2.461988486074374, :item "Just My Luck"} 
     {:rating 3.5002478401415877, :item "The Night Listener"}))
 
+(def expected-top-matches
+  '({ "Lisa Rose"    0.99124070716192991}
+    { "Mick LaSalle" 0.92447345164190486} 
+    { "Claudia Puig" 0.89340514744156474}))
+  
 (def allowed 0.000000001)
 
 (defn diff<= [delta n1 n2]
@@ -43,10 +48,9 @@
 
 (deftest test-pearson-recomendation
   (is
-    (diff<=
-      allowed
-      (pearson-similarity prefs-test "Lisa Rose" "Gene Seymour")
-       0.396059017191)))
+    (diff<= allowed
+            (pearson-similarity prefs-test "Lisa Rose" "Gene Seymour")
+             0.396059017191)))
 
 (deftest test-pearson-recomendation-no-person
   (is
