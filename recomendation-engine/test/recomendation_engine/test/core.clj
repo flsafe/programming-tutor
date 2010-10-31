@@ -41,34 +41,6 @@
   (let [matches (for [m1 map-sequence1 m2 map-sequence2 :when (= m1 m2)] m1)]
     (and (= (count map-sequence1) (count map-sequence2) (count matches)))))
 
-(defn is-sum-ratings [prefs person items exp-sum]
-  (is 
-   (diff<= 
-     allowed
-     exp-sum 
-     (sum-ratings prefs person items))))
-
-(deftest test-sum-ratings
-   (let [prefs   {:a {:x 1.3 :y 1.1 :z 1}}
-         person  :a
-         items   [:x :y :z] 
-         exp-sum 3.4]
-    (is-sum-ratings prefs person items exp-sum)))
-
-(deftest test-sum-ratings-item-not-rated
-   (let [prefs   {:a {:x 1.3 :y 1.1 :z 1}}
-         person  :a
-         items   [:x :y :z :q] 
-         exp-sum 3.4]
-    (is-sum-ratings prefs person items exp-sum)))
-
-(deftest test-sum-ratings-no-reviewer
-   (let [prefs   {:a {:x 1.3 :y 1.1 :z 1}}
-         person  :b
-         items   [:x :y :z] 
-         exp-sum 0]
-     (is-sum-ratings prefs person items exp-sum)))
-
 (deftest test-pearson-recomendation
   (is
     (diff<=
