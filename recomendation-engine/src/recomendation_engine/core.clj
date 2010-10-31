@@ -52,15 +52,17 @@
           (if (= denom 0) 0 (/ numer denom)))
         0)))
 
-(defn who-reviewed [prefs item]
+(defn who-reviewed [prefs items]
   (for [person (keys prefs)
+        item items
         :when (> (get-in prefs [person item] 0) 0)]
     person))
 
 (defn not-reviewed-by [prefs person]
   (let [all-items (set 
                     (reduce concat
-                            (for [other (keys prefs)] (keys (prefs other)))))
+                            (for [other (keys prefs)] 
+                              (keys (prefs other)))))
         reviewed-items (set (keys (prefs person)))]
     (difference all-items reviewed-items)))
     
@@ -68,4 +70,11 @@
   (let [items (not-reviewed-by prefs person)
         others (filter #(= person %)
                        (who-reviewed prefs items))]
-    [{}]))
+    (for [item items]
+      {:rating (/ (reduce + 
+                          (map #(* (get-in prefs [% item] 0)
+                                     (simfn prefs person %))
+                               others))
+                  (reduce + 
+                          (map #(simfn prefs person %)
+                               others)))})))

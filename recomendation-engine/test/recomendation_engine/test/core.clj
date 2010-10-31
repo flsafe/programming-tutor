@@ -70,8 +70,11 @@
          '(:z)))))
 
 (deftest test-who-reviewed
-   (let [prefs {:a {:x 1 :y 1} :b {:x 1} :c {:y 1}}
-         expected [:a :b]]
+   (let [prefs {:a {:x 1 :y 1} 
+                :b {:x 1} 
+                :c {:y 1}
+                :d {:x 1 :y 1 :z 1}}
+         expected [:a :b :d]]
      (is 
-       (= (who-reviewed prefs :x)
+       (= (who-reviewed prefs [:x])
           expected))))
