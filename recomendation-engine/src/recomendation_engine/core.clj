@@ -51,3 +51,6 @@
                                    (count common)))))]
           (if (= denom 0) 0 (/ numer denom)))
         0)))
+
+(defn get-recomendations [pefs person simfn]
+  [{}])

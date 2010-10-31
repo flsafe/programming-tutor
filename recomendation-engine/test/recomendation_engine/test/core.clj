@@ -32,11 +32,11 @@
     {:rating 2.461988486074374, :item "Just My Luck"} 
     {:rating 3.5002478401415877, :item "The Night Listener"}))
 
-(def expected-top-matches
-  '({ "Lisa Rose"    0.99124070716192991}
-    { "Mick LaSalle" 0.92447345164190486} 
-    { "Claudia Puig" 0.89340514744156474}))
-  
+(def expected-recomendations
+  '({:rating 3.3477895267131013, :item "The Night Listener"},
+   {:rating 2.8325499182641614, :item "Lady in the Water"}, 
+   {:rating 2.5309807037655645, :item "Just My Luck"}))
+
 (def allowed 0.000000001)
 
 (defn diff<= [delta n1 n2]
@@ -56,3 +56,8 @@
   (is
     (= 0
        (pearson-similarity prefs-test "Lisa Rose" "I don't exisit"))))
+
+(deftest test-get-recomendations 
+  (is
+    (equal-maps? (get-recomendations prefs-test "Toby" pearson-similarity)
+                  expected-recomendations)))
