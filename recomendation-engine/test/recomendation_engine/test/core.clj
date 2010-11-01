@@ -74,7 +74,7 @@
                 :b {:x 1} 
                 :c {:y 1}
                 :d {:x 1 :y 1 :z 1}}
-         expected [:a :b :d]]
+         expected #{:a :b :d}]
      (is 
        (= (who-reviewed prefs [:x])
           expected))))

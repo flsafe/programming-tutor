@@ -53,10 +53,11 @@
         0)))
 
 (defn who-reviewed [prefs items]
-  (for [person (keys prefs)
+  (set 
+    (for [person (keys prefs)
         item items
         :when (> (get-in prefs [person item] 0) 0)]
-    person))
+    person)))
 
 (defn not-reviewed-by [prefs person]
   (let [all-items (set 
@@ -68,7 +69,7 @@
     
 (defn get-recomendations [prefs person simfn]
   (let [items (not-reviewed-by prefs person)
-        others (filter #(= person %)
+        others (filter #(not= person %)
                        (who-reviewed prefs items))]
     (for [item items]
       {:rating (/ (reduce + 
