@@ -67,6 +67,21 @@
         reviewed-items (set (keys (prefs person)))]
     (difference all-items reviewed-items)))
     
+(defn sum-rating*sim [prefs person item others simfn]
+  (reduce + 
+        (map #(* (get-in prefs [% item] 0)
+                 (simfn prefs person %))
+             others)))
+
+(defn sum-sim [prefs person item others simfn]
+  (reduce + 
+          (map #(simfn prefs person %)
+               (filter #(> (get-in prefs
+                                   [% item] 
+                                   0)
+                           0)
+                        others))))
+
 (defn get-recomendations [prefs person simfn]
   (if (get prefs person)
     (let [items (not-reviewed-by prefs person)
@@ -76,16 +91,11 @@
       (reverse
         (sort-by :rating
                (for [item items]
-                  {:rating (/ (reduce + 
-                                      (map #(* (get-in prefs [% item] 0)
-                                               (simfn prefs person %))
-                                           others))
-                              (reduce + 
-                                      (map #(simfn prefs person %)
-                                           (filter #(> (get-in prefs
-                                                               [% item] 
-                                                               0)
-                                                       0)
-                                                    others))))
-                   :item item}))))
-    '({})))
+                 (let [numer (sum-rating*sim prefs person item others simfn)
+                       denom (sum-sim prefs person item others simfn)]
+                   (if (not= denom 0)
+                      {:rating (/ (sum-rating*sim prefs person item others simfn)
+                                  (sum-sim prefs person item others simfn))
+                       :item item}
+                       {}))))))
+    '({}) ))
