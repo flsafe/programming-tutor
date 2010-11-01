@@ -62,6 +62,11 @@
     (equal-maps? (get-recomendations prefs-test "Toby" pearson-similarity)
                   expected-recomendations)))
 
+(deftest test-get-recomendations-no-user
+  (is
+    (equal-maps? (get-recomendations prefs-test "I'm no here" pearson-similarity)
+                 '({}))))
+
 (deftest test-not-reviewed-by
   (let [prefs {:a {:x 1 :y 1} :b {:x 1 :y 1 :z 1}}
         expected [:y :z]]

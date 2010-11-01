@@ -68,22 +68,24 @@
     (difference all-items reviewed-items)))
     
 (defn get-recomendations [prefs person simfn]
-  (let [items (not-reviewed-by prefs person)
-        others (for [other (who-reviewed prefs items)
-                     :when (> (simfn prefs other person) 0)]
-                 other)]
-    (reverse
-      (sort-by :rating
-             (for [item items]
-                {:rating (/ (reduce + 
-                                    (map #(* (get-in prefs [% item] 0)
-                                             (simfn prefs person %))
-                                         others))
-                            (reduce + 
-                                    (map #(simfn prefs person %)
-                                         (filter #(> (get-in prefs
-                                                             [% item] 
-                                                             0)
-                                                     0)
-                                                  others))))
-                 :item item})))))
+  (if (get prefs person)
+    (let [items (not-reviewed-by prefs person)
+          others (for [other (who-reviewed prefs items)
+                       :when (> (simfn prefs other person) 0)]
+                   other)]
+      (reverse
+        (sort-by :rating
+               (for [item items]
+                  {:rating (/ (reduce + 
+                                      (map #(* (get-in prefs [% item] 0)
+                                               (simfn prefs person %))
+                                           others))
+                              (reduce + 
+                                      (map #(simfn prefs person %)
+                                           (filter #(> (get-in prefs
+                                                               [% item] 
+                                                               0)
+                                                       0)
+                                                    others))))
+                   :item item}))))
+    '({})))
