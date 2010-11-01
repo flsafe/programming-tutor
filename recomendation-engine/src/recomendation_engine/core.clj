@@ -81,5 +81,9 @@
                                          others))
                             (reduce + 
                                     (map #(simfn prefs person %)
-                                         others)))
+                                         (filter #(> (get-in prefs
+                                                             [% item] 
+                                                             0)
+                                                     0)
+                                                  others))))
                  :item item})))))
