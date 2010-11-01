@@ -69,8 +69,7 @@
     
 (defn get-recomendations [prefs person simfn]
   (let [items (not-reviewed-by prefs person)
-        others (filter #(not= person %)
-                       (who-reviewed prefs items))]
+        others (who-reviewed prefs items)]
     (reverse
       (sort-by :rating
              (for [item items]
