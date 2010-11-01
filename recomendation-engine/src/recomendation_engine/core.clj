@@ -71,11 +71,14 @@
   (let [items (not-reviewed-by prefs person)
         others (filter #(not= person %)
                        (who-reviewed prefs items))]
-    (for [item items]
-      {:rating (/ (reduce + 
-                          (map #(* (get-in prefs [% item] 0)
-                                     (simfn prefs person %))
-                               others))
-                  (reduce + 
-                          (map #(simfn prefs person %)
-                               others)))})))
+    (reverse
+      (sort-by :rating
+             (for [item items]
+                {:rating (/ (reduce + 
+                                    (map #(* (get-in prefs [% item] 0)
+                                               (simfn prefs person %))
+                                         others))
+                            (reduce + 
+                                    (map #(simfn prefs person %)
+                                         others)))
+                 :item item})))))
