@@ -32,19 +32,26 @@
     {:rating 2.461988486074374, :item "Just My Luck"} 
     {:rating 3.5002478401415877, :item "The Night Listener"}))
 
-(def expected-recomendations
+(def expected-recomendations-pearson
   '({:rating 3.3477895267131013, :item "The Night Listener"},
    {:rating 2.8325499182641614, :item "Lady in the Water"}, 
    {:rating 2.5309807037655645, :item "Just My Luck"}))
+
+(def expected-recomendations-distance
+  '({:rating 3.5002478401415877, :item "The Night Listener"}
+   {:rating 2.7561242939959363, :item "Lady in the Water"}
+   {:rating 2.4619884860743739, :item "Just My Luck"}) )
 
 (def allowed 0.000000001)
 
 (defn diff<= [delta n1 n2]
   (<= (abs (- n1 n2)) delta))
 
-(defn equal-maps? [map-sequence1 map-sequence2]
-  (let [matches (for [m1 map-sequence1 m2 map-sequence2 :when (= m1 m2)] m1)]
-    (and (= (count map-sequence1) (count map-sequence2) (count matches)))))
+(defn equal-maps?
+  ([mseq1 mseq2] (equal-maps? mseq1 mseq2 #(= %1 %2)))
+  ([mseq1 mseq2 eqfn] 
+  (let [matches (for [m1 mseq1 m2 mseq2 :when (eqfn m1 m2)] m1)]
+      (and (= (count mseq1) (count mseq2) (count matches))))))
 
 (deftest test-pearson-recomendation
   (is
@@ -57,15 +64,21 @@
     (= 0
        (pearson-similarity prefs-test "Lisa Rose" "I don't exisit"))))
 
-(deftest test-get-recomendations 
+(deftest test-get-recomendations-pearson
   (is
     (equal-maps? (get-recomendations prefs-test "Toby" pearson-similarity)
-                  expected-recomendations)))
+                  expected-recomendations-pearson)))
 
-(deftest test-get-recomendations-no-user
+(deftest test-get-recomendations-no-user-pearson
   (is
     (equal-maps? (get-recomendations prefs-test "I'm no here" pearson-similarity)
                  '({}))))
+
+(deftest test-get-recomendations-distance
+  (is
+    (equal-maps? (get-recomendations prefs-test "Toby" distance-similarity)
+                 expected-recomendations-distance
+                 #(diff<= allowed (:rating %1) (:rating %2)))))
 
 (deftest test-not-reviewed-by
   (let [prefs {:a {:x 1 :y 1} :b {:x 1 :y 1 :z 1}}
