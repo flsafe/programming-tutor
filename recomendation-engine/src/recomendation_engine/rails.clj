@@ -20,7 +20,7 @@
   [db-config]
   (let [p (second (seq (.split (get db-config :host "") ":")))]
     (cond 
-      (and (= p nil) (= (:adapter db-config) "mysql"))  "8889"
+      (and (= p nil) (= (:adapter db-config) "mysql"))  "3306"
       (and (not= p nil) (= (:adapter db-config) "mysql")) (str p)
       (= p nil) nil)))
   

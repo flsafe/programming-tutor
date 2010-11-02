@@ -25,7 +25,7 @@
 (def expected-jdbc-config-mysql
   {:classname   "com.mysql.jdbc.Driver"
    :subprotocol "mysql"
-   :subname     "//localhost:8889/blueberrytree"
+   :subname     "//localhost:3306/blueberrytree"
    :user        "blueberrytree"
    :password    "passpass"
    :timeout     nil})
