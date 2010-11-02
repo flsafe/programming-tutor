@@ -50,6 +50,7 @@
    {:classname   (classname   (db rails-env))
     :subprotocol (subprotocol (db rails-env))
     :subname     (subname     (db rails-env))
+    :timeout     (:timeout  db-config)
     :user        (:username db-config)
     :password    (:password db-config)})
 

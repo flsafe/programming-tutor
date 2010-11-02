@@ -4,12 +4,14 @@
 
 (def rails-dev-db-config
   {:adapter  "sqlite3"
-   :database "db/development.sqlite3"})
+   :database "db/development.sqlite3"
+   :timeout  5000})
 
 (def expected-dev-jdbc-config
   {:classname   "org.sqlite.JDBC"
    :subprotocol "sqlite"
    :subname     "../db/development.sqlite3"
+   :timeout     5000
    :user        nil
    :password    nil})
   
