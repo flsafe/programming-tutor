@@ -18,6 +18,5 @@ Feature: Blueberry recomends exercises
     And the user "user2" rates "Ex2" as "too-easy"
     And the user "user2" rates "Ex3" as "good-challenge"
     And the user "user2" rates "Ex4" as "good-challenge"
-    And I wait for "3" seconds
     
     Then the recomendation for "user1" should be "Ex4"

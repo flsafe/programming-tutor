@@ -3,6 +3,8 @@ Then /^the recomendation for "([^\"]*)" should be "([^\"]*)"$/ do |username, exe
   exercise = Exercise.find_by_title(exercise_title)
 
   recomendations = Recomendation.for(user.id)
+  puts "*" * 10
+  puts recomendations
   has_exercise = recomendations.include? exercise.id
 
   has_exercise.should == true
