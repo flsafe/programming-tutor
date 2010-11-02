@@ -10,6 +10,21 @@
     (yaml/parse-string 
       (slurp "../config/database.yml"))))
 
+(defn timeout
+  [db-config]
+  (if (:timeout db-config)
+    (str (:timeout db-config))))
+
+;TODO Only supports default parameter for mysql
+(defn port 
+  [db-config]
+  (let [p (second (seq (.split (get db-config :host "") ":")))]
+    (cond 
+      (and (= p nil) (= (:adapter db-config) "mysql"))  "8889"
+      (and (not= p nil) (= (:adapter db-config) "mysql")) (str p)
+      (= p nil) nil)))
+  
+;TODO only supports msql and sqlite
 (defn subprotocol
   "Return a map with :subprotocol mapping
   to the rails db :adapter"
@@ -19,6 +34,7 @@
     (adapter-to-subprotocol 
       (:adapter rails-db-config))))
 
+;TODO only supports an sqlite project relative db file
 (defn proj-relative
   "Returns true if the database name is
    a file relative to the rails root dir"
@@ -33,8 +49,9 @@
   [rails-db-config]
   (if (proj-relative rails-db-config)
     (str   ".." "/" (:database rails-db-config))
-    (str "//" (:host rails-db-config) "/" (:database rails-db-config))))
+    (str "//" (:host rails-db-config) ":" (port rails-db-config) "/" (:database rails-db-config))))
 
+;TODO only supports sqlite, mysql, and postgress
 (defn classname
   "Return a map with :classname mapping to the jdbc class to load"
   [rails-db-config]
@@ -51,7 +68,7 @@
    {:classname   (classname   db-config)
     :subprotocol (subprotocol db-config)
     :subname     (subname     db-config)
-    :timeout     (:timeout    db-config)
+    :timeout     (timeout     db-config)
     :user        (:username   db-config)
     :password    (:password   db-config)})
 
