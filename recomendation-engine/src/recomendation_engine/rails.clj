@@ -14,7 +14,8 @@
   "Return a map with :subprotocol mapping
   to the rails db :adapter"
   [rails-db-config]
-  (let [adapter-to-subprotocol {"sqlite3" "sqlite"}]
+  (let [adapter-to-subprotocol {"sqlite3" "sqlite"
+                                "mysql"   "mysql"}]
     (adapter-to-subprotocol 
       (:adapter rails-db-config))))
 
@@ -47,12 +48,12 @@
    rails-project/config/database.yml suitable for use with
    clojure.contirb.sql/with-connection"
   [db-config rails-env]
-   {:classname   (classname   (db rails-env))
-    :subprotocol (subprotocol (db rails-env))
-    :subname     (subname     (db rails-env))
-    :timeout     (:timeout  db-config)
-    :user        (:username db-config)
-    :password    (:password db-config)})
+   {:classname   (classname   db-config)
+    :subprotocol (subprotocol db-config)
+    :subname     (subname     db-config)
+    :timeout     (:timeout    db-config)
+    :user        (:username   db-config)
+    :password    (:password   db-config)})
 
 (defn db-config-to-jdbc
   "Returns a map for use with clojure.contrib.sql/with-connection
