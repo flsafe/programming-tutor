@@ -18,7 +18,7 @@ Feature: Rate Exercises
     Given I am doing the exercise RemoveChar
 		When I press "Submit"
     And I follow <rate-option>
-    Then The exercise "RemoveChar" is rated <rating>
+    Then the exercise "RemoveChar" is rated <rating>
 
   Examples:
       | rate-option      | rating           |
