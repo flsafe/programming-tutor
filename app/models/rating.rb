@@ -20,11 +20,8 @@ class Rating < ActiveRecord::Base
                             "user_id"=>user_id, 
                             "exercise_id"=>exercise_id,
                             "rating"=>rating)
-        puts resp.body
       rescue Exception => e
-        #nothing for now
-        puts e.to_s
-        puts "No rec server connection"
+        Rails.logger.error "No connection to recomendation server"
       end
     end
   end
