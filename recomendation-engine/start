@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [[ ! $PWD == "recomendation-engine" ]]
+then
+  cd recomendation-engine
+fi
+
+java -cp "lib/*:lib/dev/*:src:classes" clojure.main src/recomendation_engine/boot.clj >/dev/null 2>&1 &
+
