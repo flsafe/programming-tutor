@@ -1,3 +1,6 @@
+Given /^the recomendation server is on$/ do 
+end
+
 Then /^the recomendation for "([^\"]*)" should be "([^\"]*)"$/ do |username, exercise_title|
   user = User.find_by_username(username)
   exercise = Exercise.find_by_title(exercise_title)
@@ -8,3 +11,4 @@ Then /^the recomendation for "([^\"]*)" should be "([^\"]*)"$/ do |username, exe
   has_exercise.should == true
   recomendations.size.should == 1
 end
+

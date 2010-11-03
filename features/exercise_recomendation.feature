@@ -11,6 +11,8 @@ Feature: Blueberry recomends exercises
     And there exists a user with the username "user1"
     And there exists a user with the username "user2"
 
+    And the recomendation server is on
+
     When the user "user1" rates "Ex1" as "too-hard"
     And the user "user2" rates "Ex1" as "too-hard"
 
