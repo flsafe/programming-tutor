@@ -1,8 +1,7 @@
-Before do
+Before ('@no-txn') do
+  DatabaseCleaner.start
 end
 
-Before('@start_delayed_job') do
-end
-
-After('@start_delayed_job') do
+After ('@no-txn') do
+  DatabaseCleaner.clean
 end
