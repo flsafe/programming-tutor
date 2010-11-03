@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#PWD needs to be in recomendation-engine/ for the correct class path
+if [[ ! $PWD == "recomendation-engine" ]]
+then
+  cd recomendation-engine
+fi
+
+pid=`cat .server.pid`
+kill $pid

@@ -13,6 +13,7 @@ java -cp "lib/*:lib/dev/*:src:classes" clojure.main src/recomendation_engine/boo
 sleep 5
 bootpid=`ps aux | grep 'recomendation_engine/boot.clj' | grep -v grep | awk '{print $2}'`
 
+echo $bootpid > .server.pid
 echo $bootpid
 
 
