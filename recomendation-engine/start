@@ -1,9 +1,18 @@
 #!/bin/bash
 
+#PWD needs to be in recomendation-engine/ for the correct class path
 if [[ ! $PWD == "recomendation-engine" ]]
 then
   cd recomendation-engine
 fi
 
+#boot the recomendation server, TODO: Check that there isn't another server running
 java -cp "lib/*:lib/dev/*:src:classes" clojure.main src/recomendation_engine/boot.clj >/dev/null 2>&1 &
+
+#booting the server takes a  few seconds, wait before getting its pid
+sleep 5
+bootpid=`ps aux | grep 'recomendation_engine/boot.clj' | grep -v grep | awk '{print $2}'`
+
+echo $bootpid
+
 
