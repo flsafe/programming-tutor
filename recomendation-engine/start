@@ -1,19 +1,43 @@
 #!/bin/bash
 
-#PWD needs to be in recomendation-engine/ for the correct class path
-if [[ ! $PWD == "recomendation-engine" ]]
+boot_path="recomendation_engine/boot.clj"
+root_dir="recomendation-engine"
+
+function pidof {
+  bootpid=`ps aux | grep $1 | grep -v grep | awk '{print $2}'`
+  echo $bootpid
+}
+
+function no-other-instance {
+  pid=`pidof $boot_path`
+  if [[ "$pid" == "" ]]
+  then
+    return 0 
+  else
+    return 1
+  fi
+}
+
+if no-other-instance
 then
-  cd recomendation-engine
+
+  #PWD needs to be in recomendation-engine/ for the class path to be correct 
+  if [[ ! $PWD == $root_dir ]]
+  then
+    cd $root_dir
+  fi
+
+  #boot the recomendation engine 
+  java -cp "lib/*:lib/dev/*:src:classes" clojure.main src/${boot_path} >/dev/null 2>&1 &
+
+  #booting the engine takes a  few seconds, wait before getting its pid
+  echo "Starting..."
+  sleep 6
+  bootpid=`pidof $boot_path`
+
+  echo $bootpid > .server.pid
+  echo "CozyRecomendations pid: $bootpid"
+else
+  echo "Another CozyRecomendations instance is running. Shut it down first"
+  exit 1
 fi
-
-#boot the recomendation server, TODO: Check that there isn't another server running
-java -cp "lib/*:lib/dev/*:src:classes" clojure.main src/recomendation_engine/boot.clj >/dev/null 2>&1 &
-
-#booting the server takes a  few seconds, wait before getting its pid
-sleep 5
-bootpid=`ps aux | grep 'recomendation_engine/boot.clj' | grep -v grep | awk '{print $2}'`
-
-echo $bootpid > .server.pid
-echo $bootpid
-
-
