@@ -1,4 +1,6 @@
 Given /^the recomendation server is on$/ do 
+  out = `env RAILS_ENV=#{Rails.env} recomendation-engine/start`
+  puts out
 end
 
 Then /^the recomendation for "([^\"]*)" should be "([^\"]*)"$/ do |username, exercise_title|
