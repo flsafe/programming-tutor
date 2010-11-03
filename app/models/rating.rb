@@ -16,7 +16,7 @@ class Rating < ActiveRecord::Base
     Thread.new(user_id, exercise_id, rating) do |user_id, exercise_id, rating|
       uri = APP_CONFIG['recomendation_server_uri'][Rails.env]
       begin 
-        resp = Net::HTTP.post_form(URI.parse(uri),
+        Net::HTTP.post_form(URI.parse(uri),
                             "user_id"=>user_id, 
                             "exercise_id"=>exercise_id,
                             "rating"=>rating)
