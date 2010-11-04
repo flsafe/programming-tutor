@@ -1,8 +1,19 @@
 #!/bin/bash
 
+# Clojure file to call for booting the recomendations engine
 boot_path="recomendation_engine/boot.clj"
+
+# The name of the directory containing the recomendations engine
 root_dir="recomendation-engine"
+
+# The uri the recomendation engine will be running on
 localhost="localhost:8080"
+
+# Since the server takes a few seconds to boot this script
+# attempts to establish a connection with the server to
+# assure that it is running. This determines how
+# many times a second to establish the connection
+tries=10
 
 function pidof {
   bootpid=`ps aux | grep $1 | grep -v grep | awk '{print $2}'`
@@ -23,23 +34,30 @@ if no-other-instance
 then
 
   #PWD needs to be in recomendation-engine/ for the class path to be correct 
-  if [[ ! $PWD == $root_dir ]]
+  if [[ ! $PWD == *"$root_dir" ]]
   then
     cd $root_dir
   fi
 
   #boot the recomendation engine 
-  echo "Starting..."
+  echo -n "Starting..."
   java -cp "lib/*:lib/dev/*:src:classes" clojure.main src/${boot_path} >/dev/null 2>&1 &
 
   #wait until the recomendation engine is responsive
   wget http://${localhost} >/dev/null 2>&1
   while [ $? -ne 0 ]
   do
+    tries=$[ $tries - 1]
+    if [ $tries -eq 0 ]
+    then
+      echo "the server is not responsive"
+      exit 1
+    fi
     sleep 1
+    echo -n '.'
     wget http://${localhost} >/dev/null 2>&1
   done 
-  rm index.html
+  rm -f index.html
 
   #get the pid of the recomendation engine and save it
   bootpid=`pidof $boot_path`
