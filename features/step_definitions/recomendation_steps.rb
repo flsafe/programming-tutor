@@ -7,6 +7,5 @@ Then /^the recomendation for "([^\"]*)" should be "([^\"]*)"$/ do |username, exe
 
   has_exercise = recomendations.include? exercise.id
   has_exercise.should == true
-  recomendations.size.should == 1
 end
 
