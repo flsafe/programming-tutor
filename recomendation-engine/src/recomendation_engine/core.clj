@@ -72,32 +72,36 @@
 (defn sum-rating*sim [prefs person item others simfn]
   (reduce + 
         (map #(* (get-in prefs [% item] 0)
-                 (simfn prefs person %))
+                 (simfn person %))
              others)))
 
 (defn sum-sim [prefs person item others simfn]
   (reduce + 
-          (map #(simfn prefs person %)
+          (map #(simfn person %)
                (filter #(> (get-in prefs
                                    [% item] 
                                    0)
                            0)
                         others))))
 
-(defn get-recomendations [prefs person simfn]
+(def simfn pearson-similarity)
+
+(defn get-recomendations [prefs person simfnc]
   (if (get prefs person)
-    (let [items (not-reviewed-by prefs person)
-          others (for [other (who-reviewed prefs items)
-                       :when (> (simfn prefs other person) 0)]
-                   other)]
-      (reverse
-        (sort-by :rating
-               (for [item items]
-                 (let [numer (sum-rating*sim prefs person item others simfn)
-                       denom (sum-sim prefs person item others simfn)]
-                   (if (not= denom 0)
-                      {:rating (/ (sum-rating*sim prefs person item others simfn)
-                                  (sum-sim prefs person item others simfn))
-                       :item item}
-                       {}))))))
+    (binding [simfn (memoize simfnc)
+              *prefs* prefs]
+      (let [items (not-reviewed-by prefs person)
+            others (for [other (who-reviewed prefs items)
+                         :when (> (simfn other person) 0)]
+                     other)]
+        (reverse
+          (sort-by :rating
+                 (for [item items]
+                   (let [numer (sum-rating*sim prefs person item others simfn)
+                         denom (sum-sim prefs person item others simfn)]
+                     (if (not= denom 0)
+                        {:rating (/ (sum-rating*sim prefs person item others simfn)
+                                    (sum-sim prefs person item others simfn))
+                         :item item}
+                         {})))))))
     '({}) ))
