@@ -24,19 +24,21 @@
 (defn distance-similarity [prefs person1 person2]
   (/ 1.0 (+ 1.0 (sum-diffs-squared prefs person1 person2))))
 
-(defn pearson-similarity [prefs person other]
-  (let [common (reviewed-by-both prefs person other)]
+(def *prefs* {{}})
+
+(defn pearson-similarity [person other]
+  (let [common (reviewed-by-both *prefs* person other)]
     (if (> (count common) 0)
-      (let [sum1 (reduce + (for [item common] (get-in prefs [person item] 0)))
-            sum2 (reduce + (for [item common] (get-in prefs [other item] 0)))
+      (let [sum1 (reduce + (for [item common] (get-in *prefs* [person item] 0)))
+            sum2 (reduce + (for [item common] (get-in *prefs* [other item] 0)))
 
-            sum1sq (reduce + (map #(expt (get-in prefs [person %] 0) 2) 
+            sum1sq (reduce + (map #(expt (get-in *prefs* [person %] 0) 2) 
                                   common))
-            sum2sq (reduce + (map #(expt (get-in prefs [other  %] 0) 2)
+            sum2sq (reduce + (map #(expt (get-in *prefs* [other  %] 0) 2)
                                   common))
 
-            psum   (reduce + (map #(* (get-in prefs [person %] 0) 
-                                      (get-in prefs [other  %] 0))
+            psum   (reduce + (map #(* (get-in *prefs* [person %] 0) 
+                                      (get-in *prefs* [other  %] 0))
                                   common))
 
             numer    (- psum (/ (* sum1 sum2)
