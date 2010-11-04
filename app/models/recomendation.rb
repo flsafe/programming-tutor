@@ -5,11 +5,14 @@ class Recomendation < ActiveRecord::Base
 
 
   def self.for(user_id)
-    rec = self.find(:first, 
+    recs = self.find(:all, 
                     :conditions=>['user_id=?', user_id],
-                    :order=>"created_at DESC")
-    if rec
-      rec.exercise_recomendation_list.list
+                    :order=>"created_at DESC",
+                    :limit=>10)
+    unless recs.empty?
+      recs.reduce([]) do |accu, rec| 
+        accu.concat rec.exercise_recomendation_list.list
+      end
     else
       []
     end
