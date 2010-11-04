@@ -2,6 +2,7 @@
 
 boot_path="recomendation_engine/boot.clj"
 root_dir="recomendation-engine"
+localhost="localhost:8080"
 
 function pidof {
   bootpid=`ps aux | grep $1 | grep -v grep | awk '{print $2}'`
@@ -28,14 +29,22 @@ then
   fi
 
   #boot the recomendation engine 
+  echo "Starting..."
   java -cp "lib/*:lib/dev/*:src:classes" clojure.main src/${boot_path} >/dev/null 2>&1 &
 
-  #booting the engine takes a  few seconds, wait before getting its pid
-  echo "Starting..."
-  sleep 6
-  bootpid=`pidof $boot_path`
+  #wait until the recomendation engine is responsive
+  wget http://${localhost} >/dev/null 2>&1
+  while [ $? -ne 0 ]
+  do
+    sleep 1
+    wget http://${localhost} >/dev/null 2>&1
+  done 
+  rm index.html
 
+  #get the pid of the recomendation engine and save it
+  bootpid=`pidof $boot_path`
   echo $bootpid > .server.pid
+
   echo "CozyRecomendations pid: $bootpid"
 else
   echo "Another CozyRecomendations instance is running. Shut it down first"
