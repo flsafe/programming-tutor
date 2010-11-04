@@ -92,7 +92,7 @@
               *prefs* prefs]
       (let [items (not-reviewed-by prefs person)
             others (for [other (who-reviewed prefs items)
-                         :when (> (simfn other person) 0)]
+                         :when (> (simfn person other) 0)]
                      other)]
         (reverse
           (sort-by :rating
