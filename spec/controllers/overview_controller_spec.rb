@@ -12,9 +12,8 @@ describe OverviewController, "GET index" do
       controller.stub(:current_user).and_return(current_user)
     end
     
-    it 'gets exercise sets for the user' do
-      exercises = [stub_model(Exercise)]
-      Exercise.should_receive(:recommend).and_return(exercises)
+    it 'Assigns the recomendation exercises for the user' do
+      Recomendation.should_receive(:for).with(current_user.id) 
       get :index
     end
     
