@@ -9,12 +9,21 @@ class Recomendation < ActiveRecord::Base
                     :conditions=>['user_id=?', user_id],
                     :order=>"created_at DESC",
                     :limit=>10)
-    unless recs.empty?
-      recs.reduce([]) do |accu, rec| 
-        accu.concat rec.exercise_recomendation_list.list
-      end
-    else
-      []
+
+    recs = to_exercises(merge_all(recs))
+    recs  
+  end
+
+  protected
+
+  def self.merge_all(recs)
+    recs = recs.reduce([]) do |accu, rec| 
+      accu.concat rec.exercise_recomendation_list.list
     end
+  end
+
+  def self.to_exercises(recs)
+   Exercise.find(:all,
+                 :conditions=>{:id=>recs})
   end
 end
