@@ -35,3 +35,11 @@ Feature: Blueberry recomends exercises
     When I am on my home page
     Then I should see "Ex3"
     And I should see "Ex4"
+  
+  Scenario: A random exercise is displayed to the user if there are no recomendations
+    Given I am logged in as the user "Frank"
+    Given there exists an exercise set "String Manipulation" with "Ex1" and "Ex2"
+    And  there exists an exercise set "Prime Numbers" with "Ex3" and "Ex4" 
+    When I am on my home page
+    Then I should see /(Ex1|Ex2|Ex3|Ex4)/
+

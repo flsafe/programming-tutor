@@ -11,7 +11,11 @@ class Recomendation < ActiveRecord::Base
                     :limit=>10)
 
     recs = to_exercises(merge_all(recs))
-    recs  
+    if recs.empty?
+      random_exercise
+    else
+      recs  
+    end
   end
 
   protected
@@ -25,5 +29,14 @@ class Recomendation < ActiveRecord::Base
   def self.to_exercises(recs)
    Exercise.find(:all,
                  :conditions=>{:id=>recs})
+  end
+
+  def self.random_exercise
+    exercises = Exercise.find :all
+    if exercises.empty?
+      []
+    else
+      [ exercises[ rand(exercises.count) ] ]
+    end
   end
 end
