@@ -56,13 +56,15 @@
 (deftest test-pearson-recomendation
   (is
     (diff<= allowed
-            (pearson-similarity prefs-test "Lisa Rose" "Gene Seymour")
+            (binding [*prefs* prefs-test]
+              (pearson-similarity "Lisa Rose" "Gene Seymour"))
              0.396059017191)))
 
 (deftest test-pearson-recomendation-no-person
   (is
     (= 0
-       (pearson-similarity prefs-test "Lisa Rose" "I don't exisit"))))
+       (binding [*prefs* prefs-test]
+         (pearson-similarity "Lisa Rose" "I don't exisit")))))
 
 (deftest test-get-recomendations-pearson
   (is
