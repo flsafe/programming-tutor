@@ -4,6 +4,6 @@ class OverviewController < ApplicationController
   
   def index
     @welcome_message = "Hey there #{current_user.username}! To start things off"
-    @exercises   = Exercise.recommend(current_user.id, 4)
+    @exercises   = Recomendation.for(current_user.id) 
   end
 end
