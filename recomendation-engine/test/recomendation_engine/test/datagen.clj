@@ -1,9 +1,15 @@
-(ns recomendation-engine.test.datagen)
+(ns recomendation-engine.test.datagen
+  (import (java.util Random)))
+
+(defn next-normal-rand [mean sigma]
+  (let [r (Random.)]
+    (first 
+      (take 1 (repeatedly #(-> r .nextGaussian (* sigma) (+ mean)))))))
 
 (defn rand-ratings [num-people num-items]
   (for [person (range 1 (inc num-people))
         item (range 1 (inc num-items))]
-    {:u person :i item :r (inc (rand-int 5))}))
+    {:u person :i item :r (next-normal-rand 5 7)}))
 
 (defn rand-prefs [num-people num-items]
   (reduce #(assoc-in %1 [(:u %2)]
