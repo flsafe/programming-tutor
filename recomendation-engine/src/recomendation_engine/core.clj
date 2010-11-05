@@ -8,6 +8,8 @@
   (:use [clojure.set :only [intersection]])
   (:require [clojure.pprint :as cljprint]))
 
+(def *prefs* {{}})
+
 (defn rating-diff [prefs person other item] 
   (- (get-in prefs [person item] 0)
      (get-in prefs [other item] 0)))
@@ -21,10 +23,9 @@
   (reduce + (map #(expt (rating-diff prefs person1 person2 %) 2)
                   (reviewed-by-both prefs person1 person2))))
 
-(defn distance-similarity [prefs person1 person2]
-  (/ 1.0 (+ 1.0 (sum-diffs-squared prefs person1 person2))))
+(defn distance-similarity [person1 person2]
+  (/ 1.0 (+ 1.0 (sum-diffs-squared *prefs* person1 person2))))
 
-(def *prefs* {{}})
 
 (defn pearson-similarity [person other]
   (let [common (reviewed-by-both *prefs* person other)]
