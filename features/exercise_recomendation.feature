@@ -26,3 +26,12 @@ Feature: Blueberry recomends exercises
     And I wait for "10" seconds
 
     Then the recomendation for "user1" should be "Ex4"
+
+  Scenario: Recomendations are dispalyed to the user
+    Given I am logged in as the user "Frank"
+    Given there exists an exercise set "String Manipulation" with "Ex1" and "Ex2"
+    And  there exists an exercise set "Prime Numbers" with "Ex3" and "Ex4" 
+    And there exists a recomendation for "Ex3 Ex4"
+    When I am on my home page
+    Then I should see "Ex3"
+    And I should see "Ex4"
