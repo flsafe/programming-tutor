@@ -8,7 +8,7 @@ class Recomendation < ActiveRecord::Base
     recs = self.find(:all, 
                     :conditions=>['user_id=?', user_id],
                     :order=>"created_at DESC",
-                    :limit=>10)
+                    :limit=>1)
 
     recs = to_exercises(merge_all(recs))
     if recs.empty?
