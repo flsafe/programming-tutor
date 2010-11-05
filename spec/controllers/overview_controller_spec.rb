@@ -16,10 +16,5 @@ describe OverviewController, "GET index" do
       Recomendation.should_receive(:for).with(current_user.id) 
       get :index
     end
-    
-    it 'assigns a welcome message' do
-      get :index
-      assigns[:welcome_message].should =~ /to start things off/i
-    end
   end
 end
