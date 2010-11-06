@@ -28,27 +28,25 @@ Feature: Blueberry recomends exercises
     Then the recomendation for "user1" should be "Ex4"
 
   Scenario: Recomendations are dispalyed to the user
-    Given I am logged in as the user "Frank"
     Given there exists an exercise set "String Manipulation" with "Ex1" and "Ex2"
     And  there exists an exercise set "Prime Numbers" with "Ex3" and "Ex4" 
-    And there exists a recomendation for "Ex3 Ex4"
+    And I am logged in as the user "Frank"
+    And there exists a recomendation for "Ex4"
     When I am on my home page
-    Then I should see "Ex3"
-    And I should see "Ex4"
+    Then I should see /Ex4/
   
   Scenario: A random exercise is displayed to the user if there are no recomendations
-    Given I am logged in as the user "Frank"
     Given there exists an exercise set "String Manipulation" with "Ex1" and "Ex2"
     And  there exists an exercise set "Prime Numbers" with "Ex3" and "Ex4" 
+    And I am logged in as the user "Frank"
     When I am on my home page
     Then I should see /(Ex1|Ex2|Ex3|Ex4)/
 
   Scenario: A random exercise doesn't change if the page is reloaded
-    Given I am logged in as the user "Frank"
     Given there exists an exercise set "String Manipulation" with "Ex1" and "Ex2"
     And  there exists an exercise set "Prime Numbers" with "Ex3" and "Ex4" 
+    And I am logged in as the user "Frank"
     And I am on my home page
     And I note /(Ex1|Ex2|Ex3|Ex4)/
     When I am on my home page
     Then I should always see what I noted on "my home page"
-    Then show me the page 
