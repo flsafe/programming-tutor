@@ -32,11 +32,11 @@ class Recomendation < ActiveRecord::Base
   end
 
   def self.random_exercise
-    exercises = Exercise.find :all
-    if exercises.empty?
-      []
+    exc = Exercise.count
+    unless exc == 0
+        [ Exercise.find :first, :offset=>rand(exc) ]
     else
-      [ exercises[ rand(exercises.count) ] ]
+        []
     end
   end
 end
