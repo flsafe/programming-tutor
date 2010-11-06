@@ -29,6 +29,13 @@ Given /^I note \/([^\/]*)\/$/ do |regex|
  @noted = $1
 end
 
-Then /^I should see what I noted$/ do ||
+Then /^I should always see what I noted on "([^\"]*)"$/ do |page_path|
+ 20.times do
+  steps %Q{
+    Given I am on #{page_path}
+    Then show me the page 
+  }
   page.should have_content(@noted)
+ end
 end
+

@@ -50,4 +50,5 @@ Feature: Blueberry recomends exercises
     And I am on my home page
     And I note /(Ex1|Ex2|Ex3|Ex4)/
     When I am on my home page
-    Then I should see what I noted 
+    Then I should always see what I noted on "my home page"
+    Then show me the page 
