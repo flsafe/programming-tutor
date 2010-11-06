@@ -19,7 +19,7 @@ class Recomendation < ActiveRecord::Base
     recs = self.find(:all, 
                     :conditions=>['user_id=? AND exercise_recomendation_list<>?', user_id, ""],
                     :order=>"created_at DESC",
-                    :limit=>10)
+                    :limit=>1)
     recs = to_exercises(merge_all(recs))
   end
 
@@ -41,11 +41,11 @@ class Recomendation < ActiveRecord::Base
   end
 
   def self.to_exercises(recs)
-   Exercise.find(:all,
-                 :conditions=>{:id=>recs})
+   Exercise.find_all_by_id(recs)
   end
 
   def self.random_exercises
+    #TODO: For now this just recomends one exercise
     exc = Exercise.count
     unless exc == 0
         [ Exercise.find :first, :offset=>rand(exc) ]
