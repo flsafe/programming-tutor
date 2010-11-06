@@ -43,3 +43,11 @@ Feature: Blueberry recomends exercises
     When I am on my home page
     Then I should see /(Ex1|Ex2|Ex3|Ex4)/
 
+  Scenario: A random exercise doesn't change if the page is reloaded
+    Given I am logged in as the user "Frank"
+    Given there exists an exercise set "String Manipulation" with "Ex1" and "Ex2"
+    And  there exists an exercise set "Prime Numbers" with "Ex3" and "Ex4" 
+    And I am on my home page
+    And I note /(Ex1|Ex2|Ex3|Ex4)/
+    When I am on my home page
+    Then I should see what I noted 

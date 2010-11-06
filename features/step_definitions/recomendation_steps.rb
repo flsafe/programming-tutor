@@ -23,3 +23,12 @@ Given /^there exists a recomendation for "([^\"]*)"$/ do |exercise_titles|
   rec.save!
 end
 
+Given /^I note \/([^\/]*)\/$/ do |regex|
+ regex = Regexp.new(regex)
+ regex =~ page.body
+ @noted = $1
+end
+
+Then /^I should see what I noted$/ do ||
+  page.should have_content(@noted)
+end
