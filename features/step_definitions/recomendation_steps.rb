@@ -2,11 +2,11 @@
 Then /^the recomendation for "([^\"]*)" should be "([^\"]*)"$/ do |username, exercise_title|
   user = User.find_by_username(username)
   exercise = Exercise.find_by_title(exercise_title)
+  recs = Recomendation.find(:first, 
+    :conditions=>{:exercise_recomendation_list=>"#{exercise.id}", 
+                  :user_id=>user.id})
 
-  recomendations = Recomendation.for(user.id)
-
-  ex = recomendations.detect {|e| e.id == exercise.id}
-  ex.should_not == nil 
+  recs.should_not == nil 
 end
 
 Given /^there exists a recomendation for "([^\"]*)"$/ do |exercise_titles|

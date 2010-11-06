@@ -89,20 +89,20 @@
 
 (defn get-recomendations [prefs person simfnc]
   (if (get prefs person)
-    (binding [simfn (memoize simfnc)
-              *prefs* prefs]
-      (let [items (not-reviewed-by prefs person)
-            others (for [other (who-reviewed prefs items)
-                         :when (> (simfn person other) 0)]
-                     other)]
-        (reverse
-          (sort-by :rating
-                 (for [item items]
-                   (let [numer (sum-rating*sim prefs person item others simfn)
-                         denom (sum-sim prefs person item others simfn)]
-                     (if (not= denom 0)
-                        {:rating (/ (sum-rating*sim prefs person item others simfn)
-                                    (sum-sim prefs person item others simfn))
-                         :item item}
-                         {})))))))
-    '({}) ))
+    (filter #(not= % nil)
+      (binding [simfn (memoize simfnc)
+                *prefs* prefs]
+        (let [items (not-reviewed-by prefs person)
+              others (for [other (who-reviewed prefs items)
+                           :when (> (simfn person other) 0)]
+                       other)]
+          (reverse
+            (sort-by :rating
+                   (for [item items]
+                     (let [numer (sum-rating*sim prefs person item others simfn)
+                           denom (sum-sim prefs person item others simfn)]
+                       (if (not= denom 0)
+                          {:rating (/ (sum-rating*sim prefs person item others simfn)
+                                      (sum-sim prefs person item others simfn))
+                           :item item}))))))))
+    '()))

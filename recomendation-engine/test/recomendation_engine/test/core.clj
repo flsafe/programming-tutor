@@ -74,11 +74,11 @@
 (deftest test-get-recomendations-no-user-pearson
   (is
     (equal-maps? (get-recomendations prefs-test "I'm no here" pearson-similarity)
-                 '({}))))
+                 '())))
 
 (deftest test-get-recomendaitons-zero-correlation-test
   (let [prefs {'a {'w 3 'x 3 'y 3} 'b {'w 3 'x 3 'y 3 'z 3}}
-        expected '({})]
+        expected '()]
     (is 
       (= (get-recomendations prefs 'a pearson-similarity)
          expected))))

@@ -16,4 +16,5 @@
                                     @*user-prefs* 
                                     (:user_id rating) 
                                     pearson-similarity)]
-      (save-recomendations (:user_id rating) recomendations))))
+      (if (not (empty? recomendations ))
+        (save-recomendations (:user_id rating) recomendations)))))
