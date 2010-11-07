@@ -43,3 +43,12 @@ check_if_installed kill
 
 # Used to highlight syntax solution code
 check_if_installed pygmentize
+
+# Wget is used by the recomendation engine startup scrip
+check_if_installed wget
+
+# Java is used by the recomendation server
+check_if_installed java
+
+# Leinegin is used for the Clojure project managment
+check_if_installed lein
