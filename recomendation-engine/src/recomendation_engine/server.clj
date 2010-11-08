@@ -1,8 +1,6 @@
 (ns recomendation-engine.server
   (:use ring.adapter.jetty)
   (:use ring.middleware.params)
-  (:use ring.middleware.stacktrace)
-  (:use ring.middleware.reload)
   (:use recomendation-engine.app))
 
 (defn parse-integer [str]
@@ -36,9 +34,7 @@
 ;TODO wrap-reload, wrap-stacktrace are only for dev
 (def app
   (-> #'handler
-    (wrap-reload '(recomendation-engine.server))
-    (wrap-params)
-    (wrap-stacktrace)))
+    (wrap-params)))
     
 (defn boot-server []
   (run-jetty app {:port 8080}))
