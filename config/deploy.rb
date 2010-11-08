@@ -108,7 +108,7 @@ end
 namespace :recomendations do
   desc "Start the recomendations server"
   task :start, :roles=> :app do
-    run "cd #{current_path}; env RAILS_ENV=production recomendation-engine/start"
+    run "cd #{current_path}; env RAILS_ENV=#{rails_env} recomendation-engine/start"
   end
   
   desc "Stop the recomendations server"
