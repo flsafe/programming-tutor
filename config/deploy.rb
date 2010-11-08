@@ -105,15 +105,25 @@ namespace :delayed_job do
   end
 end
 
+# Start the recomendation engine server
 namespace :recomendations do
   desc "Start the recomendations server"
   task :start, :roles=> :app do
+    # Only one recemendation server should be running at a time.
+    # Kill any other JVM that may be running a recomendations server
+    run "( pidof java && kill `pidof java`) || true"
     run "cd #{current_path}; env RAILS_ENV=#{rails_env} recomendation-engine/start"
   end
   
   desc "Stop the recomendations server"
   task :stop, :roles=> :app do
     run "cd #{current_path}; recomendation-engine/stop"
+  end
+
+  desc "Restart the recomendations server"
+  task :restart do
+    recomendations.stop
+    recomendations.start
   end
 end
 
