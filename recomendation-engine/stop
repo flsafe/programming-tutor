@@ -6,5 +6,20 @@ then
   cd recomendation-engine
 fi
 
-pid=`cat .server.pid`
-kill $pid
+if [ -f '.server.pid' ]
+then
+  pid=`cat .server.pid`
+  if kill $pid
+  then
+    echo "Killed"
+    rm -f '.server.pid'
+    exit 0
+  else
+    echo "The pid $pid started with recomendation-engine/start is not running. Nothing to stop"
+    exit 0
+  fi
+else
+  echo "There is no server that was started with recomendation-engine/start"
+  exit 0
+fi
+

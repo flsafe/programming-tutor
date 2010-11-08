@@ -15,29 +15,28 @@ localhost="localhost:8080"
 # many times a second to establish the connection
 tries=10
 
+#PWD needs to be in recomendation-engine/ for the class path to be correct 
+if [[ ! $PWD == *"$root_dir" ]]
+then
+  cd $root_dir
+fi
+
 function pidof {
   bootpid=`ps aux | grep $1 | grep -v grep | awk '{print $2}'`
   echo $bootpid
 }
 
 function no-other-instance {
-  pid=`pidof $boot_path`
-  if [[ "$pid" == "" ]]
+  if [ -f '.server.pid' ]
   then
-    return 0 
-  else
     return 1
+  else
+    return 0
   fi
 }
 
 if no-other-instance
 then
-
-  #PWD needs to be in recomendation-engine/ for the class path to be correct 
-  if [[ ! $PWD == *"$root_dir" ]]
-  then
-    cd $root_dir
-  fi
 
   #boot the recomendation engine 
   echo -n "Starting..."
