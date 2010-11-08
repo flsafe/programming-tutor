@@ -127,6 +127,12 @@ namespace :recomendations do
     recomendations.stop
     recomendations.start
   end
+
+  desc "Restart the recomendations server"
+  task :restart do
+    recomendations.stop
+    recomendations.start
+  end
 end
 
 after "deploy:start", "delayed_job:start" 
