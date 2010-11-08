@@ -73,6 +73,13 @@ namespace :gems do
   end
 end
 
+# Install the recondation_engine deps using leiningen
+namespace :jars do
+  task :jars_install, :roles=>:app do
+    run "cd #{release_path}/recomendation-engine && lein deps no-dev"
+  end
+end
+
 # Start delayed_job in the context of the
 # bundler gems.
 namespace :delayed_job do
@@ -98,12 +105,29 @@ namespace :delayed_job do
   end
 end
 
+namespace :recomendations do
+  desc "Start the recomendations server"
+  task :start, :roles=> :app do
+    run "env RAILS_ENV=production recomendation-engine/start"
+  end
+  
+  desc "Stop the recomendations server"
+  task :stop, :roles=> :app do
+    run "recomendation-engine/stop"
+  end
+end
+
 after "deploy:start", "delayed_job:start" 
+after "deploy:start", "recomendations:start"
+
 after "deploy:stop", "delayed_job:stop" 
+after "deploy:stop", "recomendations:stop"
+
 after "deploy:restart", "delayed_job:restart" 
 
 after "deploy:update_code", "gems:bundle_install"
 after "deploy:update_code", "deploy:create_tmp"
+after "deploy:update_code", "jars:jars_install"
 
 # optional task to reconfigure databases -- Not being used for now
  # after "deploy:update_code", :configure_database
