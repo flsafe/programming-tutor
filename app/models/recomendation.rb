@@ -4,11 +4,11 @@ class Recomendation < ActiveRecord::Base
   composed_of :exercise_recomendation_list
 
   def self.for(user_id)
-    recs = get_recomendations(user_id)
-    if recs.empty?
+    recomended_exercises = get_recomendations(user_id)
+    if recomended_exercises.empty?
      recomend_random_exercises(user_id)
     else
-      recs  
+      recomended_exercises  
     end
   end
 
