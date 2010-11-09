@@ -33,6 +33,7 @@ describe TutorController do
 
     before(:each) do
       current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :user_id=>current_user.id, :exercise_id=>stub_exercise.id, :created_at=>Time.now().utc))
+      Recomendation.stub('recomended?').and_return(true)
     end
     
     context "no current exercise session" do
@@ -64,7 +65,7 @@ describe TutorController do
     end
 
     it "redirects if the exercise is not a recomended exercise" do
-      Recomendation.should_receive('recomended?').with(current_user.id, stub_exercise.id).and_return(false)
+      Recomendation.should_receive('recomended?').with(current_user.id, stub_exercise.id.to_s).and_return(false)
       get "show", :id=>stub_exercise.id
       response.should redirect_to(:controller=>:overview)
     end

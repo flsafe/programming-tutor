@@ -8,6 +8,8 @@ class TutorController < ApplicationController
 
   before_filter :redirect_if_no_exercise_session, :except=>[:grade_status]
 
+  before_filter :redirect_if_not_recomended_exercise, :only=>[:show]
+
   before_filter :redirect_if_time_is_up, :only=>[:show, :grade]
                 
   before_filter :dispatch_to_observer
@@ -111,6 +113,15 @@ class TutorController < ApplicationController
 
   def redirect_if_time_is_up
     redirect_to :action=>:did_not_finish if Time.now() > calc_exercise_end_time
+  end
+
+  def redirect_if_not_recomended_exercise
+    unless current_user.anonymous?
+      unless Recomendation.recomended?(current_user.id, params[:id])
+        flash[:notice] = "You don't have permission to do that"
+        redirect_to :controller=>:overview
+      end
+    end
   end
   
   def start_exercise_session_if_none
