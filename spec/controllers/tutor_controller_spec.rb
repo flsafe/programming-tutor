@@ -4,9 +4,7 @@ describe TutorController do
   before(:each) do
     Time.stub(:now).and_return(Time.parse('7:00'))
     
-    Exercise.stub(:find).and_return(stub_exercise(:minutes=>60))
-    
-    controller.stub(:current_user).and_return(current_user)
+    controller.stub(:current_user).and_return(current_user('anonymous?'=>false))
   end
   
   def current_user(stubs={})
@@ -22,7 +20,7 @@ describe TutorController do
   end
   
   def stub_exercise(stubs={})
-    @stub_exercise ||= stub_model(Exercise, stubs)
+    @stub_exercise ||= Factory.create(:exercise, stubs) 
   end
   
   def code
@@ -34,33 +32,34 @@ describe TutorController do
     before(:each) do
       current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :user_id=>current_user.id, :exercise_id=>stub_exercise.id, :created_at=>Time.now().utc))
       Recomendation.stub('recomended?').and_return(true)
+      Exercise.stub('retake?').and_return(false)
     end
     
     context "no current exercise session" do
       it "starts an exercise session" do
         current_user.stub(:exercise_session_in_progress?).and_return(false)
         current_user.should_receive(:start_exercise_session)
-        get 'show'
+        get 'show', :id=>stub_exercise.id
       end
     end
 
     it "assigns the exercise to be displayed to the user" do
-      get 'show'
+      get 'show', :id=>stub_exercise.id
       assigns[:exercise].should == stub_exercise
     end
   
     it "renders the show template" do
-      get 'show'
+      get 'show', :id=>stub_exercise.id
       response.should render_template('show')
     end
     
     it "assigns the exercise target end time" do
-      get 'show'
+      get 'show', :id=>stub_exercise.id
       assigns[:target_end_time].should == Time.now + stub_exercise.minutes * 60 #seconds per minute
     end
     
     it "does not redirect" do
-      get 'show', :id=>stub_exercise
+      get 'show', :id=>stub_exercise.id
       response.should_not render_template('tutor/already_doing_exercise')
     end
 
@@ -71,15 +70,17 @@ describe TutorController do
     end
 
     it "always displays retakes" do
-      Exercise.should_receive('retake?').with(stub_exercise).and_return(true)
+      current_user.stub('anonymous?').and_return(false)
+      Exercise.should_receive('retake?').with(current_user.id, stub_exercise.id.to_s).and_return(true)
       response.should_not redirect_to(:controller=>:overview)
+      get "show", :id=>stub_exercise.id
     end
 
     context "when the user is anonymous" do
       it "only displays the sample exercises" do
        current_user.should_receive('anonymous?').and_return(true)
        Exercise.should_receive('sample?').with(stub_exercise).and_return(false)
-       get "show", :id=>stub_exercise
+       get "show", :id=>stub_exercise.id
       end
     end
     
@@ -92,7 +93,7 @@ describe TutorController do
       
       it "does not set the current exercise" do
         current_user.should_not_receive(:start_exercise_session)
-        get 'show'
+        get 'show', :id=>stub_exercise.id
       end
       
       context "when show exercise not in the exercise session" do
@@ -123,7 +124,7 @@ describe TutorController do
     end
     
     it "renders the exercise text" do
-      get 'show_exercise_text'
+      get 'show_exercise_text', :id=>stub_exercise
       response.should render_template 'show_exercise_text'
     end
   end
