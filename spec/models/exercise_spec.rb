@@ -7,6 +7,20 @@ describe Exercise do
     @src_language = 'ruby'
   end
 
+  describe "#sample?" do
+    it "returns true if the exercise's title in in app_config['demo_exercise_titles']" do
+      APP_CONFIG['demo_exercise_titles'] = ["My Exercise", "TestMe"]
+      exercise = Factory.create :exercise, :title=>"My Exercise"
+      exercise.sample?.should == true
+    end
+
+    it "returns false if the exercises title is not in APP_CONFIG[demo_exercise_titles]"do
+      APP_CONFIG['demo_exercise_titles'] = ["Should not be found"]
+      exercise = Factory.create :exercise, :title=>"Ex1"
+      exercise.sample?.should == false
+    end
+  end
+
   describe "#new_hint_attributes=" do
     
     it "adds a new hint object to the hints list" do
@@ -119,7 +133,6 @@ describe Exercise do
 
   
   describe "#new_exercise_set_attributes" do
-    
     it "assigns the exercise_set " do
       exercise_set = Factory.build :exercise_set, :title=>'donkeypoop', :description=>'description'
       @exercise.new_exercise_set_attributes = exercise_set.attributes

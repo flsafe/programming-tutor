@@ -28,7 +28,12 @@ class Exercise < ActiveRecord::Base
     indices      = random_indices(how_many, exercises.size)
     indices.collect {|i| exercises[i]}
   end
-  
+ 
+  def sample?
+    titles = APP_CONFIG['demo_exercise_titles']
+    titles.detect {|t| t == self.title} != nil
+  end
+
   def new_solution_template_attributes=(attributes)
     new_attributes_for(:solution_templates, attributes)
   end
