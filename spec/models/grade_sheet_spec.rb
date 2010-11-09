@@ -35,6 +35,15 @@ describe GradeSheet do
       gs.retake?.should == false
     end
   end
+
+  describe "#retake?" do
+
+    it "returns true if the user has already has a grade for the exercise" do
+      user = Factory.create :user
+      grade_sheet = Factory.create :grade_sheet, :user=>user
+      GradeSheet.retake?(user.id, grade_sheet.exercise).should == true 
+    end
+  end
   
   describe "#complete_set?" do
     

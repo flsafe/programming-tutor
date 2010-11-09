@@ -6,7 +6,7 @@ describe Exercise do
     @src_code     = 'source_code'
     @src_language = 'ruby'
   end
-  
+
   describe "#new_hint_attributes=" do
     
     it "adds a new hint object to the hints list" do
