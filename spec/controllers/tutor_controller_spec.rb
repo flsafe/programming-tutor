@@ -62,6 +62,25 @@ describe TutorController do
       get 'show', :id=>stub_exercise
       response.should_not render_template('tutor/already_doing_exercise')
     end
+
+    it "redirects if the exercise is not a recomended exercise" do
+      Recomendation.should_receive('recomended?').with(current_user.id, stub_exercise.id).and_return(false)
+      get "show", :id=>stub_exercise.id
+      response.should redirect_to(:controller=>:overview)
+    end
+
+    it "always displays retakes" do
+      Exercise.should_receive('retake?').with(stub_exercise).and_return(true)
+      response.should_not redirect_to(:controller=>:overview)
+    end
+
+    context "when the user is anonymous" do
+      it "only displays the sample exercises" do
+       current_user.should_receive('anonymous?').and_return(true)
+       Exercise.should_receive('sample?').with(stub_exercise).and_return(false)
+       get "show", :id=>stub_exercise
+      end
+    end
     
     context "when current user has an exercise session" do
       before(:each) do
