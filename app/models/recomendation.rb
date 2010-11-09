@@ -3,7 +3,6 @@ class Recomendation < ActiveRecord::Base
 
   composed_of :exercise_recomendation_list
 
-
   def self.for(user_id)
     recs = get_recomendations(user_id)
     if recs.empty?
@@ -11,6 +10,11 @@ class Recomendation < ActiveRecord::Base
     else
       recs  
     end
+  end
+
+  def self.recomended?(user_id, exercise_id)
+    recomended_exercises = get_recomendations(user_id)
+    recomended_exercises.detect {|e| e.id == exercise_id} != nil
   end
 
   protected
