@@ -34,7 +34,6 @@ describe TutorController do
       stub_exercise(:title=>'MyExercise')
       current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :user_id=>current_user.id, :exercise_id=>stub_exercise.id, :created_at=>Time.now().utc))
       Recomendation.stub('recomended?').and_return(true)
-      Exercise.stub('retake?').and_return(false)
     end
     
     context "no current exercise session" do
@@ -71,9 +70,9 @@ describe TutorController do
       response.should redirect_to(:controller=>:overview)
     end
 
-    it "always displays retakes" do
+    it "always displays retakes if the user is not anonymous" do
       current_user.stub('anonymous?').and_return(false)
-      Exercise.should_receive('retake?').with(current_user.id, stub_exercise.id.to_s).and_return(true)
+      GradeSheet.should_receive('retake?').with(current_user.id, stub_exercise.id.to_s).and_return(true)
       response.should_not redirect_to(:controller=>:overview)
       get "show", :id=>stub_exercise.id
     end
