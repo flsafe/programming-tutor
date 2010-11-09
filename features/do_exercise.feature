@@ -51,7 +51,7 @@ Feature: Do exercise
 		And the exercise "RemoveChar" takes "0" minutes to complete
 		And I am viewing the tutor page for "RemoveChar"
 		Then I should see "Time Is Up For That Exercise!"
-		
+
 	@javascript
 	Scenario Outline: The user performs a syntax check
 		Given I am logged in as the user "frank"
@@ -99,3 +99,13 @@ Feature: Do exercise
     When the exercise "RemoveChar" takes "0" minutes to complete
     And I press "Submit"
     Then I should see "Time Is Up For That Exercise!"
+
+	Scenario: The user can't do another exercise after they've started one
+		Given I am logged in as the user "frank"
+		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
+		And the exercise "RemoveChar" takes "60" minutes to complete
+		And I am viewing the tutor page for "RemoveChar"
+		When I am on my home page
+		And I follow "Ex2"
+		Then I should see "You are already doing an exercise!"
