@@ -33,6 +33,7 @@ describe TutorController do
       current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :user_id=>current_user.id, :exercise_id=>stub_exercise.id, :created_at=>Time.now().utc))
       Recomendation.stub('recomended?').and_return(true)
       Exercise.stub('retake?').and_return(false)
+      Exercise.stub('sample?').and_return(true)
     end
     
     context "no current exercise session" do
@@ -79,7 +80,7 @@ describe TutorController do
     context "when the user is anonymous" do
       it "only displays the sample exercises" do
        current_user.should_receive('anonymous?').and_return(true)
-       Exercise.should_receive('sample?').with(stub_exercise).and_return(false)
+       Exercise.should_receive('sample?').with(stub_exercise.id.to_s).and_return(false)
        get "show", :id=>stub_exercise.id
       end
     end

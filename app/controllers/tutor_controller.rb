@@ -10,6 +10,8 @@ class TutorController < ApplicationController
 
   before_filter :redirect_if_not_recomended_exercise_or_retake, :only=>[:show]
 
+  before_filter :redirect_if_anonymous_and_not_sample_exercise, :only=>[:show]
+
   before_filter :redirect_if_time_is_up, :only=>[:show, :grade]
                 
   before_filter :dispatch_to_observer
@@ -122,6 +124,14 @@ class TutorController < ApplicationController
       if not (a_recomended_ex or a_retake)
         flash[:notice] = "You don't have permission to do that"
         redirect_to :controller=>:overview
+      end
+    end
+  end
+
+  def redirect_if_anonymous_and_not_sample_exercise
+    unless current_user.anonymous?
+      unless Exercise.sample? params[:id]
+        redirect_to :controller=>:landing
       end
     end
   end
