@@ -79,7 +79,7 @@ describe TutorController do
 
     context "when the user is anonymous" do
       it "only displays the sample exercises" do
-       current_user.should_receive('anonymous?').and_return(true)
+       current_user.stub('anonymous?').and_return(true)
        Exercise.stub(:find).and_return stub_exercise
        stub_exercise.should_receive('sample?').and_return(false)
        get "show", :id=>stub_exercise.id
