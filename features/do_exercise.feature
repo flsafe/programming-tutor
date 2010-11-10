@@ -4,12 +4,21 @@ Feature: Do exercise
 	I want to write the code to my solution
 
   # Notes: 
-  #   When the user logs in, if there is no exercise recomendation 
-  #   in the db then, a random exercise is recomened. So make sure 
-  #   you have some exercises in the db!
+  #   When the user first logs in the recomended exercise is
+  #   dsiplayed. If there is no current recomened exercise
+  #   then a recomendation for a random exercise will be created.
+  #   This means that there should be some exercise data
+  #   in the db before the user logs in otherwise wierd stuff happens.
   #
-  #   Blueberry only displays exercises that are recomended or
-  #   are retakes.
+  #   Blueberry will only show an exercise if it is a recomended exercise
+  #   or if it is retake. Therefore make sure one of these is the case
+  #   before attempting to show the tutor page for an exercise.
+  #
+  #   Everything in between double quotes is split into
+  #   multiple arguments around white space. For example:
+  #
+  #   "Remove A Char"      => "Remove" "A" "Char"
+  #   "RemoveAChar Primes" => "RemoveAChar Primes"
 		
 	Scenario: The user sees the prototype for the exercise they need to complete
 		Given there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
@@ -22,7 +31,6 @@ Feature: Do exercise
 		Given there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And I am logged in as the user "frank"
-    And there exists a recomendation for "RemoveChar"
 		And the exercise "RemoveChar" takes "60" minutes to complete
 		And I am viewing the tutor page for "RemoveChar"
 		When I am viewing the tutor page for "Ex2"	
@@ -62,9 +70,9 @@ Feature: Do exercise
 
 	@javascript
 	Scenario Outline: The user performs a syntax check
-		Given there exists an exercise set "Linked List Basics" with "Pointer intro" and "Ex2"
+		Given there exists an exercise set "Linked List Basics" with "PointerIntro" and "Ex2"
 		And I am logged in as the user "frank"
-		And I am viewing the tutor page for "Pointer intro"
+		And I am viewing the tutor page for "PointerIntro"
 		When I fill in the text editor with <code>
 		And I press "Check Syntax"
 		Then I should see "checking..."
