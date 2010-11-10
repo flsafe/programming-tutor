@@ -54,3 +54,11 @@ a{
   text-align:center;
   margin-top: 50px;
 }
+
+#footer a, #footer p{
+  color: rgb(90, 90, 90);
+}
+
+#footer a{
+  text-decoration: none;
+}

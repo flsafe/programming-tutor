@@ -18,28 +18,27 @@
 	
     <div id="wrap" class="container">
 	
-		<%= render :partial => 'layouts/header' %>
-			
-			<div id="nav" class="column span-24 last">
-				<%= render :partial=>'layouts/menu' %>
-			</div>
+      <%= render :partial => 'layouts/header' %>
+        
+        <div id="nav" class="column span-24 last">
+          <%= render :partial=>'layouts/menu' %>
+        </div>
 
-			<div class='column span-24'>
-      	<%- flash.each do |name, msg| -%>
-        	<%= content_tag :div, msg, :id => "flash_#{name}" %>
-      	<%- end -%>
-			</div>
-      
-      <%- if show_title? -%>
-        <h1><%=h yield(:title) %></h1>
-      <%- end -%>
-      
-      <%= yield %>
+        <div class='column span-24'>
+          <%- flash.each do |name, msg| -%>
+            <%= content_tag :div, msg, :id => "flash_#{name}" %>
+          <%- end -%>
+        </div>
+        
+        <%- if show_title? -%>
+          <h1><%=h yield(:title) %></h1>
+        <%- end -%>
+        
+        <%= yield %>
 
     </div><!-- end wrap -->
 
-		 <div id="footer">
-        <p>Copyright &copy; CozySystems LLC</p>
-    </div>
+    <%= render :partial=>"layouts/footer" %>
+
   </body>
 </html>
