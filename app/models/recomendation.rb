@@ -14,7 +14,7 @@ class Recomendation < ActiveRecord::Base
 
   def self.recomended?(user_id, exercise_id)
     recomended_exercises = get_recomendations(user_id)
-    recomended_exercises.detect {|e| e.id == exercise_id} != nil
+    recomended_exercises.detect {|e| e.id == exercise_id.to_i} != nil
   end
 
   protected

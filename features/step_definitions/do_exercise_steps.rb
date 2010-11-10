@@ -2,6 +2,13 @@ require 'eregex'
 
 Given /^I am viewing the tutor page for "([^\"]*)"$/ do | title |
   ex = Exercise.find_by_title title
+  
+  # Blueberry only displays an exercise if it is a 
+  # recomended exercise or a retake. So here we
+  # make sure the exercise is the recomended exercise
+  steps %Q{
+    Given there exists a recomendation for "#{title}"  
+  }
   visit "/tutor/show/#{ex.id}"
 end
 

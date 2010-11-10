@@ -18,10 +18,9 @@ Given /^there exists a recomendation for "([^\"]*)"$/ do |exercise_titles|
 
   sleep 1 # Logging in sets up a random rec. Make sure this one is the most resent
 
-  rec = Recomendation.new
-  rec.user_id = @current_user.id
-  rec.exercise_recomendation_list = recomended_ids
-  rec.save!
+  Factory.create :recomendation, 
+    :user_id=>@current_user.id,
+    :exercise_recomendation_list=>recomended_ids
 end
 
 Given /^I note \/([^\/]*)\/$/ do |regex|

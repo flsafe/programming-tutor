@@ -2,12 +2,20 @@ Feature: Do exercise
 	So that I can increase my interview skills
 	As a user
 	I want to write the code to my solution
+
+  # Notes: 
+  #   When the user logs in, if there is no exercise recomendation 
+  #   in the db then, a random exercise is recomened. So make sure 
+  #   you have some exercises in the db!
+  #
+  #   Blueberry only displays exercises that are recomended or
+  #   are retakes.
 		
 	Scenario: The user sees the prototype for the exercise they need to complete
-		Given I am logged in as the user "frank"
-		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		Given there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
-		And I am viewing the tutor page for "RemoveChar"
+		And I am logged in as the user "frank"
+		When I am viewing the tutor page for "RemoveChar"
 		Then the "textarea_1" field within "#editor" should contain "void remove_char\(char c, char str\[\]\)"
 
 	Scenario: The user can't do another exercise after they've started one
@@ -22,11 +30,11 @@ Feature: Do exercise
 	
 	@javascript
 	Scenario: The user sees a timer representing the amount of time they have to complete the exercise
-		Given I am logged in as the user "frank"
-		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		Given there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And the exercise "RemoveChar" takes "60" minutes to complete
-		And I am viewing the tutor page for "RemoveChar"
+		And I am logged in as the user "frank"
+		When I am viewing the tutor page for "RemoveChar"
 		Then I should see /59:\d\d/
 
   @javascript
