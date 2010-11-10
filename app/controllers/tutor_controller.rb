@@ -129,7 +129,7 @@ class TutorController < ApplicationController
   end
 
   def redirect_if_anonymous_and_not_sample_exercise
-    unless current_user.anonymous?
+    if current_user.anonymous?
       exercise = Exercise.find params[:id]
       unless exercise.sample?
         redirect_to :controller=>:landing
