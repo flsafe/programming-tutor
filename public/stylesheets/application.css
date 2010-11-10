@@ -298,9 +298,17 @@ table.exercise-statistics caption, table.exercise-statistics{
 }
 
 #exercise-problem-text{
-  margin: 0px 0px 0px 10px;
+  margin: 75px 0px 0px 10px;
   border:5px solid rgb(140, 140, 140);
-  padding: 10px;
+  padding: 5px 10px 10px 10px;
+}
+
+#exercise-problem-text{
+  font-size: .95em;
+}
+
+#exercise-problem-text h1{
+  font-size: 1.5em;
 }
 
 #exercise-problem-text p{
