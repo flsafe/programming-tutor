@@ -9,16 +9,25 @@
 
 	<h3 class="page-title">Unit Test Results</h3>
 
+  <%= link_to "Read Tutorial", 
+              {:controller=>:exercises,
+                :action=>:show_tutorial,
+                :id=>@exercise},
+              :id=>'tutorial',
+              :style=>'display: none;' %> &nbsp;
+
+	<%= link_to "Home", current_user_home %>
+  <hr/>
+
 	<div id="message"><p>grading...</p></div>
 
 	<%= image_tag 'bar.gif', :id=>'bar' %><br/>
-
-	<%= link_to "Read Tutorial", {:controller=>:exercises, :action=>:show_tutorial, :id=>@exercise}, :id=>'tutorial', :style=>'display: none;' %> &nbsp;
-	<%= link_to "Home", current_user_home %>
-
 </div>
 
-<%= render(:partial=>'rating_overlay', :locals=>{:exercise=>@exercise}) unless current_user.grade_for?(@exercise)%>
+<% unless GradeSheet.retake?(current_user.id, @exercise.id) %>
+  <%= render(:partial=>'rating_overlay', 
+             :locals=>{:exercise=>@exercise}) %> 
+<% end %>
 
 <%= periodically_call_remote :update=>:message,
       :url=>{:action=>'grade_status', :id=>@exercise.id}, 
