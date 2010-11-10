@@ -1,6 +1,11 @@
 class ExercisesController < ApplicationController
   
-  before_filter :require_user
+  before_filter :require_user, :except=>[:show_tutorial]
+
+  before_filter :require_user_or_create_anonymous, :only=>[:show_tutorial]
+
+  before_filter :redirect_anonymous_if_not_sample_ex, :only=>[:show_tutorial]
+
   before_filter :require_admin, :except=>[:user_index, :show, :show_tutorial]
   
   # GET /exercises
@@ -107,6 +112,17 @@ class ExercisesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(exercises_url) }
       format.xml  { head :ok }
+    end
+  end
+
+  protected
+
+  def redirect_anonymous_if_not_sample_ex 
+    if current_user.anonymous?
+      @exercise = Exercise.find params[:id]
+      unless @exercise.sample?
+        redirect_to :controller=>:landing
+      end
     end
   end
 end

@@ -15,7 +15,7 @@ module MenuHelper
     not_in_black_list_url = !(@@url_black_list.detect {|no_show| request.request_uri =~ no_show } )
     not_in_black_list_action = !(@@action_black_list.detect {|no_show| current_action == no_show} )
     
-    not_in_black_list_url and not_in_black_list_action
+    not_in_black_list_url and not_in_black_list_action and (not current_user.anonymous?)
   end
   
 end
