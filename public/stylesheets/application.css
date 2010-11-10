@@ -190,23 +190,6 @@ h1, h2, h3, h4, h5{
   width: 205px;
 }
 
-.random{
-  border: 1px solid rgb(37, 58, 89);
-}
-
-.recommendation p{
-  font-size: .90em;
-  color: white;
-}
-
-.recommendation-type{
-  font-size: .90em;
-  text-align: center;
-  color: rgb(100, 100, 100);
-  margin: 0px 0px 5px, 0px;
-  padding: 0px;
-}
-
 /************************
 * Completed exercise page (exercises/user_index)
 ************************/
