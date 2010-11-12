@@ -11,3 +11,4 @@ db/production.sqlite3
 *.swp
 .swp
 .server.pid
+.swo
