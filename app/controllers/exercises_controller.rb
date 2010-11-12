@@ -89,6 +89,7 @@ class ExercisesController < ApplicationController
     params[:exercise][:existing_hint_attributes] ||= {}
     params[:exercise][:existing_unit_test_attributes] ||= {}
     params[:exercise][:existing_solution_template_attributes] ||={}
+    params[:exercise][:existing_figure_attributes] ||= {}
     
     @exercise = Exercise.find(params[:id])
     respond_to do |format|

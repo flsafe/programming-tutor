@@ -66,6 +66,10 @@ class Exercise < ActiveRecord::Base
   def existing_unit_test_attributes=(unit_test_attributes)
     existing_attributes_for(:unit_tests, unit_test_attributes)
   end
+
+  def existing_figure_attributes=(figure_attributes)
+    existing_attributes_for(:figures, figure_attributes)
+  end
   
   def get_stat(name)
     Statistic.get_stat("exercise.#{name}", self.id) || 0
@@ -96,6 +100,7 @@ class Exercise < ActiveRecord::Base
     hints.each {|h| h.save(false)}
     unit_tests.each {|u| u.save(false)}
     solution_templates.each {|s| s.save(false)}
+    figures.each {|f| f.save}
     exercise_set.save(false)
   end
   
