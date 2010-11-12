@@ -1,9 +1,17 @@
 <div class="figure">
-<% new_or_existing = figure.new_record? ? 'new' : 'existing' %>
-<% prefix = "exercise[#{new_or_existing}_figure_attributes][]" %>
+  <% new_or_existing = figure.new_record? ? 'new' : 'existing' %>
+  <% prefix = "exercise[#{new_or_existing}_figure_attributes][]" %>
 
-<% fields_for prefix, figure  do |f| %>
-		<%= f.label :image, "Upload Figure" %> <br/>
-		<%= f.file_field :image %>	<%= link_to_function 'Remove', "this.up('.figure').remove()" %><br/>
-<% end %>
+  <% if figure.new_record? %>
+    <% fields_for prefix, figure  do |f| %>
+        <%= f.label :image, "Upload Figure" %> <br/>
+        <%= f.file_field :image %>	<%= link_to_function 'Remove', "this.up('.figure').remove()" %><br/>
+    <% end %>
+  <% else %>
+    <% fields_for prefix, figure  do |f| %>
+      <%= f.text_field :image %>
+      <%= link_to_function 'Remove', "this.up('.figure').remove()" %><br/>
+    <% end %>
+    <%= image_tag figure.image.url  %><br/>
+  <% end %>
 </div>
