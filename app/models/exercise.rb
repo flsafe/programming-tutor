@@ -105,7 +105,11 @@ class Exercise < ActiveRecord::Base
     hints.each {|h| h.save(false)}
     unit_tests.each {|u| u.save(false)}
     solution_templates.each {|s| s.save(false)}
+<<<<<<< HEAD
     figures.each {|f| f.save(false)}
+=======
+    figures.each {|f| f.save}
+>>>>>>> origin/dev
     exercise_set.save(false)
   end
   
