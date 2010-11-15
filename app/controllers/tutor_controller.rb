@@ -122,7 +122,6 @@ class TutorController < ApplicationController
       a_recomended_ex = Recomendation.recomended?(current_user.id, params[:id])
       a_retake = GradeSheet.retake?(current_user.id, params[:id])
       if not (a_recomended_ex or a_retake)
-        flash[:notice] = "You don't have permission to do that"
         redirect_to :controller=>:overview
       end
     end
