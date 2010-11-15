@@ -24,7 +24,7 @@
 	<%= image_tag 'bar.gif', :id=>'bar' %><br/>
 </div>
 
-<% unless GradeSheet.retake?(current_user.id, @exercise.id) %>
+<% unless GradeSheet.retake?(current_user.id, @exercise.id) or current_user.anonymous?%>
   <%= render(:partial=>'rating_overlay', 
              :locals=>{:exercise=>@exercise}) %> 
 <% end %>
