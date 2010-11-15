@@ -9,9 +9,12 @@
     <% end %>
   <% else %>
     <% fields_for prefix, figure  do |f| %>
-      <%= f.text_field :image %>
+      <%= f.label :image, "Image" %>
+      <%= f.text_field :image, :disabled=>true, :size=>75%>
       <%= link_to_function 'Remove', "this.up('.figure').remove()" %><br/>
     <% end %>
     <%= image_tag figure.image.url  %><br/>
+    <%= label_tag :img_html, "Img link" %></br>
+    <%= text_area_tag(:img_html, image_tag(figure.image.url), :rows=>1, :cols=>50) %>
   <% end %>
 </div>

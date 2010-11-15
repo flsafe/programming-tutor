@@ -1,5 +1,7 @@
 <div id="tutorial">
 
+  <%= link_to("Edit", edit_exercise_path(@exercise)) if current_user.has_role?("admin") %>
+
   <div id="exercise-problem-text">
     <h1> <%= @exercise.title %> </h1>
     <%= @exercise.problem %>
