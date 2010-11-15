@@ -6,6 +6,8 @@ class ExercisesController < ApplicationController
 
   before_filter :redirect_anonymous_if_not_sample_ex, :only=>[:show_tutorial]
 
+  before_filter :redirect_if_not_retake, :only=>[:show_tutorial]
+
   before_filter :require_admin, :except=>[:user_index, :show, :show_tutorial]
   
   # GET /exercises
@@ -123,6 +125,15 @@ class ExercisesController < ApplicationController
       @exercise = Exercise.find params[:id]
       unless @exercise.sample?
         redirect_to :controller=>:landing
+      end
+    end
+  end
+
+  def redirect_if_not_retake
+    exercise = Exercise.find(params[:id])
+    unless current_user.has_role?('admin')
+      unless GradeSheet.retake?(current_user.id, exercise.id)
+        redirect_to current_user_home
       end
     end
   end
