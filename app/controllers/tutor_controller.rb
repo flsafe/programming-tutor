@@ -118,7 +118,7 @@ class TutorController < ApplicationController
   end
 
   def redirect_if_not_recomended_exercise_or_retake
-    unless current_user.anonymous?
+    unless current_user.anonymous? or current_user.has_role?('admin')
       a_recomended_ex = Recomendation.recomended?(current_user.id, params[:id])
       a_retake = GradeSheet.retake?(current_user.id, params[:id])
       if not (a_recomended_ex or a_retake)
