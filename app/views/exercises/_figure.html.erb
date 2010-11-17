@@ -10,7 +10,7 @@
   <% else %>
     <% fields_for prefix, figure  do |f| %>
       <%= f.label :image, "Image" %>
-      <%= f.text_field :image, :disabled=>true, :size=>75%>
+      <%= f.text_field :image, :size=>75%>
       <%= link_to_function 'Remove', "this.up('.figure').remove()" %><br/>
     <% end %>
     <%= image_tag figure.image.url  %><br/>
