@@ -45,16 +45,20 @@ class Recomendation < ActiveRecord::Base
   end
 
   def self.to_exercises(recs)
+   # TODO: The recomendations have a special order. They are 
+   # sorted by highest predicted rating. This function does
+   # not perserve this order. If you'd like to make more than
+   # just one recomendation, then this needs to be fixed
    Exercise.find_all_by_id(recs)
   end
 
   def self.random_exercises
-    #TODO: For now this just recomends one exercise
-    exc = Exercise.count
-    unless exc == 0
-        [ Exercise.find :first, :offset=>rand(exc) ]
+    finished_exercises = Exercise.find( :all, :select=>:id, :conditions=>{:finished=>1})
+    if finished_exercises.count > 0
+      random_exercise_id = finished_exercises[ rand(finished_exercises.count)].id
+      [ Exercise.find(random_exercise_id) ]
     else
-        []
+      []
     end
   end
 end

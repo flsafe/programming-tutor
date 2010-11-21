@@ -12,6 +12,11 @@
   </p>
 
   <p>
+    <%= f.label :finished, "Finished and display?"%>
+    <%= f.check_box(:finished, {}, 1, 0) %>
+  </p>
+
+  <p>
     <%= f.label :description %><br />
     <%= f.text_field :description%>
   </p>

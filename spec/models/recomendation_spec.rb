@@ -24,4 +24,19 @@ describe Recomendation do
       Recomendation.recomended?(user.id, non_existing_ex_id).should == false
     end
   end
+
+
+  describe "#random_exercises" do
+    it "does not recommend an exercise that is not finished" do
+      Factory.create :exercise, :finished=>false
+      Factory.create :exercise, :finished=>true
+
+      # TODO: For now despite the method name 'random_exercises(s)' it only
+      # returns one random exercise.
+      10.times do 
+        ex = Recomendation.random_exercises.first
+        ex.finished?.should == true
+      end
+    end
+  end
 end
