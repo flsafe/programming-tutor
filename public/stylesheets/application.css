@@ -294,7 +294,7 @@ table.exercise-statistics caption, table.exercise-statistics{
 }
 
 #tutorial p{
-  margin: 10px 0px 10px 0px;
+  margin: 20px 0px 20px 0px;
 }
 
 #exercise-problem-text{
@@ -320,7 +320,7 @@ table.exercise-statistics caption, table.exercise-statistics{
   font-size: .85em;
   font-family: monospace;
   color: rgb(20, 20, 20);
-  padding: 20px;
+  padding: 10px 10px 10px 10px;
   margin-top: 0px;
   line-height: 16px;
   border: 1px solid rgb(140,140,140);
