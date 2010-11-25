@@ -1,0 +1,47 @@
+# This file will eventually be turned into a shell script for configuring Selinux to play nice with
+# httpd, phusion passenger and blueberrytree.
+
+# for now I'm have just a bunch of notes
+
+# Configure httpd selinux booleans
+
+# Since bluberrytree source code is installed to ~/blueberrtree
+# make sure httpd can access it.
+setsebool -P httpd_enable_home_dirs 1
+
+# Since I'm using bundler for the gems  and bundler
+# installs gems to ~/.bundler, I have to make sure httpd can access any .so files included in the
+# gems. 
+
+# This command adds the httpd_sys_content_t to all .so files in the bundler gem directory. Updates 
+# /etc/selinux/targeted/contexts/files/file_contexts.local. Using this command as opposed to
+# chcon makes the changes persistant across file system relabeling. 
+semanage fcontext -a -t httpd_sys_content_t "/home/flicea/.bundle/gems(/.*)/(.*\.so)"
+
+# Then use this to restore the file context described in file_contexts.local
+restorecon -R -v ~/.bundler/gems/
+
+
+# httpd with passenger needs access to /opt/enterprise_ruby/... (I guess it's the way I installed it?)
+semanage fcontext -a -t httpd_sys_content_t "/opt/enterprise_ruby(/.*)?"
+restorecon -R -v /opt/enterprise_ruby/...
+
+# Phusion passenger needs access to a temp dir. I created /passenger_tmp and gave it
+# executable privilages.
+mkdir /passenger_tmp
+chmod -R ugo+rwx /passenger_tmp
+
+# Then change selinux type to httpd_tmp_t
+semanage fcontext -a -t httpd_tmp_t /passenger_tmp
+restorecon -R -v /passenger_tmp
+
+# Now pussion passenger needs selinux permission to create socekts, fifo, files and other back end files.
+# I stopped httpd
+service httpd stop
+echo "" > /var/log/audit/audit.log
+service httpd start
+audit2allow -M passenger < /var/log/audit/audit.log
+semodule -i passenger.pp
+
+
+
