@@ -58,6 +58,16 @@ describe GradeSolutionJob do
       @mock_scope.should_receive(:written_in).with('c')
       job.perform
     end
+
+    it "Scrubs the solution code" do
+      IncludeScrubber.should_receive(:scrub_all_includes).with(code)
+      job.perform
+    end
+
+    it "scrubs the the user's code to get rid of any user includes" do
+      template.should_receive(:fill_in).with(IncludeScrubber.scrub_all_includes(code))
+      job.perform
+    end
     
     it "fills in the solution template with the user program code" do
       template.should_receive(:fill_in).with(code)
@@ -72,9 +82,7 @@ describe GradeSolutionJob do
     end
     
     it "runs the unit test on the solution template" do
-      solution_code = "solution code"
-      template.stub(:fill_in).and_return(solution_code)
-      unit_test.should_receive(:run_on).with(solution_code)
+      unit_test.should_receive(:run_on)
       job.perform
     end
     

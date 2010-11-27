@@ -44,7 +44,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   end
   
   def fill_in_solution_template
-    solution_code = @template.fill_in(code)
+    solution_code = @template.fill_in(IncludeScrubber.scrub_all_includes(code))
   end
   
   def fill_in_template_and_execute_unit_test
