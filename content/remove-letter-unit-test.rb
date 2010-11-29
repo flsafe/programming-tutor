@@ -61,21 +61,46 @@ class RemoveLetterUnitTest
       p.write(input)
       p.close_write
       
-      Thread.new(p.pid, 2) do |pid, wait_for|
-        sleep(wait_for)
-        begin
-          Process.kill('KILL', pid)
-        rescue
-          #If the process has already quit, do nothing
-        end
-      end
-  
       result = p.read()
       p.close
       result
     else
+      set_child_limits
       exec("sandbox ./<EXEC_NAME>")
     end   
+  end
+
+  def set_child_limits
+    # Note: The current user will already have
+    # procs running, files open, and other resources
+    # in use. Therefore these limits need to be set high enough
+    # to account for the resources already in use and to limit 
+    # any new resources the user submited solution will consume.
+    #
+    # TODO: When in production mode NProcs should be smaller
+    max_mem = 1048576
+    max_cpu_secs = 4
+    max_files = 20
+    max_file_size = 1
+    max_procs = 50
+
+    Process.setrlimit(Process::RLIMIT_CPU, max_cpu_secs)
+
+    Process.setrlimit(Process::RLIMIT_NOFILE, max_files)
+    
+    Process.setrlimit(Process::RLIMIT_FSIZE, max_file_size)
+
+    Process.setrlimit(Process::RLIMIT_NPROC, max_procs)
+
+    Process.setrlimit(Process::RLIMIT_DATA, max_mem)
+
+    Process.setrlimit(Process::RLIMIT_STACK, max_mem)
+
+    Process.setrlimit(Process::RLIMIT_RSS, max_mem)
+
+    Process.setrlimit(Process::RLIMIT_MEMLOCK, max_mem)
+
+    Process.setrlimit(Process::RLIMIT_AS, max_mem)
   end
   
   def run_with_and_expect(input, expected, title, points)

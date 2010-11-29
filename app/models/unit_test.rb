@@ -11,11 +11,11 @@ class UnitTest < ActiveRecord::Base
   
   def run_on(solution_code = nil)
     begin
+      @solution_code = solution_code
+
       initialize_unit_test_executable_paths
       substitute_executable_path_in_unit_test_code
-
-      Compiler.compile_to(solution_code, @exec_file_path)
-      
+      compile_user_solution
       write_unit_test_to_file
       execute_unit_test_file
     rescue Exception => e
@@ -44,6 +44,16 @@ class UnitTest < ActiveRecord::Base
   
   def substitute_executable_path_in_unit_test_code
     @unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, @exec_file_path)
+  end
+
+  def compile_user_solution
+    options = ""
+    if Rails.env == 'production' 
+      # In production mode assume that we are running in a Linux system
+      # with SECCOMP enabled
+      options = "-DLINUX_SECCOMP"
+    end
+    Compiler.compile_to(@solution_code, @exec_file_path, options)
   end
   
   def write_unit_test_to_file

@@ -29,7 +29,16 @@ describe UnitTest do
     it "compiles the user's program to the work directory" do
       solution_code = 'int main(){return 0;}'
       Compiler.stub(:compile_to)
-      Compiler.should_receive(:compile_to).with(solution_code, @user_program_path)
+      Compiler.should_receive(:compile_to).with(solution_code, @user_program_path, "")
+      unit_test.run_on(solution_code)
+    end
+
+    it "compiles the user's program with LINUX_SECCOMP when in production mode" do
+      solution_code = 'int main(){return 0;}'
+      Compiler.stub(:compile_to)
+      Rails.stub(:env).and_return('production')
+
+      Compiler.should_receive(:compile_to).with(solution_code, @user_program_path, "-DLINUX_SECCOMP")
       unit_test.run_on(solution_code)
     end
       

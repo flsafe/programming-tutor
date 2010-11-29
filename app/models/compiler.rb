@@ -21,13 +21,13 @@ class Compiler
     end
   end
 
-  def self.compile_to(code, dest_path)
+  def self.compile_to(code, dest_path, options="")
     f              = Tempfile.new('exec', APP_CONFIG['work_dir'])
     code_file_path = f.path
     begin
       f.write(code)
       f.flush
-      out = `gcc -x c -o #{dest_path} #{code_file_path} 2>&1`
+      out = `gcc #{options} -x c -o #{dest_path} #{code_file_path} 2>&1`
       if out =~ /error/i
         raise "Could not compile solution!"
       end
