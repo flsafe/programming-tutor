@@ -35,3 +35,13 @@ production:
 
 cucumber:
   <<: *TEST
+
+staging:
+  adapter: mysql
+  encoding: utf8
+  database: blueberrytreestaging
+  username: blueberrytree 
+  password: blueberry+$91579707+$||chompmp@!
+  host: localhost
+  pool: 5
+  timeout: 5000

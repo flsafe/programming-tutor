@@ -11,6 +11,9 @@ set :user,    'flicea'
 # scm_domain: Where is the repo located?
 # scm_user: Username for the repo account
 # project_name: The name of the project in the repo
+set :scm_verbose, true
+set :scm, 'git'
+set :branch, 'master'
 set :scm_domain,   'git@github.com'
 set :scm_user,     'flsafe'
 set :project_name, 'blueberryrow'
@@ -43,9 +46,6 @@ default_environment['PATH']='/sbin/:/usr/local/bin:/usr/bin:/bin'
 
 # miscellaneous options
 set :deploy_via, :remote_cache
-set :scm, 'git'
-set :branch, 'master'
-set :scm_verbose, true
 set :use_sudo, false
 set :dj_ruby_path, '/opt/ruby-enterprise-1.8.7-2010.02/bin/'
 set :rails_env, 'production'
