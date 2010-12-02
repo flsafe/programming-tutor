@@ -118,15 +118,11 @@ end
 namespace :recomendations do
   desc "Start the recomendations server"
   task :start, :roles=> :app do
-    # Only one recemendation server should be running at a time.
-    # But we can't use recomendation-engine/stop because it only
-    # kills jobs started with recomendation-engine/start and there are
-    # different release directories. 
+    # Only one recemendation server should be running at a time 
+    # per environment. For example only one rec server in staging.
     #
-    # Kill any other JVM that may be running a recomendations server,
-    # this could the server from the previous release so that
-    # the current release starts nicely
-    run "( pidof java && kill `pidof java`) || true"
+    # Kill the rec server from the previous release
+    recomendations.stop
     run "cd #{current_path}; env RAILS_ENV=#{rails_env} recomendation-engine/start"
   end
   
