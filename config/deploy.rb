@@ -2,9 +2,7 @@
 
 #-- User Names
 # user: the user on the server to login with
-# db_user: The app database user name
 #--
-set :db_user, 'blueberrytree'
 set :user,    'flicea'
 
 #-- Repository info
@@ -13,7 +11,7 @@ set :user,    'flicea'
 # project_name: The name of the project in the repo
 set :scm_verbose, true
 set :scm, 'git'
-set :branch, 'master'
+set :branch, 'dev'
 set :scm_domain,   'git@github.com'
 set :scm_user,     'flsafe'
 set :project_name, 'blueberryrow'
@@ -21,14 +19,25 @@ set :repository,    "#{scm_domain}:#{scm_user}/#{project_name}.git"
 
 #-- Where the application will be deployed
 set :domain, 'blueberrytree.ws'
+set :staging_domain, 'staging.blueberrytree.ws'
 set :application_name, 'blueberrytree'
-set :deploy_to, "/home/#{user}/#{application_name}" 
 
-# distribute your applications across servers (the instructions below put them
-# all on the same server, defined above as 'domain', adjust as necessary)
-role :app, domain
-role :web, domain
-role :db, domain, :primary => true
+task :staging do
+  role :web, staging_domain 
+  role :app, staging_domain
+  role :db, staging_domain, :primary=>true
+  set :stage, :staging
+end
+
+task :production do
+  role :web, domain
+  role :app, domain 
+  role :db, domain
+  set :stage, :production
+end
+
+#-- Deploy location depends on the stage
+set(:deploy_to) {"/home/#{user}/#{application_name}/#{stage}"}
 
 # you might need to set this if you aren't seeing password prompts
 # default_run_options[:pty] = true
