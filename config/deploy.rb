@@ -57,7 +57,7 @@ default_environment['PATH']='/sbin/:/usr/local/bin:/usr/bin:/bin'
 set :deploy_via, :remote_cache
 set :use_sudo, false
 set :dj_ruby_path, '/opt/ruby-enterprise-1.8.7-2010.02/bin/'
-set :rails_env, 'production'
+set( :rails_env ) { stage || 'staging' }
 
 # task which causes Passenger to initiate a restart
 namespace :deploy do
