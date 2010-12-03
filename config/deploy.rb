@@ -78,14 +78,20 @@ end
 # Install gems using bundler
 namespace :gems do
   task :bundle_install, :roles=>:app do
-    run "cd #{release_path} && bundle install --without test --without development"
+    if rails_env == 'production'
+     ops = "--without test --without development" 
+    end
+    run "cd #{release_path} && bundle install #{ops || ''}"
   end
 end
 
 # Install the recondation_engine deps using leiningen
 namespace :jars do
   task :jars_install, :roles=>:app do
-    run "cd #{release_path}/recomendation-engine && lein deps no-dev"
+    if rails_env == 'production'
+     ops = "no-dev" 
+    end
+    run "cd #{release_path}/recomendation-engine && lein deps #{ops || ''}"
   end
 end
 
