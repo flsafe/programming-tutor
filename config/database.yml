@@ -4,8 +4,8 @@ development:
   adapter: mysql
   encoding: utf8
   database: blueberrytreedev
-  username: root
-  password: 
+  username: blueberrytree
+  password: blueberry+$91579707+$||chompmp@!
   host: localhost
   pool: 5
   timeout: 5000
@@ -17,8 +17,8 @@ test: &TEST
   adapter: mysql
   encoding: utf8
   database: blueberrytreetest
-  username: root 
-  password: 
+  username: blueberrytree
+  password: blueberry+$91579707+$||chompmp@!
   host: localhost
   pool: 5
   timeout: 5000
