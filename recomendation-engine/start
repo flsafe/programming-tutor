@@ -3,7 +3,13 @@
 # The name of the directory containing the recomendations engine
 root_dir="recomendation-engine"
 
-#PWD needs to be in recomendation-engine/ for the class path to be correct 
+# Make sure $RAILS_ENV is set
+if [[ -z $RAILS_ENV ]]
+then
+  export RAILS_ENV='development'
+fi
+
+# PWD needs to be in recomendation-engine/ for the class path to be correct 
 if [[ ! $PWD == *"$root_dir" ]]
 then
   cd $root_dir
@@ -13,10 +19,14 @@ fi
 boot_path="recomendation_engine/boot.clj"
 
 # Where to save the pid files used to keep track of what servers are running
-pidpath="../tmp/pids/"
+pidpath="../tmp/pids/recomendation-server.pid"
 
-# The uri the recomendation engine will be running on
-localhost="localhost:8080"
+# Get the uri of the recomendation server based on the
+# current rails env and what is in the config file.
+function get-server-uri {
+  uri=$( cat ../config/config.yml | grep $RAILS_ENV | awk '{print $2}' )
+  echo $uri | tr -d "\"\n\r\t\f\v"
+}
 
 # Since the server takes a few seconds to boot this script
 # attempts to establish a connection with the server to
@@ -25,7 +35,7 @@ localhost="localhost:8080"
 tries=10
 
 function no-other-instance {
-  if [ -f '.server.pid' ]
+  if [ -f "${pidpath}" ]
   then
     return 1
   else
@@ -37,15 +47,16 @@ if no-other-instance
 then
 
   #boot the recomendation engine 
-  echo -n "Starting..."
+  echo -n "Starting."
   java -cp "lib/*:lib/dev/*:src:classes" clojure.main src/${boot_path} >/dev/null 2>&1 &
   servpid=$!
 
-  #wait until the recomendation engine is responsive
-  wget http://${localhost} >/dev/null 2>&1
+  # wait until the recomendation engine is responsive
+  serveruri="$( get-server-uri )"
+  wget "${serveruri}" >/dev/null 2>&1
   while [ $? -ne 0 ]
   do
-    tries=$[ $tries - 1]
+    tries=$[ $tries - 1 ]
     if [ $tries -eq 0 ]
     then
       echo "the server is not responsive"
@@ -53,14 +64,15 @@ then
     fi
     sleep 1
     echo -n '.'
-    wget http://${localhost} >/dev/null 2>&1
+    wget "${serveruri}" >/dev/null 2>&1
   done 
   rm -f index.html
 
   #save the pid so we can shut the server down later or check if one is running
-  echo $servpid > .server.pid
+  echo $servpid > "${pidpath}" 
 
   echo "CozyRecomendations pid: $servpid"
+  echo "At $serveruri"
 else
   echo "Another CozyRecomendations instance is running. Shut it down first"
   exit 1

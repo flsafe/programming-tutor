@@ -6,13 +6,15 @@ then
   cd recomendation-engine
 fi
 
-if [ -f '.server.pid' ]
+pidpath="../tmp/pids/recomendation-server.pid"
+
+if [ -f "${pidpath}" ]
 then
-  pid=`cat .server.pid`
+  pid=`cat ${pidpath}`
   if kill $pid
   then
     echo "Killed"
-    rm -f '.server.pid'
+    rm -f $pidpath
     exit 0
   else
     echo "The pid $pid started with recomendation-engine/start is not running. Nothing to stop"

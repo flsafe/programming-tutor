@@ -11,7 +11,8 @@ rating_values:
   good_challenge: 3
 
 recomendation_server_uri:
-  production: "http://127.0.0.1:8080"
-  development: "http://127.0.0.1:8080/"
-  test: "http://127.0.01:8080/"
-  cucumber: "http://127.0.0.1:8080/"
+  production: "http://127.0.0.1:8080/"
+  staging: "http://127.0.0.1:8081/"
+  test: "http://127.0.01:8082/"
+  cucumber: "http://127.0.0.1:8082/"
+  development: "http://127.0.0.1:8083/"
