@@ -69,6 +69,7 @@ Feature: Do exercise
 		Then I should see "Time Is Up For That Exercise!"
 
 	@javascript
+  @with-bg-job
 	Scenario Outline: The user performs a syntax check
 		Given there exists an exercise set "Linked List Basics" with "PointerIntro" and "Ex2"
 		And I am logged in as the user "frank"
