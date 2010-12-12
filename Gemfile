@@ -2,9 +2,8 @@ source "http://rubygems.org"
 
 gem 'acts-as-taggable-on', '2.0.6'
 gem 'authlogic', '2.1.6'
-gem 'bundler', '1.0.7'
 gem 'capistrano', '2.5.19'
-gem 'capybara', '0.3.9', :group=>:test
+gem 'capybara', '0.4.0', :group=>:test
 gem 'cucumber', '0.6.2', :group=>:test                 #Newer cucumber doesn't load all the gems
 gem 'cucumber-rails', '0.2.4', :group=>:test
 gem 'daemons', '1.0.10'                               #Newer daemons crashes on delayed_job startup
