@@ -39,6 +39,12 @@ end
 #-- Deploy location depends on the stage
 set(:deploy_to) {"/home/#{user}/#{application_name}/#{stage}"}
 
+# miscellaneous options
+set :deploy_via, :remote_cache
+set :use_sudo, false
+set :ruby_path, '/opt/ruby-enterprise-1.8.7-2010.02/bin/'
+set( :rails_env ) { stage || 'staging' }
+
 # you might need to set this if you aren't seeing password prompts
 # default_run_options[:pty] = true
 
@@ -47,17 +53,10 @@ set(:deploy_to) {"/home/#{user}/#{application_name}/#{stage}"}
 # if (for example) you have locally installed gems or applications.  Note:
 # this needs to contain the full values for the variables set, not simply
 # the deltas.
+default_environment['PATH']="#{ruby_path}:/sbin/:/usr/local/bin:/usr/bin:/bin"
 
 # We are using bundler for the gem dependencies.
 # default_environment['GEM_PATH']='<your paths>:/usr/lib/ruby/gems/1.8'
-
-default_environment['PATH']='/sbin/:/usr/local/bin:/usr/bin:/bin'
-
-# miscellaneous options
-set :deploy_via, :remote_cache
-set :use_sudo, false
-set :dj_ruby_path, '/opt/ruby-enterprise-1.8.7-2010.02/bin/'
-set( :rails_env ) { stage || 'staging' }
 
 # task which causes Passenger to initiate a restart
 namespace :deploy do
@@ -81,6 +80,7 @@ namespace :gems do
     if rails_env == 'production'
      ops = "--without test --without development" 
     end
+    run "which ruby ; ruby -v; echo $PATH"
     run "cd #{release_path} && bundle install #{ops || ''}"
   end
 end
@@ -105,7 +105,7 @@ namespace :delayed_job do
     run "( pidof delayed_job && kill `pidof delayed_job`) || true"
     
     # Run delayed job with the same ruby as Passenger.
-    run "cd #{current_path}; bundle exec env RAILS_ENV=#{rails_env} #{dj_ruby_path}/ruby script/delayed_job start" 
+    run "cd #{current_path}; bundle exec env RAILS_ENV=#{rails_env} #{ruby_path}/ruby script/delayed_job start" 
   end
 
   desc "Stop delayed_job process" 
