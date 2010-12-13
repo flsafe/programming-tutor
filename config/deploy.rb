@@ -110,7 +110,7 @@ namespace :delayed_job do
 
   desc "Stop delayed_job process" 
   task :stop, :roles => :app do
-    run "cd #{current_path}; RAILS_ENV=#{rails_env} script/delayed_job stop" 
+    run "cd #{current_path}; bundle exec env RAILS_ENV=#{rails_env} script/delayed_job stop" 
   end
 
   desc "Restart delayed_job process" 
