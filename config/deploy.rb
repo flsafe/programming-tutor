@@ -81,7 +81,7 @@ namespace :gems do
      ops = "--without test --without development" 
     end
     run "which ruby ; ruby -v; echo $PATH"
-    run "cd #{release_path} && bundle install #{ops || ''}"
+    run "cd #{release_path} && DEBUG_RESOLVER=true bundle install #{ops || ''}"
   end
 end
 
