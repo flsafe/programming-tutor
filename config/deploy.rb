@@ -43,6 +43,7 @@ set(:deploy_to) {"/home/#{user}/#{application_name}/#{stage}"}
 set :deploy_via, :remote_cache
 set :use_sudo, false
 set :ruby_path, '/opt/ruby-enterprise-1.8.7-2010.02/bin/'
+set :home_bin, "/home/#{user}/bin"
 set( :rails_env ) { stage || 'staging' }
 
 # you might need to set this if you aren't seeing password prompts
@@ -53,7 +54,7 @@ set( :rails_env ) { stage || 'staging' }
 # if (for example) you have locally installed gems or applications.  Note:
 # this needs to contain the full values for the variables set, not simply
 # the deltas.
-default_environment['PATH']="#{ruby_path}:/sbin/:/usr/local/bin:/usr/bin:/bin"
+default_environment['PATH']="#{ruby_path}:#{home_bin}:/sbin/:/usr/local/bin:/usr/bin:/bin"
 
 # We are using bundler for the gem dependencies.
 # default_environment['GEM_PATH']='<your paths>:/usr/lib/ruby/gems/1.8'
@@ -77,10 +78,16 @@ end
 # Install gems using bundler
 namespace :gems do
   task :bundle_install, :roles=>:app do
-    if rails_env == 'production'
+    if stage == :production
      ops = "--without test --without development" 
     end
     run "cd #{release_path} && bundle install #{ops || ''}"
+
+    #Celerity requires a jruby environment
+    if stage == :staging
+      run "cd #{release_path} && jruby -S gem install bundler --version '1.0.7'"
+      run "cd #{release_path} && jruby -S bundle install"
+    end
   end
 end
 
