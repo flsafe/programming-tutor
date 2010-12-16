@@ -98,8 +98,6 @@ class RemoveLetterUnitTest
 
     Process.setrlimit(Process::RLIMIT_RSS, max_mem)
 
-    Process.setrlimit(Process::RLIMIT_MEMLOCK, max_mem)
-
     Process.setrlimit(Process::RLIMIT_AS, max_mem)
   end
   
