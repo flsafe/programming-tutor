@@ -3,7 +3,7 @@
 #-- User Names
 # user: the user on the server to login with
 #--
-set :user,    'flicea'
+set :user,    'blueberrytree'
 
 #-- Repository info
 # scm_domain: Where is the repo located?
@@ -32,12 +32,12 @@ end
 task :production do
   role :web, domain
   role :app, domain 
-  role :db, domain
+  role :db, domain, :primary=>true
   set :stage, :production
 end
 
 #-- Deploy location depends on the stage
-set(:deploy_to) {"/home/#{user}/#{application_name}/#{stage}"}
+set(:deploy_to) {"/home/#{user}/#{stage}"}
 
 # miscellaneous options
 set :deploy_via, :remote_cache
