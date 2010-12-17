@@ -77,7 +77,6 @@ Feature: Do exercise
 		When I fill in the text editor with <code>
 		And I press "Check Syntax"
 		Then I should see "checking..."
-		And The task is finished
 		And I should see <message> within "#message"
 		
 	Examples:
@@ -86,15 +85,16 @@ Feature: Do exercise
 		| "int main(){int i return 0;}"  | "syntax error"              | 
 		
 	@javascript
+  @with-bg-job
 	Scenario: The user submits a solution to an exercise and it gets graded
     Given I am doing the exercise RemoveChar
 		And I press "Submit"
 		Then I should see "grading..."
-		And The task is finished
 		And I should see "Remove all letters:" within ".gradesheet"
 		And I should see "Final Grade: 100" within ".gradesheet"
 
 	@javascript
+  @with-bg-job
 	Scenario: The user submits a solution to an exercise, but the solution template crashes
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
@@ -103,7 +103,6 @@ Feature: Do exercise
 		When I fill in the text editor with the solution "remove-letter-solution.c"
 		And I press "Submit"
 		Then I should see "grading..."
-		And The task is finished
 		And I should see "Error"
 			
   @javascript
