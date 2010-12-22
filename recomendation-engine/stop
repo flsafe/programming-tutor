@@ -6,7 +6,7 @@ then
   cd recomendation-engine
 fi
 
-pidpath="../tmp/pids/recomendation-server.pid"
+pidpath="../tmp/pids/${RAILS_ENV}/recomendation-server.pid"
 
 if [ -f "${pidpath}" ]
 then
