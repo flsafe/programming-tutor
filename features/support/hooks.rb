@@ -15,11 +15,10 @@ After ('@with-rec-engine') do
   `recomendation-engine/stop`
 end
 
-  
 Before('@with-bg-job') do
-  system "/usr/bin/env RAILS_ENV=cucumber script/delayed_job start"
+  system "/usr/bin/env RAILS_ENV=cucumber script/delayed_job --pid-dir=#{Rails.root}/tmp/pids/cucumber start"
 end
 
 After('@with-bg-job') do
-  system "user/bin/env RAILS_ENV=cucumber script/delayed_job stop"
+  system "/usr/bin/env RAILS_ENV=cucumber script/delayed_job --pid-dir=#{Rails.root}/tmp/pids/cucumber stop"
 end
