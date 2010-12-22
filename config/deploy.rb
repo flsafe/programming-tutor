@@ -111,12 +111,12 @@ namespace :delayed_job do
     run "( pidof delayed_job && kill `pidof delayed_job`) || true"
     
     # Run delayed job with the same ruby as Passenger.
-    run "cd #{current_path}; bundle exec env RAILS_ENV=#{rails_env} #{ruby_path}/ruby script/delayed_job start" 
+    run "cd #{current_path}; bundle exec env RAILS_ENV=#{rails_env} #{ruby_path}/ruby script/delayed_job --pid-dir=tmp/pids/#{rails_env} start" 
   end
 
   desc "Stop delayed_job process" 
   task :stop, :roles => :app do
-    run "cd #{current_path}; bundle exec env RAILS_ENV=#{rails_env} script/delayed_job stop" 
+    run "cd #{current_path}; bundle exec env RAILS_ENV=#{rails_env} script/delayed_job --pid-dir=tmp/#{rails_env} stop" 
   end
 
   desc "Restart delayed_job process" 

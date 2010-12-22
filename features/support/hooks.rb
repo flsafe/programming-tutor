@@ -17,9 +17,9 @@ After ('@with-rec-engine') do
 end
 
 Before('@with-bg-job') do
-  system "/usr/bin/env RAILS_ENV=cucumber script/delayed_job --pid-dir=#{Rails.root}/tmp/pids/cucumber start"
+  system "/usr/bin/env RAILS_ENV=cucumber bundle exec script/delayed_job --pid-dir=#{Rails.root}/tmp/pids/cucumber start"
 end
 
 After('@with-bg-job') do
-  system "/usr/bin/env RAILS_ENV=cucumber script/delayed_job --pid-dir=#{Rails.root}/tmp/pids/cucumber stop"
+  system "/usr/bin/env RAILS_ENV=cucumber bundle exec script/delayed_job --pid-dir=#{Rails.root}/tmp/pids/cucumber stop"
 end
