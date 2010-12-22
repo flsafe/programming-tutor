@@ -12,7 +12,6 @@
 
 #define MAX_STR 255
 
-void remove_char(char, char[]);
 
 #ifdef LINUX_SECCOMP
   void set_limit(int resource, int value){         
@@ -24,8 +23,10 @@ void remove_char(char, char[]);
   }
 #endif
 
+void remove_char(char, char[]);
+
 int main(){
-  char str[MAX_STR + 1];
+  char str[MAX_STR + 1] = {'\0'};
   char rm_char;
 
   #ifdef LINUX_SECCOMP 
