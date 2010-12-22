@@ -23,7 +23,7 @@ Feature: Blueberry recomends exercises
 
     And the user "user1" rates "Ex3" as "good-challenge"
 
-    And I wait for "10" seconds
+    And I wait for "4" seconds
 
     Then the recomendation for "user1" should be "Ex4"
 
