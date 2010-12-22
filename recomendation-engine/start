@@ -19,7 +19,11 @@ fi
 boot_path="recomendation_engine/boot.clj"
 
 # Where to save the pid files used to keep track of what servers are running
-pidpath="../tmp/pids/recomendation-server.pid"
+pidpath="../tmp/pids/${RAILS_ENV}/recomendation-server.pid"
+if [ ! -d "../tmp/pids/${RAILS_ENV}" ]
+then
+  mkdir "../tmp/pids/${RAILS_ENV}"
+fi
 
 # Get the uri of the recomendation server based on the
 # current rails env and what is in the config file.

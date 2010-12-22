@@ -7,12 +7,13 @@ After ('@no-txn') do
 end
 
 Before('@with-rec-engine') do
-  out = `env RAILS_ENV=#{Rails.env} recomendation-engine/start`
+  out = `env RAILS_ENV=cucumber recomendation-engine/start`
   puts out
 end
 
 After ('@with-rec-engine') do
-  `recomendation-engine/stop`
+  out = `env RAILS_ENV=cucumber recomendation-engine/stop`
+  puts out
 end
 
 Before('@with-bg-job') do

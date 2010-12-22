@@ -6,7 +6,13 @@ then
   cd recomendation-engine
 fi
 
-pidpath="../tmp/pids/recomendation-server.pid"
+# Make sure $RAILS_ENV is set
+if [[ -z $RAILS_ENV ]]
+then
+  export RAILS_ENV='development'
+fi
+
+pidpath="../tmp/pids/${RAILS_ENV}/recomendation-server.pid"
 
 if [ -f "${pidpath}" ]
 then
