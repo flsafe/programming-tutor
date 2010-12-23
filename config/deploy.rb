@@ -106,11 +106,6 @@ end
 namespace :delayed_job do
   desc "Start delayed_job process" 
   task :start, :roles => :app do
-    # Only one delayed job daemon at a time. Kill the
-    # daemons that may be running from the previous deployment.
-    run "( pidof delayed_job && kill `pidof delayed_job`) || true"
-    
-    # Run delayed job with the same ruby as Passenger.
     run "cd #{current_path}; bundle exec env RAILS_ENV=#{rails_env} #{ruby_path}/ruby script/delayed_job --pid-dir=tmp/pids/#{rails_env} start" 
   end
 
@@ -130,11 +125,6 @@ end
 namespace :recomendations do
   desc "Start the recomendations server"
   task :start, :roles=> :app do
-    # Only one recemendation server should be running at a time 
-    # per environment. For example only one rec server in staging.
-    #
-    # Kill the rec server from the previous release
-    recomendations.stop
     run "cd #{current_path}; env RAILS_ENV=#{rails_env} recomendation-engine/start"
   end
   
