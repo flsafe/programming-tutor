@@ -8,7 +8,6 @@ gem 'capistrano'
 gem 'capybara', :group=>:test
 gem 'cucumber', :group=>:test                 
 gem 'cucumber-rails', :group=>:test
-gem 'daemons', '1.0.10'                               
 gem 'database_cleaner', :group=>:test
 gem 'delayed_job'
 gem 'easy_roles' 
