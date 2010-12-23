@@ -77,12 +77,12 @@ Feature: Do exercise
 		When I fill in the text editor with <code>
 		And I press "Check Syntax"
 		Then I should see "checking..."
-		And I should see <message> within "#message"
+		And I should <see> <message> within "#message"
 		
 	Examples:
-		| code                           | message                     |
-		| "int main(){int i; return 0;}" | "No syntax errors detected" |
-		| "int main(){int i return 0;}"  | "syntax error"              | 
+		| code                           | see     | message                     |
+		| "int main(){int i; return 0;}" | see     | "No syntax errors detected" |
+		| "int main(){int i return 0;}"  | not see | "No Syntax errors detected" | 
 		
 	@javascript
   @with-bg-job
