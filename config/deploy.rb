@@ -142,13 +142,7 @@ namespace :recomendations do
   task :stop, :roles=> :app do
     # Stop the receomdnation server, but one may not be running
     # so no need to freak if we try to shut it down we get an error
-    run "cd #{current_path}; recomendation-engine/stop || true"
-  end
-
-  desc "Restart the recomendations server"
-  task :restart do
-    recomendations.stop
-    recomendations.start
+    run "cd #{current_path}; env RAILS_ENV=#{rails_env} recomendation-engine/stop || true"
   end
 
   desc "Restart the recomendations server"
