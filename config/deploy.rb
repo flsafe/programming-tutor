@@ -106,12 +106,12 @@ end
 namespace :delayed_job do
   desc "Start delayed_job process" 
   task :start, :roles => :app do
-    run "cd #{current_path}; bundle exec env RAILS_ENV=#{rails_env} #{ruby_path}/ruby script/delayed_job --pid-dir=tmp/pids/#{rails_env} start" 
+    run "cd #{current_path}; env RAILS_ENV=#{rails_env} bundle exec script/delayed_job --pid-dir=tmp/pids/#{rails_env} start" 
   end
 
   desc "Stop delayed_job process" 
   task :stop, :roles => :app do
-    run "cd #{current_path}; bundle exec env RAILS_ENV=#{rails_env} script/delayed_job --pid-dir=tmp/pids/#{rails_env} stop" 
+    run "cd #{current_path}; env RAILS_ENV=#{rails_env} bundle exec  script/delayed_job --pid-dir=tmp/pids/#{rails_env} stop" 
   end
 
   desc "Restart delayed_job process" 

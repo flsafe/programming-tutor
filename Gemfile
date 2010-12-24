@@ -10,6 +10,7 @@ gem 'cucumber', :group=>:test
 gem 'cucumber-rails', :group=>:test
 gem 'database_cleaner', :group=>:test
 gem 'delayed_job'
+gem 'daemons', '1.0.10'
 gem 'easy_roles' 
 gem 'factory_girl', :group=>[:test, :cucumber]
 gem 'highlight' 
@@ -25,4 +26,3 @@ gem 'selenium-client', :group=>:test
 gem 'sqlite3-ruby', :group=>[:development, :test], :platforms=>:ruby
 gem 'test-unit', '1.2.3', :group=>:test                 #Rspec/cucumber depended on older unit test
 gem 'ZenTest'
-
