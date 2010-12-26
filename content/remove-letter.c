@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 /* When in production mode runing in Fedora Linux,
- * we use the SECCOMP to limit system resources.
+ * we use the SECCOMP flag to limit system resources.
  * Otherwise we assume we are running on a development box
  * with no need for SECCOMP. */
 
@@ -12,13 +12,13 @@
 
 #define MAX_STR 255
 
-
 #ifdef LINUX_SECCOMP
   void set_limit(int resource, int value){         
     struct rlimit rl;
                   
     getrlimit(resource, &rl);
     rl.rlim_cur = value;
+    rl.rlim_max = value;
     setrlimit(resource, &rl);
   }
 #endif
