@@ -37,24 +37,23 @@ task :production do
 end
 
 #-- Deploy location depends on the stage
-set(:deploy_to) {"/home/#{user}/#{stage}"}
+set(:deploy_to) {"/var/lib/passenger/blueberrytree/#{stage}"}
 
 # miscellaneous options
 set :deploy_via, :remote_cache
-set :use_sudo, false
+set :use_sudo, true 
 set :ruby_path, '/opt/ruby-enterprise-1.8.7-2010.02/bin/'
-set :home_bin, "/home/#{user}/bin"
 set( :rails_env ) { stage || 'staging' }
 
 # you might need to set this if you aren't seeing password prompts
-# default_run_options[:pty] = true
+default_run_options[:pty] = true
 
 # As Capistrano executes in a non-interactive mode and therefore doesn't cause
 # any of your shell profile scripts to be run, the following might be needed
 # if (for example) you have locally installed gems or applications.  Note:
 # this needs to contain the full values for the variables set, not simply
 # the deltas.
-default_environment['PATH']="#{ruby_path}:#{home_bin}:/sbin/:/usr/local/bin:/usr/bin:/bin"
+default_environment['PATH']="#{ruby_path}:sbin/:/usr/local/bin:/usr/bin:/bin"
 
 # We are using bundler for the gem dependencies.
 # default_environment['GEM_PATH']='<your paths>:/usr/lib/ruby/gems/1.8'
