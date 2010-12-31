@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <strings.h>
+#include <string.h>
 
 /* When in production mode runing in Fedora Linux,
  * we use the SECCOMP flag to limit system resources.
@@ -29,7 +29,7 @@ void remove_char(char, char[]);
 int main(){
   char str[MAX_STR + 1];
   char rm_char; 
-  bzero(str, MAX_STR + 1);
+  memset(str, '\0', (MAX_STR + 1) * sizeof(char));
 
   #ifdef LINUX_SECCOMP 
     set_limit(RLIMIT_CPU, 4); 
