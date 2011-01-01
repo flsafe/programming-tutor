@@ -71,7 +71,7 @@ class RemoveLetterUnitTest
 
   def run_with_and_expect(input, expected, title, points)
    result = run_with(input)
-   if result.lstrip.chomp == expected.lstrip.chomp
+   if result.strip.chomp == expected.strip.chomp
      add(:tests, title, :expected=>expected, :got=>result, :points=>points)
    else
      add(:tests, title, :expected=>expected, :got=>result, :points=>0)
