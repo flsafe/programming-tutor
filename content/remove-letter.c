@@ -43,7 +43,9 @@ int main(){
 
   scanf("%c %255s",&rm_char, str);
   remove_char(rm_char, str);
-  printf("%255s", str);
+
+  str[MAX_STR] = '\0'; /*Always null terminated*/
+  printf("%s", str);
   return 0;
 }
 
