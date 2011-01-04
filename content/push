@@ -1,0 +1,26 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'yaml'
+require 'active_record'
+require 'logger'
+
+# Change this to your own project home
+PROJ_HOME = "#{ENV['HOME']}/Projects/blueberryrow"
+
+ActiveRecord::Base.logger = Logger.new(STDERR)
+db_config = YAML::load(File.open("#{PROJ_HOME}/config/database.yml"))
+ActiveRecord::Base.establish_connection(db_config[ ENV['RAILS_ENV']||'development'] )
+
+require 'acts-as-taggable-on'
+
+# Load the exercise model files
+require "#{PROJ_HOME}/app/models/exercise"
+require "#{PROJ_HOME}/app/models/exercise_set"
+require "#{PROJ_HOME}/app/models/hint"
+require "#{PROJ_HOME}/app/models/unit_test"
+require "#{PROJ_HOME}/app/models/solution_template"
+
+
+
+# vim: set filetype=ruby
