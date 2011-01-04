@@ -30,7 +30,7 @@
               (do 
                 (handle-rating
                   (build-rating request))
-                (str @*user-prefs*))
+                "Rating accepted")
               "No rating")})
          
 ;TODO wrap-reload, wrap-stacktrace are only for dev
