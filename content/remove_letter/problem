@@ -1,0 +1,57 @@
+
+<p>
+Write a function that takes two arguments. The first argument is a char 'c'. The second is a
+char array 'str'. The function deletes all instances of 'c' in 'str'.
+</p>
+
+<p> For example: </p>
+
+<pre><code>
+remove_char('c', 'acacac') => 'aaa'
+
+remove_char('c', 'aaaac')  => 'aaaa'
+	
+remove_char('c', 'abab')   => 'abab'
+</code></pre>
+
+<p>
+Notice that the function 'remove_char' returns
+'void' and modifies the 'str' input array in place.
+</p>
+
+<h4>Hint 1:</h4>
+<p> Most people on their first try come up with an algorithm like this:</p>
+
+<pre><code>
+for each letter L in str
+ if L equals C
+  shift everything to the right of L to the left by one
+</code></pre>
+
+<p>
+This is very inefficient and is O(n^2) in the worst case. You can do better!
+</p>
+
+<p>
+In fact how could you do this in linear time?
+</p>
+
+<h4>Hint 1:</h4>
+<p> Most people on their first try come up with an algorithm like this:</p>
+
+<pre>
+<code>
+for each letter L in str
+ if L equals C
+  shift everything to the right of L to the left by one
+</code>
+</pre>
+
+<p>
+This is very inefficient and is O(n^2) in the worst case. You can do better!
+</p>
+
+<p>
+In fact how could you do this in linear time?
+</p>
+	    
