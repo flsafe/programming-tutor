@@ -11,7 +11,6 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
       results       = execute_unit_test_on_code(solution_code)
       place_results(results)
     rescue Exception => e
-      puts e.message if Rails.env == "development"
       Rails.logger.error(e.message)
       JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :error_message=>e.message, :job_type=>'grade')
     end
@@ -39,7 +38,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   end
   
   def get_exercise_unit_test
-     @unit_test = UnitTest.for_exercise(exercise_id).written_in('rb').first
+     @unit_test = UnitTest.for_exercise(exercise_id).written_in('ruby').first
     raise "Unit test not found" unless @unit_test
   end
   

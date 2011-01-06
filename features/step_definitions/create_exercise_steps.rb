@@ -33,7 +33,7 @@ Then /^I should see the sample exercise$/ do
     And the "Hint" field should contain "sample hint"
     And the "Src language" field should contain "c"
     And the "Src code" field should contain "int main"
-    And the "Src language" field within "#unit_tests" should contain "rb"
+    And the "Src language" field within "#unit_tests" should contain "ruby"
     And the "Src code" field within "#unit_tests" should contain "RemoveLetterUnitTest"
     And the "Image" field within "#figures" should contain "/system/images/*"
     And the "Img link" field within "#figures" should contain "<img alt=.+ src=.+/>"

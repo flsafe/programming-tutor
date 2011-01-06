@@ -77,7 +77,7 @@ describe GradeSolutionJob do
     it "gets the unit test associated with the exercise" do
       UnitTest.stub_chain(:for_exercise, :written_in)
       UnitTest.should_receive(:for_exercise).with(exercise.id).and_return(@mock_scope = mock('mock_scope'))
-      @mock_scope.should_receive(:written_in).with('rb')
+      @mock_scope.should_receive(:written_in).with('ruby')
       job.perform
     end
     
