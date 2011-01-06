@@ -47,11 +47,6 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     solution_code = @template.fill_in(IncludeScrubber.scrub_all_includes(code))
   end
   
-  def fill_in_template_and_execute_unit_test
-    solution_code = @template.fill_in(code)
-    @unit_test.run_on(solution_code)
-  end
-  
   def place_results(results)
     if results[:error]
         JobResult.place_result(:user_id=>user_id, :exercise_id=>exercise_id, :error_message=>results[:error], :job_type=>'grade')

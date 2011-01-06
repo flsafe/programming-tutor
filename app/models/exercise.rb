@@ -15,7 +15,7 @@ class Exercise < ActiveRecord::Base
   after_update :save_associates
   
   validates_presence_of :title, :description, :problem, :tutorial, :minutes, :unit_tests, :exercise_set
-  validates_associated  :hints, :unit_tests, :figures, :exercise_set
+  validates_associated  :hints, :unit_tests, :figures, :exercise_set, :solution_templates
   
   validates_uniqueness_of :title
     
