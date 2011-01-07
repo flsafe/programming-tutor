@@ -1,3 +1,5 @@
+require 'tempfile'
+
 class Compiler
   
   def self.syntax_error?(code)
