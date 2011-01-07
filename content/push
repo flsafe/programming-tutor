@@ -1,0 +1,133 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'yaml'
+require 'active_record'
+require 'active_support'
+require 'logger'
+require 'paperclip'
+require 'pp'
+
+# Change this to your own project home
+PROJ_HOME = "."
+ENV['SCRIPT'] = '1'
+
+ActiveRecord::Base.logger = Logger.new(STDERR)
+db_config = YAML::load(File.open("#{PROJ_HOME}/config/database.yml"))
+ActiveRecord::Base.establish_connection(db_config[ ENV['RAILS_ENV']||'development'] )
+
+require 'acts-as-taggable-on'
+
+# Load the exercise model files
+require "#{PROJ_HOME}/app/models/figure"
+require "#{PROJ_HOME}/app/models/exercise_set"
+require "#{PROJ_HOME}/app/models/hint"
+require "#{PROJ_HOME}/app/models/unit_test"
+require "#{PROJ_HOME}/app/models/solution_template"
+require "#{PROJ_HOME}/app/models/exercise"
+
+CONTENT_HOME = "#{PROJ_HOME}/content"
+Dir.chdir(CONTENT_HOME)
+
+def start
+  Dir.foreach(Dir.getwd) do |exercise_title|
+    create_or_update_by(exercise_title) if valid_exercise?(exercise_title)
+  end
+end
+
+def valid_exercise?(exercise_title)
+  if exercise_title == "." or exercise_title == ".." or exercise_title =~ /^\./ or not File.directory?(exercise_title)
+    return false
+  end
+  true
+end
+
+def create_or_update_by(exercise_title_dir)
+  Dir.chdir(exercise_title_dir)
+  exercise_title = exercise_title_dir.titleize
+  begin
+    exercise = Exercise.find_by_title(exercise_title) || Exercise.new
+    exercise.title = exercise_title
+    populate_exercise(exercise)
+  rescue Exception
+    puts "Oops! #{$!}" 
+    puts $!.backtrace
+    exit 1
+  end
+end
+
+def populate_exercise(exercise)
+  populate_primitives(exercise)
+  populate_assoc_models(exercise)
+  save_with_exercise_set(exercise)
+end
+
+def save_with_exercise_set(exercise)
+   puts exercise.to_yaml
+   set = ExerciseSet.find_by_title( read_field('exercise_set_title') )
+   unless set
+    set = ExerciseSet.new
+    set.title = read_field('exercise_set_title')
+    set.description = read_field('exercise_set_description')
+    set.save!
+    set.exercises << exercise
+   else
+     set.exercises << exercise
+   end
+end
+
+def populate_primitives(exercise)
+    exercise.description = read_field('description')
+    exercise.problem = read_field('problem')
+    exercise.tutorial = read_field('tutorial')
+    exercise.minutes = read_field('minutes')
+    exercise.finished = read_field('finished').to_i
+    exercise.algorithm_list = read_field('algorithm_list')
+    exercise.data_structure_list = read_field('data_structure_list')
+end
+
+def populate_assoc_models(exercise)
+  # TODO: Currently only supporting one solution template and unit test
+  # per exercise. 
+  exercise.solution_templates.replace( new_solution_template )
+  exercise.unit_tests.replace( new_unit_test )
+  exercise.hints.replace( new_hints )
+end
+
+def new_solution_template
+  template = SolutionTemplate.new
+  template.src_language = 'c'
+  template.src_code = IO.read('solution_template.c')
+  [ template ]
+end
+
+def new_unit_test
+  unit_test = UnitTest.new
+  unit_test.src_language = 'rb'
+  unit_test.src_code = IO.read('unit_test.rb')
+  [ unit_test ]
+end
+
+def new_hints
+  hints = []
+  Dir.foreach(Dir.getwd) do | filename | 
+    if hint_file?(filename)
+     hint = Hint.new
+     hint.text = IO.read(filename)
+     hints << hint
+    end
+  end
+  hints
+end
+
+def hint_file?(filename)
+  return true if filename =~ /^hint\d+/
+end
+
+def read_field(field)
+  IO.read(field).lstrip.rstrip.chomp
+end
+
+start
+
+# vim: set filetype=ruby
