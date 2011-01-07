@@ -35,7 +35,7 @@ Given /^the exercise "([^\"]*)" has the solution template "([^\"]*)" and the uni
   
   exercise = Exercise.find_by_title exercise_title
   exercise.solution_templates.create! :src_code=>template, :src_language=>'c'
-  exercise.unit_tests.create! :src_code=>unit_test, :src_language=>'rb'
+  exercise.unit_tests.create! :src_code=>unit_test, :src_language=>'ruby'
 end
 
 Given /^the exercise "([^\"]*)" takes "([^\"]*)" minutes to complete$/ do |exercise_title, minutes|

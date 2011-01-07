@@ -13,4 +13,21 @@ module CozyFileUtils
     t = Time.now
     "#{prefix}-#{t.usec}-#{Kernel.rand(10000)+1}"
   end
+
+  def self.language(filename)
+    case CozyFileUtils.base_part_of(filename)
+      when /\.c$/
+        'c' 
+      when /\.rb$/
+        'ruby' 
+      when /\.java$/
+        'java'
+      when /\.clj$/
+        'clojure'
+    end
+  end
+  
+  def self.base_part_of(filename) 
+    out = File.basename(filename).gsub(/[^\w._-]/, '') 
+  end 
 end

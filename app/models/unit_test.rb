@@ -29,7 +29,7 @@ class UnitTest < ActiveRecord::Base
   
   def self.from_file_field(unit_test_field)
     return unless unit_test_field
-    src_language = UnitTest.language(unit_test_field)
+    src_language = CozyFileUtils.language(unit_test_field.original_filename)
     src_code     = unit_test_field.read
     
     {:src_language=>src_language, :src_code=>src_code}
@@ -85,17 +85,4 @@ class UnitTest < ActiveRecord::Base
    def work_dir
     APP_CONFIG['work_dir']
   end
-  
-  def self.language(unit_test_field)
-    case UnitTest.base_part_of(unit_test_field.original_filename)
-      when /\.(c)$/
-        $1
-      when /\.(rb)$/
-        $1
-    end
-  end
-  
-  def self.base_part_of(user_program) 
-    File.basename(user_program).gsub(/[^\w._-]/, '') 
-  end 
 end
