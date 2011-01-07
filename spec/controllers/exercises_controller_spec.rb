@@ -29,7 +29,6 @@ describe ExercisesController do
     before(:each) do
       stub_exercise
       stub_exercise.stub_chain(:hitns, :build)
-      stub_exercise.stub_chain(:figures, :build)
       Exercise.stub(:new).and_return(stub_exercise)
     end
     
@@ -45,11 +44,6 @@ describe ExercisesController do
     
     it 'assigns a new unit test list containing one new unit test' do
       stub_exercise.unit_tests.should_receive(:build).once
-      get 'new'
-    end
-    
-    it 'assigns a new figure to the exercise' do
-      stub_exercise.figures.should_receive(:build).once
       get 'new'
     end
     

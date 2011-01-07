@@ -23,7 +23,6 @@ Rails::Initializer.run do |config|
   config.gem 'factory_girl'
   config.gem 'acts-as-taggable-on'
   config.gem 'easy_roles'
-  config.gem 'paperclip'
   config.gem 'delayed_job'
   config.gem 'highlight', :lib=>'simplabs/highlight'
   

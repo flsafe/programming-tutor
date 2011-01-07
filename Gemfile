@@ -16,7 +16,6 @@ gem 'factory_girl', :group=>[:test, :cucumber]
 gem 'highlight' 
 gem 'mysql', :platforms=>:ruby
 gem 'nifty-generators', :group=>:development
-gem 'paperclip'
 gem 'rack' 
 gem 'rails', '2.3.5'
 gem 'rspec', '1.3.1', :group=>:test
