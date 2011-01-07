@@ -5,7 +5,6 @@ require 'yaml'
 require 'active_record'
 require 'active_support'
 require 'logger'
-require 'paperclip'
 require 'pp'
 
 # Change this to your own project home
@@ -102,7 +101,7 @@ end
 
 def new_unit_test
   unit_test = UnitTest.new
-  unit_test.src_language = 'rb'
+  unit_test.src_language = 'ruby'
   unit_test.src_code = IO.read('unit_test.rb')
   [ unit_test ]
 end
