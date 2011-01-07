@@ -9,7 +9,6 @@ require 'pp'
 
 # Change this to your own project home
 PROJ_HOME = "."
-ENV['SCRIPT'] = '1'
 
 ActiveRecord::Base.logger = Logger.new(STDERR)
 db_config = YAML::load(File.open("#{PROJ_HOME}/config/database.yml"))
