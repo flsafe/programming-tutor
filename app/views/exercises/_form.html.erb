@@ -65,14 +65,6 @@
 	</div>
 	<%= add_model_link "Add Unit Test", :unit_tests, :partial=>'unit_test', :object=>UnitTest.new %>
 
-	
-	<div id="figures">
-		<p>
-			<%= render :partial=>'figure', :collection=>@exercise.figures %>
-		</p>	
-	</div>
-	<%= add_model_link "Add Figure", :figures, :partial=>'figure', :object=>Figure.new %>
-
 	<p>
 		<%= f.label :exercise_set_id, "Exercise Set" %>
 		<%= f.collection_select :exercise_set_id, ExerciseSet.find(:all), :id, :title, :prompt=>'Select Exercise Set' %>

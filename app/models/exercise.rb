@@ -2,7 +2,6 @@ class Exercise < ActiveRecord::Base
   acts_as_taggable
   acts_as_taggable_on :algorithms, :data_structures
 
-  has_many :figures
   has_many :hints, :dependent=>:destroy
   has_many :solution_templates, :dependent=>:destroy
   has_many :unit_tests, :dependent=>:destroy
@@ -15,7 +14,7 @@ class Exercise < ActiveRecord::Base
   after_update :save_associates
   
   validates_presence_of :title, :description, :problem, :tutorial, :minutes, :unit_tests, :exercise_set
-  validates_associated  :hints, :unit_tests, :figures, :exercise_set, :solution_templates
+  validates_associated  :hints, :unit_tests, :exercise_set, :solution_templates
   
   validates_uniqueness_of :title
     
@@ -45,10 +44,6 @@ class Exercise < ActiveRecord::Base
   def new_unit_test_attributes=(unit_test_attributes)
     new_attributes_for(:unit_tests, unit_test_attributes)
   end
-  
-  def new_figure_attributes=(figure_attributes)
-    new_attributes_for(:figures, figure_attributes)
-  end
 
   def new_exercise_set_attributes=(new_exercise_set_attributes)
     #A new exercise set hash is not always returned from the client, sometimes one is chosen from the select dropdown.
@@ -65,15 +60,6 @@ class Exercise < ActiveRecord::Base
   
   def existing_unit_test_attributes=(unit_test_attributes)
     existing_attributes_for(:unit_tests, unit_test_attributes)
-  end
-
-  def existing_figure_attributes=(existing_figure_attributes)
-    figures.reject(&:new_record?).each do |figure|
-      attributes = existing_figure_attributes[figure.id.to_s]
-      if not attributes
-        figures.delete(figure)
-      end
-    end
   end
   
   def get_stat(name)
@@ -105,7 +91,6 @@ class Exercise < ActiveRecord::Base
     hints.each {|h| h.save(false)}
     unit_tests.each {|u| u.save(false)}
     solution_templates.each {|s| s.save(false)}
-    figures.each {|f| f.save(false)}
     exercise_set.save(false)
   end
   

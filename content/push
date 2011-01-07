@@ -19,7 +19,6 @@ ActiveRecord::Base.establish_connection(db_config[ ENV['RAILS_ENV']||'developmen
 require 'acts-as-taggable-on'
 
 # Load the exercise model files
-require "#{PROJ_HOME}/app/models/figure"
 require "#{PROJ_HOME}/app/models/exercise_set"
 require "#{PROJ_HOME}/app/models/hint"
 require "#{PROJ_HOME}/app/models/unit_test"

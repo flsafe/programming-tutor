@@ -58,7 +58,6 @@ class ExercisesController < ApplicationController
     @exercise.hints.build
     @exercise.solution_templates.build
     @exercise.unit_tests.build
-    @exercise.figures.build
     @exercise_sets = ExerciseSet.find(:all, :select=>"id, title")
     respond_to do |format|
       format.html # new.html.erb
@@ -91,7 +90,6 @@ class ExercisesController < ApplicationController
     params[:exercise][:existing_hint_attributes] ||= {}
     params[:exercise][:existing_unit_test_attributes] ||= {}
     params[:exercise][:existing_solution_template_attributes] ||={}
-    params[:exercise][:existing_figure_attributes] ||= {}
     
     @exercise = Exercise.find(params[:id])
     respond_to do |format|

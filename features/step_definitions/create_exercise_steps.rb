@@ -10,14 +10,12 @@ When /^I fill in the sample exercise$/ do
       And I fill in "Tutorial" with "sample tutorial"
       And I fill in "Hint" with "sample hint"
       And I select "60" from "Minutes"
-      And I attach the file "content/test.png" to "Upload Figure"
       And I attach the file "content/remove-letter.c" to "Upload Solution Template"
       And I attach the file "content/remove-letter-unit-test.rb" to "Upload Unit Test"
       And I fill in "Set Title" with "sample exercise set title"
       And I fill in "Set Description" with "sampel exercise set description"
       And I fill in "Set Algorithm Tags" with "sample exercise algorithm" 
       And I fill in "Set Data Structure Tags" with "sample exercise data structure"
-      And I attach the file "content/test.png" to "Upload Figure"
     }
 end
 
@@ -35,8 +33,6 @@ Then /^I should see the sample exercise$/ do
     And the "Src code" field should contain "int main"
     And the "Src language" field within "#unit_tests" should contain "ruby"
     And the "Src code" field within "#unit_tests" should contain "RemoveLetterUnitTest"
-    And the "Image" field within "#figures" should contain "/system/images/*"
-    And the "Img link" field within "#figures" should contain "<img alt=.+ src=.+/>"
   }
 end
 
