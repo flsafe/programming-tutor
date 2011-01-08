@@ -104,12 +104,12 @@ end
 namespace :delayed_job do
   desc "Start delayed_job process" 
   task :start, :roles => :app do
-    run "cd #{current_path}; env RAILS_ENV=#{rails_env} bundle exec script/delayed_job --pid-dir=tmp/pids/#{rails_env} start" 
+    run "cd #{release_path}; env RAILS_ENV=#{rails_env} bundle exec script/delayed_job --pid-dir=tmp/pids/#{rails_env} start" 
   end
 
   desc "Stop delayed_job process" 
   task :stop, :roles => :app do
-    run "cd #{current_path}; env RAILS_ENV=#{rails_env} bundle exec  script/delayed_job --pid-dir=tmp/pids/#{rails_env} stop" 
+    run "cd #{release_path}; env RAILS_ENV=#{rails_env} bundle exec  script/delayed_job --pid-dir=tmp/pids/#{rails_env} stop" 
   end
 
   desc "Restart delayed_job process" 
@@ -123,20 +123,27 @@ end
 namespace :recomendations do
   desc "Start the recomendations server"
   task :start, :roles=> :app do
-    run "cd #{current_path}; env RAILS_ENV=#{rails_env} recomendation-engine/start"
+    run "cd #{release_path}; env RAILS_ENV=#{rails_env} recomendation-engine/start"
   end
   
   desc "Stop the recomendations server"
   task :stop, :roles=> :app do
     # Stop the receomdnation server, but one may not be running
     # so no need to freak if we try to shut it down we get an error
-    run "cd #{current_path}; env RAILS_ENV=#{rails_env} recomendation-engine/stop || true"
+    run "cd #{release_path}; env RAILS_ENV=#{rails_env} recomendation-engine/stop || true"
   end
 
   desc "Restart the recomendations server"
   task :restart do
     recomendations.stop
     recomendations.start
+  end
+end
+
+namespace :content do
+  desc "Push the content to the database"
+  task :push, :roles=>:app do
+    run "cd #{release_path}; env RAILS_ENV=#{rails_env} bundle exec ruby content/push"
   end
 end
 
@@ -152,6 +159,7 @@ after "deploy:restart", "recomendations:restart"
 after "deploy:update_code", "gems:bundle_install"
 after "deploy:update_code", "deploy:create_tmp"
 after "deploy:update_code", "jars:jars_install"
+after "deploy:update_code", "content:push"
 
 # optional task to reconfigure databases -- Not being used for now
  # after "deploy:update_code", :configure_database
