@@ -29,7 +29,7 @@ class Compiler
     begin
       f.write(code)
       f.flush
-      out = `gcc #{options} -x c -o #{dest_path} #{code_file_path} 2>&1`
+      out = `gcc #{options} -g -o #{dest_path} #{code_file_path} 2>&1`
       if out =~ /error/i
         raise "Could not compile solution!"
       end

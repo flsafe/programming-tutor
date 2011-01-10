@@ -1,0 +1,16 @@
+<h4>Hint 1:</h4>
+<p>The obvious but naive solution is the following algorithm:</p>
+
+<pre><code>
+for each letter L in str
+ if remove L
+  shift everything to the right of L to the left by one
+</code></pre>
+
+<p>
+This is very inefficient and is O(n^2) in the worst case. You can do better!
+</p>
+
+<p>
+In fact this problem can be solved with a linear runtime algorithm.
+</p>
