@@ -9,10 +9,10 @@ Given /^I am doing the exercise RemoveChar$/ do
 end
 
 Given /^I have filled in the exercise "([^"]*)" with "([^"]*)$/ do |title, solution_file|
-  title = title.tableize
-  solution_template = File.join(title, 'solution_template.rb')
-  unit_test = File.join(title, 'unit_test.rb')
-  solution = Fille.join(title, solution_file)
+  title_t = title.tableize
+  solution_template = File.join(title_t, 'solution_template.rb')
+  unit_test = File.join(title_t, 'unit_test.rb')
+  solution = Fille.join(title_t, solution_file)
 
   steps %Q{
     Given I am logged in as the user "frank"
