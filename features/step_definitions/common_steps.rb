@@ -20,7 +20,6 @@ Given /^I have filled in the exercise "([^"]*)" with "([^"]*)"$/ do |title, solu
 		And there exists an exercise set "Exercise Set" with "#{title}" and "Ex2"
 		And the exercise "#{title}" has the solution template "#{solution_template}" and the unit test "#{unit_test}"
 		And I am viewing the tutor page for "#{title}"
-    And show me the page
 		And I fill in the text editor with the solution "#{solution}"
   }
 end

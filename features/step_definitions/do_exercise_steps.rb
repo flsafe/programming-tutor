@@ -14,17 +14,13 @@ Given /^I am viewing the tutor page for "([^\"]*)"$/ do | title |
 end
 
 When /^I fill in the text editor with "([^\"]*)"$/ do |code|
-  if page.has_selector?('edit_area_toggle_checkbox_textarea_1')
-    uncheck('edit_area_toggle_checkbox_textarea_1')
-  end
+  uncheck('edit_area_toggle_checkbox_textarea_1')
   fill_in("textarea_1", :with => code)
 end
 
 When /^I fill in the text editor with the solution "([^\"]*)"$/ do |filename|
   f    = open("content/#{filename}", 'r')
-  if page.has_selector?('edit_area_toggle_checkbox_textarea_1')
-    uncheck('edit_area_toggle_checkbox_textarea_1')
-  end
+  uncheck('edit_area_toggle_checkbox_textarea_1')
   fill_in("textarea_1", :with => f.read)
   f.close
 end
