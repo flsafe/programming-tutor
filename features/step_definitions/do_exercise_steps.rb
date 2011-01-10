@@ -2,6 +2,7 @@ require 'eregex'
 
 Given /^I am viewing the tutor page for "([^\"]*)"$/ do | title |
   ex = Exercise.find_by_title title
+  ex.should_not == nil
 
   # Blueberry only displays an exercise if it is a 
   # recomended exercise or a retake. So here we
@@ -13,13 +14,17 @@ Given /^I am viewing the tutor page for "([^\"]*)"$/ do | title |
 end
 
 When /^I fill in the text editor with "([^\"]*)"$/ do |code|
-  uncheck('edit_area_toggle_checkbox_textarea_1')
+  if page.has_selector?('edit_area_toggle_checkbox_textarea_1')
+    uncheck('edit_area_toggle_checkbox_textarea_1')
+  end
   fill_in("textarea_1", :with => code)
 end
 
 When /^I fill in the text editor with the solution "([^\"]*)"$/ do |filename|
   f    = open("content/#{filename}", 'r')
-  uncheck('edit_area_toggle_checkbox_textarea_1')
+  if page.has_selector?('edit_area_toggle_checkbox_textarea_1')
+    uncheck('edit_area_toggle_checkbox_textarea_1')
+  end
   fill_in("textarea_1", :with => f.read)
   f.close
 end

@@ -11,7 +11,7 @@ end
 
 Given /^there exists a recomendation for "([^\"]*)"$/ do |exercise_titles|
   exercises = Exercise.find :all,
-    :conditions=>{:title=>exercise_titles.split},
+    :conditions=>{:title=>exercise_titles.split(',')},
     :select=>[:id]
   exercise_ids = exercises.map {|e| e.id}.join(',')
   recomended_ids = ExerciseRecomendationList.new(exercise_ids)
