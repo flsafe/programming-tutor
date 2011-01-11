@@ -102,13 +102,11 @@ describe Exercise do
     
     context "from file" do
       it "adds a new unit test object" do
-        unit_test = stub_model(UnitTest, :src_language=>@src_language, :src_code=>@src_code)
-        UnitTest.stub(:from_file_field).and_return(unit_test.attributes)
-      
-        @exercise.new_unit_test_attributes = [:unit_test_file=>nil]
+        file = mock(:file, :original_file_name=>"unit_test.rb", :read=>"unit test code",:to_str=>"unit_test.rb", :to_s=>"unit_test.rb").as_null_object
+        @exercise.new_unit_test_attributes = [:unit_test_file=>file]
         
-        (@exercise.unit_tests.select {|ut| ut.src_language == unit_test.src_language and 
-          ut.src_code == unit_test.src_code}).should have(1).items
+        (@exercise.unit_tests.select {|ut| ut.src_language == "ruby" and 
+          ut.src_code == "unit test code"}).should have(1).items
       end
     end
   end
