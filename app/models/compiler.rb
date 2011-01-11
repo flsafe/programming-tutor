@@ -3,8 +3,8 @@ require 'tempfile'
 class Compiler
   
   def self.syntax_error?(code)
-    out = Compiler.check_syntax(code)
-    out =~ /error/i ? true : false
+    Compiler.check_syntax(code)
+    $? == 0 ? false : true
   end
   
    def self.check_syntax(code)
@@ -29,8 +29,8 @@ class Compiler
     begin
       f.write(code)
       f.flush
-      out = `gcc #{options} -g -o #{dest_path} #{code_file_path} 2>&1`
-      if out =~ /error/i
+      out = `gcc #{options} -x c -g -o #{dest_path} #{code_file_path} 2>&1`
+      if $? != 0
         raise "Could not compile solution!"
       end
       true
