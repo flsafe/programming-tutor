@@ -8,7 +8,15 @@ class UnitTest < ActiveRecord::Base
   named_scope :written_in, lambda {|lang| {:conditions=>{:src_language=>lang}}}
   
   named_scope :for_exercise, lambda {|exercise_id| {:conditions=>{:exercise_id=>exercise_id}}}
-  
+
+  @@EXEC_NAME_REGEX = /<EXEC_NAME>/
+
+  @@COMPILE_OPTIONS = "-DLINUX_SECCOMP"
+
+  def unit_test_file=(unit_test_file)
+    self.attributes = from_file_field(unit_test_file)
+  end
+
   def run_on(solution_code = nil)
     begin
       @solution_code = solution_code
@@ -23,37 +31,20 @@ class UnitTest < ActiveRecord::Base
     end
   end
   
-  def unit_test_file=(unit_test_file)
-    self.attributes = UnitTest.from_file_field(unit_test_file)
-  end
-  
-  def self.from_file_field(unit_test_field)
-    return unless unit_test_field
-    src_language = CozyFileUtils.language(unit_test_field.original_filename)
-    src_code     = unit_test_field.read
-    
-    {:src_language=>src_language, :src_code=>src_code}
-  end
-  
   protected
   
   def initialize_unit_test_executable_paths
-    @exec_file_path = CozyFileUtils.unique_file_in(work_dir, 'tmp')
+    @exec_file_path = CozyFileUtils.unique_file_in(APP_CONFIG['work_dir'], 'tmp')
     @unit_test_path = @exec_file_path + '-unit-test'      
   end
   
   def substitute_executable_path_in_unit_test_code
-    @unit_test_src_code = src_code.gsub(/<EXEC_NAME>/, @exec_file_path)
+    @unit_test_src_code = src_code.gsub(@@EXEC_NAME_REGEX, @exec_file_path)
   end
 
   def compile_user_solution
-    options = ""
-    if Rails.env == 'production' 
-      # In production mode assume that we are running in a Linux system
-      # with SECCOMP enabled
-      options = "-DLINUX_SECCOMP"
-    end
-    Compiler.compile_to(@solution_code, @exec_file_path, options)
+    ops = Rails.env == 'production' ? @@COMPILE_OPTIONS : ''
+    Compiler.compile_to(@solution_code, @exec_file_path, ops)
   end
   
   def write_unit_test_to_file
@@ -82,7 +73,11 @@ class UnitTest < ActiveRecord::Base
     results && ( not results[:grade].blank?) && ( not results[:tests].blank?)
   end
   
-   def work_dir
-    APP_CONFIG['work_dir']
+  def from_file_field(unit_test_field)
+    return unless unit_test_field
+    src_language = CozyFileUtils.language(unit_test_field.original_filename)
+    src_code     = unit_test_field.read
+    
+    {:src_language=>src_language, :src_code=>src_code}
   end
 end

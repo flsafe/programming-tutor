@@ -3,7 +3,7 @@ module CozyFileUtils
   def self.unique_file_in(dir, prefix, opts = { :with_base => true })
     while true
      file = CozyFileUtils.rand_file_name(prefix)
-     path = "#{dir}/#{file}"
+     path = File.join(dir, file) 
      break unless File.exists?(path)
     end
     opts[:with_base] ? path : path.gsub(/#{dir}\//, "")
