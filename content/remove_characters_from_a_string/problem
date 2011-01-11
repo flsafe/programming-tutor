@@ -1,7 +1,7 @@
 
 <p>
-Write a function that takes two arguments. The first argument is a 
-a character array 'remove_chars'. The second argument is a 
+Write a function 'remove_from_str' that takes two arguments. The first argument is a 
+character array 'remove_chars'. The second argument is a 
 character array 'str'. The function removes the characters in 'remove_chars'
 from 'str'.
 </p>
@@ -9,37 +9,16 @@ from 'str'.
 <p> For example: </p>
 
 <pre><code>
-void remove_char(char remove_chars[], char str[]);
+void remove_from_str(char[], char[]);
 
-Given remove_char('c', 'acacac') the resultant string is 'aaa'
+remove_from_str("c", "acacac") => "aaa"
 
-Given remove_char('c', 'aaaac')  the resultant string is 'aaaa'
+remove_from_str("c", "aaaac")  => "aaaa"
 	
-Given remove_char('c', 'abab') the resultant string is 'abab'
+remov_from_str("c", "abab")    => "abab"
 </code></pre>
 
 <p>
-Notice that the function 'remove_char' returns
+Notice that the function 'remove_from_str' returns
 'void' and modifies the character array 'str' in place.
 </p>
-
-
-<h4>Hint 1:</h4>
-<p> Most people on their first try come up with an algorithm like this:</p>
-
-<pre>
-<code>
-for each letter L in str
- if L equals C
-  shift everything to the right of L to the left by one
-</code>
-</pre>
-
-<p>
-This is very inefficient and is O(n^2) in the worst case. You can do better!
-</p>
-
-<p>
-In fact how could you do this in linear time?
-</p>
-	    

@@ -1,1 +1,47 @@
-Tutorial comming soon
+<p>
+Ah yes, this problem. This problem is actually a pretty common
+phone screening problem or a warm up problem. As always there is 
+an obvious and inefficient solution that your interviewer won't like.
+And there exists an insightful and elegant solution that can help you
+land your dream job.
+</p>
+
+<p>
+The difference in efficiency and elegance is in the use
+of an appropriate data structure. The technique you learn in this
+tutorial can also be applied to similar problems.
+</p>
+
+</p>
+We are tasked with removing certain characters from an array without
+allocating a new array. Let's start with removing a char from an array. One
+way to do this is to shift the elements in an array as shown in figure 1 below.
+</p>
+
+<p class="description">
+Figure 1. We are deleting the character 'c' by shifting everything
+to the right of 'c' left by one.
+</p>
+<img src="images.blueberrytree.ws.s3.amazonaws.com/shifting_array.png"/>
+
+<p>
+What about detecting what characters to remove? The problem above
+states that one of our inputs is 'remove_chars' and it contains the
+chars we need to remove from 'str'. Well, we could simply check to see
+if a char 'c' in 'str' is included in 'remove_chars'.
+</p>
+
+<p>
+The algorithm depicted above is simple. Let's code it for funsies. You can see
+me code in listing 1 below.
+</p>
+
+<p class="description">
+Listing 1. My naive code for solving this exercise.
+</p>
+<pre>
+<code>
+
+</code>
+</pre>
+
