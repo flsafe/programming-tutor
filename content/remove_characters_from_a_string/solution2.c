@@ -80,12 +80,10 @@ void remove_from_str(char remove_chars[], char str[]){
   int read = 0;
 
   while( str[read] ){
-    if( includes(remove_chars, str[read]) ){
+    if( includes(remove_chars, str[read]) )
       remove_char(read, str);
-    }
-    else{
+    else
       read++;
-    }
   }
 }
 
