@@ -1,9 +1,9 @@
 
 <p>
-Write a function 'remove_from_str' that takes two arguments. The first argument is a 
-character array 'remove_chars'. The second argument is a 
-character array 'str'. The function removes the characters in 'remove_chars'
-from 'str'.
+Write a function remove_from_str that takes two arguments. The first argument is a 
+character array remove_chars. The second argument is a 
+character array str. The function removes the characters in remove_chars
+from str.
 </p>
 
 <p> For example: </p>
@@ -19,6 +19,6 @@ remov_from_str("c", "abab")    => "abab"
 </code></pre>
 
 <p>
-Notice that the function 'remove_from_str' returns
-'void' and modifies the character array 'str' in place.
+Notice that the function remove_from_str returns
+void and modifies the character array str in place.
 </p>

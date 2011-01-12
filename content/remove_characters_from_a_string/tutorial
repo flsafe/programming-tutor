@@ -8,7 +8,7 @@ land your dream job.
 
 <p>
 The difference in efficiency and elegance is in the use
-of an appropriate data structure. The technique you learn in this
+of the appropriate data structure. The technique you learn in this
 tutorial can also be applied to similar problems.
 </p>
 
@@ -19,21 +19,21 @@ way to do this is to shift the elements in an array as shown in figure 1 below.
 </p>
 
 <p class="description">
-Figure 1. We are deleting the character 'c' by shifting everything
-to the right of 'c' left by one.
+Figure 1. We are deleting the character c by shifting everything
+to the right of c left by one.
 </p>
 <img src="images.blueberrytree.ws.s3.amazonaws.com/shifting_array.png"/>
 
 <p>
-What about detecting what characters to remove? The problem above
-states that one of our inputs is 'remove_chars' and it contains the
-chars we need to remove from 'str'. Well, we could simply check to see
-if a char 'c' in 'str' is included in 'remove_chars'.
+The algorithm to solve this problem then consits of scaning the input
+string str one character at a time. If a character in str is included in
+the remove_char array then, we delete it.
 </p>
 
 <p>
-The algorithm depicted above is simple. Let's code it for funsies. You can see
-me code in listing 1 below.
+The algorithm depicted above is simple. Let's code it for fun. You can see
+me code in listing 1 below. Feel free to post feedback if you catch me being
+stupid.
 </p>
 
 <p class="description">
@@ -41,7 +41,58 @@ Listing 1. My naive code for solving this exercise.
 </p>
 <pre>
 <code>
+#include<string.h> 
 
+/*
+ * Return 1 if remove_chars includes c 
+ */
+int includes(char remove_chars[], char c){
+  int i = 0;
+
+  if( ! remove_chars )
+    return;
+
+  while( remove_chars[i] )
+    if( c == remove_chars[i++] )
+      return 1;
+
+  return 0;
+}
+
+/*
+ * Remove the character at index from str
+ * by left shifting str.
+ */
+void remove_char(int index, char  str[]){
+ int i = index;
+
+ if( (! str) || i < 0 || i >= strlen(str) )
+   return;
+
+ do{
+   str[i] = str[i + 1];
+   i++;
+ }while( str[i] );
+}
+
+
+/*
+ * A naive algorithm to remove all characters in
+ * remove_chars from str.
+ */
+void remove_from_str(char remove_chars[], char str[]){
+  int read = 0;
+
+  if( ! (remove_chars && str) )
+    return;
+
+  while( str[read] ){
+    if( includes(remove_chars, str[read]) )
+      remove_char(read, str);
+    else
+      read++;
+  }
+}
 </code>
 </pre>
 
