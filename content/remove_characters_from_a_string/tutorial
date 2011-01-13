@@ -12,7 +12,7 @@ of the appropriate data structure. The technique you learn in this
 tutorial can also be applied to similar problems.
 </p>
 
-</p>
+<p>
 We are tasked with removing certain characters from an array without
 allocating a new array. Let's start with removing a char from an array. One
 way to do this is to shift the elements in an array as shown in figure 1 below.
@@ -22,7 +22,7 @@ way to do this is to shift the elements in an array as shown in figure 1 below.
 Figure 1. We are deleting the character c by shifting everything
 to the right of c left by one.
 </p>
-<img src="images.blueberrytree.ws.s3.amazonaws.com/shifting_array.png"/>
+<img src="http://images.blueberrytree.ws.s3.amazonaws.com/shifting_array.png"/>
 
 <p>
 The algorithm to solve this problem then consits of scaning the input
@@ -41,58 +41,6 @@ Listing 1. My naive code for solving this exercise.
 </p>
 <pre>
 <code>
-#include<string.h> 
-
-/*
- * Return 1 if remove_chars includes c 
- */
-int includes(char remove_chars[], char c){
-  int i = 0;
-
-  if( ! remove_chars )
-    return;
-
-  while( remove_chars[i] )
-    if( c == remove_chars[i++] )
-      return 1;
-
-  return 0;
-}
-
-/*
- * Remove the character at index from str
- * by left shifting str.
- */
-void remove_char(int index, char  str[]){
- int i = index;
-
- if( (! str) || i < 0 || i >= strlen(str) )
-   return;
-
- do{
-   str[i] = str[i + 1];
-   i++;
- }while( str[i] );
-}
-
-
-/*
- * A naive algorithm to remove all characters in
- * remove_chars from str.
- */
-void remove_from_str(char remove_chars[], char str[]){
-  int read = 0;
-
-  if( ! (remove_chars && str) )
-    return;
-
-  while( str[read] ){
-    if( includes(remove_chars, str[read]) )
-      remove_char(read, str);
-    else
-      read++;
-  }
-}
+[[solution2.c]]
 </code>
 </pre>
-

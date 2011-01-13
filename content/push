@@ -9,7 +9,16 @@ require 'pp'
 
 # Change this to your own project home
 PROJ_HOME = "."
+CONTENT_HOME = "#{PROJ_HOME}/content"
 
+# In the exercise text use <filename.c> to subsititue file text
+FILE_SUB_REGEX = /\[\[(.+)\]\]/
+
+# All html code within <code> </code> tags get thier '<' char escaped
+CODE_TAG_REGEX = /<code>(.*)<\/code>/m
+
+# Establish DB connection here because some gems require
+# a DB before being loaded
 ActiveRecord::Base.logger = Logger.new(STDERR)
 db_config = YAML::load(File.open("#{PROJ_HOME}/config/database.yml"))
 ActiveRecord::Base.establish_connection(db_config[ ENV['RAILS_ENV']||'development'] )
@@ -23,7 +32,6 @@ require "#{PROJ_HOME}/app/models/unit_test"
 require "#{PROJ_HOME}/app/models/solution_template"
 require "#{PROJ_HOME}/app/models/exercise"
 
-CONTENT_HOME = "#{PROJ_HOME}/content"
 Dir.chdir(CONTENT_HOME)
 
 def start
@@ -60,7 +68,6 @@ def populate_exercise(exercise)
 end
 
 def save_with_exercise_set(exercise)
-   puts exercise.to_yaml
    set = ExerciseSet.find_by_title( read_field('exercise_set_title') )
    unless set
     set = ExerciseSet.new
@@ -76,7 +83,7 @@ end
 def populate_primitives(exercise)
     exercise.description = read_field('description')
     exercise.problem = read_field('problem')
-    exercise.tutorial = read_field('tutorial')
+    exercise.tutorial =  read_field('tutorial')
     exercise.minutes = read_field('minutes').to_i
     exercise.finished = read_field('finished').to_i
     exercise.algorithm_list = read_field('algorithm_list')
@@ -122,9 +129,42 @@ def hint_file?(filename)
 end
 
 def read_field(field)
-  IO.read(field).lstrip.rstrip.chomp
+  perform_subs( IO.read(field).strip.chomp )
 end
 
-start
+def perform_subs(text)
+  complete_text = sub_file_references(text)
+  escaped_text = escape_tags_in_code_tag(complete_text)
+end
+
+def sub_file_references(text)
+  while FILE_SUB_REGEX =~ text
+    text = sub_file_reference(text) 
+  end
+  text
+end
+
+def sub_file_reference(text)
+  filename = FILE_SUB_REGEX.match(text)[1]
+  if filename 
+    text.sub(FILE_SUB_REGEX, IO.read(filename)).strip
+  else
+    text
+  end
+end
+
+def escape_tags_in_code_tag(text)
+  text.gsub(CODE_TAG_REGEX) do |match|
+    if $1
+      "<code>" + $1.gsub(/</, '&lt;').strip + "</code>"
+    else
+      match
+    end
+  end
+end
+
+if __FILE__ == $0
+  start
+end
 
 # vim: set filetype=ruby
