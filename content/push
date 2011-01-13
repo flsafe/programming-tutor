@@ -14,8 +14,9 @@ CONTENT_HOME = "#{PROJ_HOME}/content"
 # In the exercise text use <filename.c> to subsititue file text
 FILE_SUB_REGEX = /\[\[(.+)\]\]/
 
-# All html code within <code> </code> tags get thier '<' char escaped
-CODE_TAG_REGEX = /<code>(.*)<\/code>/m
+# Text between [startcode] and [endcode] is wrapped around <pre><code> </code></pre>
+# and any < characters in between are escaped to &lt;
+CODE_TAG_REGEX = /\[startcode\](.*?)\[endcode\]/m
 
 # Establish DB connection here because some gems require
 # a DB before being loaded
@@ -134,7 +135,7 @@ end
 
 def perform_subs(text)
   complete_text = sub_file_references(text)
-  escaped_text = escape_tags_in_code_tag(complete_text)
+  escaped_text = sub_start_end_code(complete_text)
 end
 
 def sub_file_references(text)
@@ -153,13 +154,10 @@ def sub_file_reference(text)
   end
 end
 
-def escape_tags_in_code_tag(text)
-  text.gsub(CODE_TAG_REGEX) do |match|
-    if $1
-      "<code>" + $1.gsub(/</, '&lt;').strip + "</code>"
-    else
-      match
-    end
+def sub_start_end_code(text)
+   text.gsub(CODE_TAG_REGEX) do |match|
+      match.gsub!(/(\[startcode\]|\[endcode\])/, '')
+      "<pre><code>" + match.gsub(/</, '&lt;').strip + "</code></pre>"
   end
 end
 

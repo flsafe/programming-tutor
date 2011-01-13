@@ -39,8 +39,6 @@ stupid.
 <p class="description">
 Listing 1. My naive code for solving this exercise.
 </p>
-<pre>
-<code>
-[[solution2.c]]
-</code>
-</pre>
+[startcode]
+ [[solution2.c]]
+[endcode]

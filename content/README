@@ -1,0 +1,37 @@
+The content/push script will push exercises to the DB
+using the development environment as default. You can change
+the environment with the command 'env RAILS_ENV=production bundle exec ruby content/push'.
+
+
+--- Text processing done before pushing to database
+
+  - The push script supports some text processing before the exercise text is sent to the server.
+    Here are some things you can use.
+
+     [[filename.txt]]  - This tag is replaced with the file filename.txt. The file name
+                         is relative to the exercise directory.
+
+     [startcode] [endcode] - Everything between these two tags are wrapped with <pre><code> </code></pre>
+                             and the < characters are excaped with &lt;
+
+     These tags can be nested for example:
+
+     [startcode]
+       [[solution.c]]
+     [endcode]
+
+
+--- Text that has special meaning when Blueberry is running
+
+   - Solution template files have a special comment that is used to identify the
+     the desired prototype for the user to use when coding thier solution.
+
+     /*start_prototype*/ /*end_prototype*/ - The code between these two comments is displayed in the text editor
+                                             when the user starts and exercise. Only one per file is supported
+
+   - Unit test files have a special place holder that is substitued with the name
+     of the user's compiled solution.
+     TODO: <EXEC_NAME> should probably be changed to [EXEC_NAME] to remain consitent with the other tags.
+
+     <EXEC_NAME> - In a unit test file will be substitued with something like "tmp/work/exec-1233123-23".
+                   Which would be the path to the user's compiled solution.
