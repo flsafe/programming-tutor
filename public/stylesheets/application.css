@@ -294,7 +294,7 @@ table.exercise-statistics caption, table.exercise-statistics{
 }
 
 #tutorial p{
-  margin: 20px 0px 20px 0px;
+  margin: 20px 0px 0px 0px;
 }
 
 #exercise-problem-text{
@@ -330,17 +330,19 @@ table.exercise-statistics caption, table.exercise-statistics{
   border: none;
 }
 
-#tutorial h3{
+#tutorial h1{
   font-size: 1.5em;
   padding: 10px 0px 0px 0px;
-  margin: 20px 0px 10px 0px;
+  margin: 30px 0px 0px;
+  color: rgb(89, 115, 48);
 }
 
-#tutorial p.description{
-  margin-bottom: 0px;
+#tutorial div.description{
+  margin: 35px 0px 0px 0px;
   color: black;
   padding: 0px;
-  font-size: 1em;
+  font-size: .90em;
+  font-family: serif ;
 }
 /************************
 * Footer
