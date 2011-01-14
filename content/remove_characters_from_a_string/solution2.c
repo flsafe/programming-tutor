@@ -7,7 +7,7 @@ int includes(char remove_chars[], char c){
   int i = 0;
 
   if( ! remove_chars )
-    return;
+    return 0;
 
   while( remove_chars[i] )
     if( c == remove_chars[i++] )
@@ -26,10 +26,10 @@ void remove_char(int index, char  str[]){
  if( (! str) || i < 0 || i >= strlen(str) )
    return;
 
- do{
+ while( str[i] ){
    str[i] = str[i + 1];
    i++;
- }while( str[i] );
+ }
 }
 
 
