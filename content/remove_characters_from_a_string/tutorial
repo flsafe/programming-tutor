@@ -1,44 +1,200 @@
+<h1>Getting Started</h1>
 <p>
-Ah yes, this problem. This problem is actually a pretty common
-phone screening problem or a warm up problem. As always there is 
-an obvious and inefficient solution that your interviewer won't like.
-And there exists an insightful and elegant solution that can help you
-land your dream job.
+You glance at your watch again, it is almost time. With an uneasy
+stomach you pull out your laptop and prepare for your phone interview.
+At 2:02 pm your phone rings and you get started.
 </p>
 
 <p>
-The difference in efficiency and elegance is in the use
-of the appropriate data structure. The technique you learn in this
-tutorial can also be applied to similar problems.
+Imagine your relief when your interviewer's problem is somewhat
+similar to this problem. It is a tricky and twisty road to your dream job. Along
+the way toll booths will often ask you to remove characters from arrays. Let's 
+put some change in your pocket. 
 </p>
+
+<h1>The Problem</h1>
+<p>
+Removing characters from an array sounds pretty easy, like staining your
+nice shirt on a posh night out. But actually there are some
+neat opportunities to wield your data structures. 
+</p>
+
+<h1>Our First Solution</h1>
+<p>
+Lets consider a first solution that may come to mind. 
+My pseudo code is below in listing 1.
+</p>
+
+<div class="description">Listing 2. Pseudo code for an initial solution</div>
+[startcode]
+for each character C in STR
+  if C is a character to delete
+    remove C from STR
+[endcode]
 
 <p>
-We are tasked with removing certain characters from an array without
-allocating a new array. Let's start with removing a char from an array. One
-way to do this is to shift the elements in an array as shown in figure 1 below.
+How exactly do we remove an element from an array? Imagine
+a line of attractive people who have been waiting in line for a long time. 
+When a person in the middle of the line leaves, everyone
+steps forward to fill in the space left by the impatient quitter. Deleting
+an element from an array is the same concept. The attractive people are irrelevant.
+Take a look at the attractive characters in figure 1.
 </p>
 
-<p class="description">
+<div class="description">
 Figure 1. We are deleting the character c by shifting everything
 to the right of c left by one.
-</p>
+</div>
 <img src="http://images.blueberrytree.ws.s3.amazonaws.com/shifting_array.png"/>
 
 <p>
-The algorithm to solve this problem then consits of scaning the input
-string str one character at a time. If a character in str is included in
-the remove_char array then, we delete it.
+In figure 1 c is the quitter and the other characters are shifted so there is no
+gap. Notice the  null characters that signal the end of the array.
 </p>
 
 <p>
-The algorithm depicted above is simple. Let's code it for fun. You can see
-me code in listing 1 below. Feel free to post feedback if you catch me being
-stupid.
+Refining our pseudo code gives us listing 2.
+</p>
+<div class="description">Listing 2. A more specific version of listing 1</div>
+[startcode]
+for each character c in str
+  if c is a character to delete
+    shift the characters to the right of c, left one space
+[endcode]
+
+<p>
+So far we are on obvious route 66. But even as I coded the
+solution, I was caught speeding through it too quickly and made 
+some error.
 </p>
 
-<p class="description">
-Listing 1. My naive code for solving this exercise.
+<p>
+The solution in Listing 3 below has the functions includes, remove_char and 
+remove_char_from_str. The function 'includes' determines whether a
+character c is a quitter, er, a character we want to remove. To remove 
+a character from the array we use remove_char. 
 </p>
+
+<p>
+Here is where I got in trouble on obvious route 66. The function remove_char_from_str
+maintains the variable read as the index into str. Imagine we give the function 
+the string in Figure 1 as input and we want to remove the character c.  
+</p>
+
+<p>
+The variable read has the initial value 0 and str[read] references the character a.
+No big deal, a isn't a quitter, let's increment read. No trouble at
+b. But now c comes along. To remove c we use the function remove_char. When
+remove_char returns what is the value of str[read]?
+</p>
+
+<p>
+It's not c because remove_char removed it. It is the character d, the next character in str. 
+"That's obvious" I hear you say! But be careful! Remember that we have not incremented read and yet
+str[read] is at the next character. Watch out for this in your own solution.
+</p>
+
+<div class="description">
+Listing 3. My naive code for solving this exercise.
+</div>
 [startcode]
  [[solution2.c]]
 [endcode]
+
+<h1>An Obvious and Inefficient Solution</h1>
+<p>
+The solution above certainly works and it is easy enough to derive and
+grok. Unfortunately it is inefficient. The solution will earn you the question
+"Can you do better?"
+</p>
+
+<p>
+Well, that depends, is Fe a metal in the first transitional series?
+</p>
+
+<h1>How Can We Do Better?</h1>
+<p>
+To help us make this algorithm more efficient let's examine why it is inefficient.
+Imagine the case where all the characters of the input string 
+must be deleted. 
+</p>
+
+<p>
+Say n is the size of the input string.
+To delete the first character the algorithm must first
+find the character in the remove_chars array. This takes at most
+m steps, where m is the size of the remove_chars array. Next the algorithm
+shifts the other n characters located to the right of the first character. Remember
+that this includes the null character. 
+</p>
+
+<p>
+To delete the second character we search for it in
+remove_chars, that's m steps. Next shift all the other n - 1 characters. 
+</p>
+
+<p>
+The third character follows the same pattern. Search for the character in
+remove_chars, at most m steps. Shift the n - 2 characters located to
+the right of the second character, including the null character. 
+</p>
+
+<h1>That Kind Of Looks Familiar, Is That A Series?</h1>
+<p>
+Figure 2 expresses the number of steps the algorithm does with a series.
+</p>
+
+<div class="description"> Figure 2. The number of steps our algorithm performs</div>
+<pre><code>
+  (n + m) + (n - 1 + m) + (n - 2 + m) + .. + (1 + m)
+
+= (1 + 2 + 3 + .. + n) + (n * m)
+
+= (n (n + 1)) / 2  +  (n * m)
+
+= (n^2 / 2) + (n / 2) + (n * m)
+</code></pre>
+
+<p>
+Right away we see that our algorithm is dominated by all the shifting and searching. Yuck.
+Any ideas on how to avoid all the shifting
+and searching? What efficient data structures are available for searching?
+</p>
+
+<p>
+We can describe the number of steps this algorithm using Big O notation.
+To make things easier let's fix m, the size of the remove_char array, to some
+constant.
+</p>
+
+<p>
+We can now discuss the upper bound of the number of steps our algorithm performs
+when given an input string of size n. We write O(n^2 / 2 + n / 2 + n * m) to describe
+that upper bound.
+</p>
+
+<h1>Do You Show That Big O to Your Mother?</h1>
+<p>
+Well, almost. To better describe this algorithm using Big O notation we keep only
+the most dominant term in the expression above. We also drop 
+all the constants. We end up with with an algorithm that performs O(n^2) where n
+is the size of the input array, and m is kept constant.
+</p>
+
+<p>
+We do this because in Big O notation we only care about very large inputs and
+the non-dominant terms don't really effect our description of the worst case 
+behavior of our algorithm. 
+</p>
+
+<p>
+Take a look a at figure 3. I've plotted the run times of the algorithm for different
+sized inputs on my laptop. The remove_array was "1234567890abcdefghijklmnopqrstuvwxyz" and 
+the input array was such that every element would be removed. Notice that
+the runtime grown of the algorithm as n gets bigger isn't linear.
+</p>
+
+<div class="description">
+Figure 3. The runtimes of our naive algorithm for different sized inputs
+</div>
+<img src="http://images.blueberrytree.ws.s3.amazonaws.com/remove-chars-naive.png" />
