@@ -383,3 +383,32 @@ The algorithm reads the character at str[read] and writes it to cpy_buffer[write
 the character is not to be deleted. The read index is incremented after every read and
 the write index is incremented after every write.
 </p>
+
+<p>
+In figure [x] below the character c has been deleted by writing
+d in its place.
+</p>
+<img src="http://images.blueberrytree.ws/read-write-heads.png"/>
+<div class="description">
+Figure x. Removing the character c. When the
+algorithm reads a character, read is incremented. When a character is written
+write is written"
+</div>
+
+<p>
+Now check this for yourself. If both read and write indexed the same array and not
+two different buffers would this algorithm still work? Try it out.
+</p>
+
+<h1>An Efficient And Elegant Way Of Doing This</h1>
+<p>
+We don't have to allocate another buffer. Notice in figure [x] above that the array never gets modified
+ahead of the read index. So there is no trouble using both read and write within the same array.
+</p>
+
+<p>
+Here is a solution that takes advantage of this.
+</p>
+[startcode]
+[[solution.c]]
+[endcode]
