@@ -412,3 +412,40 @@ Here is a solution that takes advantage of this.
 [startcode]
 [[solution.c]]
 [endcode]
+
+<p>
+This is by far the shortest and the most efficient solution we've seen.
+What about its worst case runtime behavior? At each character we read and write
+a character. Let's consider that one step. So if the character array length is n,
+then at most there are n steps. 
+</p>
+
+<p>
+The algorithm alocated space for the remove table or <i>removetab</i> in the source code.
+Specifing what characters get deleted in <i>removetab</i> requires <i>m</i> steps, where
+<i>m</i> is the number of characters we need to remove.
+<p>
+
+<p>
+Therefore our algorithm is O(<i>m</i> + <i>n</i>). Which means it is linear! Phew
+</p>
+
+<h1>What We Learned</h1>
+<ol>
+<li>
+ASCII characters map to an integer, it is possible to use this integer value to
+index into an array.
+</li>
+
+<li>
+An efficient way of removing characters from an array is to "pretend" to write
+them to a temporary buffer, minus the characters want to delete.
+</li>
+</ol>
+
+<h1>Exercises</h1>
+<p>
+We've allocated a character array to keep track of what characters
+need to be deleted. What other data structures could be used? Try using a
+bit vector then benchmark to find out what is faster.
+</p>
