@@ -21,7 +21,7 @@ neat opportunities to wield your data structures.
 
 <h1>Our First Solution</h1>
 <p>
-Lets consider a first solution that may come to mind. 
+Let's implement the first solution that comes to mind.
 My pseudo code is below in listing 1.
 </p>
 
@@ -43,7 +43,7 @@ Take a look at the attractive characters in figure 1.
 
 <div class="description">
 Figure 1. We are deleting the character c by shifting everything
-to the right of c left by one.
+to the right of c left one spot. 
 </div>
 <img src="http://images.blueberrytree.ws.s3.amazonaws.com/shifting_array.png"/>
 
@@ -63,20 +63,20 @@ for each character c in str
 [endcode]
 
 <p>
-So far we are on obvious route 66. But even as I coded the
-solution, I was caught speeding through it too quickly and made 
-some error.
+So far we are on obvious route 66. But be careful! There
+is a subtle bug that is easy to overlook! 
 </p>
 
 <p>
-The solution in Listing 3 below has the functions includes, remove_char and 
+The solution in Listing 3 below has the functions remove_char, includes and 
 remove_char_from_str. The function 'includes' determines whether a
 character c is a quitter, er, a character we want to remove. To remove 
 a character from the array we use remove_char. 
 </p>
 
 <p>
-Here is where I got in trouble on obvious route 66. The function remove_char_from_str
+When I implemented this solution I had a small bug that you should
+watch out for in your own solution. The function remove_char_from_str
 maintains the variable read as the index into str. Imagine we give the function 
 the string in Figure 1 as input and we want to remove the character c.  
 </p>
@@ -104,8 +104,8 @@ Listing 3. My naive code for solving this exercise.
 <h1>An Obvious and Inefficient Solution</h1>
 <p>
 The solution above certainly works and it is easy enough to derive and
-grok. Unfortunately it is inefficient. The solution will earn you the question
-"Can you do better?"
+grok. Unfortunately it is inefficient. I can hear your interviewer now...
+"Can you do better?". 
 </p>
 
 <p>
@@ -139,7 +139,7 @@ remove_chars, at most m steps. Shift the n - 2 characters located to
 the right of the second character, including the null character. 
 </p>
 
-<h1>That Kind Of Looks Familiar, Is That A Series?</h1>
+<h1>Warning! Math Content</h1>
 <p>
 Figure 2 expresses the number of steps the algorithm does with a series.
 </p>
@@ -183,18 +183,203 @@ is the size of the input array, and m is kept constant.
 
 <p>
 We do this because in Big O notation we only care about very large inputs and
-the non-dominant terms don't really effect our description of the worst case 
-behavior of our algorithm. 
+the non-dominant terms don't effect our description of the worst case 
+behavior of our algorithm enough to concern ourselves with at this point. 
 </p>
 
 <p>
 Take a look a at figure 3. I've plotted the run times of the algorithm for different
 sized inputs on my laptop. The remove_array was "1234567890abcdefghijklmnopqrstuvwxyz" and 
 the input array was such that every element would be removed. Notice that
-the runtime grown of the algorithm as n gets bigger isn't linear.
+the runtime growth of the algorithm isn't linear. Muahahahah! Just as we
+predicted. Math <em>in action is power.</em>
 </p>
 
 <div class="description">
 Figure 3. The runtimes of our naive algorithm for different sized inputs
 </div>
 <img src="http://images.blueberrytree.ws.s3.amazonaws.com/remove-chars-naive.png" />
+
+<h1>A Better Implementation</h1>
+<p>
+Before we delete a character it must be found in the remove_char array.
+The algorithm above uses a for loop to check all the characters in remove_char. 
+We don't have to search through all the characters in remove_char. 
+</p>
+
+<p>
+Alright, let's do better. What other data structures could we use? A binary tree? Yes, that could
+work. But here is the concern. Whatever data structure we choose has to be implemented in front
+of the interviewer. 
+We should be able to do it of course, but there could be an easier alternative.
+</p>
+
+<p>
+Additionally consider the usage of our function. Say the interviewer is only concerned with
+ASCII characters. Now we are working with only 128 unique characters. This
+leads me to use an array or even a bit vector to keep track of what characters need to be removed.
+</p>
+
+<p>
+This is because 128 characters has a relatively small memory foot print and is a fixed size.
+Let me show you what I mean.
+</p>
+
+<p>
+Say we have the following array in listing [x].
+</p>
+
+<div class="description">Our remove_char array assumes ASCII</div>
+[startcode]
+unsigned char remove[128] = {0};
+[endcode]
+
+<p>
+Of course we index into an array with an integer. For example remove[65] would
+be the value of the 65th element of the array. And the time to access any random element
+is always the same with an array.
+</p>
+
+<p>
+In C, what is the relationship between a unsigned char and an integer (integer in the
+mathematical sense)? A character type in C is an integer value. At least 8 bits, but could
+be more on your machine. Could the integer value be negative? Yup, again depends on your
+machine. This is why we specify unsigned characters in our program. To make sure
+that our characters convert to positive integers.
+</p>
+
+<h1>Three Hints</h1>
+<p>
+Here are three pieces of information, can you see where we are going with this?
+</p>
+
+<ol>
+
+<li>
+We index
+arrays with positive integers.
+</li> 
+
+<li>
+Unsigned characters can be converted into positive integers.
+</li>
+
+<li>
+Accessing an array is always constant time. For example accessing remove[0] takes
+that same time as remove[127].
+</li>
+
+</ol>
+
+<h1>The Answer</h1>
+<p>
+Suppose we want to remove the character 'a' from our input string.
+Then we set remove['a'] to true.
+</p>
+[startcode]
+remove['a'] = 1;
+[endcode]
+
+<p>
+When it comes time to check if a character in our input string should be removed we check 
+our character array.
+</p>
+
+[startcode]
+
+  /* code */
+
+  while( str[i] ){
+    if( remove[ str[i] ] )
+      /*remove the character*/
+    else
+      i++;
+  }
+[endcode]
+
+<p>
+No need to traverse the entire length of the remove_chars array.
+Now we can determine in constant time if a character in the input string
+needs to be deleted. 
+</p>
+
+<p>
+Or we can determine if a character is a duplicate, or
+unique, or count the instances of the character and wash the dishes. Keep
+this technique in mind, it comes in handy.
+</p>
+
+[startcode]
+int count[128] = {0};       /*We have assumed ASCII*/
+for(i = 0 ; str[i]  ; i++){
+  count[ str[i] ]++;
+  if( count[ str[i] > 1] ){
+    /* str[i] is a duplicate */
+  }
+}
+[endcode]
+
+<h1>What About All That Shifting?</h1>
+<p>
+So far we haven't really tackled the most inefficient aspect of the algorithm.
+Deleting a character from an array by shifting won't work in this case. How else 
+can it be done?
+</p>
+
+<p>
+In our problem text we aren't allowed to allocate a new buffer. Let's pretend
+that we can allocate a new buffer. To delete certain characters from the input string
+we copy the characters one by one to our buffer. Except we don't copy
+the characters we want to delete. Let's look at some pseudo code.
+</p>
+
+[startcode]
+BUF is the same size as STR
+
+for each character C in STR
+  if C not going to be removed 
+    copy C to BUF
+
+return BUF
+[endcode]
+
+<p>
+In the figure below we are deleting the character c. The characters a,b,d,e,f and \0 all get copied
+over into the new buffer. But not c because it's going no where.
+</p>
+
+<img src="http://images.blueberrytree.ws/remove-char-with-output-buffer.png"/>
+<div class="description">Removing a character from an array by leaving it out of the party</div>
+
+<p>
+Notice that this method can delete many characters from the input string without any shifts!
+The trade off is increased memory usage. What if our input string was several giga bytes?
+We would need a second buffer thus doubling our memory usage. Can we do better?
+</p>
+
+<h1>Another Hint</h1>
+<p>
+Can you figure out a way to do the same thing without allocating another buffer?
+How could you do this using only the input array?
+</p>
+
+<h1>How To Do It</h1>
+<p>
+First let's consider how to implement the concept above using an extra buffer. I've written
+a solution using an extra buffer.
+</p>
+
+[startcode]
+[endcode]
+
+<p>
+The algorithm maintains two indices read and write. The index read indexes into
+the input string. The index write indexes into the copy buffer. Both have the initial value
+of 0.
+</p>
+
+<p>
+The algorithm reads the character at str[read] and writes it to cpy_buffer[write] if
+the character is not to be deleted. The read index is incremented after every read and
+the write index is incremented after every write.
+</p>
