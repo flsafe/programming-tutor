@@ -8,15 +8,21 @@ class SolutionTemplate < ActiveRecord::Base
   named_scope :for_exercise, lambda{|exercise_id| {:conditions=>{:exercise_id=>exercise_id}}}
   
   attr_reader :filled_in_src_code
+
+  @@PROTOTYPE_REGEX = /\/\*start_prototype\*\/(.*)\/\*end_prototype\*\//m
   
   def fill_in(solution_code)
-    solution_code = solution_code.gsub(/\\/, '\\\\\\\\')
-    @filled_in_src_code = src_code.gsub(/\/\*start_prototype\*\/(.*)\/\*end_prototype\*\//m, solution_code)
+    solution_code = CozyStringUtils.escape_back_slashes(solution_code)
+    @filled_in_src_code = src_code.gsub(@@PROTOTYPE_REGEX, solution_code)
   end
   
   def prototype
-    src_code =~ /\/\*start_prototype\*\/(.*)\/\*end_prototype\*\//m
-    $1
+    m = src_code.match(@@PROTOTYPE_REGEX)
+    if m and m[1]
+      m[1]
+    else
+      ""
+    end
   end
   
    def solution_template_file=(template_file)
