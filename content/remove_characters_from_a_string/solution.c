@@ -5,7 +5,7 @@ void remove_from_str(char remove_chars[], char str[]){
   if( ! (remove_chars && str) )
     return;
 
-  for(i = 0 ; str[i] ; i++){
+  for(i = 0 ; remove_chars[i] ; i++){
     removetab[ remove_chars[i] ] = 1;
   }
 
