@@ -43,7 +43,7 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   end
   
   def fill_in_solution_template
-    solution_code = @template.fill_in(IncludeScrubber.scrub_all_includes(code))
+    solution_code = @template.fill_in(CozyStringUtils.scrub_all_includes(code))
   end
   
   def place_results(results)
