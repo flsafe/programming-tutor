@@ -1,15 +1,17 @@
 void remove_from_str(char remove_chars[], char str[]){
-  int read = 0, write = 0, i = 0;
-  char c = 0;
-  char remove[256] = {'\0'};
+  int  read = 0, write = 0, i = 0;
+  char removetab[128] = {'\0'}, c = 0;
 
-  while( remove_chars[i] ){
-    remove[ remove_chars[i++] ] = 1;
+  if( ! (remove_chars && str) )
+    return;
+
+  for(i = 0 ; str[i] ; i++){
+    removetab[ remove_chars[i] ] = 1;
   }
 
   do{
     c = str[read];
-    if( !remove[c] ){
+    if( ! removetab[c] ){
       str[write++] = str[read];
     }
     read++;
