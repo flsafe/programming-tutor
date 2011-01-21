@@ -1,6 +1,6 @@
 class JobResult < ActiveRecord::Base
   
-  validates_presence_of :user_id, :exercise_id
+  validates_presence_of :user_id, :exercise_id, :job_type
   
   def self.place_result(result)
     JobResult.clear_slot(result[:user_id], result[:exercise_id], result[:job_type])
