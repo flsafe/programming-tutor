@@ -1,0 +1,23 @@
+
+<p>
+Write a function that takes a character array as an argument.
+The function reverses the characters of the input array.
+Take a look at the examples below.
+</p>
+
+<p> For example: </p>
+
+<pre><code>
+void reverse(char[]);
+
+reverse("abcd") => "dcba"
+
+reverse("123456") => "654321"
+	
+reverse("the cat sat") => "tas tac eht"
+</code></pre>
+
+<p>
+Notice that the function returns void and does not return a new string.
+Assume ASSCII characters.
+</p>
