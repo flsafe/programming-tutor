@@ -80,9 +80,9 @@ Feature: Do exercise
 		And I should <see> <message> within "#message"
 		
 	Examples:
-		| code                           | see     | message                     |
-		| "int main(){int i; return 0;}" | see     | "No syntax errors detected" |
-		| "int main(){int i return 0;}"  | not see | "No Syntax errors detected" | 
+		| code                                    | see     | message                     |
+    | "int main(){int i = 0; i++; return 0;}" | see     | "No syntax errors detected" |
+		| "int main(){int i return 0;}"           | not see | "No Syntax errors detected" | 
 		
 	@javascript
   @with-bg-job
