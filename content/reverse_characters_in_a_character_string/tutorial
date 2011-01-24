@@ -1,73 +1,101 @@
 <h1>Getting Started</h1>
 <p>
 This problem is one you may expect to get as a warm up
-or to weed out those who really don't know how to
-program. Since there isn't too much to this problem, let's just
-get started.
+or to weed out those who couldn't program their way out
+of a kiddie pool. For the rest of us Tennessee-whisky drinking, fast-car driving,
+edge-living programmers...we still have to be careful not to make a beginner mistake.
 </p>
+
+<p>
+It is to easy to become overconfident with this exercise and make a
+careless mistake. Take your time and be careful!
+</p>
+
+<h1>How To Solve It</h1>
 
 <p>
 The general strategy is to swap the first character with the last
 character. Then swap the second character with the second to 
-last character and so on.
+last character, the third character with the third to last character and so on.
 </p>
 
 <p>
 We will use two indexes named <i>first</i> and <i>last</i> that initially
-index the first and last element of the input array.
+index the first and last element of the input string. We also need
+a <i>temp</i> variable to temporally hold our swap values.
 </p>
 
 <p>
 The algorithm will write the character at <i>str[first]</i> to a <i>temp</i>
 variable. Then it will write the character at <i>str[last]</i> to <i>str[first]</i>
-and the character at <i>temp</i> to <i>str[last]</i>.
+and the character at <i>temp</i> to <i>str[last]</i>. Check out the action in figure 1 below.
+</p>
+
+<img src="http://images.blueberrytree.ws/swap-elems-in-array.png"/>
+<div class="description">
+Figure 1. Swapping the first and last element of
+an array. First <i>a</i> would be written to <i>temp</i> (the lone square). Second <i>b</i> is
+written to <i>a</i>. Third <i>temp</i> is written to <i>b</i>.
+</div>
+
+<p>
+To swap the next characters in the array we increment <i>first</i> and decrement <i>last</i>
+and continue the swap operation towards the middle of the array.
+But how do we know when to stop? After each iteration 
+<i>first</i> and <i>last</i> get closer and closer. The whole time <i>first</i> &lt; <i>last</i>
+until they cross in the middle of the input string. 
 </p>
 
 <p>
-To swap the next characters in the array we increment first and decrement last.
-But how do we know when to stop? After each iteration of this algorithm
-first and last get closer and closer. The whole time <i>first</i> &lt; <i>last</i>
-until they cross in the middle of the input array. 
-</p>
-
-<p>
-After they cross in the middle first &gt; last. When this happens we know
+After they cross in the middle <i>first</i> &gt; <i>last</i>. When this happens we know
 to stop.
 </p>
+
+<p>
+Here is my solution below. Not too complicated. But always double check your code.
+It's too easy to be overconfident and make a careless mistake.
+Don't use any uninitialized variables. Remember that the last element is located 
+at <i>strlen(str) - 1</i> and make sure to check for off-by-one errors.
+</p>
+
+[startcode]
+[[solution.c]]
+[endcode]
 
 <h1>Edge Cases?</h1>
 <p>
 Do we need to be careful depending on whether the input string is
-even or odd? Not really the algorithm works for both cases! If the
-input string is even then <i>first</i> and <i>last</i> will swap the
+even or odd? Not really, the algorithm works for both cases! If the
+input string is even then, <i>first</i> and <i>last</i> will swap the
 middle two elements.
 </p>
 
 <p>
 If the input string is odd then, then <i>first</i> and <i>last</i> will
-swap the one middle element with itself.
+swap the one middle element with itself. Afterwards <i>first</i> &gt; <i>last</i>
+and we know to stop.
 </p>
 
 <h1>Efficiency</h1>
 <p>
-Say the input array length is <i>n</i>. Unfortunately in C simply 
-determining the size of the input array with the function <i>strlen</i>
+Say the input string length is <i>n</i>. Unfortunately, in C, simply 
+determining the size of the input string with the function <i>strlen</i>
 is already <i>n</i> steps. 
 </p>
 
 <p>
-Let's consider each swap just one step. The algorithm swap the first
+Let's consider the swap operation in figure 1 just one step. The algorithm swaps the first
 element with the last, the second with the second to last and so on. If the
-input array was even then the number of step is just the length of the input
+input string was even then, the number of steps is just the length of the input
 array divided by 2. 
 </p>
 
 <p>
-If input array length is odd then, the number of steps is the ceiling of
+If input string length is odd then, the number of steps is the ceiling of
 the array length divided by 2. This is because the middle element has to be swapped 
-with itself. 
+with itself.
 </p>
 
 <p>
-Then our algorithm is just O(n + ceiling(n/2)), or just O(n).
+Then our algorithm is just <code>O(n + ceiling(n/2))</code>, or just O(n).
 </p>

@@ -1,13 +1,18 @@
 #include <string.h>
 
 void reverse(char str[]){
-  int first = 0, last = 0;
-  char temp = 0;
+  int first, last;
+  char temp;
+
+  if( ! str )
+    return
 
   last = strlen(str) - 1;
-  while( first <= last ){
+  first = 0;
+  for(; first <= last ; first++, last--)
+  {
     temp = str[first];
-    str[first++] = str[last];
-    str[last--] = temp;
+    str[first] = str[last];
+    str[last] = temp;
   }
 }
