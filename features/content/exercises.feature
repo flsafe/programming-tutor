@@ -13,7 +13,8 @@ Feature: All Exercises
 		And I should see "Final Grade: 100" within ".gradesheet"
 
   Examples:
-      | exercise                          | file          |
-      | "Remove Characters From A String" | "solution.c"  |
-      | "Remove Characters From A String" | "solution2.c" |
-      | "Remove Characters From A String" | "solution3.c" |
+      | exercise                                   | file          |
+      | "Remove Characters From A String"          | "solution.c"  |
+      | "Remove Characters From A String"          | "solution2.c" |
+      | "Remove Characters From A String"          | "solution3.c" |
+      | "Reverse Characters In A Character String" | "solution.c"  |

@@ -5,7 +5,7 @@ void reverse(char str[]){
   char temp;
 
   if( ! str )
-    return
+    return;
 
   last = strlen(str) - 1;
   first = 0;
