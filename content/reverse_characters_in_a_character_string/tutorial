@@ -1,4 +1,4 @@
-<h1>Getting Started</h1>
+<h1 id="getting-started">Getting Started</h1>
 <p>
 This problem is one you may expect to get as a warm up
 or to weed out those who couldn't program their way out
@@ -11,7 +11,7 @@ It is to easy to become overconfident with this exercise and make a
 careless mistake. Take your time and be careful!
 </p>
 
-<h1>How To Solve It</h1>
+<h1 id="how-to-solve">How To Solve It</h1>
 
 <p>
 The general strategy is to swap the first character with the last
@@ -62,7 +62,7 @@ at <i>strlen(str) - 1</i> and make sure to check for off-by-one errors.
 [[solution.c]]
 [endcode]
 
-<h1>Edge Cases?</h1>
+<h1 id="edge-cases">Edge Cases?</h1>
 <p>
 Do we need to be careful depending on whether the input string is
 even or odd? Not really, the algorithm works for both cases! If the
@@ -76,7 +76,7 @@ swap the one middle element with itself. Afterwards <i>first</i> &gt; <i>last</i
 and we know to stop.
 </p>
 
-<h1>Efficiency</h1>
+<h1 id="effciency">Efficiency</h1>
 <p>
 Say the input string length is <i>n</i>. Unfortunately, in C, simply 
 determining the size of the input string with the function <i>strlen</i>
