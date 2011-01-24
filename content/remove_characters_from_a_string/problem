@@ -1,15 +1,14 @@
-
 <p>
-Write a function remove_from_str that takes two arguments. The first argument is a 
-character array remove_chars. The second argument is a 
-character array str. The function removes the characters in remove_chars
-from str.
+Write a function <i>remove_from_str</i> that takes two arguments. The first argument is a 
+character array <i>remove_chars</i>. The second argument is a 
+character array <i>str</i>. The function removes the characters in <i>remove_chars</i>
+from <i>str</i>.
 </p>
 
 <p> For example: </p>
 
 <pre><code>
-void remove_from_str(char[], char[]);
+void remove_from_str(char remove_chars[], char str[]);
 
 remove_from_str("c", "acacac") => "aaa"
 
@@ -21,4 +20,5 @@ remov_from_str("c", "abab")    => "abab"
 <p>
 Notice that the function remove_from_str returns
 void and modifies the character array str in place.
+Assume ASCII characters.
 </p>

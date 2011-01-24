@@ -80,11 +80,12 @@ Starting to see a pattern?
  When the algorithm deletes the first character of
 <i>str</i> it performs <code>m + n</code> steps. To delete the second character it performs
 <code>m + n - 1</code> steps. Deleting the third character is another <code>m + n - 2</code> steps.
-We can add up all the steps with the closed form of the series below. Ultimately this algorithm is O(n^2).
+We can add up all the steps with the closed form of the <a href="http://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%C2%B7_%C2%B7_%C2%B7">series</a> below.
+Ultimately this algorithm is O(n^2 + (n * m)).
 </p>
 
 <pre><code>
-  (n + m) + (n - 1 + m) + (n - 2 + m) + .. + (1 + m)
+  (m + n) + (m + n - 1) + (m + n - 2) + .. + (m + 1)
 
 = (1 + 2 + 3 + .. + n) + (n * m)
 
@@ -119,11 +120,13 @@ Figure 2. The run times of our naive algorithm for different sized inputs
 <h1>A Better Implementation</h1>
 <p>
 Before we delete a character it must be found in the <i>remove_chars</i> array.
-The algorithm above uses a <i>for</i> loop to check all the characters in <i>remove_chars</i>. 
+The algorithm above uses a <i>for</i> loop to find characters in <i>remove_chars</i>. 
 </p>
 
 <p>
-Let's do better. What other data structures could we use for searching? 
+Let's figure out a better way to test if a character
+from the input string is included in the <i>remove_chars</i> array. 
+What other data structures could we use for searching? 
 Which should we choose? Why?
 </p>
 
@@ -140,8 +143,9 @@ characters we will only use 128 bytes in memory.
 </p>
 
 <p>
-Assuming 4 byte addressing if we use a binary tree, each node of the tree stores the character (1 byte)  plus a left pointer (4 bytes)
-and a right pointer (4 bytes). Each node then uses at least 9 bytes! Since our characters are so small
+If we use a binary tree, each node of the tree stores the character (1 byte) plus a left pointer (Assume 4 bytes)
+and a right pointer (4 bytes). Each node then uses at least 9 bytes for a
+total of 1152 bytes! Since our characters are so small
 and there are only 128 of them, we should use an array based hash table.
 </p>
 
@@ -191,11 +195,11 @@ the same time as removetab[127].
 
 <h1>The Answer</h1>
 <p>
-Suppose we want to remove the character 'a' from our input string.
-Then we set removetab['a'] to true.
+Suppose we want to remove the character <i>c</i> from our input string.
+Then we set removetab[<i>c</i>] to true.
 </p>
 [startcode]
-removetab['a'] = 1;
+removetab[c] = 1;
 [endcode]
 
 <p>
@@ -256,7 +260,7 @@ return BUF
 [endcode]
 
 <p>
-In the figure 3 below we are deleting the character c. The characters a,b,d,e,f and \0 all get copied
+In figure 3 below we are deleting the character c. The characters a,b,d,e,f and \0 all get copied
 over into the new buffer. But not c because it's going no where.
 </p>
 
@@ -272,7 +276,7 @@ We would need a second buffer thus doubling our memory usage. Can we do better?
 <h1>Another Hint</h1>
 <p>
 Can you figure out a way to do the same thing without allocating another buffer?
-How could you do this using only the input string?
+How could you do this using only the input array string?
 </p>
 
 <h1>How To Do It</h1>
@@ -335,12 +339,12 @@ Here is a solution that takes advantage of this.
 This is by far the shortest and the most efficient solution we've seen.
 What about its worst case run time behavior? For each character in the input string the
 algorithm reads a character from the input string and then writes
-a character to the temporary buffer. Let's consider that one step. So if the character array length is <i>n</i>
+a character to the temporary buffer. Let's consider that one step. So if the input string is length <i>n</i>
 then, at most the algorithm does <i>n</i> steps.
 </p>
 
 <p>
-The algorithm also allocated space for <i>removetab</i> in the source code.
+The algorithm also allocates space for <i>removetab</i> in the source code.
 Setting what characters get deleted in <i>removetab</i> with a 1 requires at most <i>m</i> steps, where
 <i>m</i> is the number of characters we need to remove.
 <p>
@@ -358,7 +362,7 @@ index into an array.
 
 <li>
 An efficient way of removing characters from an array is to "pretend" to write
-them to a temporary buffer, minus the characters want to delete.
+them to a temporary buffer, minus the characters we want to delete.
 </li>
 </ol>
 
