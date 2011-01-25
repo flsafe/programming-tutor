@@ -47,4 +47,3 @@ int pop(stack *s, int *err){
 
   return val;
 }
-/*end prototype*/

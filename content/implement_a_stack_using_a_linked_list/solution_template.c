@@ -13,7 +13,7 @@ int main(){
   return 0;
 }
 
-/*start prototype*/
+/*start_prototype*/
 typedef struct node node;
 struct node{
   node *next;
@@ -36,7 +36,7 @@ int pop(stack *s, int *err){
   /*your code here*/
 
 }
-/*end prototype*/
+/*end_prototype*/
 
 enum Cmd{
   PUSH = '+',

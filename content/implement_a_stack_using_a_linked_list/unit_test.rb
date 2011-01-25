@@ -65,7 +65,6 @@ class UnitTest
       
       result = p.read()
       p.close
-      puts result
       result
     else
       exec("sandbox ./<EXEC_NAME>")
