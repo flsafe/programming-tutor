@@ -7,8 +7,8 @@ require 'active_support'
 require 'logger'
 require 'pp'
 
-# Change this to your own project home
-PROJ_HOME = "."
+# Assumes this script is called from the project root
+PROJ_HOME = Dir.getwd
 CONTENT_HOME = "#{PROJ_HOME}/content"
 
 # In the exercise text use <filename.c> to subsititue file text
