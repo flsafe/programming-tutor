@@ -52,6 +52,9 @@ table, p{
   margin-top: 0px;
 }
 
+table th{
+  background: white;
+}
 
 h1, h2, h3, h4, h5{
   padding-left: 4px;
@@ -223,8 +226,14 @@ h1, h2, h3, h4, h5{
 ************************/
 
 .gradesheet-text p{
-  font-size: 1.1em;
-  margin: 0px;
+  font-size: 1.2em;
+  margin: 10px;
+  text-align: center;
+}
+
+.gradesheet-text{
+  width: 200px
+  text-align: center;
 }
 
 .gradesheet{
@@ -233,7 +242,8 @@ h1, h2, h3, h4, h5{
 
 .green-text{
   color: green;
-  font-size: 1.4em;
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
 .tests td{

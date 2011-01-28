@@ -10,7 +10,7 @@ Feature: All Exercises
     Given I have filled in the exercise <exercise> with <file> 
 		And I press "Submit"
 		Then I should see "grading..."
-		And I should see "Final Grade: 100" within ".gradesheet"
+		And I should see "100" within ".gradesheet"
 
   Examples:
       | exercise                                   | file          |

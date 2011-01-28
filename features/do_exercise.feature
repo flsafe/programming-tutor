@@ -91,7 +91,7 @@ Feature: Do exercise
 		And I press "Submit"
 		Then I should see "grading..."
 		And I should see "Remove all letters:" within ".gradesheet"
-		And I should see "Final Grade: 100" within ".gradesheet"
+		And I should see "100" within ".gradesheet"
 
 	@javascript
   @with-bg-job
