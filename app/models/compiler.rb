@@ -1,6 +1,8 @@
 require 'tempfile'
 
 class Compiler
+
+  @@TEMPLATE_UTILS_PATH = "content/cozy_template_utils.c"
   
   def self.syntax_error?(code)
     Compiler.check_syntax(code)
@@ -29,9 +31,10 @@ class Compiler
     begin
       f.write(code)
       f.flush
-      out = `gcc #{options} -x c -g -o #{dest_path} #{code_file_path} 2>&1`
+      out = `gcc #{options} -x c -g -o #{dest_path} #{code_file_path} #{@@TEMPLATE_UTILS_PATH} 2>&1`
       if $? != 0
-        raise "Could not compile solution!"
+        Rails.logger.error("Could not compile:\n #{out}")
+        raise "Could not compile solution! #{out}"
       end
       true
     ensure

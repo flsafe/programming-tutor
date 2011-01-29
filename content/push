@@ -11,7 +11,13 @@ require 'pp'
 PROJ_HOME = Dir.getwd
 CONTENT_HOME = "#{PROJ_HOME}/content"
 
-# In the exercise text use <filename.c> to subsititue file text
+# The c header file for the template utils
+COZY_TEMPL_UTIL_H = "#{PROJ_HOME}/content/cozy_template_utils.h"
+
+# The cozy template utils that control system resources when running the user soluton
+COZY_TEMPL_UTIL_C = "#{PROJ_HOME}/content/cozy_template_utils.c"
+
+# In the exercse text use <filename.c> to subsititue file text
 FILE_SUB_REGEX = /\[\[(.+)\]\]/
 
 # Text between [startcode] and [endcode] is wrapped around <pre><code> </code></pre>
@@ -40,6 +46,7 @@ def start
   Dir.foreach(Dir.getwd) do |exercise_title|
     create_or_update_by(exercise_title) if valid_exercise?(exercise_title)
   end
+  copy_template_utils()
 end
 
 def valid_exercise?(exercise_title)
@@ -64,6 +71,11 @@ def create_or_update_by(exercise_title_dir)
     exit 1
   end
   Dir.chdir(pcwd)
+end
+
+def copy_template_utils
+  FileUtils.cp(COZY_TEMPL_UTIL_H, File.join(PROJ_HOME, 'tmp', 'work'))
+  FileUtils.cp(COZY_TEMPL_UTIL_C, File.join(PROJ_HOME, 'tmp', 'work'))
 end
 
 def populate_exercise(exercise)
