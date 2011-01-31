@@ -14,6 +14,10 @@
           typing './configure; make ; cd .. ; make'.					 
     Then runing 'bundle install' at the project root again.
 
+   *Note: The install script above run 'lein deps' but it throws an exception. 
+          If you move into the recomendation-engine directory and type 'lein deps'
+					manually, then it seem to install the dependencies.
+
 
   Create the mysql accounts in config/database.yml
   Type 'rake db:migrate'
