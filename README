@@ -7,22 +7,32 @@
 == Getting Started
 	Blueberry uses bundler to manage the gem dependencies
 	
-	1. Type 'bundle install' to install all the gem dependencies
-	2. Type 'script/server' to start the server
-	3. Go to 'localhost:3000' to start the app
-	4. Register your account by going to the 'register' link
-	5. You are now registered! But you need admin access.
-	6. Type: 'scrip/console' to bring up the ROR console
-	7. Type: 'u = User.first'
-	8. Type: 'u.add_role('admin')'
-	9. Type: 'u.save'
-	10. You now are an admin and should have access to the admin panel!
+	Type './install_prereqs' to install system dependencies (Script uses yum, modify to use other package manager)
+	Type 'bundle install' to install all the gem dependencies
+   *Note: On Fedora you may see the message '0 bad file descriptor'. I had some luck going into the
+          directory '~/.bundle/ruby/1.8/gems/ffi-0.6.3/ext/ffi_c/libffi' and 
+          typing './configure; make ; cd .. ; make'.					 
+    Then runing 'bundle install' at the project root again.
 
+
+  Create the mysql accounts in config/database.yml
+  Type 'rake db:migrate'
+  Type 'rake db:test:prepare'
+
+	Type 'script/server' to start the server
+	Go to 'localhost:3000' to start the app
+
+	Register your account by going to the 'register' link
+	You are now registered! But you need admin access.
+	Type: 'scrip/console' to bring up the ROR console
+	Type: 'u = User.first'
+	Type: 'u.add_role('admin')'
+	Type: 'u.save'
+  You now are an admin and should have access to the admin panel!
+
+  Type 'script/delayed_job start' to start the jobs for grading and syntax checks
+  Type 'recomendation-engine/start' to start the recomendation server
+  Type 'content/push' to add exercises in content/ to the db
 
 == Blueberry System Design For New Developers
 	Nothing here yet...
-
-
-
-
-
