@@ -17,6 +17,8 @@
    *Note: The install script above run 'lein deps' but it throws an exception. 
           If you move into the recomendation-engine directory and type 'lein deps'
 					manually, then it seem to install the dependencies.
+   *Note: If the server isn't responsive, try running 'lein repl'. This will
+          copy the deps to the project and the server may startup.
 
 
   Create the mysql accounts in config/database.yml
