@@ -12,3 +12,4 @@ db/production.sqlite3
 .swp
 .server.pid
 .swo
+log/*
