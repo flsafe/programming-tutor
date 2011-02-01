@@ -9,10 +9,12 @@ sudo yum install libxml
 sudo yum install libxml2
 sudo yum install libxslt-devel
 sudo yum install mysql
+sudo yum install mysql-server
 sudo yum install ruby-mysql
 sudo yum install mysql-devel
 sudo yum install sqlite-devel
 sudo yum install java-1.6.0-openjdk
+sudo yum install python-pygments 
 
 sudo gem install bundler
 bundle install
@@ -21,6 +23,22 @@ if [[ ! -d "${HOME}/bin" ]]
 then
 	mkdir "${HOME}/bin"
 fi
+if [[ ! -d "${HOME}/opt" ]]
+then
+	mkdir "${HOME}/opt"	
+fi
+
+if [[ ! -f "${HOME}/opt/jruby.tar.gz" ]]
+then
+	wget -O "${HOME}/opt/jruby.tar.gz" http://jruby.org.s3.amazonaws.com/downloads/1.5.6/jruby-bin-1.5.6.tar.gz
+fi
+
+tar -C "${HOME}/opt" -xvf "${HOME}/opt/jruby.tar.gz"
+mv -v "${HOME}/opt/jruby-1.5.6" "${HOME}/opt/jruby"
+cp -v -f -s "${HOME}/opt/jruby/bin/jruby" "${HOME}/bin/jruby"
+jruby -S gem install bundler --version '1.0.7'
+jruby -S bundle install
+
 wget --no-check-certificate -O ~/bin/lein https://github.com/technomancy/leiningen/raw/stable/bin/lein
 chmod ugo+x ~/bin/lein
 
