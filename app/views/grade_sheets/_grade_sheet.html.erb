@@ -30,6 +30,22 @@
 						<th align="left">Grade: <%=h results[:grade] %></th>
 					</tr>
 			</table>
+
+     <table class="column span-22 exercise-statistics">
+             <caption>Exercise Stats</caption>
+             <tr>
+               <td>Average Grade:</td>
+               <td><%=h "%.2f" % grade_sheet.exercise.get_stat('average_grade') %></td>
+             </tr>
+             <tr>
+               <td>Completion Time:</td>
+               <td><%=h "%.2f" % (grade_sheet.time_taken / 60.0) %> mins</td>
+             </tr>
+             <tr>
+               <td>Average Completion Time:</td>
+               <td><%=h "%.2f" % (grade_sheet.exercise.get_stat('average_time_taken') / 60.0)%> mins</td>
+             </tr>
+     </table>
 			
 			<h3>Source Code</h3>
 			<pre class="solution-code">
