@@ -9,8 +9,8 @@ int includes(char remove_chars[], char c){
   if( ! remove_chars )
     return 0;
 
-  while( remove_chars[i] )
-    if( c == remove_chars[i++] )
+  for(i = 0 ; remove_chars[i] ; i++)
+    if( c == remove_chars[i] )
       return 1;
 
   return 0;
@@ -21,15 +21,13 @@ int includes(char remove_chars[], char c){
  * by left shifting str.
  */
 void remove_char(int index, char  str[]){
- int i = index;
+ int i;
 
- if( (! str) || i < 0 || i >= strlen(str) )
+ if( (! str) || index < 0 || index >= strlen(str) )
    return;
 
- while( str[i] ){
+ for(i = index ; str[i] ; i++)
    str[i] = str[i + 1];
-   i++;
- }
 }
 
 

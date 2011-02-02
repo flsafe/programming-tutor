@@ -7,11 +7,17 @@ require 'active_support'
 require 'logger'
 require 'pp'
 
-# Change this to your own project home
-PROJ_HOME = "."
+# Assumes this script is called from the project root
+PROJ_HOME = Dir.getwd
 CONTENT_HOME = "#{PROJ_HOME}/content"
 
-# In the exercise text use <filename.c> to subsititue file text
+# The c header file for the template utils
+COZY_TEMPL_UTIL_H = "#{PROJ_HOME}/content/cozy_template_utils.h"
+
+# The cozy template utils that control system resources when running the user soluton
+COZY_TEMPL_UTIL_C = "#{PROJ_HOME}/content/cozy_template_utils.c"
+
+# In the exercse text use <filename.c> to subsititue file text
 FILE_SUB_REGEX = /\[\[(.+)\]\]/
 
 # Text between [startcode] and [endcode] is wrapped around <pre><code> </code></pre>
@@ -20,7 +26,7 @@ CODE_TAG_REGEX = /\[startcode\](.*?)\[endcode\]/m
 
 # Establish DB connection here because some gems require
 # a DB before being loaded
-ActiveRecord::Base.logger = Logger.new(STDERR)
+#ActiveRecord::Base.logger = Logger.new(STDERR)
 db_config = YAML::load(File.open("#{PROJ_HOME}/config/database.yml"))
 ActiveRecord::Base.establish_connection(db_config[ ENV['RAILS_ENV']||'development'] )
 
@@ -40,16 +46,19 @@ def start
   Dir.foreach(Dir.getwd) do |exercise_title|
     create_or_update_by(exercise_title) if valid_exercise?(exercise_title)
   end
+  copy_template_utils()
 end
 
 def valid_exercise?(exercise_title)
-  if exercise_title == "." or exercise_title == ".." or exercise_title =~ /^\./ or not File.directory?(exercise_title)
-    return false
+  if File.directory?(exercise_title)
+    if exercise_title != "." and exercise_title != ".."
+      return true
+    end
   end
-  true
 end
 
 def create_or_update_by(exercise_title_dir)
+  pcwd = Dir.getwd
   Dir.chdir(exercise_title_dir)
   exercise_title = exercise_title_dir.titleize
   begin
@@ -61,6 +70,12 @@ def create_or_update_by(exercise_title_dir)
     puts $!.backtrace
     exit 1
   end
+  Dir.chdir(pcwd)
+end
+
+def copy_template_utils
+  FileUtils.cp(COZY_TEMPL_UTIL_H, File.join(PROJ_HOME, 'tmp', 'work'))
+  FileUtils.cp(COZY_TEMPL_UTIL_C, File.join(PROJ_HOME, 'tmp', 'work'))
 end
 
 def populate_exercise(exercise)

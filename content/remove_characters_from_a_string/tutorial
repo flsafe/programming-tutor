@@ -1,11 +1,11 @@
-<h1>Getting Started</h1>
+<h1 id="getting-started">Getting Started</h1>
 <p>
 Removing characters from an array sounds pretty easy, like staining your
 nice shirt on a posh night out. Despite the easy sounding description
 there are some interesting choices and trade offs to be made. Let's get started.
 </p>
 
-<h1>Our First Solution</h1>
+<h1 id="our-first-solution">Our First Solution</h1>
 <p>
 Let's begin with a pseudo code outline of one possible solution.
 </p>
@@ -40,7 +40,7 @@ is the obvious way to solve it.
  [[solution2.c]]
 [endcode]
 
-<h1>An Obvious and Inefficient Solution</h1>
+<h1 id="obvious-and-ineffcient">An Obvious and Inefficient Solution</h1>
 <p>
 The solution above certainly works and it is easy enough to derive and
 grok. Unfortunately it is inefficient. I can hear your interviewer now...
@@ -51,7 +51,7 @@ grok. Unfortunately it is inefficient. I can hear your interviewer now...
 Well, that depends, is Fe a metal in the first transitional series?
 </p>
 
-<h1>How Can We Do Better?</h1>
+<h1 id="do-better">How Can We Do Better?</h1>
 <p>
 To help us make this algorithm more efficient let's examine why it is inefficient.
 Imagine the case where all the characters of the input string 
@@ -75,16 +75,17 @@ out to an additional <i>m</i> + (<i>n</i> - 1) steps.
 Starting to see a pattern?
 </p>
 
-<h1>Warning! Math Content</h1>
+<h1 id="math-content">Warning! Math Content</h1>
 <p>
  When the algorithm deletes the first character of
 <i>str</i> it performs <code>m + n</code> steps. To delete the second character it performs
 <code>m + n - 1</code> steps. Deleting the third character is another <code>m + n - 2</code> steps.
-We can add up all the steps with the closed form of the series below. Ultimately this algorithm is O(n^2).
+We can add up all the steps with the closed form of the <a href="http://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%C2%B7_%C2%B7_%C2%B7">series</a> below.
+Ultimately this algorithm is O(n^2 + (n * m)).
 </p>
 
 <pre><code>
-  (n + m) + (n - 1 + m) + (n - 2 + m) + .. + (1 + m)
+  (m + n) + (m + n - 1) + (m + n - 2) + .. + (m + 1)
 
 = (1 + 2 + 3 + .. + n) + (n * m)
 
@@ -116,14 +117,16 @@ predicted. Math <em>is power.</em>
 Figure 2. The run times of our naive algorithm for different sized inputs
 </div>
 
-<h1>A Better Implementation</h1>
+<h1 id="better-impelementation">A Better Implementation</h1>
 <p>
 Before we delete a character it must be found in the <i>remove_chars</i> array.
-The algorithm above uses a <i>for</i> loop to check all the characters in <i>remove_chars</i>. 
+The algorithm above uses a <i>for</i> loop to find characters in <i>remove_chars</i>. 
 </p>
 
 <p>
-Let's do better. What other data structures could we use for searching? 
+Let's figure out a better way to test if a character
+from the input string is included in the <i>remove_chars</i> array. 
+What other data structures could we use for searching? 
 Which should we choose? Why?
 </p>
 
@@ -140,8 +143,9 @@ characters we will only use 128 bytes in memory.
 </p>
 
 <p>
-Assuming 4 byte addressing if we use a binary tree, each node of the tree stores the character (1 byte)  plus a left pointer (4 bytes)
-and a right pointer (4 bytes). Each node then uses at least 9 bytes! Since our characters are so small
+If we use a binary tree, each node of the tree stores the character (1 byte) plus a left pointer (Assume 4 bytes)
+and a right pointer (4 bytes). Each node then uses at least 9 bytes for a
+total of 1152 bytes! Since our characters are so small
 and there are only 128 of them, we should use an array based hash table.
 </p>
 
@@ -157,7 +161,7 @@ char removetab[128] = {0};
 [endcode]
 
 
-<h1>Three Hints</h1>
+<h1 id="three-hints">Three Hints</h1>
 
 <p>
 In C, what is the relationship between a character and an integer?
@@ -189,13 +193,13 @@ the same time as removetab[127].
 
 </ol>
 
-<h1>The Answer</h1>
+<h1 id="the-answer">The Answer</h1>
 <p>
-Suppose we want to remove the character 'a' from our input string.
-Then we set removetab['a'] to true.
+Suppose we want to remove the character <i>c</i> from our input string.
+Then we set removetab[<i>c</i>] to true.
 </p>
 [startcode]
-removetab['a'] = 1;
+removetab[c] = 1;
 [endcode]
 
 <p>
@@ -237,7 +241,7 @@ for(i = 0 ; str[i]  ; i++){
 }
 [endcode]
 
-<h1>What About All That Shifting?</h1>
+<h1 id="shifting">What About All That Shifting?</h1>
 <p>
 So far we haven't really tackled the most inefficient aspect of the algorithm.
 Suppose that we allocate a new temporary buffer the same size as the input string.
@@ -256,7 +260,7 @@ return BUF
 [endcode]
 
 <p>
-In the figure 3 below we are deleting the character c. The characters a,b,d,e,f and \0 all get copied
+In figure 3 below we are deleting the character c. The characters a,b,d,e,f and \0 all get copied
 over into the new buffer. But not c because it's going no where.
 </p>
 
@@ -269,13 +273,13 @@ We've now deleted characters without shifting but the trade off is increased mem
 We would need a second buffer thus doubling our memory usage. Can we do better?
 </p>
 
-<h1>Another Hint</h1>
+<h1 id="another-hint">Another Hint</h1>
 <p>
 Can you figure out a way to do the same thing without allocating another buffer?
-How could you do this using only the input string?
+How could you do this using only the input array string?
 </p>
 
-<h1>How To Do It</h1>
+<h1 id="how-to-doit">How To Do It</h1>
 <p>
 First let's consider how to implement the concept above using an extra buffer. I've written
 a solution using an extra buffer.
@@ -315,7 +319,7 @@ temporary buffer. If <i>read</i> and <i>write</i> both indexed into the input st
 two separate ones would this algorithm still work? Try it out.
 </p>
 
-<h1>An Efficient And Elegant Way Of Doing This</h1>
+<h1 id="effcient-elegant">An Efficient And Elegant Way Of Doing This</h1>
 <p>
 We don't have to allocate another temporary buffer. Notice in figure 4 above that the algorithm 
 never writes a character before <i>read</i> gets a chance to read it. In other words if 
@@ -335,12 +339,12 @@ Here is a solution that takes advantage of this.
 This is by far the shortest and the most efficient solution we've seen.
 What about its worst case run time behavior? For each character in the input string the
 algorithm reads a character from the input string and then writes
-a character to the temporary buffer. Let's consider that one step. So if the character array length is <i>n</i>
+a character to the temporary buffer. Let's consider that one step. So if the input string is length <i>n</i>
 then, at most the algorithm does <i>n</i> steps.
 </p>
 
 <p>
-The algorithm also allocated space for <i>removetab</i> in the source code.
+The algorithm also allocates space for <i>removetab</i> in the source code.
 Setting what characters get deleted in <i>removetab</i> with a 1 requires at most <i>m</i> steps, where
 <i>m</i> is the number of characters we need to remove.
 <p>
@@ -349,7 +353,7 @@ Setting what characters get deleted in <i>removetab</i> with a 1 requires at mos
 Therefore our algorithm is O(<i>m</i> + <i>n</i>). Which means it is linear! 
 </p>
 
-<h1>What We Learned</h1>
+<h1 id="what-we-learned">What We Learned</h1>
 <ol>
 <li>
 ASCII characters map to an integer, it is possible to use this integer value to
@@ -358,11 +362,11 @@ index into an array.
 
 <li>
 An efficient way of removing characters from an array is to "pretend" to write
-them to a temporary buffer, minus the characters want to delete.
+them to a temporary buffer, minus the characters we want to delete.
 </li>
 </ol>
 
-<h1>Exercises</h1>
+<h1 id="exercises">Exercises</h1>
 <p>
 We've allocated a character array to keep track of what characters
 need to be deleted. What other data structures could be used? Try using a

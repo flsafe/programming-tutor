@@ -2,58 +2,55 @@
 
 <% results = grade_sheet.unit_test_results_hash %>
 
+<%= render :partial=>"grade_sheets/recommendation", :locals=>{:grade_sheet=>grade_sheet} %>
+
 <div class="gradesheet">
 	
-	<div class="column span-24">
-		<div class="column span-15 colborder test">
-			<table class="column span-15 colborder tests">
-				<caption>Unit Tests</caption>
+	<div class="column span-22">
+			<table class="tests">
+        <caption><%=h grade_sheet.exercise.title %></caption>
 				<tr>
-					<th>Unit Test</th>
-					<th>Expected</th>
-					<th>Result</th>
+					<th>Test</th>
+          <th>Input</th>
+					<th>Output</th>
+          <th>Expected</th>
 					<th>Points</th>
 				</tr> 
 					<% results[:tests].each_pair do |test_title, test_results| %>
 						<tr>
-							<td> <%=h test_title%></td> 
-							<td> <%=h test_results[:expected].blank? ? '""' : test_results[:expected]%>  </td>
-							<td><%=h test_results[:points] != 0 ? "Nice!" : "Oops" %>                    </td>
-							<td> <%=h test_results[:points] %>                                           </td>
+							<td> <%=h test_title%>                         </td> 
+              <td> <%=h to_str(test_results[:input])%>       </td>
+							<td> <%=h to_str(test_results[:got]) %>        </td>
+              <td> <%=h to_str(test_results[:expected]) %>   </td>
+							<%= to_color_points_td(test_results) %>   
 						</tr>
 					<% end %>
 					<tr>
-						<th>Final Grade: <%=h results[:grade] %></th>
+            <td colspan="4"></td>
+						<th align="left">Grade: <%=h results[:grade] %></th>
 					</tr>
 			</table>
+
+     <table class="column span-22 exercise-statistics">
+             <caption>Exercise Stats</caption>
+             <tr>
+               <td>Average Grade:</td>
+               <td><%=h "%.2f" % grade_sheet.exercise.get_stat('average_grade') %></td>
+             </tr>
+             <tr>
+               <td>Completion Time:</td>
+               <td><%=h "%.2f" % (grade_sheet.time_taken / 60.0) %> mins</td>
+             </tr>
+             <tr>
+               <td>Average Completion Time:</td>
+               <td><%=h "%.2f" % (grade_sheet.exercise.get_stat('average_time_taken') / 60.0)%> mins</td>
+             </tr>
+     </table>
 			
 			<h3>Source Code</h3>
-			<pre class="column span-15 colborder solution-code">
+			<pre class="solution-code">
 				<%= highlight_code(:c, grade_sheet.src_code) %>
 			</pre>
-		</div> <!-- End left content -->
 
-		<div class="column span-7">
-			<div class="column span-7">
-				<%= render :partial=>'grade_sheets/recommendation', :locals=>{:grade_sheet=>grade_sheet}  %>
-			</div>
-		
-			<table class="column span-7 exercise-statistics">
-				<caption>Exercise Stats</caption>
-				<tr>
-					<td>Average Grade:</td>
-					<td><%=h "%.2f" % grade_sheet.exercise.get_stat('average_grade') %></td>
-				</tr>
-				<tr>
-					<td>Completion Time:</td>
-					<td><%=h "%.2f" % (grade_sheet.time_taken / 60.0) %> mins</td>
-				</tr>
-				<tr>
-					<td>Average Completion Time:</td>
-					<td><%=h "%.2f" % (grade_sheet.exercise.get_stat('average_time_taken') / 60.0)%> mins</td>
-				</tr>
-			</table>
-		 </div><!-- span-7 End right content -->
 	</div><!-- End span-24 wrapper -->
-	
 </div><!-- End gradesheet -->

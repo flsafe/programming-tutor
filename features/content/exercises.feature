@@ -10,10 +10,12 @@ Feature: All Exercises
     Given I have filled in the exercise <exercise> with <file> 
 		And I press "Submit"
 		Then I should see "grading..."
-		And I should see "Final Grade: 100" within ".gradesheet"
+		And I should see "100" within ".gradesheet"
 
   Examples:
-      | exercise                          | file          |
-      | "Remove Characters From A String" | "solution.c"  |
-      | "Remove Characters From A String" | "solution2.c" |
-      | "Remove Characters From A String" | "solution3.c" |
+      | exercise                                   | file          |
+      | "Remove Characters From A String"          | "solution.c"  |
+      | "Remove Characters From A String"          | "solution2.c" |
+      | "Remove Characters From A String"          | "solution3.c" |
+      | "Reverse Characters In A Character String" | "solution.c"  |
+      | "Implement A Stack Using A Linked List"    | "solution.c"  |

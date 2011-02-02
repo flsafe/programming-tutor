@@ -1,28 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-
-/* When in production mode runing in Fedora Linux,
- * we use the SECCOMP flag to limit system resources.
- * Otherwise we assume we are running on a development box
- * with no need for SECCOMP. */
-
-#ifdef LINUX_SECCOMP
-  #include<sys/time.h>
-  #include<sys/resource.h>
-#endif
+#include "cozy_template_utils.h"
 
 #define MAX_STR 255
-
-#ifdef LINUX_SECCOMP
-  void set_limit(int resource, int value){         
-    struct rlimit rl;
-                  
-    getrlimit(resource, &rl);
-    rl.rlim_cur = value;
-    rl.rlim_max = value;
-    setrlimit(resource, &rl);
-  }
-#endif
 
 void remove_char(char, char[]);
 
@@ -31,18 +11,12 @@ int main(){
   char rm_char; 
   memset(str, '\0', (MAX_STR + 1) * sizeof(char));
 
-  #ifdef LINUX_SECCOMP 
-    set_limit(RLIMIT_CPU, 4); 
-    set_limit(RLIMIT_NOFILE, 0); 
-    set_limit(RLIMIT_FSIZE, 1); 
-    set_limit(RLIMIT_NPROC, 1);  
-    set_limit(RLIMIT_DATA, 100000); 
-    set_limit(RLIMIT_STACK, 100000); 
-    set_limit(RLIMIT_AS, 100000); 
-  #endif
-
   scanf("%c %255s",&rm_char, str);
+
+  cozy1B9yZp_limit_resources();
+  cozy1B9yZp_start_ignore_out();
   remove_char(rm_char, str);
+  cozy1B9yZp_stop_ignore_stdout();
 
   str[MAX_STR] = '\0'; /*Always null terminated*/
   printf("%s", str);
