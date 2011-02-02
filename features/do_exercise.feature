@@ -98,9 +98,9 @@ Feature: Do exercise
   Scenario: The user's program output to stdout or stderr is not displayed
     Given I am doing the exercise RemoveChar
     And I fill in the text editor with the solution "pstdout.c"
-		And I press "Submit"
+		When I press "Submit"
     Then I should see "Output" within ".gradesheet"
-		And I should not see "test message"
+		And I should not see "test message" within ".tests"
 
 	@javascript
   @with-bg-job
