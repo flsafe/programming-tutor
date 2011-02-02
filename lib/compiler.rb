@@ -16,7 +16,7 @@ class Compiler
     begin
       f.write(code)
       f.flush
-      out = `gcc -Wall -pedantic -x c -fsyntax-only #{code_file_path} 2>&1`
+      out = `gcc -Wall -x c -fsyntax-only #{code_file_path} 2>&1`
       out.gsub(/#{f.path}:/, '')
     rescue
       raise "Could not write tmp scratch file to do the syntax check!"
@@ -31,7 +31,7 @@ class Compiler
     begin
       f.write(code)
       f.flush
-      out = `gcc #{options} -x c -g -o #{dest_path} #{code_file_path} #{@@TEMPLATE_UTILS_PATH} 2>&1`
+      out = `gcc #{options} -fstack-protector-all -x c -g -o #{dest_path} #{code_file_path} #{@@TEMPLATE_UTILS_PATH} 2>&1`
       if $? != 0
         Rails.logger.error("Could not compile:\n #{out}")
         raise "Could not compile solution! #{out}"
