@@ -48,9 +48,14 @@ class UnitTest < ActiveRecord::Base
   end
   
   def write_unit_test_to_file
-    f = File.open(@unit_test_path, 'w')
-    f.write(@unit_test_src_code)
-    f.close
+    begin
+      f = File.open(@unit_test_path, 'w')
+      f.write(@unit_test_src_code)
+    rescue
+      raise "Could not write unit test"
+    ensure
+      f.close
+    end
   end
   
   def execute_unit_test_file
