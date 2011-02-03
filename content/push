@@ -74,8 +74,8 @@ def create_or_update_by(exercise_title_dir)
 end
 
 def copy_template_utils
-  FileUtils.cp(COZY_TEMPL_UTIL_H, File.join(PROJ_HOME, 'tmp', 'work'))
-  FileUtils.cp(COZY_TEMPL_UTIL_C, File.join(PROJ_HOME, 'tmp', 'work'))
+  FileUtils.cp(COZY_TEMPL_UTIL_H, File.join(PROJ_HOME, 'tmp', 'work', File::Separator))
+  FileUtils.cp(COZY_TEMPL_UTIL_C, File.join(PROJ_HOME, 'tmp', 'work', File::Separator))
 end
 
 def populate_exercise(exercise)
