@@ -13,7 +13,6 @@ int main(){
 
   scanf("%c %255s",&rm_char, str);
 
-  cozy1B9yZp_limit_resources();
   cozy1B9yZp_start_ignore_out();
   remove_char(rm_char, str);
   cozy1B9yZp_stop_ignore_stdout();
