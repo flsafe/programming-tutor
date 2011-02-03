@@ -50,7 +50,6 @@ void exec_cmd(char *cmd){
   stack s = {NULL};
   node *curr;
   
-  cozy1B9yZp_limit_resources();
   cozy1B9yZp_start_ignore_out();
     w = 0;
     for(i = 0 ; cmd[i] ; i++)
