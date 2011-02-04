@@ -93,15 +93,6 @@ Feature: Do exercise
 		And I should see "Remove all letters:" within ".gradesheet"
 		And I should see "100" within ".gradesheet"
 
-  @javascript
-  @with-bg-job
-  Scenario: The user's program output to stdout or stderr is not displayed
-    Given I am doing the exercise RemoveChar
-    And I fill in the text editor with the solution "pstdout.c"
-		When I press "Submit"
-    Then I should see "Output" within ".gradesheet"
-		And I should not see "test message" within ".tests"
-
 	@javascript
   @with-bg-job
 	Scenario: The user submits a solution to an exercise, but the solution template crashes
