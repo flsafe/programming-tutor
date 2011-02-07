@@ -1,30 +1,12 @@
 require 'yaml'
 
-class CozyUnitTest 
-  
-  attr_reader :results
-
-  @@TEST_REGEX = /`(test_.+)'/
-
-  @@IS_TEST_METHOD = /^test/
-  
-  def initialize(executable_name)
-    @executable_name = executable_name
-    @results = { :grade     => 0,
-                 :tests     => {},
-                 :run_times => {} }
-    @points_per_test = 100.0 / self.public_methods.count {|m| m =~ /^test/}
-  end
-
-  public 
+module UnitTestRunner 
   
   def start
     call_test_methods()
     calculate_final_grade() 
   end
   
-  protected
-
   def run_with_and_expect(input, expected, test_name = nil, points = @points_per_test)
    test_name = create_auto_test_name() unless test_name
    result = run_with(input)
@@ -38,13 +20,13 @@ class CozyUnitTest
   private
 
   def call_test_methods
-    self.public_methods.each do |m|
-      self.send(m) if m =~ @@IS_TEST_METHOD
+    public_methods.each do |m|
+      send(m) if m =~ /^test/
     end
   end
 
   def calculate_final_grade 
-    tests  = results[:tests]
+    tests  = @results[:tests]
     points = 0
     tests.each_pair do |test_name, test_results|
       points += test_results[:points]
@@ -53,9 +35,9 @@ class CozyUnitTest
   end
 
   def create_auto_test_name
-    Kernel.caller.each do | file_line_in |
-      m = @@TEST_REGEX.match(file_line_in)
-      return humanize( m[1] ) if m and m[1]
+    Kernel.caller.each do | callr |
+      caller_m = /`(test_.+)'/.match(callr)
+      return humanize( caller_m[1] ) if caller_m and caller_m[1]
     end
     "Test case"
   end
@@ -65,17 +47,8 @@ class CozyUnitTest
   end
 
   def run_with(input)
-    p = IO.popen('-', 'w+')
-    if p 
-      p.write(input)
-      p.close_write
-      
-      result = p.read()
-      p.close
-      result
-    else
-      exec("sandbox ./#{@executable_name}")
-    end   
+    # Execute @testcode with input
+    ""
   end
 
   def add_test_result(test_name,  info)
