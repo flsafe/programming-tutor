@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "cozy_template_utils.h"
 
 #define MAX_LEN 255
 
@@ -46,31 +45,29 @@ enum Cmd{
 
 void exec_cmd(char *cmd){
   int i, w, err;
-  char rslt[MAX_LEN] = {'\0'};
+  char rslt[MAX_LEN] = {0};
   stack s = {NULL};
   node *curr;
   
-  cozy1B9yZp_start_ignore_out();
-    w = 0;
-    for(i = 0 ; cmd[i] ; i++)
+  w = 0;
+  for(i = 0 ; cmd[i] ; i++)
+  {
+    err = 0;
+    if( cmd[i] == PUSH )
     {
-      err = 0;
-      if( cmd[i] == PUSH )
-      {
-        if( ! push(&s, cmd[i+1] - '0') )
-          err = 1;
-      }
-      else if( cmd[i] == POP )
-      {
-        pop(&s, &err);
-      }
-      else
-      {
-        continue;
-      }
-      rslt[w++] = err + '0';
+      if( ! push(&s, cmd[i+1] - '0') )
+        err = 1;
     }
-  cozy1B9yZp_stop_ignore_stdout();
+    else if( cmd[i] == POP )
+    {
+      pop(&s, &err);
+    }
+    else
+    {
+      continue;
+    }
+    rslt[w++] = err + '0';
+  }
 
   printf("err values: %s, ", rslt);
   printf("stack: ");

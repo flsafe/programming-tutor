@@ -17,21 +17,22 @@ class UnitTest < ActiveRecord::Base
 
   def run_on(solution_code = nil)
     begin
-      init  
+      init(solution_code)
       start
       @results.with_indifferent_access
     rescue Exception => e
-      return {:error=>"#{e.message}"}
+      return {:error=>"#{e.message} #{e.backtrace}"}
     end
   end
   
   protected
 
-  def init
+  def init(solution_code)
+    @solution_code = solution_code
     @results = { :grade     => 0,
                  :tests     => {},
                  :run_times => {} }
-    @points_per_test = 100.0 / self.public_methods.count {|m| m =~ /^test/}
+    @points_per_test = 100.0 / public_methods.count {|m| m =~ /^test/}
     class_eval(src_code)
   end
   
