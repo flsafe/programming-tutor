@@ -17,5 +17,5 @@ Feature: All Exercises
       #| "Remove Characters From A String"          | "solution.c"  |
       #| "Remove Characters From A String"          | "solution2.c" |
       #| "Remove Characters From A String"          | "solution3.c" |
-      #| "Reverse Characters In A Character String" | "solution.c"  |
+      | "Reverse Characters In A Character String" | "solution.c"  |
       | "Implement A Stack Using A Linked List"    | "solution.c"  |

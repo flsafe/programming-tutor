@@ -87,9 +87,9 @@ class IdeoneClient
       soap.body = {:user => user,
                    :pass => password,
                    :link => link,
+                   :with_input=>true,
                    :with_output=>true}
     end
-    response
   end
 
   def program_finished?(status)
@@ -128,11 +128,16 @@ class IdeoneClient
   end
 
   def parse(response, action, key)
+    #
+    # Note: As of API 1.1.11, an empty string is represented in the response.to_hash 
+    # as an item with {value:{"type":"xsd:string"}, key:"output/input"}. Therefore
+    # if the item value is not a string, we will just return the empty string. 
+    #
     raise_if_not_parsable(response, action) 
     items_hash_array = response.to_hash[action][:return][:item]
     item = items_hash_array.detect {|item| item[:key].to_sym == key.to_sym}
     raise "Response did not include a #{key.to_sym} key" unless item and item[:value]
-    item[:value]
+    item[:value].is_a?(String) ? item[:value] : ""
   end
 
   def raise_if_not_parsable(response, action)
