@@ -1,4 +1,5 @@
 require 'yaml'
+require 'lib/unit_test_runner'
 
 class UnitTest < ActiveRecord::Base
   belongs_to :exercise
@@ -32,8 +33,9 @@ class UnitTest < ActiveRecord::Base
     @results = { :grade     => 0,
                  :tests     => {},
                  :run_times => {} }
-    @points_per_test = 100.0 / public_methods.count {|m| m =~ /^test/}
+
     class_eval(src_code)
+    @points_per_test = 100.0 / public_methods.count {|m| m =~ /^test/}
   end
   
   def error_results?(results)
@@ -41,7 +43,7 @@ class UnitTest < ActiveRecord::Base
   end
   
   def valid_results?(results)
-    results && ( not results[:grade].blank?) && ( not results[:tests].blank?)
+    results && (not results[:grade].blank?) && (not results[:tests].blank?)
   end
   
   def from_file_field(unit_test_field)

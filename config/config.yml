@@ -16,3 +16,7 @@ recomendation_server_uri:
   test: "http://127.0.01:8082/"
   cucumber: "http://127.0.0.1:8082/"
   development: "http://127.0.0.1:8083/"
+
+ideone:
+  user: "cozysystems"
+  password: "Manbat22+"

@@ -64,4 +64,12 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
     grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code, :time_taken=>time_stat.to_i
     grade_sheet.save!
   end
+
+  def debug_mode
+    file_handle = File.open("log/#{Rails.env}_delayed_jobs.log", (File::WRONLY | File::APPEND | File::CREAT))
+    file_handle.sync = true
+    Rails.logger.auto_flushing = true
+    Rails.logger.instance_variable_set :@log, file_handle
+    Delayed::Worker.logger = Rails.logger
+  end
 end

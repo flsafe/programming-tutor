@@ -21,6 +21,7 @@ gem 'rails', '2.3.5'
 gem 'rspec', '1.3.1', :group=>:test
 gem 'rspec-rails' 
 gem 'ruby-debug', '0.10.3', :platforms=>:ruby
+gem 'savon'
 gem 'selenium-client', :group=>:test
 gem 'sqlite3-ruby', :group=>[:development, :test], :platforms=>:ruby
 gem 'test-unit', '1.2.3', :group=>:test                 #Rspec/cucumber depended on older unit test
