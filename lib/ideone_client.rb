@@ -78,8 +78,8 @@ class IdeoneClient
   def create_detailed_result(link)
     response = get_submission_details(link)
     {:output => parse(response, :get_submission_details_response, :output),
-     :memory => parse(response, :get_submission_details_response, :memory),
-     :time   => parse(response, :get_submission_details_response, :time)}
+     :memory => parse(response, :get_submission_details_response, :memory).to_i,
+     :time   => parse(response, :get_submission_details_response, :time).to_f}
   end
 
   def get_submission_details(link)
