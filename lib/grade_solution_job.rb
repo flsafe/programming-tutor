@@ -4,7 +4,6 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   
   def perform
     begin
-      FileUtils.mkdir_p(APP_CONFIG['work_dir'])
       get_exercise_solution_template
       get_exercise_unit_test
       solution_code = fill_in_solution_template
