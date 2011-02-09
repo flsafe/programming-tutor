@@ -15,5 +15,4 @@ Feature: Try it now
 		And I follow "RemoveChar"
 		And I fill in the text editor with the solution "remove-letter-solution.c"
 		And I press "Submit"
-		Then I should see "Remove all letters:" within ".gradesheet"
 		And I should see "100" within ".gradesheet"

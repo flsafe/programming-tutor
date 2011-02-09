@@ -90,7 +90,7 @@ Feature: Do exercise
     Given I am doing the exercise RemoveChar
 		And I press "Submit"
 		Then I should see "grading..."
-		And I should see "Remove all letters:" within ".gradesheet"
+		And I should see "All letters removed" within ".gradesheet"
 		And I should see "100" within ".gradesheet"
 
 	@javascript
