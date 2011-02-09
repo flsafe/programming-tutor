@@ -47,7 +47,6 @@ def start
   Dir.foreach(Dir.getwd) do |exercise_title|
     create_or_update_by(exercise_title) if valid_exercise?(exercise_title)
   end
-  copy_template_utils()
 end
 
 def valid_exercise?(exercise_title)
@@ -72,11 +71,6 @@ def create_or_update_by(exercise_title_dir)
     exit 1
   end
   Dir.chdir(pcwd)
-end
-
-def copy_template_utils
-  FileUtils.cp(COZY_TEMPL_UTIL_H, File.join(PROJ_HOME, 'tmp', 'work', File::Separator))
-  FileUtils.cp(COZY_TEMPL_UTIL_C, File.join(PROJ_HOME, 'tmp', 'work', File::Separator))
 end
 
 def populate_exercise(exercise)
