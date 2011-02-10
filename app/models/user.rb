@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   
   has_many :grade_sheets, :dependent=>:destroy
   has_many :completed_exercises, :through=>:grade_sheets, :source=>:exercise, :uniq=>true #todo: What does this mean?
-  has_many :exercise_sessions, :dependent=>:destroy, :before_add=>:limit_one_exercise_session
+  has_one :exercise_session, :dependent=>:destroy
   
   attr_protected :roles_mask, :anonymous, :password_salt, :persistence_token
   
@@ -17,34 +17,25 @@ class User < ActiveRecord::Base
   end
   
   def get_stat(name)
-    Statistic.get_stat("user.#{name}", self.id) || 0
+    Statistic.get_stat("user.#{name}", id) || 0
   end
   
-  def start_exercise_session(exercise_id)
-    exercise_sessions << ExerciseSession.new(:exercise_id=>exercise_id)
+  def start_exercise_session(exercise)
+    create_exercise_session(:exercise=>exercise, :user=>self)
   end
   
   def exercise_session_in_progress?
     exercise_session != nil
   end
   
-  def exercise_session
-    exercise_sessions.find :first
-  end
-  
   def current_exercise
-    session = exercise_session
-    session.exercise
+    exercise_session.exercise
   end
   
   def end_exercise_session
-    session = exercise_session
-    raise "The user doesn't have an exercise session" unless session
-    session.destroy
-  end
-  
-  def limit_one_exercise_session(exercise_session)
-    raise "The user can't have more than one exercise session at a time!" if exercise_session_in_progress?
+    raise "The user doesn't have an exercise session" unless exercise_session
+    exercise_session.destroy
+    exercise_session = nil
   end
   
   def self.new_anonymous
