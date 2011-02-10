@@ -2,7 +2,7 @@
 	
 	<div class="column span-9 completed-exercise-title"> <%=h exercise.title%></div>
 	
-	<div class="column span-6 grade grade-a rounded-corners"><%=h current_user.grade_for?(exercise) %></div>
+	<div class="column span-6 grade grade-a rounded-corners"><%=h current_user.grade_for(exercise) %></div>
 	
 	<div class="column span-9">
 		<%= link_to "Retake", :controller=>:tutor, :action=>:show, :id=>exercise %> |

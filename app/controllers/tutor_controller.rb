@@ -118,9 +118,10 @@ class TutorController < ApplicationController
   end
 
   def redirect_if_not_recomended_exercise_or_retake
-    unless current_user.anonymous? or current_user.has_role?('admin')
-      a_recomended_ex = Recomendation.recomended?(current_user.id, params[:id])
-      a_retake = GradeSheet.retake?(current_user.id, params[:id])
+    exercise = Exercise.find_by_id(params[:id])
+    unless current_user.is_admin?
+      a_recomended_ex = Recomendation.recomended?(current_user.id, exercise.id)
+      a_retake = current_user.retake?(a_recomended_ex)
       if not (a_recomended_ex or a_retake)
         redirect_to :controller=>:overview
       end
@@ -137,8 +138,8 @@ class TutorController < ApplicationController
   end
   
   def start_exercise_session_if_none
-    @exercise = Exercise.find params[:id]
-    current_user.start_exercise_session(@exercise) unless current_user.exercise_session_in_progress?
+    exercise = Exercise.find params[:id]
+    current_user.start_exercise_session(exercise) unless current_user.exercise_session_in_progress?
   end
   
   def end_exercise_session

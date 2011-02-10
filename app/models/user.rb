@@ -10,10 +10,13 @@ class User < ActiveRecord::Base
   
   attr_protected :roles_mask, :anonymous, :password_salt, :persistence_token
   
-  def grade_for?(exercise)
-    conds = ['exercise_id=? AND user_id=?', exercise.id, self.id]
-    gs    = GradeSheet.find(:first, :conditions=>conds, :order=>'created_at DESC')
+  def grade_for(exercise)
+    gs = grade_sheets.find_by_exercise_id(exercise, :order=>"created_at DESC")
     gs.grade if gs
+  end
+
+  def retake?(exercise)
+    grade_for(exercise) == nil
   end
   
   def get_stat(name)

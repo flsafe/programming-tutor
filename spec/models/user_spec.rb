@@ -20,7 +20,7 @@ describe User do
        Factory.create :grade_sheet, :grade=>60, :user=>@current_user, :exercise=>@exercise
        Factory.create :grade_sheet, :grade=>90, :user=>@current_user, :exercise=>@exercise
        sleep(1) #Make sure one is inserted at a later time
-       GradeSheet.create!(Factory.build(:grade_sheet, :grade=>100, :user=>@current_user, :exercise=>@exercise).attributes)
+       Factory.create(:grade_sheet, :grade=>100, :user=>@current_user, :exercise=>@exercise)
        @current_user.grade_for?(@exercise).should == 100
       end
     
