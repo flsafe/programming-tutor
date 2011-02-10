@@ -64,15 +64,16 @@ describe TutorController do
       response.should_not render_template('tutor/already_doing_exercise')
     end
 
-    it "redirects if the exercise is not a recomended exercise" do
-      Recomendation.should_receive('recomended?').with(current_user.id, stub_exercise.id.to_s).and_return(false)
+    it "redirects if the exercise is not a recomended exercise and not a retake" do
+      Recomendation.stub(:recomended?).and_return(false)
+      current_user.stub(:retake?).and_return(false)
       get "show", :id=>stub_exercise.id
       response.should redirect_to(:controller=>:overview)
     end
 
     it "always displays retakes if the user is not anonymous" do
       current_user.stub('anonymous?').and_return(false)
-      GradeSheet.should_receive('retake?').with(current_user.id, stub_exercise.id.to_s).and_return(true)
+      Recomendation.stub(:recomended?).and_return(false)
       response.should_not redirect_to(:controller=>:overview)
       get "show", :id=>stub_exercise.id
     end

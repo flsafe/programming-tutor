@@ -5,17 +5,9 @@ class GradeSheet < ActiveRecord::Base
   validates_presence_of :user, :grade, :exercise, :unit_test_results, :src_code, :time_taken
   
   def retake?
-    completed = GradeSheet.count_grade_sheets(user, exercise)
-    completed >= 2
+    user.retake?(exercise)
   end
 
-  def self.retake?(user_id, exercise_id)
-    gs = GradeSheet.find(:first, 
-                    :conditions=>{:user_id=>user_id,
-                                          :exercise_id=>exercise_id})
-    gs != nil            
-  end
-  
   def complete_set?
     completed_exercises = GradeSheet.count_distinct_sibling_grade_sheets(user, exercise)
     exercises_in_set    = GradeSheet.siblings(exercise).count

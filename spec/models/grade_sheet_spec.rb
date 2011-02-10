@@ -19,11 +19,9 @@ describe GradeSheet do
   describe "#retake?" do
     
     it "returns true if the user has other grade sheets for the associated exercise" do
-      gs = nil
-      [50, 51].each do | g |
-        gs = @ex1.grade_sheets.create!(Factory.build(:grade_sheet, :grade=>g, :user=>@user, :exercise=>@ex1).attributes)
-      end
-      gs.retake?.should == true
+      @user.grade_sheets << GradeSheet.new(:grade=>100, :exercise=>@ex1)
+      @user.grade_sheets << GradeSheet.new(:grade=>100, :exercise=>@ex1)
+      @user.grade_sheets.first.retake?.should == true
     end
     
     it "returns false if the user has only one grade sheet for the associated exercise" do
@@ -36,15 +34,6 @@ describe GradeSheet do
     end
   end
 
-  describe "#retake?" do
-
-    it "returns true if the user has already has a grade for the exercise" do
-      user = Factory.create :user
-      grade_sheet = Factory.create :grade_sheet, :user=>user
-      GradeSheet.retake?(user.id, grade_sheet.exercise).should == true 
-    end
-  end
-  
   describe "#complete_set?" do
     
     it "return true if the user has a grade sheet for each exercise in the set" do

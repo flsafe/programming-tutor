@@ -76,8 +76,8 @@ class ExercisesController < ApplicationController
 
   def redirect_if_not_retake
     exercise = Exercise.find(params[:id])
-    unless current_user.has_role?('admin')
-      unless GradeSheet.retake?(current_user.id, exercise.id)
+    unless current_user.is_admin?
+      unless current_user.retake?(exercise)
         redirect_to current_user_home
       end
     end
