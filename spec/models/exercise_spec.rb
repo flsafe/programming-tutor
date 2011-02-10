@@ -3,8 +3,6 @@ require 'spec_helper'
 describe Exercise do
   before(:each) do
     @exercise ||= Factory.build(:exercise)
-    @src_code     = 'source_code'
-    @src_language = 'ruby'
   end
 
   describe "#sample?" do
