@@ -46,12 +46,6 @@ describe GradeSolutionJob do
       unit_test.stub(:run_on).and_return({:error => nil})
     end
     
-    it "creates a work directory where the solution will be compiled and the unit test executed" do
-      FileUtils.stub(:mkdir_p).and_return true
-      FileUtils.should_receive(:mkdir_p).with(APP_CONFIG['work_dir'])
-      job.perform
-    end
-    
     it "gets the solution template associated with the exercise" do
       SolutionTemplate.stub_chain(:for_exercise, :written_in)
       SolutionTemplate.should_receive(:for_exercise).with(exercise.id).and_return(@mock_scope = mock("scope_scope"))
@@ -59,16 +53,6 @@ describe GradeSolutionJob do
       job.perform
     end
 
-    it "Scrubs the solution code" do
-      CozyStringUtils.should_receive(:scrub_all_includes).with(code)
-      job.perform
-    end
-
-    it "scrubs the the user's code to get rid of any user includes" do
-      template.should_receive(:fill_in).with(CozyStringUtils.scrub_all_includes(code))
-      job.perform
-    end
-    
     it "fills in the solution template with the user program code" do
       template.should_receive(:fill_in).with(code)
       job.perform
