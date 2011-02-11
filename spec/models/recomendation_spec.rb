@@ -13,7 +13,7 @@ describe Recomendation do
         :exercise_recomendation_list=>ExerciseRecomendationList.new("#{ex.id}")
       recomendation.save
 
-      Recomendation.recomended?(usr.id, ex.id).should == true
+      Recomendation.recomended?(usr, ex).should == true
     end
 
     it "returns false if there is no recomendation for the user_id and exercise_id" do
@@ -30,11 +30,12 @@ describe Recomendation do
     it "does not recommend an exercise that is not finished" do
       Factory.create :exercise, :finished=>false
       Factory.create :exercise, :finished=>true
+      user = Factory.create :user
 
       # TODO: For now despite the method name 'random_exercises(s)' it only
       # returns one random exercise.
       10.times do 
-        ex = Recomendation.random_exercises.first
+        ex = Recomendation.random_exercises(user).first
         ex.finished?.should == true
       end
     end

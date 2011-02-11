@@ -12,8 +12,8 @@ describe OverviewController, "GET index" do
       controller.stub(:current_user).and_return(current_user)
     end
     
-    it 'Assigns the recomendation exercises for the user' do
-      Recomendation.should_receive(:for).with(current_user.id) 
+    it 'Retrieves the recomended exercises for the user' do
+      Recomendation.should_receive(:for).with(current_user) 
       get :index
     end
   end
