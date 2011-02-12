@@ -4,12 +4,11 @@ class Recomendation < ActiveRecord::Base
   composed_of :exercise_recomendation_list
 
   def self.for(user) 
-    recomended_exercises = get_recomendations(user)
-    if recomended_exercises.empty?
-     recomend_random_exercises(user)
-    else
-      recomended_exercises  
+    new_plate = remove_completed_exercises_from_plate(user)
+    if new_plate.empty
+      user.plate.replace( recomended_or_random_exercies(user) )
     end
+    user.plate
   end
 
   def self.recomended?(user, exercise)
@@ -18,6 +17,18 @@ class Recomendation < ActiveRecord::Base
   end
 
   protected
+
+  def self.remove_completed_exercises_from_plate(user)
+    user.plate.delete(user.completed_exercises) 
+  end
+
+  def self.recomended_or_random_exercies(user)
+    exercises = get_recomendations(user)
+    if exercises.empty?
+      exercises = random_exercises(user) 
+    end
+    exercises 
+  end
 
   def self.get_recomendations(user)
    # TODO: The recomendations have a special order. They are 

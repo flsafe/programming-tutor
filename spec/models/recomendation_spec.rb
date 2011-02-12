@@ -3,6 +3,33 @@ require 'spec_helper'
 describe Recomendation do
   before(:each) do
   end
+
+  describe "for" do
+    it "recomends exercises that the user hasn't done" do
+      user = Factory.create :user
+      completed_exercise = Factory.create :exercise
+      new_exercise = Factory.create :exercise
+
+      gs1 = Factory.create :grade_sheet, :user_id=>user.id, :exercise_id=>completed_exercise.id
+      user.grade_sheets << gs1
+
+      Recomendation.for(user).should == [new_exercise]
+    end
+
+    it "An exercise is not recomended after it is completed" do
+      user = Factory.create :user
+      completed_exercise = Factory.create :exercise
+      new_exercise = Factory.create :exercise
+
+      gs1 = Factory.create :grade_sheet, :user_id=>user.id, :exercise_id=>completed_exercise.id
+      user.grade_sheets << gs1
+
+      recomended_exercise = Recomendation.for(user).first
+      gs1 = Factory.create :grade_sheet, :user_id=>user.id, :exercise_id=>recomended_exercise.id
+      user.grade_sheets << gs1
+      Recomendation.for(user).detect {|e| e == recomended_exercise}.should == nil
+    end
+  end
   
   describe "#recomended?" do
     it "Returns true if the user_id and exercise_id match the current recomendation" do
