@@ -102,14 +102,14 @@ class TutorController < ApplicationController
   end
   
   def redirect_if_already_doing_exercise
-    current_exercise_session = current_user.exercise_session
+    current_exercise = current_user.current_exercise
     exercise_to_show = Exercise.find params[:id]
     
-    can_show = ( not current_exercise_session) || 
-      (exercise_to_show.id == current_exercise_session.exercise_id)
+    can_show = ( not current_user.exercise_session_in_progress? ) || 
+      (exercise_to_show == current_exercise)
       
     unless can_show
-      redirect_to :action=>'already_doing_exercise', :id=>current_exercise_session.exercise_id
+      redirect_to :action=>'already_doing_exercise', :id=>current_exercise
     end
   end
 

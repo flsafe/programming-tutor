@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   end
   
   def current_exercise
-    exercise_session.exercise
+    exercise_session.exercise if exercise_session
   end
   
   def end_exercise_session
