@@ -8,7 +8,7 @@ class TutorController < ApplicationController
 
   before_filter :redirect_if_no_exercise_session, :except=>[:grade_status]
 
-  before_filter :redirect_if_not_recomended_exercise_or_retake, :only=>[:show]
+  before_filter :redirect_regular_user_if_not_recomended_exercise_or_retake, :only=>[:show]
 
   before_filter :redirect_if_anonymous_and_not_sample_exercise, :only=>[:show]
 
@@ -117,10 +117,10 @@ class TutorController < ApplicationController
     redirect_to :action=>:did_not_finish if Time.now() > calc_exercise_end_time
   end
 
-  def redirect_if_not_recomended_exercise_or_retake
+  def redirect_regular_user_if_not_recomended_exercise_or_retake
     exercise = Exercise.find_by_id(params[:id])
-    unless current_user.is_admin?
-      a_recomended_ex = Recomendation.recomended?(current_user.id, exercise.id)
+    unless current_user.anonymous? or current_user.is_admin?
+      a_recomended_ex = Recomendation.recomended?(current_user, exercise)
       a_retake = current_user.retake?(a_recomended_ex)
       if not (a_recomended_ex or a_retake)
         redirect_to :controller=>:overview

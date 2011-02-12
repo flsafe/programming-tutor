@@ -61,9 +61,9 @@ class Recomendation < ActiveRecord::Base
                               :conditions=>["finished = 1 AND id NOT IN (?)", completed_exercises])
     if not exercise_ids.empty?
       random_exercise_id = exercise_ids[ rand(exercise_ids.count)].id
-      [ Exercise.find(random_exercise_id) ]
+      return [ Exercise.find(random_exercise_id) ]
     else
-      []
+      return []
     end
   end
 end

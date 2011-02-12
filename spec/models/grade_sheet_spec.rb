@@ -19,18 +19,16 @@ describe GradeSheet do
   describe "#retake?" do
     
     it "returns true if the user has other grade sheets for the associated exercise" do
-      @user.grade_sheets << GradeSheet.new(:grade=>100, :exercise=>@ex1)
-      @user.grade_sheets << GradeSheet.new(:grade=>100, :exercise=>@ex1)
+      gs1 = Factory.create :grade_sheet, :user_id=>@user.id, :exercise_id=>@ex1.id, :grade=>100
+      gs2 = Factory.create :grade_sheet, :user_id=>@user.id, :exercise_id=>@ex1.id, :grade=>100
+      @user.grade_sheets.push(gs1, gs2)
       @user.grade_sheets.first.retake?.should == true
     end
     
     it "returns false if the user has only one grade sheet for the associated exercise" do
-      gs = @ex1.grade_sheets.create!(Factory.build(:grade_sheet, :grade=>50, :user=>@user, :exercise=>@ex1).attributes)
-      gs.retake?.should == false
-      
-      @user = Factory.create :user
-      gs = @ex1.grade_sheets.create!(Factory.build(:grade_sheet, :grade=>50, :user=>@user, :exercise=>@ex1).attributes)
-      gs.retake?.should == false
+      gs1 = Factory.create :grade_sheet, :user_id=>@user.id, :exercise_id=>@ex1.id, :grade=>100
+      @user.grade_sheets.push(gs1)
+      @user.grade_sheets.first.retake?.should == false
     end
   end
 

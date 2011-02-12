@@ -39,5 +39,15 @@ describe Recomendation do
         ex.finished?.should == true
       end
     end
+
+    it "does not return exercises that the user has already done" do
+      user = Factory.create :user
+      exercise = Factory.create :exercise
+      gs = Factory.build :grade_sheet, :user_id => user.id, :exercise_id => exercise.id, :grade=>100
+
+      user.grade_sheets << gs
+      recomended = Recomendation.random_exercises(user)
+      recomended.should == [] 
+    end 
   end
 end

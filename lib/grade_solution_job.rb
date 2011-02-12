@@ -61,7 +61,8 @@ class GradeSolutionJob < Struct.new :code, :user_id, :exercise_id
   def save_grade_sheet(results)
     time_stat   = Statistic.get_stat('user.time_taken', user_id)
     grade_sheet = GradeSheet.new :grade=>results[:grade], :user_id=>user_id, :exercise_id=>exercise_id, :unit_test_results=>results, :src_code=>code, :time_taken=>time_stat.to_i
-    grade_sheet.save!
+    user = User.find(user_id)
+    user.grade_sheets << grade_sheet
   end
 
   def debug_mode

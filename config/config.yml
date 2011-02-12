@@ -3,7 +3,7 @@ work_dir: tmp/work
 demo_exercise_titles:
   - Test
   - t
-  - Remove A Char From A String
+  - Remove Characters From A String 
 
 rating_values:
   too_hard: 1

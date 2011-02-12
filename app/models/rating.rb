@@ -12,6 +12,10 @@ class Rating < ActiveRecord::Base
     rating.to_f
   end
 
+  def self.has_rated?(user, exercise)
+    Rating.find_by_user_id_and_exercise_id(user.id, exercise.id) != nil 
+  end
+
   def push_rating
     Thread.new(user_id, exercise_id, rating) do |user_id, exercise_id, rating|
       uri = APP_CONFIG['recomendation_server_uri'][Rails.env]

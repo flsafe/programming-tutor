@@ -16,7 +16,8 @@ class User < ActiveRecord::Base
   end
 
   def retake?(exercise)
-    grade_for(exercise) == nil
+    raise "nil exercise" if exercise == nil
+    grade_sheets.count(:conditions=>["exercise_id = ?", exercise.id]) > 1 
   end
   
   def get_stat(name)

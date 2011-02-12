@@ -95,12 +95,7 @@ describe GradeSolutionJob do
       job.perform
     end
     
-    it "saves a grade sheet to the db" do
-      stub_grade_sheet = stub_model(GradeSheet)
-      GradeSheet.stub(:new).and_return(stub_grade_sheet)
-      stub_grade_sheet.should_receive('save!')
-      job.perform
-    end
+    it "saves a grade sheet to the db"
     
     context "when the unit test returns an error, it places and error result in the db" do
       it "it posts an error message" do
