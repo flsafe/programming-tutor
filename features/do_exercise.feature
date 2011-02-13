@@ -13,15 +13,9 @@ Feature: Do exercise
   #   Blueberry will only show an exercise if it is a recomended exercise
   #   or if it is retake. Therefore make sure one of these is the case
   #   before attempting to show the tutor page for an exercise.
-  #
-  #   Everything in between double quotes is split into
-  #   multiple arguments around white space. For example:
-  #
-  #   "Remove A Char"      => "Remove" "A" "Char"
-  #   "RemoveAChar Primes" => "RemoveAChar Primes"
 		
 	Scenario: The user sees the prototype for the exercise they need to complete
-		Given there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		Given there exists an exercise set "String Manipulation" with "RemoveChar"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And I am logged in as the user "frank"
 		When I am viewing the tutor page for "RemoveChar"
@@ -38,7 +32,7 @@ Feature: Do exercise
 	
 	@javascript
 	Scenario: The user sees a timer representing the amount of time they have to complete the exercise
-		Given there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		Given there exists an exercise set "String Manipulation" with "RemoveChar"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And the exercise "RemoveChar" takes "60" minutes to complete
 		And I am logged in as the user "frank"
@@ -61,17 +55,17 @@ Feature: Do exercise
 
 	@javascript
 	Scenario: The user is redirected to the incomplete page when the timer is up
-		Given I am logged in as the user "frank"
-		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		Given there exists an exercise set "String Manipulation" with "RemoveChar"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
+		And I am logged in as the user "frank"
 		And the exercise "RemoveChar" takes "0" minutes to complete
-		And I am viewing the tutor page for "RemoveChar"
+		When I am viewing the tutor page for "RemoveChar"
 		Then I should see "Time Is Up For That Exercise!"
 
 	@javascript
   @with-bg-job
 	Scenario Outline: The user performs a syntax check
-		Given there exists an exercise set "Linked List Basics" with "PointerIntro" and "Ex2"
+		Given there exists an exercise set "Linked List Basics" with "PointerIntro"
 		And I am logged in as the user "frank"
 		And I am viewing the tutor page for "PointerIntro"
 		When I fill in the text editor with <code>
@@ -96,9 +90,9 @@ Feature: Do exercise
 	@javascript
   @with-bg-job
 	Scenario: The user submits a solution to an exercise, but the solution template crashes
-		Given I am logged in as the user "frank"
-		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		Given there exists an exercise set "String Manipulation" with "RemoveChar"
 		And the exercise "RemoveChar" has the solution template "crap.c" and the unit test "remove-letter-unit-test.rb"
+		And I am logged in as the user "frank"
 		And I am viewing the tutor page for "RemoveChar"
 		When I fill in the text editor with the solution "remove-letter-solution.c"
 		And I press "Submit"
@@ -107,10 +101,10 @@ Feature: Do exercise
 			
   @javascript
 	Scenario: The user is redirected to the incomplete page when the timer is up
-		Given I am logged in as the user "frank"
-		And there exists an exercise set "String Manipulation" with "RemoveChar" and "Ex2"
+		Given there exists an exercise set "String Manipulation" with "RemoveChar"
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And the exercise "RemoveChar" takes "30" minutes to complete
+		And I am logged in as the user "frank"
 		And I am viewing the tutor page for "RemoveChar"
     When the exercise "RemoveChar" takes "0" minutes to complete
     And I press "Submit"

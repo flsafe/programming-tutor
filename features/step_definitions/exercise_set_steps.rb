@@ -1,3 +1,8 @@
+Given /^there exists an exercise set "([^\"]*)" with "([^\"]*)"$/ do |set_title, ex1_title|
+  @ex1 = Factory.create :exercise, :title=>ex1_title
+  @exercise_set = Factory.create :exercise_set, :title=>set_title, :exercises=>[@ex1]
+end
+
 Given /^there exists an exercise set "([^\"]*)" with "([^\"]*)" and "([^\"]*)"$/ do |set_title, ex1_title, ex2_title|
   @ex1 = Factory.create :exercise, :title=>ex1_title
   @ex2 = Factory.create :exercise, :title=>ex2_title

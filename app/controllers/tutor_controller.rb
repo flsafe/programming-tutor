@@ -121,7 +121,7 @@ class TutorController < ApplicationController
     exercise = Exercise.find_by_id(params[:id])
     unless current_user.anonymous? or current_user.is_admin?
       a_recomended_ex = Recomendation.recomended?(current_user, exercise)
-      a_retake = current_user.retake?(a_recomended_ex)
+      a_retake = current_user.grade_for(exercise)
       if not (a_recomended_ex or a_retake)
         redirect_to :controller=>:overview
       end

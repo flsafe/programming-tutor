@@ -5,21 +5,22 @@ class Recomendation < ActiveRecord::Base
 
   def self.for(user) 
     new_plate = remove_completed_exercises_from_plate(user)
-    if new_plate.empty
+    if new_plate.empty?
       user.plate.replace( recomended_or_random_exercies(user) )
     end
+    user.save
     user.plate
   end
 
   def self.recomended?(user, exercise)
-    recomended_exercises = get_recomendations(user)
-    recomended_exercises.detect {|e| e == exercise} != nil
+    user.plate.detect {|e| e == exercise} != nil
   end
 
   protected
 
   def self.remove_completed_exercises_from_plate(user)
-    user.plate.delete(user.completed_exercises) 
+    user.plate.delete(user.completed_exercises(true)) 
+    user.plate
   end
 
   def self.recomended_or_random_exercies(user)

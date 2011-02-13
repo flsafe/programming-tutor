@@ -8,6 +8,7 @@ class Exercise < ActiveRecord::Base
   has_many :completed_users, :through=>:grade_sheets, :source=>:user, :uniq=>true #todo: wtf does this imply?
   has_many :grade_sheets, :dependent=>:destroy
   has_many :exercise_sessions
+  has_and_belongs_to_many :dinner_guests, :class_name=>"User"
 
   belongs_to :exercise_set  
   

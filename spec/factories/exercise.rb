@@ -11,5 +11,6 @@ Factory.define :exercise do |e|
   e.unit_tests {|e| [e.association(:unit_test)]}
   e.exercise_set {|e| e.association(:exercise_set)}
   e.finished true
+  e.dinner_guests []
   #todo: tags need to be included?
 end

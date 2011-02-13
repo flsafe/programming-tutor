@@ -12,4 +12,5 @@ Factory.define :user do |u|
   u.password_confirmation 'password'
   u.email {Factory.next :email}
   u.anonymous false
+  u.plate []
 end

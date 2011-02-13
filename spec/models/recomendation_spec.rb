@@ -12,46 +12,45 @@ describe Recomendation do
 
       gs1 = Factory.create :grade_sheet, :user_id=>user.id, :exercise_id=>completed_exercise.id
       user.grade_sheets << gs1
-
+      user.save
+      
       Recomendation.for(user).should == [new_exercise]
     end
 
-    it "An exercise is not recomended after it is completed" do
+    it "A Recomended exercise is not returned after it is completed" do
       user = Factory.create :user
+    
       completed_exercise = Factory.create :exercise
-      new_exercise = Factory.create :exercise
-
       gs1 = Factory.create :grade_sheet, :user_id=>user.id, :exercise_id=>completed_exercise.id
       user.grade_sheets << gs1
+      user.save
+
+      Factory.create :exercise
 
       recomended_exercise = Recomendation.for(user).first
       gs1 = Factory.create :grade_sheet, :user_id=>user.id, :exercise_id=>recomended_exercise.id
       user.grade_sheets << gs1
+      user.save
       Recomendation.for(user).detect {|e| e == recomended_exercise}.should == nil
     end
   end
   
   describe "#recomended?" do
-    it "Returns true if the user_id and exercise_id match the current recomendation" do
+    it "Returns true if the exercise is recomended"  do
       usr = Factory.create :user
-      ex = Factory.create :exercise
-      recomendation = Factory.build :recomendation,
-        :user_id=>usr.id,
-        :exercise_recomendation_list=>ExerciseRecomendationList.new("#{ex.id}")
-      recomendation.save
+      Factory.create :exercise
 
-      Recomendation.recomended?(usr, ex).should == true
+      exercises = Recomendation.for(usr)
+      Recomendation.recomended?(usr, exercises.first).should == true
     end
 
     it "returns false if there is no recomendation for the user_id and exercise_id" do
-      non_existing_ex_id = 99999
-      Factory.create :exercise
+      ex = Factory.create :exercise
       user = Factory.create :user
      
-      Recomendation.recomended?(user.id, non_existing_ex_id).should == false
+      Recomendation.recomended?(user, ex).should == false
     end
   end
-
 
   describe "#random_exercises" do
     it "does not recommend an exercise that is not finished" do

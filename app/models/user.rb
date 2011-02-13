@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   
   has_many :grade_sheets, :dependent=>:destroy
   has_many :completed_exercises, :through=>:grade_sheets, :source=>:exercise, :uniq=>true #todo: What does this mean?
+  has_and_belongs_to_many :plate, :class_name=>"Exercise"
   has_one :exercise_session, :dependent=>:destroy
   
   attr_protected :roles_mask, :anonymous, :password_salt, :persistence_token
