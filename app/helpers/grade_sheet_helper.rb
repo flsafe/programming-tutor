@@ -11,6 +11,16 @@ module GradeSheetHelper
         css_class = "green-text"
       end
     end
-    "<td class='#{css_class}'> #{test_results[:points]} </td>"
+    "<td class='#{css_class}'> #{html_escape(test_results[:points])} </td>"
+  end
+
+  def to_color_got_td(test_results)
+    css_class = ""
+    if test_results[:got]
+      if test_results[:got] =~ /error/ix
+        css_class = "black-text"
+      end
+    end
+    "<td class='#{css_class}'> #{html_escape(test_results[:got])} </td>"
   end
 end

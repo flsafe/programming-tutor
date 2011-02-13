@@ -20,9 +20,9 @@
 						<tr>
 							<td> <%=h test_title%>                         </td> 
               <td> <%=h to_str(test_results[:input])%>       </td>
-							<td> <%=h to_str(test_results[:got]) %>        </td>
+                   <%= to_color_got_td(test_results) %>
               <td> <%=h to_str(test_results[:expected]) %>   </td>
-							<%= to_color_points_td(test_results) %>   
+							     <%= to_color_points_td(test_results) %>   
 						</tr>
 					<% end %>
 					<tr>
