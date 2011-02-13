@@ -13,6 +13,7 @@ class JobResult < ActiveRecord::Base
     type        = conds[:job_type]
 
     result = JobResult.find :first, :conditions=>{:user_id=>user_id, :exercise_id=>exercise_id, :job_type=>type}, :order=>'created_at DESC'
+    clear_slot(user_id, exercise_id, type)
     result
   end
   
