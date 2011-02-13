@@ -25,8 +25,8 @@ class IdeoneClient
   def get_code_results(link)
     response = wait_for_submission_status_response(link)
     result = parse(response, :get_submission_status_response, :result)
-    raise_if_not_success(result)
-    create_detailed_result(link)
+    raise "Your solution didn't compile!" unless program_compiled?(result)
+    create_detailed_result(link, result)
   end
 
   private
@@ -75,9 +75,14 @@ class IdeoneClient
     end
   end
 
-  def create_detailed_result(link)
+  def create_detailed_result(link, result_code)
     response = get_submission_details(link)
-    {:output => parse(response, :get_submission_details_response, :output),
+    if program_completed_successfully?(result_code) 
+      output = parse(response, :get_submission_details_response, :output)
+    else
+      output = "Shucks, An Error Occurred :("
+    end
+    {:output => output,
      :memory => parse(response, :get_submission_details_response, :memory).to_i,
      :time   => parse(response, :get_submission_details_response, :time).to_f}
   end
@@ -118,6 +123,10 @@ class IdeoneClient
     #
     result_code.to_i == 15 
   end
+  
+  def program_compiled?(result_code)
+    result_code.to_i != 11
+  end
 
   def to_id(lang)
     #
@@ -147,10 +156,5 @@ class IdeoneClient
     raise emsg  unless rhash[action] and rhash[action][:return]
     items = rhash[action][:return][:item]
     raise emsg unless items.respond_to?(:detect)
-  end
-
-  def raise_if_not_success(result_code)
-    msg = "The solution did not run successfully. Double check syntax, bad system calls or runtime errors"
-    raise msg unless program_completed_successfully?(result_code)
   end
 end
