@@ -28,10 +28,11 @@ Feature: Blueberry recomends exercises
     Then the recomendation for "user1" should be "Ex4"
 
   Scenario: Recomendations are dispalyed to the user
-    Given there exists an exercise set "String Manipulation" with "Ex1" and "Ex2"
+    Given there exists a user with the username "Frank"
+    And there exists an exercise set "String Manipulation" with "Ex1" and "Ex2"
     And  there exists an exercise set "Prime Numbers" with "Ex3" and "Ex4" 
-    And I am logged in as the user "Frank"
-    And there exists a recomendation for "Ex4"
+    And there exists a recomendation for "Ex4" for "Frank"
+    And I log in as "Frank"
     When I am on my home page
     Then I should see /Ex4/
   

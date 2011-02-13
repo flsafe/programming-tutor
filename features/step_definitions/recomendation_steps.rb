@@ -23,6 +23,19 @@ Given /^there exists a recomendation for "([^\"]*)"$/ do |exercise_titles|
     :exercise_recomendation_list=>recomended_ids
 end
 
+Given /^there exists a recomendation for "([^\"]*)" for "([^\"]*)"$/ do |exercise_titles, username|
+  exercises = Exercise.find :all,
+    :conditions=>{:title=>exercise_titles.split(',')},
+    :select=>[:id]
+  exercise_ids = exercises.map {|e| e.id}.join(',')
+  recomended_ids = ExerciseRecomendationList.new(exercise_ids)
+
+  user = User.find_by_username username
+  Factory.create :recomendation, 
+    :user_id=>user.id,
+    :exercise_recomendation_list=>recomended_ids
+end
+
 Given /^I note \/([^\/]*)\/$/ do |regex|
  regex = Regexp.new(regex)
  regex =~ page.body

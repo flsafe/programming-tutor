@@ -22,3 +22,11 @@ Given /^I am logged in as the user "([^\"]*)"$/ do |username|
 end
 
 
+Given /^I log in as "([^\"]*)"$/ do |username|
+  steps %Q{
+    Given I am on the login page
+		And I fill in "Username" with "frank"
+		And I fill in "Password" with "password"
+		And I press "Login"
+  }
+end
