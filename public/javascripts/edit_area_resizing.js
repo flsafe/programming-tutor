@@ -33,14 +33,15 @@ function flashEditArea(){
 }
 
 function twoThirdsWindowWidth(offset){
-  return ((window.innerWidth / 3) * 2) + offset + 'px'
+  return ((document.documentElement.clientWidth / 3) * 2) + offset + 'px'
 }
+
 function oneThirdWindowWidth(offset){
-  width = window.innerWidth
+  var width = document.documentElement.clientWidth 
   return (width / 3) + offset + 'px'
 }
 
 function calcHeight(){
-  height_offset = -175
-  return window.innerHeight + height_offset + 'px'
+  var height_offset = -175
+  return document.documentElement.clientHeight + height_offset + 'px'
 }
