@@ -6,7 +6,7 @@ class ExercisesController < ApplicationController
 
   before_filter :redirect_anonymous_if_not_sample_ex, :only=>[:show_tutorial]
 
-  before_filter :redirect_if_no_grade, :only=>[:show_tutorial]
+  before_filter :redirect_regular_user_if_no_grade, :only=>[:show_tutorial]
 
   before_filter :require_admin, :except=>[:user_index, :show, :show_tutorial]
   
@@ -74,9 +74,9 @@ class ExercisesController < ApplicationController
     end
   end
 
-  def redirect_if_no_grade
+  def redirect_regular_user_if_no_grade
     exercise = Exercise.find(params[:id])
-    unless current_user.is_admin?
+    unless current_user.anonymous? or current_user.is_admin?
       unless current_user.grade_for(exercise)
         redirect_to current_user_home
       end

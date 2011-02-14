@@ -4,5 +4,8 @@
 		<p class="exercise-description">
 			<%=h exercise.description %>
 		</p>
+    <p>
+    <%=link_to "Read Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>exercise %>
+    </p>
 	</div>
 </div>
