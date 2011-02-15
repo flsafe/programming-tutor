@@ -363,6 +363,16 @@ table.exercise-statistics caption, table.exercise-statistics{
   font-size: .90em;
   font-family: serif ;
 }
+
+/************************
+* Sample Exercises Page 
+************************/
+
+a.tutorial-link{
+ color: rgb(120, 120, 120);
+ font-weight: normal;
+}
+
 /************************
 * Footer
 ************************/
