@@ -1,23 +1,5 @@
 <% javascript '/javascripts/edit_area/edit_area_full' %>
 <% javascript '/javascripts/edit_area_resizing'%>
-<% content_for(:onload) do %> 
-  <%= "resizeEditAreaDimensions(); resizeExerciseTextDimensions()" %>
-<% end %>
-
-<script type='text/javascript' language='javascript'>
-    editAreaLoader.init({
-      id : "textarea_1"		       
-      ,syntax: "c"			         
-      ,start_highlight: true 
-      ,allow_toggle:  <%= Rails.env == 'production' ? 'false' : 'true' %>
-      ,toolbar: "undo, redo, help"
-      ,replace_tab_by_spaces: 2
-      ,allow_resize: 'no'
-      ,gecko_spellcheck: false
-      ,min_width: 50
-      ,min_height: 50
-    });
-</script>
 
 <% form_tag url_for(:action=>:grade), :id=>'editor' do %>
 
@@ -41,3 +23,22 @@
 <% end %>
 
 <div id='dummy-unfocus-div'></div>
+
+<script type='text/javascript' language='javascript'>
+
+  editAreaLoader.init({
+    id : "textarea_1"		       
+    ,syntax: "c"			         
+    ,start_highlight: true 
+    ,allow_toggle:  <%= Rails.env == 'production' ? 'false' : 'true' %>
+    ,toolbar: "undo, redo, help"
+    ,replace_tab_by_spaces: 2
+    ,allow_resize: 'no'
+    ,gecko_spellcheck: false
+    ,min_width: 400 
+    ,min_height: 400
+    ,EA_load_callback: "resizeEditArea"
+  });
+
+  window.onresize = queuedResize
+</script>

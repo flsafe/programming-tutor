@@ -1,11 +1,21 @@
 
+var resizeId;
+
+// The window.onresize event fires too quickly and causes
+// EditArea to crash. This queued resize function limits the
+// calls to once every 100 ms.
+//
+function queuedResize(){ 
+  window.clearTimeout(resizeId)
+  resizeId = window.setTimeout('resizeEditArea()', 100);
+}
+
 var resizeEditArea = function(){
   unfocusEditArea()	
   resizeEditAreaDimensions()
   resizeExerciseTextDimensions()
   flashEditArea()
 }
-window.onresize = resizeEditArea
 
 function unfocusEditArea(){
   dummy_div = document.getElementById('dummy-unfocus-div')
