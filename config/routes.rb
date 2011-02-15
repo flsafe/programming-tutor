@@ -12,12 +12,13 @@ ActionController::Routing::Routes.draw do |map|
   
   map.connect 'exercises/user_index', :controller=>'exercises', :action=>'user_index'
   map.resources :exercises
+
+  map.resources :beta_invites
   
   map.connect '/motivation', :controller=>'landing', :action=>'motivation'
 
   map.connect '/ratings/:exercise_id/:rating', :controller=>'ratings', :action=>'create'
 
-  
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

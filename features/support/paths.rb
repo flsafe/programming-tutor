@@ -28,6 +28,9 @@ module NavigationHelpers
       
     when /the register page/
       new_user_path
+
+    when /the beta invite page/
+      new_beta_invite_path
       
     when /my exercises page/
       url_for :controller=>'exercises', :action=>'user_index', :id=>'done'
