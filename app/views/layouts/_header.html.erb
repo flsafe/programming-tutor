@@ -10,7 +10,7 @@
 					<li><%= link_to("#{current_user.username}", :controller=>:users, :action=>:show_me)%></li>
 					<li><%= link_to("Logout", logout_path)%></li>
 				<% else%>
-					<li> <%= link_to 'Pricing and Sign Up', :controller=>:users, :action=>:new %> </li>
+          <li> <%= link_to 'Pricing and Sign Up', new_beta_invite_path %> </li>
 					<li> <%= link_to 'Login', login_path %> </li>
 			<% end %>
 		</ul>
