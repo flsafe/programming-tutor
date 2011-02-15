@@ -47,6 +47,11 @@ Rails::Initializer.run do |config|
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
+  #
 end
 
 APP_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/config.yml")
+
+ActionView::Base.field_error_proc = Proc.new do |html_tag, instance_tag|
+  html_tag
+end
