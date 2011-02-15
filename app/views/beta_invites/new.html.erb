@@ -1,17 +1,12 @@
-<h2> Request A Beta Invite </h2>
+<h2 class="page-title"> Request An Invite </h2>
 
-<div id="request-invite" class="column span-24 last">
-	
+<%= error_messages_for 'beta_invite', :header_message=>nil, :message=>nil %>
+
+<div id="register" class="column span-16">
 	<% form_for @beta_invite do |f| %>
-		
-	    <%= f.label :email %><br/>
-	    <%= f.text_field :email %><br/>
-		<br/>
-	  <%= f.submit "Request Invite!" %> <br/>
-	
-		<div class="errors">
-  		<%= error_messages_for('beta_invite', :header_message=>nil, :message=>nil) %>
-		</div>
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+
+	  <%= f.submit "Send!" %>
 	<% end %>
-	
 </div>

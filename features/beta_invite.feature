@@ -9,8 +9,8 @@ Feature: Beta Invite
     Given I am on the home page
     When I follow "Pricing and Sign Up" 
 		When I fill in "Email" with "test-user@mail.com" 
-    And I press "Request Invite"
-    Then there should be a new invite for "test-user" 
+    And I press "beta_invite_submit"
+    Then there should be a new invite for "test-user@mail.com" 
     And an email should be sent out to "test-user@mail.com" containing the invite link
 
   Scenario: User registers with the invite link 
