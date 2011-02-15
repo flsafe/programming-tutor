@@ -1,8 +1,12 @@
 <h3 class="column span-16 last page-title">Exercises To Help You Practice</h3>
 
 <div id="recommended-exercises" class="column span-16 colborder last">
-	<%= render :partial=>'exercise', :collection=>@exercises %>
-</div><!-- end recommended exercises -->
+  <% if not @exercises.empty? %>
+    <%= render(:partial=>'exercise', :collection=>@exercises) %>
+  <% else %>
+    <p> Nothing here for now...why don't you try browsing past exercises? </p>
+  <% end %>
+</div>
 
 <div class="column span-6 last user-statistics">
 	<table>
