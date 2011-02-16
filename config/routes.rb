@@ -13,6 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'exercises/user_index', :controller=>'exercises', :action=>'user_index'
   map.resources :exercises
 
+  map.connect "/redeem/:token", :controller=>'beta_invites', :action=>'redeem'
   map.resources :beta_invites
   
   map.connect '/motivation', :controller=>'landing', :action=>'motivation'

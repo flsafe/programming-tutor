@@ -10,7 +10,7 @@ Then /^an email should be sent out to "([^"]*)" containing the invite link$/ do 
   @beta_invite = BetaInvite.find_by_email email
   match = @invite_email.body.match(/<a href="(.*)">/)
   match.should_not == nil 
-  match[1].should == "http://blueberrytree.ws/beta_invites/redeem?email=test-user%40mail.com&amp;token=#{@beta_invite.token}"
+  match[1].should == url_for( :controller=>:beta_invites, :action=>:redeem, :token=>@beta_invite.token, :host=>"blueberrytree.ws")
 end
 
 Given /^there exists an invite for "([^"]*)"$/ do |email|
@@ -20,6 +20,6 @@ Given /^there exists an invite for "([^"]*)"$/ do |email|
 end
 
 When /^I follow the test invite link$/ do
-  pending
+  visit(url_for :controller=>:beta_invites, :action=>:redeem, :token=>@beta_invite.token)
 end
 

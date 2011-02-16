@@ -5,6 +5,6 @@ class BetaInviteMailer < ActionMailer::Base
     from       'Blueberry Tree'
     sent_on    Time.now 
     
-    body       :token=> inv.token, :email=>inv.email 
+    body       :token=> inv.token 
   end
 end
