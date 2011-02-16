@@ -10,11 +10,12 @@ Then /^an email should be sent out to "([^"]*)" containing the invite link$/ do 
   @beta_invite = BetaInvite.find_by_email email
   match = @invite_email.body.match(/<a href="(.*)">/)
   match.should_not == nil 
-  match[1].should == url_for( :controller=>:beta_invites, :action=>:redeem, :token=>@beta_invite.token, :host=>"blueberrytree.ws")
+  match[1].should == url_for(:controller=>:beta_invites, :action=>:redeem, :token=>@beta_invite.token, :host=>"blueberrytree.ws")
 end
 
 Given /^there exists an invite for "([^"]*)"$/ do |email|
-  @beta_invite = BetaInvite.create_invite :email=>email
+  @beta_invite = BetaInvite.new_invite :email=>email
+  @beta_invite.save
   @invite_email = BetaInviteMailer.create_invite(@beta_invite)
   BetaInviteMailer.deliver(@invite_email)
 end

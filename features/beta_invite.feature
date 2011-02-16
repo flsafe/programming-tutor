@@ -19,7 +19,7 @@ Feature: Beta Invite
     And I fill in "Username" with "test-user"
     And I fill in "Password" with "password"
     And I fill in "Password confirmation" with "password"
-    And I press "Submit"
+    And I press "user_submit"
     Then there should be a new user "test-user" in the database
    
   Scenario: User tries to signup without an invite
@@ -32,3 +32,5 @@ Feature: Beta Invite
     And the user "test-user" registers using the invite link
     When a new user tries to use the same invite link
     Then there should be no new user in the database 
+  
+  Scenario: The user tries to register without a beta invite

@@ -4,7 +4,7 @@ class BetaInvitesController < ApplicationController
   end
 
   def create
-    @beta_invite = BetaInvite.create_invite params[:beta_invite]
+    @beta_invite = BetaInvite.new_invite params[:beta_invite]
     if @beta_invite.save
       BetaInviteMailer.deliver_invite(@beta_invite)
       render :action=>:create
@@ -14,6 +14,13 @@ class BetaInvitesController < ApplicationController
   end
 
   def redeem
-
+    @beta_invite = BetaInvite.find_by_token(params[:token]) 
+    if @beta_invite
+      @user = User.new
+      @user.email = @beta_invite.email
+      render :template=>"/users/new" 
+    else
+      redirect_to root_path
+    end
   end
 end

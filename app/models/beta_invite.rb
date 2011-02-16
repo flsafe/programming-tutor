@@ -10,7 +10,7 @@ class BetaInvite < ActiveRecord::Base
     (0..32).map { chartab[rand(size)] }.join
   end
 
-  def self.create_invite(attr)
+  def self.new_invite(attr)
     i = BetaInvite.new attr
     i.token = BetaInvite.gen_token
     i
