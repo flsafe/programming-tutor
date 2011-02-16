@@ -4,7 +4,22 @@ end
 
 Then /^an email should be sent out to "([^"]*)" containing the invite link$/ do |email|
   ActionMailer::Base.deliveries.count.should == 1
-  e = ActionMailer::Base.deliveries.first
-  e.to[0].should == email 
+  @invite_email = ActionMailer::Base.deliveries.first
+  @invite_email.to[0].should == email 
+
+  @beta_invite = BetaInvite.find_by_email email
+  match = @invite_email.body.match(/<a href="(.*)">/)
+  match.should_not == nil 
+  match[1].should == "http://blueberrytree.ws/beta_invites/redeem?email=test-user%40mail.com&amp;token=#{@beta_invite.token}"
+end
+
+Given /^there exists an invite for "([^"]*)"$/ do |email|
+  @beta_invite = BetaInvite.create_invite :email=>email
+  @invite_email = BetaInviteMailer.create_invite(@beta_invite)
+  BetaInviteMailer.deliver(@invite_email)
+end
+
+When /^I follow the test invite link$/ do
+  pending
 end
 

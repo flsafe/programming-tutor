@@ -14,7 +14,7 @@ Feature: Beta Invite
     And an email should be sent out to "test-user@mail.com" containing the invite link
 
   Scenario: User registers with the invite link 
-    Given there exists an invite for "test-user"
+    Given there exists an invite for "test-user@mail.com"
     When I follow the test invite link
     And I fill in "Username" with "test-user"
     And I fill in "Password" with "password"
@@ -28,7 +28,7 @@ Feature: Beta Invite
     Then I should be redirected to the "beta invite" page
 
   Scenario: User tries to reuse a beta invite
-    Given there exists an invite for "test-user"
+    Given there exists an invite for "test-user@mail.com"
     And the user "test-user" registers using the invite link
     When a new user tries to use the same invite link
     Then there should be no new user in the database 
