@@ -24,13 +24,11 @@ Feature: Beta Invite
    
   Scenario: User tries to signup without an invite
     Given I haven't requested an invite
-    When I navigate to the register page
-    Then I should be redirected to the "beta invite" page
+    When I am on the register page
+    Then I should be on the home page 
 
   Scenario: User tries to reuse a beta invite
     Given there exists an invite for "test-user@mail.com"
     And the user "test-user" registers using the invite link
     When a new user tries to use the same invite link
     Then there should be no new user in the database 
-  
-  Scenario: The user tries to register without a beta invite

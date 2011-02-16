@@ -28,3 +28,8 @@ Then /^there should be a new user "([^"]*)" in the database$/ do |username|
   User.count(:conditions=>["username = ?", username]).should == 1
 end
 
+Given /^I haven't requested an invite$/ do
+  BetaInvite.destroy_all 
+end
+
+
