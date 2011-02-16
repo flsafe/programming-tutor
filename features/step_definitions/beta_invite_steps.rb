@@ -24,3 +24,7 @@ When /^I follow the test invite link$/ do
   visit(url_for :controller=>:beta_invites, :action=>:redeem, :token=>@beta_invite.token)
 end
 
+Then /^there should be a new user "([^"]*)" in the database$/ do |username|
+  User.count(:conditions=>["username = ?", username]).should == 1
+end
+
