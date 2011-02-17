@@ -9,9 +9,9 @@ describe UsersController do
   
   context "the current user is not an admin" do
     
-    it 'allows access to the new template' do
+    it 'does not allow access to the new' do
       get :new
-      response.should render_template 'new'
+      response.should be_redirect
     end
     
     it "does not allow access to the index" do
