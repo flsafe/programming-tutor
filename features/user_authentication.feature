@@ -4,7 +4,7 @@ Feature: User Authentication
 	As a user
 	I want to login
 	
-	@valid-credentials
+	@wip
 	Scenario: The user provides the proper credentials
 		Given I am the registered user "frank"
 		And I am on the login page
@@ -12,7 +12,8 @@ Feature: User Authentication
 		And I fill in "Password" with "password"
 		And I press "Login"
 		Then I should be on my home page
-		
+
+  @wip
 	Scenario: The user creates an account
 		Given I am on the home page
 		When I follow "Pricing and Sign Up"
