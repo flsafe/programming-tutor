@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_filter :require_user, :except=>[:new, :create]
   before_filter :require_admin, :except=>[:new, :create, :show_me]
   before_filter :destroy_anonymous, :only=>:create
+  before_filter :require_beta_invite, :only=>[:create, :new]
   
   # GET /users
   # GET /users.xml
@@ -54,9 +55,12 @@ class UsersController < ApplicationController
   # POST /users.xml
   def create
     @user = User.new(params[:user])
+    @invite = BetaInvite.find_by_token session[:beta_invite]
 
     respond_to do |format|
-      if @user.save
+      if @invite and @user.save
+        @invite.destroy
+        session[:beta_invite] = nil 
         format.html { redirect_to :controller=>'overview' }
         #format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
@@ -92,6 +96,14 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(users_url) }
       format.xml  { head :ok }
+    end
+  end
+
+  protected
+
+  def require_beta_invite
+    unless current_user and current_user.is_admin?
+      redirect_to current_user_home unless session[:beta_invite]
     end
   end
 end

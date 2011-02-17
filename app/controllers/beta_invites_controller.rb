@@ -18,6 +18,7 @@ class BetaInvitesController < ApplicationController
     if @beta_invite
       @user = User.new
       @user.email = @beta_invite.email
+      session[:beta_invite] = @beta_invite.token 
       render :template=>"/users/new" 
     else
       redirect_to root_path

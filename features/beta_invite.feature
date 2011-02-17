@@ -27,8 +27,13 @@ Feature: Beta Invite
     When I am on the register page
     Then I should be on the home page 
 
-  Scenario: User tries to reuse a beta invite
+  Scenario: User tries to reuse a beta invite token
     Given there exists an invite for "test-user@mail.com"
-    And the user "test-user" registers using the invite link
-    When a new user tries to use the same invite link
-    Then there should be no new user in the database 
+    And I follow the test invite link
+    And I fill in "Username" with "test-user"
+    And I fill in "Password" with "password"
+    And I fill in "Password confirmation" with "password"
+    And I press "user_submit"
+    And I follow "Logout"
+    When I follow the test invite link
+    Then I should be on the home page
