@@ -3,6 +3,10 @@
 <%= error_messages_for 'beta_invite', :header_message=>nil, :message=>nil %>
 
 <div id="register" class="column span-16">
+  <p>
+    BlueberryTree is still a bit rough. But if you like to test drive 
+    I'll send you a beta invite as soon as some space opens up!
+  </p>
 	<% form_for @beta_invite do |f| %>
     <%= f.label :email %>
     <%= f.text_field :email %>
