@@ -14,7 +14,7 @@ class BetaInvitesController < ApplicationController
 
   def redeem
     @beta_invite = BetaInvite.find_by_token(params[:token]) 
-    if @beta_invite
+    unless @beta_invite.redeemed?
       @user = User.new
       @user.email = @beta_invite.email
       session[:beta_invite] = @beta_invite.token 

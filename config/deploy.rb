@@ -83,7 +83,7 @@ namespace :gems do
 
     #Celerity requires a jruby environment
     if stage == :staging
-      run "cd #{release_path} && jruby -S gem install bundler --version '1.0.7'"
+      #run "cd #{release_path} && jruby -S gem install bundler --version '1.0.7'"
       run "cd #{release_path} && jruby -S bundle install"
     end
   end

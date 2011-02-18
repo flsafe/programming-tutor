@@ -59,8 +59,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @invite and @user.save
-        @invite.destroy
-        session[:beta_invite] = nil 
+        redeem_beta_invite
         format.html { redirect_to :controller=>'overview' }
         #format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
@@ -105,5 +104,11 @@ class UsersController < ApplicationController
     unless current_user and current_user.is_admin?
       redirect_to current_user_home unless session[:beta_invite]
     end
+  end
+
+  def redeem_beta_invite
+    @invite.redeemed = 1
+    @invite.save!
+    session[:beta_invite] = nil 
   end
 end
