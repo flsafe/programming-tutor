@@ -9,11 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110215195825) do
+ActiveRecord::Schema.define(:version => 20110218173331) do
 
   create_table "beta_invites", :force => true do |t|
-    t.string "email"
-    t.string "token"
+    t.string   "email"
+    t.string   "token"
+    t.boolean  "redeemed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "delayed_jobs", :force => true do |t|

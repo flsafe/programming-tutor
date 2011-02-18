@@ -6,8 +6,7 @@ class BetaInvitesController < ApplicationController
   def create
     @beta_invite = BetaInvite.new_invite params[:beta_invite]
     if @beta_invite.save
-      BetaInviteMailer.deliver_invite(@beta_invite)
-      render :action=>:create
+      @beta_invite.send_if_space 
     else
        render :action=>:new
     end
