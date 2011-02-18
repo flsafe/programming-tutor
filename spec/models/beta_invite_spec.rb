@@ -52,8 +52,25 @@ describe BetaInvite do
       @new_cap = @beta_cap + 5
       AppSetting.stub(:beta_capacity).and_return(@new_cap)
 
+      ActionMailer::Base.deliveries = []
       BetaInvite.fill_to_capacity
       ActionMailer::Base.deliveries.count.should == (@new_cap - @beta_cap)
+    end
+
+    it "sends emails for unredeemed beta invites" do
+      @beta_cap = 10 
+      AppSetting.stub(:beta_capacity).and_return(@beta_cap)
+
+      create_invites(10)
+      redeem_invites(@beta_cap/2)
+
+      ActionMailer::Base.deliveries = []
+      BetaInvite.fill_to_capacity
+
+      ActionMailer::Base.deliveries.all? do |e| 
+        bi = BetaInvite.find_by_email(e.to[0])
+        bi.redeemed?.should == false
+      end
     end
 
     def create_invites(n)
@@ -65,7 +82,6 @@ describe BetaInvite do
 
     def redeem_invites(n)
       BetaInvite.find(:all, :limit=>n).each {|bi| bi.redeemed = 1 ; bi.save}
-      ActionMailer::Base.deliveries = []
     end
   end
 end
