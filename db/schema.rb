@@ -9,7 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110218173331) do
+ActiveRecord::Schema.define(:version => 20110218181810) do
+
+  create_table "app_settings", :force => true do |t|
+    t.string  "setting"
+    t.integer "int_value"
+    t.float   "flt_value"
+    t.string  "str_value"
+  end
 
   create_table "beta_invites", :force => true do |t|
     t.string   "email"
