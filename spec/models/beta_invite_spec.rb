@@ -46,17 +46,26 @@ describe BetaInvite do
       @beta_cap = 2 
       AppSetting.stub(:beta_capacity).and_return(@beta_cap)
 
-      10.times do |i| 
-        @beta_invite = BetaInvite.new_invite :email=>"test#{i}@mail.com"
-        @beta_invite.send_if_space
-      end
-      BetaInvite.find(:all, :limit=>@beta_cap).each {|bi| bi.redeemed = 1 ; bi.save}
-      ActionMailer::Base.deliveries = []
+      create_invites(10)
+      redeem_invites(@beta_cap)
 
       @new_cap = @beta_cap + 5
       AppSetting.stub(:beta_capacity).and_return(@new_cap)
+
       BetaInvite.fill_to_capacity
       ActionMailer::Base.deliveries.count.should == (@new_cap - @beta_cap)
+    end
+
+    def create_invites(n)
+      n.times do |i| 
+        @beta_invite = BetaInvite.new_invite :email=>"test#{i}@mail.com"
+        @beta_invite.send_if_space
+      end
+    end
+
+    def redeem_invites(n)
+      BetaInvite.find(:all, :limit=>n).each {|bi| bi.redeemed = 1 ; bi.save}
+      ActionMailer::Base.deliveries = []
     end
   end
 end
