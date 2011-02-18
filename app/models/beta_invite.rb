@@ -6,13 +6,13 @@ class BetaInvite < ActiveRecord::Base
   attr_protected :token, :redeemed
 
   def send_if_space
-    if save!() and BetaInvite.redeemed < AppSettings.beta_capacity 
+    if save!() and BetaInvite.redeemed < AppSetting.beta_capacity 
       BetaInviteMailer.deliver_invite(self)
     end
   end
 
   def self.fill_to_capacity
-    space_left = AppSettings.beta_capacity - BetaInvite.redeemed
+    space_left = AppSetting.beta_capacity - BetaInvite.redeemed
     invites = BetaInvite.find(:all, :conditions=>['redeemed = ?', 0], :limit=> space_left, :order=>"created_at ASC")
     invites.each do |bi|
       BetaInviteMailer.deliver_invite(bi)

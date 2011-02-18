@@ -2,20 +2,19 @@ require 'spec_helper'
 
 describe BetaInvite do
   before(:each) do
-    AppSettings =  double("AppSettings") unless defined? AppSettings
     ActionMailer::Base.deliveries = []
   end
 
   describe "#send_if_space" do
     it "if there is space in the beta" do
-      AppSettings.stub(:beta_capacity).and_return(1)
+      AppSetting.stub(:beta_capacity).and_return(1)
       @beta_invite = BetaInvite.new_invite :email=>'test@mail.com'
       @beta_invite.send_if_space
       ActionMailer::Base.deliveries.count.should == 1 
     end
 
     it "doesn't send the invite email if there is no more space in the beta" do
-      AppSettings.stub(:beta_capacity).and_return(0)
+      AppSetting.stub(:beta_capacity).and_return(0)
 
       @beta_invite = BetaInvite.new_invite :email=>'test@mail.com'
       @beta_invite.send_if_space
@@ -23,7 +22,7 @@ describe BetaInvite do
     end
 
     it "saves the invite to the db" do
-      AppSettings.stub(:beta_capacity).and_return(1)
+      AppSetting.stub(:beta_capacity).and_return(1)
       @beta_invite = BetaInvite.new_invite :email=>'test@mail.com'
       @beta_invite.send_if_space
       BetaInvite.count.should == 1
@@ -32,7 +31,7 @@ describe BetaInvite do
 
   describe "BetaInvite.redeemed" do
     it "returns the number of beta invites that have been redeemed" do
-      AppSettings.stub(:beta_capacity).and_return(3)
+      AppSetting.stub(:beta_capacity).and_return(3)
       3.times do |i| 
         @beta_invite = BetaInvite.new_invite :email=>"test#{i}@mail.com"
         @beta_invite.redeemed = 1
@@ -43,9 +42,9 @@ describe BetaInvite do
   end
 
   describe "BetaInvite.fill_to_capacity" do
-    it "sends AppSettings.beta_capcity - BetaInvites.redeemed emails" do
+    it "sends AppSetting.beta_capcity - BetaInvites.redeemed emails" do
       @beta_cap = 2 
-      AppSettings.stub(:beta_capacity).and_return(@beta_cap)
+      AppSetting.stub(:beta_capacity).and_return(@beta_cap)
 
       10.times do |i| 
         @beta_invite = BetaInvite.new_invite :email=>"test#{i}@mail.com"
@@ -55,7 +54,7 @@ describe BetaInvite do
       ActionMailer::Base.deliveries = []
 
       @new_cap = @beta_cap + 5
-      AppSettings.stub(:beta_capacity).and_return(@new_cap)
+      AppSetting.stub(:beta_capacity).and_return(@new_cap)
       BetaInvite.fill_to_capacity
       ActionMailer::Base.deliveries.count.should == (@new_cap - @beta_cap)
     end
