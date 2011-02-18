@@ -2,6 +2,8 @@ class AppSetting < ActiveRecord::Base
   validates_presence_of :setting
   validates_uniqueness_of :setting
 
+  @@beta_capacity_default = 50
+
   def self.spec(setting_name, value)
     settings = {}
     settings[:setting] = setting_name
@@ -20,9 +22,13 @@ class AppSetting < ActiveRecord::Base
 
   def self.beta_capacity
     # TODO: Add these functions like this one dynamically based on 
-    # the AppSettings database table rows
+    # the AppSettings database table rows.
     s = AppSetting.find_by_setting('beta_capacity')
-    s.value if s
+    if s
+      s.value
+    else
+      AppSetting.spec('beta_capacity', @@beta_capacity_default).value
+    end
   end
 
   def value

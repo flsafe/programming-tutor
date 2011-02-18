@@ -61,5 +61,3 @@ APP_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/config.yml")
 ActionView::Base.field_error_proc = Proc.new do |html_tag, instance_tag|
   html_tag
 end
-
-AppSetting.spec('beta_capacity', 50) unless AppSetting.beta_capacity
