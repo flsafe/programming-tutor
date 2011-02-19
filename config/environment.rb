@@ -52,7 +52,7 @@ Rails::Initializer.run do |config|
   config.action_mailer.smtp_settings = {
     :address => "localhost",
     :port => 25,
-    :domain=> "blueberrytree.ws"
+    :domain=> "mcstacker.blueberrytree.ws"
   }
 end
 
