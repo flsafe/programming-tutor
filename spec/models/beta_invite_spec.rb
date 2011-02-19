@@ -27,6 +27,16 @@ describe BetaInvite do
       @beta_invite.send_if_space
       BetaInvite.count.should == 1
     end
+
+    context "An exception occurs when attempting to deliver the email" do
+      it "does not save the invite to the database" do
+        AppSetting.stub(:beta_capacity).and_return(1)
+        BetaInviteMailer.stub(:deliver_invite).and_raise(Exception)
+        @beta_invite = BetaInvite.new_invite :email=>'test@mail.com'
+        @beta_invite.send_if_space
+        BetaInvite.count.should == 0
+      end
+    end
   end
 
   describe "BetaInvite.redeemed" do

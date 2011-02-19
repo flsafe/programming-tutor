@@ -7,7 +7,11 @@ class BetaInvite < ActiveRecord::Base
 
   def send_if_space
     if save!() and BetaInvite.redeemed < AppSetting.beta_capacity 
-      BetaInviteMailer.deliver_invite(self)
+      begin
+        BetaInviteMailer.deliver_invite(self)
+      rescue Exception=>e
+        destroy()
+      end
     end
   end
 
