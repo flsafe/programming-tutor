@@ -11,6 +11,7 @@ class BetaInvite < ActiveRecord::Base
         BetaInviteMailer.deliver_invite(self)
       rescue Exception=>e
         destroy()
+        raise e
       end
     end
   end

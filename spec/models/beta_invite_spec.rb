@@ -32,8 +32,10 @@ describe BetaInvite do
       it "does not save the invite to the database" do
         AppSetting.stub(:beta_capacity).and_return(1)
         BetaInviteMailer.stub(:deliver_invite).and_raise(Exception)
+
         @beta_invite = BetaInvite.new_invite :email=>'test@mail.com'
-        @beta_invite.send_if_space
+        lambda {@beta_invite.send_if_space}.should raise_exception(Exception)
+
         BetaInvite.count.should == 0
       end
     end
