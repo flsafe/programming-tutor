@@ -2,7 +2,7 @@ class BetaInviteMailer < ActionMailer::Base
   def invite(inv)
     subject    'BlueberryTree Beta Invite'
     recipients inv.email 
-    from       '<Francisco> beta@blueberrytree.ws'
+    from       'beta@blueberrytree.ws'
     sent_on    Time.now 
     
     body       :token=> inv.token 
