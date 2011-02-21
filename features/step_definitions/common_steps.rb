@@ -16,9 +16,9 @@ Given /^I have filled in the exercise "([^"]*)" with "([^"]*)"$/ do |title, solu
   solution = File.join(title_t, solution_file)
 
   steps %Q{
-    Given I am logged in as the user "frank"
-		And there exists an exercise set "Exercise Set" with "#{title}" and "Ex2"
-		And the exercise "#{title}" has the solution template "#{solution_template}" and the unit test "#{unit_test}"
+    Given there exists an exercise set "Exercise Set" with "#{title}"
+    And the exercise "#{title}" has the solution template "#{solution_template}" and the unit test "#{unit_test}"
+    And I am logged in as the user "frank"
 		And I am viewing the tutor page for "#{title}"
 		And I fill in the text editor with the solution "#{solution}"
   }

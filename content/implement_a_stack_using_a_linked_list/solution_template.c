@@ -14,27 +14,20 @@ int main(){
 }
 
 /*start_prototype*/
-typedef struct node node;
-struct node{
-  node *next;
-  int  val;
-};
+#include <stdlib.h>
 
 typedef struct stack stack;
 struct stack{
-  node *head;
+  stack *next;
+  int  val;
 };
 
-stack* push(stack *s, int val){
-
+int push(stack **s, int val){
   /* Your code here */
-
 }
 
-int pop(stack *s, int *err){
-
-  /*your code here*/
-
+int pop(stack **s, int *val){
+  /* Your code here */
 }
 /*end_prototype*/
 
@@ -44,10 +37,9 @@ enum Cmd{
 };
 
 void exec_cmd(char *cmd){
-  int i, w, err;
+  int i, w, data, err;
   char rslt[MAX_LEN] = {0};
-  stack s = {NULL};
-  node *curr;
+  stack *s = NULL, *curr = NULL;
   
   w = 0;
   for(i = 0 ; cmd[i] ; i++)
@@ -55,12 +47,11 @@ void exec_cmd(char *cmd){
     err = 0;
     if( cmd[i] == PUSH )
     {
-      if( ! push(&s, cmd[i+1] - '0') )
-        err = 1;
+       err = push(&s, cmd[i+1] - '0');
     }
     else if( cmd[i] == POP )
     {
-      pop(&s, &err);
+      err = pop(&s, &data);
     }
     else
     {
@@ -71,6 +62,6 @@ void exec_cmd(char *cmd){
 
   printf("err values: %s, ", rslt);
   printf("stack: ");
-  for(curr = s.head; curr ; curr = curr->next)
+  for(curr = s; curr ; curr = curr->next)
     printf("%d", curr->val);
 }

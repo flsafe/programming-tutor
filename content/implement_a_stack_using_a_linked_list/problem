@@ -1,1 +1,41 @@
-Nothing here yet
+Implement a stack data structure. Use a linked list to implement the <i>push</i>
+and <i>pop</i> operations.
+
+<p>
+Here is the specification:
+</p>
+
+<pre><code>
+int pop(stack **s, int* val)
+
+ - Removes the element at 
+   the top of the stack.
+
+ - s is a pointer to the
+   head pointer of the linked list.
+
+ - val is a integer pointer were
+   the poped data value will be stored.
+
+ - Returns 1 if the pop operation
+   was successful, otherwise
+   returns 0.
+
+ - Return 0 if the pop operation 
+   is on an empty stack.
+
+int push(stack **s, int v)
+
+  - Inserts a new element
+    at the top of the stack
+
+  - s is a pointer to the head
+    pointer of the linked list.
+
+  - v is the value to insert.
+
+  - Returns 1 if the operation was
+    successful otherwise returns 0.
+</pre></code>
+
+
