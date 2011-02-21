@@ -22,7 +22,8 @@ class UnitTest < ActiveRecord::Base
       start
       @results.with_indifferent_access
     rescue Exception => e
-      return {:error=>"#{e.message} #{e.backtrace}"}
+      Rails.logger.error "A unit test threw an exception: #{e.message} #{e.backtrace}"
+      return {:error=>"#{e.message}"}
     end
   end
   
