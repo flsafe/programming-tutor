@@ -4,6 +4,7 @@ demo_exercise_titles:
   - Test
   - t
   - Remove Characters From A String 
+  - Implement A Stack Using A Linked List
 
 rating_values:
   too_hard: 1
