@@ -36,6 +36,8 @@ when the function returns?
 <p>
 Yes they do...
 </p>
+
 <p>
-But the gist is right. Does this hint help?
+What if we were given a pointer to HEAD?
+Then we could change the callers value of head!
 </p>

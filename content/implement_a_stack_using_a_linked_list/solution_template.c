@@ -22,11 +22,11 @@ struct stack{
   int  val;
 };
 
-int push(stack **s, int val){
+int pop(stack **s, int *val){
   /* Your code here */
 }
 
-int pop(stack **s, int *val){
+int push(stack **s, int val){
   /* Your code here */
 }
 /*end_prototype*/

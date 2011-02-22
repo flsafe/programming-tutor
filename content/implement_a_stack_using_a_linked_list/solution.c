@@ -29,4 +29,3 @@ int pop(stack **s, int *val){
 
   return 1;
 }
-/*end_prototype*/
