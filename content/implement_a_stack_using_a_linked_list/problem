@@ -1,8 +1,10 @@
-Implement a stack data structure. Use a linked list to implement the <i>push</i>
-and <i>pop</i> operations.
+<p>
+  Implement a stack data structure. Use a linked list to implement the <i>push</i>
+  and <i>pop</i> operations.
+</p>
 
 <p>
-Here is the specification:
+  Here is the specification:
 </p>
 
 <pre><code>
@@ -14,7 +16,7 @@ int pop(stack **s, int* val)
  - s is a pointer to the
    head pointer of the linked list.
 
- - val is a integer pointer were
+ - val is an integer pointer were
    the poped data value will be stored.
 
  - Returns 1 if the pop operation
@@ -27,7 +29,7 @@ int pop(stack **s, int* val)
 int push(stack **s, int v)
 
   - Inserts a new element
-    at the top of the stack
+    at the top of the stack.
 
   - s is a pointer to the head
     pointer of the linked list.
@@ -35,7 +37,7 @@ int push(stack **s, int v)
   - v is the value to insert.
 
   - Returns 1 if the operation was
-    successful otherwise returns 0.
+    successful, otherwise returns 0.
 </pre></code>
 
 

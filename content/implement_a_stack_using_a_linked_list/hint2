@@ -1,0 +1,41 @@
+<p>
+Here is a pseudo code description
+of inserting an element into the front 
+of a linked list. 
+</p>
+
+<pre><code>
+function insert(HEAD, V)
+  allocate a new element N
+  set N.val to V
+  set N.next to HEAD
+  set HEAD to N
+
+function remove(HEAD)
+  set TMP to HEAD
+  set HEAD to HEAD.next
+  deallocate TMP
+</pre></code>
+
+<p>
+Okay, okay, the code above describes the
+general concept but the devil is in 
+the details! It has to do with the scope
+of local variables and passing function
+arguments by value.
+</p>
+
+<p>
+In other words HEAD might be updated inside
+our pseudo code functions. But what
+happens to HEAD when our function returns?
+Don't all our local variables disappear 
+when the function returns?
+</p>
+
+<p>
+Yes they do...
+</p>
+<p>
+But the gist is right. Does this hint help?
+</p>

@@ -1,1 +1,22 @@
-nothing here yet
+<p>
+   We want an efficient implementation
+   for the <i>pop</i> and <i>push</i> operations.
+   If we append new elements to the end of 
+   the linked list the, our operations
+   will get slower based on how many elements
+   are in the list.
+</p>
+
+<p>
+  Pre-appending to the front is the
+  more efficient choice since there
+  is no need to traverse to the end
+  of the list before inserting or deleting
+  and element. 
+</p>
+
+<p>
+  The problem then is really a linked list
+  problem. How do you insert/remove an element
+  from the front of a linked list?
+</p>
