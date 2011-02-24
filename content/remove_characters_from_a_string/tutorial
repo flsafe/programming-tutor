@@ -12,7 +12,7 @@ Let's begin with a pseudo code outline of one possible solution.
 
 [startcode]
 for each character C in STR
-  if C is a character to delete
+  if C is a character we want to delete 
     remove C from STR
 [endcode]
 
@@ -81,7 +81,9 @@ Starting to see a pattern?
 <i>str</i> it performs <code>m + n</code> steps. To delete the second character it performs
 <code>m + n - 1</code> steps. Deleting the third character is another <code>m + n - 2</code> steps.
 We can add up all the steps with the closed form of the <a href="http://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%C2%B7_%C2%B7_%C2%B7">series</a> below.
-Ultimately this algorithm is O(n^2 + (n * m)).
+Ultimately this algorithm is O(n^2 + (n * m)). Some of you may have noticed I left out
+the call to <i>strlen</i> in my calculation. I make no apologies as it is an exercise
+for the reader :)
 </p>
 
 <pre><code>
@@ -100,8 +102,7 @@ Ultimately this algorithm is O(n^2 + (n * m)).
 
 <p>
 Right away we see that our algorithm is dominated by all the shifting and searching. Yuck.
-Any ideas on how to avoid all the shifting
-and searching? What efficient data structures are available for searching?
+Any ideas on how to improve this ? What efficient data structures are available for searching?
 </p>
 
 <p>
@@ -132,7 +133,7 @@ Which should we choose? Why?
 
 <p>
 To make an appropriate decision we must consider the input data to our algorithm.
-For simplicity let's only deal with 1 byte ASCII characters (all 128 of them). Because of the limited
+For simplicity let's only deal with 1 byte unsigned ASCII characters (all 128 of them). Because of the limited
 interview time this assumption is pretty common. 
 </p>
 
@@ -167,7 +168,7 @@ char removetab[128] = {0};
 In C, what is the relationship between a character and an integer?
 A character type in C has an integer value. At least 8 bits, but could
 be more on your machine. Could the integer value be negative? Yup, again depends on the
-platform. That's why we are assuming ASSCII characters but be aware of potential differences
+platform. That's why we are assuming unsigned 8-bit ASSCII characters but be aware of potential differences
 between character encodings.
 </p>
 
@@ -179,7 +180,7 @@ Here are three pieces of information, can you see where we are going with this?
 
 <li>
 We index
-arrays with positive integers.
+arrays with positive integers values.
 </li> 
 
 <li>
@@ -196,19 +197,21 @@ the same time as removetab[127].
 <h1 id="the-answer">The Answer</h1>
 <p>
 Suppose we want to remove the character <i>c</i> from our input string.
-Then we set removetab[<i>c</i>] to true.
+Then we set removetab[<i>c</i>] to 1.
 </p>
+
 [startcode]
 removetab[c] = 1;
 [endcode]
 
 <p>
-When it comes time to check if a character in our input string <i>str</i> should be removed we check to 
-see if <i>removetab[ somecharacter ]</i> is set to true.
+When it comes time to check if a some character in our input string <i>str</i>
+should be removed we check to 
+see if <i>removetab[ somecharacter ]</i> is set to 1 (true).
+For example:
 </p>
 
 [startcode]
-
   /* code */
 
   for(i = 0 ; str[i] ; i++)
@@ -261,7 +264,7 @@ return BUF
 
 <p>
 In figure 3 below we are deleting the character c. The characters a,b,d,e,f and \0 all get copied
-over into the new buffer. But not c because it's going no where.
+over into the new buffer. But not c because nobody likes that stinking consonant.  
 </p>
 
 <img src="http://images.blueberrytree.ws/remove-char-with-output-buffer.png"/>
@@ -290,6 +293,10 @@ a solution using an extra buffer.
 [endcode]
 
 <p>
+Yikes! That's came out to be longer than I expected. 
+</p>
+
+<p>
 The algorithm maintains two indices <i>read</i> and <i>write</i>. The index <i>read</i> indexes into
 the input string. The index <i>write</i> indexes into the temporary buffer. Both have the initial value
 of 0.
@@ -297,7 +304,7 @@ of 0.
 
 <p>
 Each character at <i>str[read]</i> is written to <i>tmp_buffer[write]</i> only when 
-the character is going to be kept. The <i>read</i> index is incremented after every read and
+the character is not going to be deleted. The <i>read</i> index is incremented after every read and
 the <i>write</i> index is incremented after every write.
 </p>
 
@@ -321,7 +328,7 @@ two separate ones would this algorithm still work? Try it out.
 
 <h1 id="effcient-elegant">An Efficient And Elegant Way Of Doing This</h1>
 <p>
-We don't have to allocate another temporary buffer. Notice in figure 4 above that the algorithm 
+We don't have to allocate a temporary buffer. Notice in figure 4 above that the algorithm 
 never writes a character before <i>read</i> gets a chance to read it. In other words if 
 <i>read</i> and <i>write</i> both indexed into the same array, as far as <i>read</i> is concerned
 the input string never gets modified.
@@ -339,13 +346,13 @@ Here is a solution that takes advantage of this.
 This is by far the shortest and the most efficient solution we've seen.
 What about its worst case run time behavior? For each character in the input string the
 algorithm reads a character from the input string and then writes
-a character to the temporary buffer. Let's consider that one step. So if the input string is length <i>n</i>
+a character to the "temporary buffer". Let's consider that one step. So if the input string is length <i>n</i>
 then, at most the algorithm does <i>n</i> steps.
 </p>
 
 <p>
 The algorithm also allocates space for <i>removetab</i> in the source code.
-Setting what characters get deleted in <i>removetab</i> with a 1 requires at most <i>m</i> steps, where
+Setting what characters get deleted in <i>removetab</i> requires at most <i>m</i> steps, where
 <i>m</i> is the number of characters we need to remove.
 <p>
 
