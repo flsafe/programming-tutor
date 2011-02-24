@@ -1,8 +1,9 @@
 <h1 id="introduction">Introduction</h1>
 
 <p>
-This exercise examines both your knowledge of stacks, linked lists and pointers.
-I've tried to explain them in this tutorial but my focus is on implementing
+This exercise examines your knowledge of stacks, linked lists and pointers.
+I've included a bit on pointers and structs in
+this tutorial but my focus is on implementing
 the stack and not the basics of structs and pointers. Check out my list
 of tutorials <a href="http://www.blueberrytree.ws/tutorials">here</a> to brush up
 on your skills.
@@ -20,7 +21,7 @@ This behavior is also useful for traversing trees in
 
 <p>
 If you guessed that a stack is analogous to a stack of stuff, like beer containers, then you
-are right. They both are a lot of fun. 
+are right. They are both lots of fun. 
 </p>
 
 <p>
@@ -35,10 +36,10 @@ the top of the stack.
 </p>
 
 <p>
-Remove the lager (pop) and lambic is at the top. Next
+Remove the lager (pop) and the lambic is at the top. Next
 remove the lambic (pop) and the stout is at the top. Pop one more time
 and the stack is empty. Take a look at figure 1 one to see
-what this would look like.
+what this would look like. In the U.S this could be a neat bar trick.
 </p>
 
 <img src="http://images.blueberrytree.ws/push-pop-beer-containers.png"
@@ -84,7 +85,7 @@ what this looks like in figure 2 below.
           head pointer points the first node of the list"/>
 <div class="description">
 Figure 2. The special head pointer points to the first node. Each
-node of the list points to the next node in the list. The last
+node of the has a pointer to the next node in the list. The last
 node points to null.
 </div>
 
@@ -98,8 +99,8 @@ element of this linked list.
 
 <p>
 Adding the first node of a linked list involves 
-allocating a new node, link it to the first node of the list, then
-update the head pointer to point to the newly allocated node as seen in
+allocating a new node, linking it to the first node, then
+updating the head pointer to point to the newly allocated node as seen in
 figure 3 below.
 </p>
 
@@ -108,7 +109,7 @@ figure 3 below.
 <div class="description">
 Figure 3. Each node has data and a "next" pointer that points to the next
 node in the list. The newly allocated node's "next" pointer points to the first
-node of the list. Then head gets updated.
+node. Then head gets updated to point to the new node.
 </div>
 
 <p>
@@ -119,14 +120,14 @@ Figure 4 shows how to do it.
 </p>
 <img src="http://images.blueberrytree.ws/remove-front-linked-list.png.png"
      alt="Removing the first node of a linked list requires updating 
-          head to point to the second element in the list. Be careful
-          not to loose your pointer to the first node when updating
+          head to point to the second node in the list. Be careful
+          not to loose your original pointer to the first node when updating
           head!"/>
 <div class="description">
 Figure 4. Removing the first node of a linked list requires updating 
-head to point to the second element in the list. Be careful
+head to point to the second node in the list. Be careful
 not to loose your pointer to the first node when updating
-head! You need to to deallocate the node. Here I've temporally stored it
+head! We still need it to free the node memory. Here I've temporally stored it
 in tmp. 
 </div>
 
@@ -137,15 +138,15 @@ can be difficult to understand.
 </p>
 
 <p>
-Let's take a look at a solution that puts all this together. However
+Let's take a look at a solution that puts all this together. However,
 it's not quite right.
 </p>
 
 [startcode]
 typedef struct stack stack;
-struct stack{
-  stack *next;
-  int  val;
+struct stack{   /* This is our node definition */ 
+  stack *next;  /* A pointer to the next node  */
+  int  val;     /* Our data is just an integer */
 };
 
 int push(stack *s, int val){
@@ -176,12 +177,35 @@ int pop(stack *s, int *val){
 [endcode]
 
 <p>
+The function <i>push</i> takes two arguments. The first, <i>s</i>, is
+the head pointer to our linked list based stack. The second, <i>val</i>,
+is the integer value to insert into the stack.
+</p>
+
+<p>
+The function allocates memory for the new node then assigns its 
+<i>val</i> and <i>next</i> values. Then the head pointer, <i>s</i>, is
+updated to point to the new node. If the memory allocation <i>malloc</i> fails then 
+0 is returned to indicate that the insertion failed.
+</p>
+
+<p>
+Pop also takes two arguments. The first, <i>s</i>, is the head pointer.
+The second is a pointer to an integer where the poped data value can be stored.
+First the function tests if <i>s</i> is NULL. If it is then it returns 0 to indicate
+that the <i>pop</i> operation failed. After all we can't <i>pop</i> anything if there
+is nothing to pop. Next it temporarily stores the head pointer <i>s</i> in <i>top</i>,
+updates the head pointer to point to the second node, then frees the
+memory pointed to by <i>top</i>.
+</p>
+
+<p>
 So what's wrong with the code above? Lets take a look at
-some code that calls on the code above.
+a snippet of code that uses the implemention above. 
 </p>
 
 [startcode]
-stack* head = NULL;
+stack* head = NULL;  /* An empty stack */
 
 push(head, 1); /* ? head->val = 1 */
 
@@ -206,9 +230,13 @@ of reference to <i>head</i> but a copy of head. A copy of a memory address.
 
 <p>
 Inside push and pop, you can mess with the copy of head all you want but it will never
-affect the real head in the code above. This is where the bug is. Head
+affect the client code's head. This is where the bug is. Head
 is never updated.
 </p>
+
+<h1 id="pointer_to_a_pointer" class="description">
+A Pointer To A Pointer To A Node
+</h1>
 
 <p>
 You may have seen code that uses the following idiom:
@@ -218,7 +246,6 @@ You may have seen code that uses the following idiom:
 struct system_settings settings;
 
 get_default_settings(&settings); 
-
 settings.setting1 == 10; /* true */
 settings.pwn      == 1;  /* true */
 
@@ -229,10 +256,10 @@ void get_default_settings(struct system_settings *settings){
 [endcode]
 
 <p>
-Our imaginary system settings struct is modified by the function 
+Our imaginary system settings struct can be modified by the function 
 <i>get_default_settings</i> because we pass a pointer to the 
 struct and not a copy of it. The function
-<i>get_default_settings</i> uses the pointer to update the structure
+uses its pointer parameter to update the structure
 using the <i>-&gt;</i> operator.
 We can fix our stack implementation by applying the same concept only
 instead of using a pointer to a struct, we will use a pointer
@@ -242,7 +269,7 @@ to a pointer.
 [startcode]
 stack *head = NULL;
 
-push(&head, 1); 
+push(&head, 1); /* Notice I'm now using &head */ 
 
 push(&head, 2);
 
@@ -250,10 +277,10 @@ push(&head, 3);
 [endcode]
 
 <p>
-Notice that the arugument is now
+Notice that the function argument is 
 <i>&amp;head</i>. Now that our <i>push</i> and <i>pop</i> functions have a pointer
 to the head they can update it. This is what we needed all along!
-And now we can implement a proper solution.
+Let's see an updated implementaion:
 </p>
 
 [startcode]
@@ -265,11 +292,11 @@ The functions push and pop take a pointer to head as an argument. To access head
 within push and pop we use the <i>*s</i> notation. Remember that the dereference 
 operator <i>*</i> is used to reference what the pointer points to. 
 Say this three times fast: s is a pointer to the head pointer, *s
-is the head pointer; a pointer to the head node.  
+is the head pointer; a pointer to the head node. 
 </p>
 
 <p>
-Some code snippets to illustrate.
+Some code snippets to illustrate my point:
 </p>
 
 [startcode]
@@ -285,7 +312,7 @@ stack *first_node = *s;
 [endcode]
 
 <p>
-To access the struct values of the head node we use the following code.
+To access the struct values of the head node we could use the following code.
 </p>
 
 [startcode]
@@ -298,3 +325,37 @@ This notation is a bit funky. The parenthesis around the <i>*s</i>
 are required because the <i>-&gt;</i> precedence is higher than the
 <i>*</i> operator. 
 </p>
+
+<h1 id="array-stack">An Alternative Implementation</h1>
+
+<p>
+Of course there are other ways to implement a stack. Would could also use an array albeit
+the implementation is more involved. A stack array has to dynamically expand as we push more
+items to the stack and dynamically shrink was we pop items off.
+This could make some stack operations very slow if our array is 
+big. We could get around this by implementing a fixed size stack, say size 100, but
+what if that is not enough? Or it's too much?
+</p>
+
+<p>
+Despite these disadvantages an array based stack can be faster than a linked list
+based stack. In a linked list stack, every time we push an item into the stack
+we allocate new memory with <i>malloc</i>. An array based implementation
+doesn't have this overhead. Additionally, if the data size in each node is small then the overhead
+of <i>malloc</i> may not be worth it. As is the case in the implementation above. 
+</p>
+
+<h1 id="exercises">Exercises</h1>
+<ol>
+  <li>
+      Given that our stack holds integers, 
+      is our linked list based implementation appropriate? 
+      If not, what should we change? What if we wanted to somehow 
+      push very large structs into our stack?
+  </li>
+
+  <li>
+    Implement a fixed sized, array stack. Bonus cool points
+    if you make it resize when full or under capacity.
+  </li>
+</ol>
