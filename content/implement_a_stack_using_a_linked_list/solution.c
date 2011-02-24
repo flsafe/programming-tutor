@@ -13,6 +13,7 @@ int push(stack **s, int val){
   
   newelem->val = val;
   newelem->next = *s;
+
   *s = newelem;
   return 1;
 }
