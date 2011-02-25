@@ -13,7 +13,7 @@ class SolutionTemplate < ActiveRecord::Base
   
   def fill_in(solution_code)
     solution_code = CozyStringUtils.escape_back_slashes(solution_code)
-    @filled_in_src_code = src_code.gsub(@@PROTOTYPE_REGEX, solution_code)
+    @filled_in_src_code = src_code.gsub(@@PROTOTYPE_REGEX, solution_code).strip
   end
   
   def prototype
