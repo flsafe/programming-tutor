@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'prototype' %>
+
 <div id="tutorial">
 
   <%= link_to("Edit", edit_exercise_path(@exercise)) if current_user.has_role?("admin") %>
@@ -13,10 +15,29 @@
 
 </div>
 
-<a id="feedback-link" href="" onclick="alert('hi'); return false;"> 
+<a id="feedback-link" href="" 
+  onclick="document.getElementById('feedback-form').style.display = 'block'; return false;"> 
   <img src="/images/feedback.png" width="99" height="128"/>
 </a>
 
-<div id="feedback">
-  
+<div id="feedback-form" style="display: none;">
+
+  <div id="fade" class="black-overlay"></div>
+
+  <div class="white-content">
+
+    <%= link_to_function( image_tag("x.png", :style=>"float: right;",:width=>25, :height=>25), 
+      "Element.hide('feedback-form').hide") %>
+
+    <% form_remote_tag(:url=>{:controller=>:feed_back_comments, :action=>:create},
+                       :after=>"document.getElementById('feedback-form').style.display = 'none'",
+                       :update=>"feedback-form",
+                       :position=>:bottom) do%>
+      <%= label "feed_back_comment", "email"  %><br/>
+      <%= text_field "feed_back_comment", "email"%><br/>
+      <%= label "feed_back_comment", "comment"  %><br/>
+      <%= text_area "feed_back_comment", "comment"%><br/>
+      <%= submit_tag "Send" %>
+    <% end %>
+  </div>
 </div>

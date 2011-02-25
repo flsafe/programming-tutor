@@ -1,0 +1,22 @@
+<h1>Listing feed_back_comments</h1>
+
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Comment</th>
+  </tr>
+
+<% @feed_back_comments.each do |feed_back_comment| %>
+  <tr>
+    <td><%=h feed_back_comment.email %></td>
+    <td><%=h feed_back_comment.comment %></td>
+    <td><%= link_to 'Show', feed_back_comment %></td>
+    <td><%= link_to 'Edit', edit_feed_back_comment_path(feed_back_comment) %></td>
+    <td><%= link_to 'Destroy', feed_back_comment, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New feed_back_comment', new_feed_back_comment_path %>

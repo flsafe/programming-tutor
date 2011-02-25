@@ -1,0 +1,13 @@
+<p>
+  <b>Email:</b>
+  <%=h @feed_back_comment.email %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%=h @feed_back_comment.comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_feed_back_comment_path(@feed_back_comment) %> |
+<%= link_to 'Back', feed_back_comments_path %>
