@@ -13,6 +13,7 @@ int push(stack **s, int val){
   
   newelem->val = val;
   newelem->next = *s;
+
   *s = newelem;
   return 1;
 }
@@ -29,4 +30,3 @@ int pop(stack **s, int *val){
 
   return 1;
 }
-/*end_prototype*/
