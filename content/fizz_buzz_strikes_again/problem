@@ -1,0 +1,37 @@
+<p>
+Write a function that prints out the numbers between 1 and 100 inclusive 
+in the following manner:
+</p>
+
+<p>
+If a number is a multiple of 3 then print "fizz" instead of the number. If
+the the number is a multiple of 5 then print "buzz" instead of the number. If
+the number is a multiple of both three and five then print "fizzbuzz" instead
+of the number. 
+</p>
+
+<p> For example: </p>
+
+<pre><code>
+1
+2
+fizz
+4
+buzz
+fizz
+7
+8
+fizz
+buzz
+11
+fizz
+13
+14
+fizzbuzz
+</code></pre>
+
+<p>
+Notice that each number is printed on its own line and there are no empty lines. 
+The words "fizz" and "buzz" are lowercase and the word "fizzbuzz" has
+no space in between. Good luck!
+</p>
