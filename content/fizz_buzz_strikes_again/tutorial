@@ -2,100 +2,120 @@
 <p>
 This problem is one you may expect to get as a warm up
 or to weed out those who couldn't program their way out
-of a kiddie pool. For the rest of us Tennessee-whisky drinking, fast-car driving,
-edge-living programmers...we still have to be careful not to make a beginner mistake.
+of a Justin Beiber concert. For the rest of us keyboard loving
+programmers...we still have to be careful not to make a beginner mistake.
+</p>
+
+<h1 id="how-to-solve">An Interesting Conceptual Block</h1>
+<p>
+Okay, today we will start the tutorial with another puzzle. Yes
+I know I'm getting meta on you but it illuminates an interesting
+behavior.
 </p>
 
 <p>
-It is to easy to become overconfident with this exercise and make a
-careless mistake. Take your time and be careful!
+Take a look at figure 1 below. Be impressed with my merely adequate
+drawing skills. Here is the challenge: Connect all nine dots using
+no more than four straight lines.
 </p>
 
-<h1 id="how-to-solve">How To Solve It</h1>
-
-<p>
-The general strategy is to swap the first character with the last
-character. Then swap the second character with the second to 
-last character, the third character with the third to last character and so on.
-</p>
-
-<p>
-We will use two indexes named <i>first</i> and <i>last</i> that initially
-index the first and last element of the input string. We also need
-a <i>temp</i> variable to temporally hold our swap values.
-</p>
-
-<p>
-The algorithm will write the character at <i>str[first]</i> to a <i>temp</i>
-variable. Then it will write the character at <i>str[last]</i> to <i>str[first]</i>
-and the character at <i>temp</i> to <i>str[last]</i>. Check out the action in figure 1 below.
-</p>
-
-<img src="http://images.blueberrytree.ws/swap-elems-in-array.png"/>
+<img src="http://images.blueberrytree.ws/nine-dots.png"
+     alt="Nine dots arranged 3 x 3"/>
 <div class="description">
-Figure 1. Swapping the first and last element of
-an array. First <i>a</i> would be written to <i>temp</i> (the lone square). Second <i>b</i> is
-written to <i>a</i>. Third <i>temp</i> is written to <i>b</i>.
+Connect all nine dots with no more than 4 straight lines.
 </div>
 
 <p>
-To swap the next characters in the array we increment <i>first</i> and decrement <i>last</i>
-and continue the swap operation towards the middle of the array.
-But how do we know when to stop? After each iteration 
-<i>first</i> and <i>last</i> get closer and closer. The whole time <i>first</i> &lt; <i>last</i>
-until they cross in the middle of the input string. 
+Did you figure it out? If you've seen this puzzle before then you
+know why it works. There is an imaginary constraint that many of us
+unconsciously try to adhere to. Figure 2 shows one possible solution.
+</p>
+
+<img src="http://images.blueberrytree.ws/nine-dots-connected.png"
+     alt="Nine dots connected with three strait lines. The lines extend
+          far beyond the perimiter of the outer most dots."/>
+
+<p>
+And now I exercise my smugness for knowing the solution (Get used to it
+interviewers can't help it). If you didn't see this solution or a similar 
+solution it is because the problem is stated in a way that forces 
+assumptions into our thinking, like staying with in the perimeter of the
+dots, and we don't realize it.
 </p>
 
 <p>
-After they cross in the middle <i>first</i> &gt; <i>last</i>. When this happens we know
-to stop.
-</p>
-
-<p>
-Here is my solution below. Not too complicated. But always double check your code.
-It's too easy to be overconfident and make a careless mistake.
-Don't use any uninitialized variables. Remember that the last element is located 
-at <i>strlen(str) - 1</i> and make sure to check for off-by-one errors.
+Going back to the FizzBuzz exercise, if you write a function that follows
+the problem description then you'd write something that tests
+tests multiples of 3, then multiples of 5, then multiples of 3 and 5.
 </p>
 
 [startcode]
-[[solution.c]]
+  [[solution1.c]]
 [endcode]
 
-<h1 id="edge-cases">Edge Cases?</h1>
 <p>
-Do we need to be careful depending on whether the input string is
-even or odd? Not really, the algorithm works for both cases! If the
-input string is even then, <i>first</i> and <i>last</i> will swap the
-middle two elements.
+And then you will suffer the wrath of the Smug Programing Interviewer.
 </p>
 
 <p>
-If the input string is odd then, then <i>first</i> and <i>last</i> will
-swap the one middle element with itself. Afterwards <i>first</i> &gt; <i>last</i>
-and we know to stop.
-</p>
-
-<h1 id="effciency">Efficiency</h1>
-<p>
-Say the input string length is <i>n</i>. Unfortunately, in C, simply 
-determining the size of the input string with the function <i>strlen</i>
-is already <i>n</i> steps. 
+The code above starts by defining START and MAX to 1 and 100 respectively.
+Next comes the <i>for</i> loop. This is were you could commit an off by one error. 
+Going from 1 to 100 with the counter <i>i</i> means that we start at <i>i = 1</i>
+and end when <i>i&tl;=100</i>. 
 </p>
 
 <p>
-Let's consider the swap operation in figure 1 just one step. The algorithm swaps the first
-element with the last, the second with the second to last and so on. If the
-input string was even then, the number of steps is just the length of the input
-array divided by 2. 
+To test if a number is a multiple of another number we use
+the modulus operator <i>%</i>. We read x % y == 0 as "The remainder of
+x divided by y is zero". If the remainder of dividing two numbers
+is zero then x is a multiple of y. 
+</p>
+
+<h1 id="things-to-do">Best Practices</h1>
+
+<p>
+Despite the leading problem statement it is up to us, the interviewee, to
+check our solution as we code it. As you code and after you finish, <b>immediately</b>
+trace through your code with test cases. Tracing the above code when <i>i</i> is
+3, 5 and 15 leads us to discover an error in the implementation. 
 </p>
 
 <p>
-If input string length is odd then, the number of steps is the ceiling of
-the array length divided by 2. This is because the middle element has to be swapped 
-with itself.
+Notice how 15 is a multiple of 3 and 5. Since 15 is a multiple of 3, the 
+program prints out "fizz" when we expect it to print out "fizzbuzz".
 </p>
 
 <p>
-Then our algorithm is just <code>O(n + ceiling(n/2))</code>, or just O(n).
+The solution is to test for a multiple of 3 and 5 first. Then for a multiple
+of 3. Then for a multiple of 5. Notice that if an integer <i>i</i> is a multiple
+of 3 and 5 then it is also a multiple of 15. We don't need to test using
+<i>if (i % 3 == 0 && i % 5 == 0)</i>. Instead we can use the lowest common multiple (LCM)
+of the two numbers: <i>if (i % 15 == 0)</i> .
+</p>
+
+[startcode]
+  [[sotluion.c]]
+[endcode]
+
+<h1 id="lesson-learned">Lesson Learned</h1>
+
+<p>
+Always be skeptical of the interview question. Ask questions!
+Pretend they were hiding something from you!
+</p>
+
+<p>
+If they ask you "Sort an array of integers" and you start
+coding with no questions asked then it will look bad.
+</p>
+
+<p>
+Instead ask "What are these integers? Are they database identifiers? Serial numbers?
+You interviewer will respond "It's an array of dog weights in pounds". Now we know
+the our integers will range from 1 to 400 (just to be safe) and we can use a linear
+sorting algorithm. Much better!
+</p>
+
+<p>
+Be aware of hidden assumptions!
 </p>
