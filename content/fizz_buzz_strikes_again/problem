@@ -1,5 +1,5 @@
 <p>
-Write a function that prints out the numbers between 1 and 100 inclusive 
+Write a function named <i>fizzbuzz</i> that prints out the numbers between 1 and 100 inclusive 
 in the following manner:
 </p>
 
@@ -10,7 +10,7 @@ the number is a multiple of both three and five then print "fizzbuzz" instead
 of the number. 
 </p>
 
-<p> For example: </p>
+<p> For example 1 through 15 prints out: </p>
 
 <pre><code>
 1
