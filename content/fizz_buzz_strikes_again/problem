@@ -6,8 +6,7 @@ in the following manner:
 <p>
 If a number is a multiple of 3 then print "fizz". If
 the number is a multiple of 5 then print "buzz". If
-the number is a multiple of both three and five then print "fizzbuzz" instead
-of the number. 
+the number is a multiple of both three and five then print "fizzbuzz".
 </p>
 
 <p> For example 1 through 15 prints out: </p>

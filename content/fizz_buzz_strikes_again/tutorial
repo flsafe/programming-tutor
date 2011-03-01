@@ -1,6 +1,6 @@
 <h1 id="getting-started">Getting Started</h1>
 <p>
-This problem is one you may expect to get as a warm up
+You may expect to get as a warm up
 or to weed out those who couldn't program their way out
 of a Justin Beiber concert. For the rest of us keyboard loving
 programmers...we still have to be careful not to make a beginner mistake.
@@ -30,12 +30,20 @@ know why it works. There is an imaginary constraint that many of us
 unconsciously try to adhere to. Figure 2 shows one possible solution.
 </p>
 
-<img src="http://images.blueberrytree.ws/nine-dots-connected.png"
+<p id="show-link">
+  <a href="#" onclick="document.getElementById('dot-solution').style.display='inline'; document.getElementById('show-link').style.display='none'; return false">
+    Click here to show the solution
+  </a>
+</p>
+<img id="dot-solution" src="http://images.blueberrytree.ws/nine-dots-connected.png"
      alt="Nine dots connected with three strait lines. The lines extend
           far beyond the perimiter of the outer most dots."/>
 <div class="description">
 Figure 2. One possible solution.
 </div>
+<script type="text/javascript">
+  document.getElementById('dot-solution').style.display = 'none';
+</script>
 
 <p>
 And now I exercise my smugness for knowing the solution (Get used to it
