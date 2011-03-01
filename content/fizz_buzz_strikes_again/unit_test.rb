@@ -1,16 +1,18 @@
-
-def test_reverse_even_length_string
-  run_with_and_expect('abcdef', 'fedcba')
+def create_expected_string
+  (1..100).to_a.map do |i|
+    case
+      when i % 15 == 0
+        "fizzbuzz"
+      when i % 3 == 0
+        "fizz"
+      when i % 5 == 0
+        "buzz"
+      else
+        i
+    end
+  end.join("\n")
 end
 
-def test_reverse_odd_length_string 
-  run_with_and_expect('123456789', '987654321')
-end
-
-def test_reverse_empty_string
-  run_with_and_expect('', '')
-end
-
-def test_reverse_string_with_length_one 
-  run_with_and_expect('a', 'a')
+def test_fizz_buzz
+  run_with_and_expect('', create_expected_string)
 end
