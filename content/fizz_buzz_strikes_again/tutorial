@@ -6,11 +6,10 @@ of a Justin Beiber concert. For the rest of us keyboard loving
 programmers...we still have to be careful not to make a beginner mistake.
 </p>
 
-<h1 id="how-to-solve">An Interesting Conceptual Block</h1>
+<h1 id="how-to-solve">Welcome To Zombocom, The Only Limit Is Yourself</h1>
 <p>
 Okay, today we will start the tutorial with another puzzle. Yes
-I know I'm getting meta on you but it illuminates an interesting
-behavior.
+I know I'm getting meta on you but it illuminates something interesting.
 </p>
 
 <p>
@@ -22,7 +21,7 @@ no more than four straight lines.
 <img src="http://images.blueberrytree.ws/nine-dots.png"
      alt="Nine dots arranged 3 x 3"/>
 <div class="description">
-Connect all nine dots with no more than 4 straight lines.
+Figure 1. Connect all nine dots with no more than 4 straight lines.
 </div>
 
 <p>
@@ -34,18 +33,21 @@ unconsciously try to adhere to. Figure 2 shows one possible solution.
 <img src="http://images.blueberrytree.ws/nine-dots-connected.png"
      alt="Nine dots connected with three strait lines. The lines extend
           far beyond the perimiter of the outer most dots."/>
+<div class="description">
+Figure 2. One possible solution.
+</div>
 
 <p>
 And now I exercise my smugness for knowing the solution (Get used to it
 interviewers can't help it). If you didn't see this solution or a similar 
-solution it is because the problem is stated in a way that forces 
-assumptions into our thinking, like staying with in the perimeter of the
-dots, and we don't realize it.
+solution it is because the problem is posed in a way that forces 
+assumptions into our thinking. In this case staying with in the perimeter of the
+dots.
 </p>
 
 <p>
-Going back to the FizzBuzz exercise, if you write a function that follows
-the problem description then you'd write something that tests
+Going back to the FizzBuzz exercise, if you unconsciously write a function that follows
+the problem description then you'd write something that 
 tests multiples of 3, then multiples of 5, then multiples of 3 and 5.
 </p>
 
@@ -58,16 +60,16 @@ And then you will suffer the wrath of the Smug Programing Interviewer.
 </p>
 
 <p>
-The code above starts by defining START and MAX to 1 and 100 respectively.
+The code above starts by defining <i>START</i> and <i>MAX</i> to 1 and 100 respectively.
 Next comes the <i>for</i> loop. This is were you could commit an off by one error. 
 Going from 1 to 100 with the counter <i>i</i> means that we start at <i>i = 1</i>
-and end when <i>i&tl;=100</i>. 
+and end when <i>i&lt;=100</i>. 
 </p>
 
 <p>
 To test if a number is a multiple of another number we use
-the modulus operator <i>%</i>. We read x % y == 0 as "The remainder of
-x divided by y is zero". If the remainder of dividing two numbers
+the modulus operator <i>%</i>. We read <i>x % y == 0</i> as "the remainder of
+x divided by y is zero." If the remainder of x / y 
 is zero then x is a multiple of y. 
 </p>
 
@@ -81,12 +83,14 @@ trace through your code with test cases. Tracing the above code when <i>i</i> is
 </p>
 
 <p>
-Notice how 15 is a multiple of 3 and 5. Since 15 is a multiple of 3, the 
+The error
+occurs when <i>i</i> is 15. Since 15 is a multiple of 3, the 
 program prints out "fizz" when we expect it to print out "fizzbuzz".
 </p>
 
 <p>
-The solution is to test for a multiple of 3 and 5 first. Then for a multiple
+The solution requires testing whether <i>i</i> is a multiple of
+3 and 5 first. Then for a multiple
 of 3. Then for a multiple of 5. Notice that if an integer <i>i</i> is a multiple
 of 3 and 5 then it is also a multiple of 15. We don't need to test using
 <i>if (i % 3 == 0 && i % 5 == 0)</i>. Instead we can use the lowest common multiple (LCM)
@@ -94,25 +98,25 @@ of the two numbers: <i>if (i % 15 == 0)</i> .
 </p>
 
 [startcode]
-  [[sotluion.c]]
+  [[solution.c]]
 [endcode]
 
 <h1 id="lesson-learned">Lesson Learned</h1>
 
 <p>
 Always be skeptical of the interview question. Ask questions!
-Pretend they were hiding something from you!
+Pretend they are hiding something from you!
 </p>
 
 <p>
-If they ask you "Sort an array of integers" and you start
-coding with no questions asked then it will look bad.
+If they ask you to sort an array of integers, it won't look good if
+your first instinct is to start writing code no questions asked.
 </p>
 
 <p>
-Instead ask "What are these integers? Are they database identifiers? Serial numbers?
-You interviewer will respond "It's an array of dog weights in pounds". Now we know
-the our integers will range from 1 to 400 (just to be safe) and we can use a linear
+Instead ask "What are these integers? Are they database identifiers? Serial numbers?"
+Your interviewer will respond "The integers are dog weights in pounds." Now we know
+that our integers will range from 1 to 300 (just to be safe) and we can use a linear
 sorting algorithm. Much better!
 </p>
 

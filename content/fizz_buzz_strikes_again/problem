@@ -4,8 +4,8 @@ in the following manner:
 </p>
 
 <p>
-If a number is a multiple of 3 then print "fizz" instead of the number. If
-the the number is a multiple of 5 then print "buzz" instead of the number. If
+If a number is a multiple of 3 then print "fizz". If
+the number is a multiple of 5 then print "buzz". If
 the number is a multiple of both three and five then print "fizzbuzz" instead
 of the number. 
 </p>
