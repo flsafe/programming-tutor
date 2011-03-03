@@ -1,4 +1,4 @@
-unsigned int igcd(unsigned int a, unsigned int b){
+unsigned int gcd(unsigned int a, unsigned int b){
   unsigned int mod;
 
   while (b){
