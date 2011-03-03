@@ -433,3 +433,14 @@ a.tutorial-link{
 #footer p, #footer a{
   color: rgb(240, 240,240);
 }
+
+#ideone-api a{
+  text-decoration: none;
+  color: rgb(90, 90, 90);
+}
+
+#ideone-api{
+  color: rgb(90, 90, 90);
+  text-align: center;
+  font-size: .80em;
+}

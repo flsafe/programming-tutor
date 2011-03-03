@@ -17,6 +17,9 @@
       <%= yield %>
     </div> <!-- end wrap -->
 
-    <%= render :partial=>'layouts/footer' %>
+    <div id="ideone-api">
+      &copy;<%= Time.now.year %> BlueberryTree uses <a href="http://ideone.com">Ideone API</a> &copy;
+       by <a href="http://sphere-research.com">Sphere Research Labs</a>
+    </div>
   </body>
 </html>
