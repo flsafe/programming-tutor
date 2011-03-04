@@ -1,14 +1,14 @@
 <h1 id="getting-started">Getting Started</h1>
 <p>
-Right away the problem description gives away how to find a 
+Right away the problem description gives an obvious
 solution. Find the largest number that divides both arguments
 evenly. We'll go over the obvious way to solve this exercise first. 
 Then the genius way.
 </p>
 
-<h1 id="how-to-solve">The First Obvious Way</h1>
+<h1 id="how-to-solve">Obvious Way</h1>
 <p>
-The initial algorithm is straight forward so let's just
+Our initial algorithm is straight forward so let's just
 look at the code.
 </p>
 
@@ -17,26 +17,49 @@ look at the code.
 [endcode]
 
 <p>
-The code starts with testing for special cases. The 
+The code starts out testing for special cases. The 
 problem text says we should define <i>gcd(0, 0)</i> as
 0, so that's what we test for first. 
 </p>
 
 <p>
-The next special case to consider is when <i>a</i> is zero
-and <i>b</i> is non-zero or vice-versa. Since all numbers divide into zero evenly 
-we just use the non-zero argument as the greatest common divisor of the two arguments.
+The next special case is when <i>a</i> is zero
+and <i>b</i> is non-zero or vice-versa. In this case, since all numbers divide into zero 
+evenly,
+we return the non-zero argument as the greatest common divisor of both arguments.
 </p>
 
 <p>
 Next comes the meat of our algorithm. The overall strategy is to test the
-integers below <i>a</i> and <i>b</i> and find which integer,
-<i>i</i>, divides into both evenly. Initially <i>i = min(a,b)</i> and in a loop
+integers below <i>a</i> and <i>b</i> and find 
+<i>i</i> such that <i>a % i == 0 && b % i == 0</i>.
+</p>
+
+<p>
+Initially <i>i = min(a,b)</i> and in a loop
 we test <i>i</i> until <i>i</i> is &lt;= 1 or we find the <i>i</i>
 that divides <i>a</i> and <i>b</i>.
 </p>
 
 <p>
-
+Notice that there are a few simplifications. For example we aren't dealing with 
+negative numbers. In fact this algorithm wouldn't work with negative arguments since it
+assumes that <i>a</i> and <i>b</i> are &gt; 0. What changes would you make
+if we wanted to support negative arguments?
 </p>
 
+<h1 id="getting-started">The Genius Solution</h1>
+
+<p>
+Alright, I would have never thought of this solution but there is
+a neat algorithm called Euler's algorithm. Here it is:
+</p>
+
+[startcode]
+unsigned int gcd(unsigned int a, unsigned int b){
+  if (b == 0)
+    return a;
+
+  return gcd(b, a % b);
+}
+[endcode]
