@@ -1,59 +1,15 @@
 <h1 id="getting-started">Getting Started</h1>
 <p>
-
+Right away the problem description gives away how to find a 
+solution. Find the largest number that divides both arguments
+evenly. We'll go over the obvious way to solve this exercise first. 
+Then the genius way.
 </p>
 
-<h1 id="how-to-solve">Welcome To Zombocom, The Only Limit Is Yourself</h1>
+<h1 id="how-to-solve">The First Obvious Way</h1>
 <p>
-Okay, today we will start the tutorial with another puzzle. Yes
-I know I'm getting meta on you but it illuminates something interesting.
-</p>
-
-<p>
-Take a look at figure 1 below. Be impressed with my merely adequate
-drawing skills. Here is the challenge: Connect all nine dots using
-no more than four straight lines.
-</p>
-
-<img src="http://images.blueberrytree.ws/nine-dots.png"
-     alt="Nine dots arranged 3 x 3"/>
-<div class="description">
-Figure 1. Connect all nine dots with no more than 4 straight lines.
-</div>
-
-<p>
-Did you figure it out? If you've seen this puzzle before then you
-know why it works. There is an imaginary constraint that many of us
-unconsciously try to adhere to. Figure 2 shows one possible solution.
-</p>
-
-<p id="show-link">
-  <a href="#" onclick="document.getElementById('dot-solution').style.display='inline'; document.getElementById('show-link').style.display='none'; return false">
-    Click here to show the solution
-  </a>
-</p>
-<img id="dot-solution" src="http://images.blueberrytree.ws/nine-dots-connected.png"
-     alt="Nine dots connected with three strait lines. The lines extend
-          far beyond the perimiter of the outer most dots."/>
-<div class="description">
-Figure 2. One possible solution.
-</div>
-<script type="text/javascript">
-  document.getElementById('dot-solution').style.display = 'none';
-</script>
-
-<p>
-And now I exercise my smugness for knowing the solution (Get used to it
-interviewers can't help it). If you didn't see this solution or a similar 
-solution it is because the problem is posed in a way that forces 
-assumptions into our thinking. In this case staying with in the perimeter of the
-dots.
-</p>
-
-<p>
-Going back to the FizzBuzz exercise, if you unconsciously write a function that follows
-the problem description then you'd write something that 
-tests multiples of 3, then multiples of 5, then multiples of 3 and 5.
+The initial algorithm is straight forward so let's just
+look at the code.
 </p>
 
 [startcode]
@@ -61,70 +17,26 @@ tests multiples of 3, then multiples of 5, then multiples of 3 and 5.
 [endcode]
 
 <p>
-And then you will suffer the wrath of the Smug Programing Interviewer.
+The code starts with testing for special cases. The 
+problem text says we should define <i>gcd(0, 0)</i> as
+0, so that's what we test for first. 
 </p>
 
 <p>
-The code above starts by defining <i>START</i> and <i>MAX</i> to 1 and 100 respectively.
-Next comes the <i>for</i> loop. This is were you could commit an off by one error. 
-Going from 1 to 100 with the counter <i>i</i> means that we start at <i>i = 1</i>
-and end when <i>i&lt;=100</i>. 
+The next special case to consider is when <i>a</i> is zero
+and <i>b</i> is non-zero or vice-versa. Since all numbers divide into zero evenly 
+we just use the non-zero argument as the greatest common divisor of the two arguments.
 </p>
 
 <p>
-To test if a number is a multiple of another number we use
-the modulus operator <i>%</i>. We read <i>x % y == 0</i> as "the remainder of
-x divided by y is zero." If the remainder of x / y 
-is zero then x is a multiple of y. 
-</p>
-
-<h1 id="things-to-do">Best Practices</h1>
-
-<p>
-Despite the leading problem statement it is up to us, the interviewee, to
-check our solution as we code it. As you code and after you finish, <b>immediately</b>
-trace through your code with test cases. Tracing the above code when <i>i</i> is
-3, 5 and 15 leads us to discover an error in the implementation. 
+Next comes the meat of our algorithm. The overall strategy is to test the
+integers below <i>a</i> and <i>b</i> and find which integer,
+<i>i</i>, divides into both evenly. Initially <i>i = min(a,b)</i> and in a loop
+we test <i>i</i> until <i>i</i> is &lt;= 1 or we find the <i>i</i>
+that divides <i>a</i> and <i>b</i>.
 </p>
 
 <p>
-The error
-occurs when <i>i</i> is 15. Since 15 is a multiple of 3, the 
-program prints out "fizz" when we expect it to print out "fizzbuzz".
+
 </p>
 
-<p>
-The solution requires testing whether <i>i</i> is a multiple of
-3 and 5 first. Then for a multiple
-of 3. Then for a multiple of 5. Notice that if an integer <i>i</i> is a multiple
-of 3 and 5 then it is also a multiple of 15. We don't need to test using
-<i>if (i % 3 == 0 && i % 5 == 0)</i>. Instead we can use the lowest common multiple (LCM)
-of the two numbers: <i>if (i % 15 == 0)</i> .
-</p>
-
-[startcode]
-  [[solution.c]]
-[endcode]
-
-<h1 id="lesson-learned">Lesson Learned</h1>
-
-<p>
-Always be skeptical of the interview question. Ask questions!
-Pretend they are hiding something from you!
-</p>
-
-<p>
-If they ask you to sort an array of integers, it won't look good if
-your first instinct is to start writing code no questions asked.
-</p>
-
-<p>
-Instead ask "What are these integers? Are they database identifiers? Serial numbers?"
-Your interviewer will respond "The integers are dog weights in pounds." Now we know
-that our integers will range from 1 to 300 (just to be safe) and we can use a linear
-sorting algorithm. Much better!
-</p>
-
-<p>
-Be aware of hidden assumptions!
-</p>
