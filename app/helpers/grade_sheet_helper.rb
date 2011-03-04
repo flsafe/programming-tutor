@@ -11,7 +11,7 @@ module GradeSheetHelper
         css_class = "green-text"
       end
     end
-    "<td class='#{css_class}'> #{html_escape("%.2f" % test_results[:points])} </td>"
+    "<td class='#{css_class}'> #{html_escape("%.2f" % (test_results[:points] || 0))} </td>"
   end
 
   def to_color_got_td(test_results)
