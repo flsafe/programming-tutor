@@ -7,7 +7,7 @@ def test_zero_one_argument
 end
 
 def test_zero_other_argument
-  run_with_and_expect('0 1', '1')
+  run_with_and_expect('0 100', '100')
 end
 
 def test_one
