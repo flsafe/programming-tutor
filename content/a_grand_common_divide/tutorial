@@ -34,7 +34,7 @@ Next comes the meat of our algorithm. The overall strategy is to test the
 integers below <i>a</i> and <i>b</i> and find 
 <i>i</i> such that <i>a % i == 0 && b % i == 0</i>. In other words we say
 that <i>i</i> divides both <i>a</i> and <i>b</i> without leaving a remainder since
-the modulus operator <i>x % y</i> returns the remainder of two integers <i>x / y</i>.
+the modulus operator <i>x % y</i> returns the remainder of <i>x / y</i>.
 </p>
 
 <p>
@@ -68,15 +68,34 @@ unsigned int gcd(unsigned int a, unsigned int b){
 
 <p>
 There is a neat description on why this mathematically works on 
-<a href="http://en.wikipedia.org/wiki/Euclidean_algorithm">wikipedia</a> so I
-wont' go over it here.
+<a href="http://en.wikipedia.org/wiki/Euclidean_algorithm">wikipedia</a>.
+The key observation for why this works is that the greatest common divisor of
+<i>a</i> and <i>b</i> doesn't change if we subtract the smaller integer from the greater
+integer.
+</p>
+
+<p>
+For example <i>gcd(10,4) == 2</i> and <i>gcd(6, 4) == 2</i>, 
+<i>gcd(2, 4) == 2</i>, <i>gcd(2,2) == 2</i>. Thus we don't have to test all
+the numbers below <i>a</i> and <i>b</i>. 
 </p>
 
 
+<h1 id="luxury-vs-racecare">Recursion Is An Elegant But Heavy Luxury Car, 
+Iteration Is A Fast But Spartan Race Car</h1>
+<p>
+The recursive algorithm above is easily expressed iteratively. Although
+not as elegant, in general, the iterative solution runs faster because
+their is no function call overhead.
+</p>
+[startcode]
+  [[solution2.c]]
+[endcode]
+
 <h1 id="getting-started">Why This Should Be Kept In Mind</h1>
 <p>
-Try to keep this algorithm in mind. Not only because finding the GCD of two number
+Try to keep this algorithm in mind. Not only because finding the GCD of two integers 
 is a typical interview question but because remembering it enables one to come
 up with elegant algorithms to other exercises like finding the least common multiple
-of two integers.
+of two integers or determining co-primes!
 </p>
