@@ -40,7 +40,7 @@ the modulus operator <i>x % y</i> returns the remainder of two integers <i>x / y
 <p>
 Initially <i>i = min(a,b)</i> and in a loop
 we test <i>i</i> until <i>i</i> is &lt;= 1 or we find the <i>i</i>
-that divides <i>a</i> and <i>b</i>.
+that divides <i>a</i> and <i>b</i> without a remainder.
 </p>
 
 <p>
@@ -65,3 +65,18 @@ unsigned int gcd(unsigned int a, unsigned int b){
   return gcd(b, a % b);
 }
 [endcode]
+
+<p>
+There is a neat description on why this mathematically works on 
+<a href="http://en.wikipedia.org/wiki/Euclidean_algorithm">wikipedia</a> so I
+wont' go over it here.
+</p>
+
+
+<h1 id="getting-started">Why This Should Be Kept In Mind</h1>
+<p>
+Try to keep this algorithm in mind. Not only because finding the GCD of two number
+is a typical interview question but because remembering it enables one to come
+up with elegant algorithms to other exercises like finding the least common multiple
+of two integers.
+</p>
