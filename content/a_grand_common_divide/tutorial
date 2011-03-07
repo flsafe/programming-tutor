@@ -32,7 +32,9 @@ we return the non-zero argument as the greatest common divisor of both arguments
 <p>
 Next comes the meat of our algorithm. The overall strategy is to test the
 integers below <i>a</i> and <i>b</i> and find 
-<i>i</i> such that <i>a % i == 0 && b % i == 0</i>.
+<i>i</i> such that <i>a % i == 0 && b % i == 0</i>. In other words we say
+that <i>i</i> divides both <i>a</i> and <i>b</i> without leaving a remainder since
+the modulus operator <i>x % y</i> returns the remainder of two integers <i>x / y</i>.
 </p>
 
 <p>
@@ -49,13 +51,10 @@ if we wanted to support negative arguments?
 </p>
 
 <h1 id="getting-started">The Genius Solution</h1>
-[startcode]
-  [[solution.c]]
-[endcode]
 
 <p>
 Alright, I would have never thought of this solution but there is
-a neat algorithm called Euler's algorithm. Here it is:
+a neat method called Euler's algorithm. Here it is:
 </p>
 
 [startcode]
