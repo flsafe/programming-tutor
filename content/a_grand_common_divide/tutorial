@@ -51,7 +51,6 @@ if we wanted to support negative arguments?
 </p>
 
 <h1 id="getting-started">The Genius Solution</h1>
-
 <p>
 Alright, I would have never thought of this solution but there is
 a neat method called Euler's algorithm. Here it is:
