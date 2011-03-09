@@ -1,18 +1,28 @@
 <div class="column span-16 completed-exercise rounded-corners">
 	
-	<div class="column span-9 completed-exercise-title"> <%=h exercise.title%></div>
+  <div class="column span-9"> 
+    <h3 class="completed-exercise-title"><%=h exercise.title %></h3>
+  </div>
+
   <% grade = current_user.grade_for(exercise) %>	
   <div class="column span-6 grade <%= grade_to_class(grade) %> rounded-corners">
     <%=h current_user.grade_for(exercise) %>
   </div>
+
+  <div class="column span-15">
+   <p class="exercise-description">
+      <%=h exercise.description %>
+      </p>
+  </div>
 	
-	<div class="column span-9">
-		<%= link_to "Retake", :controller=>:tutor, :action=>:show, :id=>exercise %> |
-		<%= link_to "Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>exercise %> |
-		<%= link_to "Gradesheet", :controller=>:grade_sheets, :action=>:show_user_grade_sheet, :id=>exercise %> | 
-		<%= link_to "All Gradesheets", :controller=>:grade_sheets, :action=>:show_all, :id=>exercise  %>
+	<div class="column span-15">
+		<%= link_to(current_user.grade_for(exercise) ? "Retake" : "Start Exercise", :controller=>:tutor, :action=>:show, :id=>exercise)  %> 
+    <% if current_user.grade_for(exercise) %>
+      |
+      <%= link_to("Tutorial", :controller=>:exercises, :action=>:show_tutorial, :id=>exercise) %> |
+      <%= link_to "Gradesheet", :controller=>:grade_sheets, :action=>:show_user_grade_sheet, :id=>exercise %> |
+      <%= link_to "All Gradesheets", :controller=>:grade_sheets, :action=>:show_all, :id=>exercise  %>
+    <% end %>
 	</div>
 	
 </div>
-
-

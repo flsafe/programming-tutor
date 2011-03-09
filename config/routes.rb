@@ -22,6 +22,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect '/ratings/:exercise_id/:rating', :controller=>'ratings', :action=>'create'
 
+  map.connect '/overview/show_plate_exercise/:id', :controller=>'overview', :action=>'show_plate_exercise'
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

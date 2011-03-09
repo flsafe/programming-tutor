@@ -1,320 +1,117 @@
 require 'spec_helper'
 
 describe TutorController do
-  before(:each) do
-    Time.stub(:now).and_return(Time.parse('7:00'))
+
+  before do
+    @current_user = Factory.create :user
+    controller.stub(:current_user).and_return(@current_user)
+
+    @exercise = Factory.create :exercise
+    @set = Factory.create :exercise_set, :exercises => [@exercise]
+    @exercise.exercise_set = @set
+    @exercise.save
     
-    controller.stub(:current_user).and_return(current_user('anonymous?'=>false))
-  end
-  
-  def current_user(stubs={})
-    @current_user ||= stub_model(User, stubs)
-  end
-  
-  def grade_sheet(stubs={})
-    @grade_sheet ||= stub_model(GradeSheet, stubs)
-  end
-  
-  def grade_solution_result(stubs={})
-    @grade_solution_result ||= mock("GradeJobResult", stubs).as_null_object
-  end
-  
-  def stub_exercise(stubs={})
-    @stub_exercise ||= Factory.create(:exercise, stubs) 
-  end
-  
-  def code
-    "int main(){int i = 0; return 0;}"
+    Time.stub(:now).and_return(Time.parse('7:00'))
   end
   
   describe "get show" do
-
-    before(:each) do
-      APP_CONFIG['demo_exercise_titles'] = ['MyExercise']
-      stub_exercise(:title=>'MyExercise')
-      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :user_id=>current_user.id, :exercise_id=>stub_exercise.id, :created_at=>Time.now().utc))
-      Recomendation.stub('recomended?').and_return(true)
-    end
     
-    context "no current exercise session" do
+    context "the user has no current exercise session" do
+      before do
+        @current_user.plate.push(@exercise)
+      end
+
       it "starts an exercise session" do
-        current_user.stub(:exercise_session_in_progress?).and_return(false)
-        current_user.should_receive(:start_exercise_session)
-        get 'show', :id=>stub_exercise.id
+        @current_user.should_receive(:start_exercise_session).with(@exercise)
+        get "show", :id=>@exercise.id
+      end
+
+      it "assigns the exercise that will be displayed" do
+        get "show", :id=>@exercise.id
+        assigns[:exercise].should == @exercise
+      end
+
+      it "assigns the exercise end time" do
+        get 'show', :id=>@exercise.id
+        assigns[:target_end_time].should == Time.now + @exercise.minutes * 60 # to seconds 
+      end
+
+      it "renders the show template" do
+        get 'show', :id=>@exercise.id
+        response.should render_template('show')
+      end
+
+      it "asigns a plate to the current user if they don't have one already" do
+        @current_user.plate.replace([])
+        get 'show', :id=>@exercise.id
+        @current_user.plate.should_not == []
+      end
+
+      it "redirects if the exercise isn't on the plate and has no grade in the db" do
+        created_unrelated_set
+        get 'show', :id=>@unrelated_ex.id
+        response.should redirect_to(:controller=>:overview)
+      end
+
+      it "does not redirect if the exercise  isn't on the plate and has a grade in the db" do
+        @current_user.plate.replace([])
+        @current_user.grade_sheets.push(Factory.build(:grade_sheet, :user_id=>@current_user.id, :exercise_id=>@exercise.id))
+        get 'show', :id=>@exercise.id
+        response.should render_template('show')
+      end 
+
+      def created_unrelated_set
+        @unrelated_ex = Factory.build(:exercise, :exercise_set_id=>nil)
+        @unrelated_set = Factory.create(:exercise_set)
+        @unrelated_set.exercises.push(@unrelated_ex)
       end
     end
 
-    it "assigns the exercise to be displayed to the user" do
-      get 'show', :id=>stub_exercise.id
-      assigns[:exercise].should == stub_exercise
-    end
-  
-    it "renders the show template" do
-      get 'show', :id=>stub_exercise.id
-      response.should render_template('show')
-    end
-    
-    it "assigns the exercise target end time" do
-      get 'show', :id=>stub_exercise.id
-      assigns[:target_end_time].should == Time.now + stub_exercise.minutes * 60 #seconds per minute
-    end
-    
-    it "does not redirect" do
-      get 'show', :id=>stub_exercise.id
-      response.should_not render_template('tutor/already_doing_exercise')
+    context "the user already has an exercise session" do
+      before do
+        @current_user.start_exercise_session(@exercise)
+        @current_user.plate.push(@exercise)
+      end
+
+      it "does not start a new exercise session" do
+        get "show", :id=>@exercise.id
+        @current_user.exercise_session.exercise.should == @exercise
+      end
+
+      it "assigns the exercise in the exercise session" do
+        get "show", :id=>@exercise.id
+        assigns[:exercise].should == @exercise
+      end
+
+      it "redirects if an exercise is not in the exercise session" do
+        @another_exercise = Factory.create :exercise  
+        @current_user.plate.push(@another_exercise)
+        get "show", :id=>@another_exercise.id
+        response.should redirect_to(:action=>:already_doing_exercise, :id=>@exercise.id)
+      end
     end
 
-    it "redirects if the exercise is not a recomended exercise and not a retake" do
-      Recomendation.stub(:recomended?).and_return(false)
-      current_user.stub(:retake?).and_return(false)
-      get "show", :id=>stub_exercise.id
-      response.should redirect_to(:controller=>:overview)
-    end
+    context "the user is anonymous" do
 
-    it "always displays retakes if the user is not anonymous" do
-      current_user.stub('anonymous?').and_return(false)
-      Recomendation.stub(:recomended?).and_return(false)
-      response.should_not redirect_to(:controller=>:overview)
-      get "show", :id=>stub_exercise.id
-    end
+      it "displays all sample exercises unconditionally (plate or no plate)" do
+        @sample1 = Factory.create :exercise, :title=>'demo1'
+        APP_CONFIG['demo_exercise_titles'].push(@sample1.title)
+        @current_user.stub(:anonymous?).and_return(true)
 
-    context "when the user is anonymous" do
-      it "only displays the sample exercises" do
-       current_user.stub('anonymous?').and_return(true)
-       Exercise.stub(:find).and_return stub_exercise
-       stub_exercise.should_receive('sample?').and_return(false)
-       get "show", :id=>stub_exercise.id
+        get "show", :id=>@sample1.id
+        assigns[:exercise].should == @sample1
       end
-    end
-    
-    context "when current user has an exercise session" do
-      before(:each) do
-        current_user.stub('exercise_session_in_progress?').and_return(true)
-        current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise_id=>stub_exercise.id))
-        current_user.stub_chain(:exercise_session, :exercise).and_return(stub_exercise)
-      end
-      
-      it "does not set the current exercise" do
-        current_user.should_not_receive(:start_exercise_session)
-        get 'show', :id=>stub_exercise.id
-      end
-      
-      context "when show exercise not in the exercise session" do
-        it "redirects to the 'aready doing exercise' page" do
-          Exercise.stub(:find).and_return(not_in_session_ex = stub_model(Exercise))
-          get 'show', :id=>not_in_session_ex.id
-          response.should redirect_to(:action=>:already_doing_exercise, :id=>stub_exercise.id)
-        end
-      end
-      
-      context "when show the exercise currently in the exercise session"do
-        it "does not redirect" do
-          get 'show', :id=>stub_exercise.id
-          response.should_not render_template('tutor/already_doing_exercise')
-        end
-      end
-    end
-  end
-  
-  describe "get show_exercise_text" do
-    before(:each) do
-      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise=>stub_exercise, :destroy=>true))
-    end
-    
-    it "assigns the exercise to show the problem text for" do
-      get 'show_exercise_text', :id=>stub_exercise
-      assigns[:exercise].should == stub_exercise
-    end
-    
-    it "renders the exercise text" do
-      get 'show_exercise_text', :id=>stub_exercise
-      response.should render_template 'show_exercise_text'
-    end
-  end
-  
-  describe "post grade" do
-    
-    before(:each) do
-      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise=>stub_exercise, :destroy=>true))
-      
-      @grade_job = mock_model(GradeSolutionJob, :perform=>true)
-      GradeSolutionJob.stub(:new).and_return(@grade_job).as_null_object
-      
-      @delayed_job = mock_model(Delayed::Job).as_null_object
-      Delayed::Job.stub(:new).and_return(@delayed_job)
-    end
-    
-    it "creates a new grade job for the user, with the given code and the current exercise id" do
-      start_time      = Time.parse("1:00")
-      end_time        = Time.parse("1:30")
-      seconds_elapsed = end_time.to_i - start_time.to_i
-      Time.stub(:now).and_return(end_time)
-      
-      GradeSolutionJob.should_receive(:new).with(code, current_user.id, stub_exercise.id).once
-      post :grade, :code=>code, :id=>stub_exercise.id
-    end
-    
-    it "enqueues the grade job" do
-      controller.should_receive(:enqueue_job)
-      post :grade, :code=>code, :id=>stub_exercise
-    end
-    
-    it "clears the current exercise session" do
-      current_user.should_receive(:end_exercise_session)
-      post :grade, :code=>code, :id=>stub_exercise
-    end
-    
-    it "associates the job with the current session" do
-      post :grade, :code=>code, :id=>stub_exercise.id
-      session[:grade_solution_job].should == @delayed_job.id
-    end
-    
-    it "renders grading" do
-      post :grade, :code=>code, :id=>stub_exercise.id
-      response.should render_template 'tutor/grade'
-    end
-    
-    context "there is already a job associated with the session" do
-      it "does not create a new job if the session already has a grade solution job" do
-        controller.stub(:job_running?).and_return(true)
-        GradeSolutionJob.should_not_receive(:new).with(code, current_user.id, stub_exercise.id)
-        post :grade, :code=>code, :id=>stub_exercise.id
-      end
-    end
-  end
-  
-  describe "get grade_status" do
 
-    context "if the grade solution job was a success" do
-      before(:each) do
-        GradeSolutionJob.stub(:get_latest_result).and_return(grade_solution_result(:error_message=>nil, :in_progress=>nil, :error_message=>nil, :grade_sheet=>grade_sheet))
-        GradeSheet.stub(:find).and_return(grade_sheet)
-      end
-      
-      it "retrieves the grade solution job result" do
-        GradeSolutionJob.should_receive(:get_latest_result).with(current_user.id, stub_exercise.id)
-        post :grade_status, :id=>stub_exercise.id
-      end
-      
-      it "renders the grade_sheet partial" do
-        post :grade_status, :id=>stub_exercise.id
-        response.should render_template('grade_sheets/_grade_sheet')
+      it "redirects for all exercises that are not sample exercises" do
+        @not_sample = Factory.create :exercise
+        @sample1 = Factory.create :exercise, :title=>'demo1'
+        APP_CONFIG['demo_exercise_titles'].push(@sample1.title)
+        @current_user.stub(:anonymous?).and_return(true)
+
+        get "show", :id=>@not_sample.id
+        response.should_not render_template('show')
       end
     end
-    
-    context "there is no grade solution result yet" do
-      before(:each) do
-        GradeSolutionJob.stub(:get_latest_result).and_return(grade_solution_result(:in_progress=>true))
-      end
-      
-      it "renders an in-progress message" do
-        post :grade_status, :id=>stub_exercise.id
-        response.should have_text('Still grading...')
-      end
-    end
-    
-    context "if the grade solution job was not successfull" do
-      it "renders an error message" do
-        GradeSolutionJob.stub(:get_latest_result).and_return(grade_solution_result(:error_message=>'job error', :in_progress=>nil))
-        post :grade_status, :id=>stub_exercise.id
-        response.should have_text(/job error/i)
-      end
-    end
-  end
-  
-  describe "post check_syntax" do
-    
-    before(:each) do
-      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise=>stub_exercise))
-      
-      @syntax_job  = mock_model(SyntaxCheckJob, :perform=>true)
-      SyntaxCheckJob.stub(:new).and_return(@syntax_job)
-      
-      @delayed_job = stub_model(Delayed::Job)
-      Delayed::Job.stub(:enqueue).and_return(@delayed_job)
-      
-      Exercise.stub(:find).and_return(stub_exercise)
-    end
-    
-     it "creates a new syntax job for the user, with the given code and exercise" do
-      SyntaxCheckJob.should_receive(:new).with(code, current_user.id.to_s, stub_exercise.id.to_s)
-      post :check_syntax, :code=>code, :id=>stub_exercise.id
-    end
-    
-    it "queues a new syntax job" do
-      Delayed::Job.should_receive(:enqueue).with(@syntax_job)
-      post :check_syntax, :code=>code, :id=>stub_exercise
-    end
-    
-    it 'assigns a message describing the job is in progress' do
-      post :check_syntax, :code=>code, :id=>stub_exercise
-      assigns[:message].should == 'checking...'
-    end
-    
-    it 'stores the delayed job id in the session' do
-      post :check_syntax, :code=>code, :id=>stub_exercise
-      session[:syntax_check_job].should == @delayed_job.id
-    end
-    
-    context "when the user posts check syntax while a syntax check job is running" do
-      before(:each) do
-        controller.stub(:job_running?).and_return(true)
-      end
-      
-      it "doesn't create a new syntax job if the user still has a syntax job in the db" do
-        Delayed::Job.should_not_receive(:enqueue)
-        post :check_syntax, :code=>code, :id=>stub_exercise
-      end
-      
-      it "assigns :duplicate_job to the status" do
-        post :check_syntax
-        assigns[:message].should == 'already checking!'
-      end
-    end
-  end
-  
-  describe "get syntax_status" do
-    
-    before(:each) do
-      current_user.stub(:exercise_session).and_return(stub_model(ExerciseSession, :exercise=>stub_exercise))
-      Exercise.stub(:find).and_return stub_exercise
-    end
-    
-    it "retrieves the result of the syntax check" do
-      SyntaxCheckJob.should_receive(:get_latest_result).with(current_user.id, stub_exercise.id)
-      get :syntax_status, :id=>stub_exercise.id
-    end
-    
-    it "assigns sytntax check message" do
-      syntax_check_result = "Syntax Error"
-      SyntaxCheckJob.stub(:get_latest_result).and_return(syntax_check_result)
-      get :syntax_status, :id=>stub_exercise
-      assigns[:message].should == "Syntax Error"
-    end
-    
-    context "the syntax message is nil" do
-      it "assigns 'checkking...'" do
-         syntax_check_result = nil
-         SyntaxCheckJob.stub(:get_latest_result).and_return(syntax_check_result)
-         get :syntax_status, :id=>stub_exercise
-         assigns[:message].should == "checking..."
-      end
-    end
-  end
-  
-  describe "post did_not_finish" do
-    before(:each) do
-      current_user.stub_chain(:exercise_session, :destroy, :exercise).and_return(stub_exercise)
-    end
-    
-    it "clears the current exercise" do
-      current_user.should_receive(:end_exercise_session)
-      post :did_not_finish, :id=>stub_exercise
-    end
-    
-    it "renders did_not_finish" do
-      post :did_not_finish
-      response.should render_template('tutor/did_not_finish')
-    end
-  end
+ end
 end
+

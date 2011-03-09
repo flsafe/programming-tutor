@@ -1,11 +1,18 @@
+<% javascript 'prototype' %>
+<% javascript 'plate'%>
+
 <h3 class="column span-16 last page-title">Exercises To Help You Practice</h3>
 
 <div id="recommended-exercises" class="column span-16 colborder last">
-  <% if not @exercises.empty? %>
-    <%= render(:partial=>'exercise', :collection=>@exercises) %>
-  <% else %>
-    <p> Nothing here for now...why don't you try browsing past exercises? </p>
-  <% end %>
+  <div style="text-align: center;">
+    <img id="ex-spinner" src="/images/spinner.gif" style="display: none;"/>
+  </div>
+  <div id="plate-exercise"></div>
+  <div id="next-link" style="display: none; float: right;">
+    <%= content_tag(:button, image_tag('next.png'),:type=>'submit', :style=>"cursor: pointer;", :onClick=>"postNewPlate()")%>
+  </div>
+  <img id="plate-spinner" src="/images/spinner.gif" style="display: none;"/>
+  <canvas id="canvas" width="600" height="450"></canvas> 
 </div>
 
 <div class="column span-6 last user-statistics">
@@ -16,3 +23,39 @@
 		<tr><td>Average Grade:</td><td><%=h "%.2f" % current_user.get_stat('average_grade') %></td></tr>
 	</table>
 </div>
+
+<script type="text/javascript">
+  /*TODO: Figure out a more RAILS way to send the ajax request for the
+          exercise that the user clicks on*/
+  function exerciseClicked(obj){
+    Element.hide("plate-exercise");
+    Element.show("ex-spinner");
+    new Ajax.Updater('plate-exercise', 
+        '/overview/show_plate_exercise/'+obj.ex_id, 
+        {asynchronous:true, 
+         evalScripts:true,
+         onComplete: function(){Element.hide('ex-spinner');Element.show('plate-exercise')}});
+  }
+
+  function allDone(){
+    Element.show('next-link');
+  }
+
+  function postNewPlate(){
+    <%= remote_function(:url=>url_for(:action=>:new_plate),
+          :success=>"initPlate(document.getElementById('canvas'), request.responseJSON, exerciseClicked, allDone);drawSceneObjects()",
+          :failure=>"alert('oops, an error occured')",
+          :before=>"Element.show('plate-spinner')",
+          :complete=>"Element.hide('plate-spinner')") %>
+  }
+
+  function init(){
+    <%= remote_function(:url=>url_for(:action=>:current_plate),
+          :success=>"initPlate(document.getElementById('canvas'), request.responseJSON, exerciseClicked, allDone);drawSceneObjects()",
+          :failure=>"alert('oops, an error occured')",
+          :before=>"Element.show('plate-spinner')",
+          :complete=>"Element.hide('plate-spinner')") %>
+  }
+
+  init();
+</script>

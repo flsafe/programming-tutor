@@ -188,7 +188,9 @@ h1, h2, h3, h4, h5{
   text-decoration: underline;
 }
 
-.recommended-exercise p{
+.exercise-description{
+  padding: 5px;
+  font-size: 1.2em;
 }
 
 .recommendation{
@@ -210,13 +212,13 @@ h1, h2, h3, h4, h5{
 
 .completed-exercise-title{
   font-weight: bold;
-  font-size: 1.3em;
+  font-size: 1.5em;
   color: rgb(52, 99 ,163);
   padding: 5px;
 }
 
 .grade{
-  margin: 10px 10px 0px 0px;
+  margin: 5px 10px 0px 0px;
   padding: 5px;
   text-align: center;
   color: white;

@@ -12,7 +12,7 @@ class Exercise < ActiveRecord::Base
 
   belongs_to :exercise_set  
   
-  validates_presence_of :title, :description, :problem, :tutorial, :minutes, :unit_tests, :exercise_set
+  validates_presence_of :title, :description, :problem, :tutorial, :minutes, :unit_tests, :exercise_set, :order
   validates_associated  :hints, :unit_tests, :exercise_set, :solution_templates
   
   validates_uniqueness_of :title

@@ -4,8 +4,9 @@ class User < ActiveRecord::Base
   
   acts_as_authentic
   
-  has_many :grade_sheets, :dependent=>:destroy
+  has_many :grade_sheets, :dependent=>:destroy, :after_add=>:track_completed_sets
   has_many :completed_exercises, :through=>:grade_sheets, :source=>:exercise, :uniq=>true #todo: What does this mean?
+  has_and_belongs_to_many :completed_sets, :class_name=>"ExerciseSet"
   has_and_belongs_to_many :plate, :class_name=>"Exercise"
   has_one :exercise_session, :dependent=>:destroy
   
@@ -42,6 +43,44 @@ class User < ActiveRecord::Base
     exercise_session.destroy
     exercise_session = nil
   end
+
+  def make_plate_if_empty(reload = false)
+    if plate.empty?
+      next_plate = ExerciseSet.random_incomplete_set_for(self)
+      if next_plate
+        plate.push(next_plate.exercises)
+      else
+        plate.push([])
+      end
+    end
+  end
+
+  def plate_json
+    make_plate_if_empty 
+    exercises = plate.map do |ex|
+      { :ex_id => ex.id,
+        :order => ex.order,
+        :grade => grade_for(ex)
+      }
+    end
+    {:plate => exercises}
+  end
+
+  def new_plate
+    if plate.all? {|e| grade_for(e) == 100}
+      next_plate = ExerciseSet.random_incomplete_set_for(self)
+      if next_plate 
+        plate.push(next_plate.exercises)
+      else
+        plate.replace([])
+      end
+    end
+    plate_json
+  end
+
+  def in_plate?(exercise)
+    self.plate.detect {|e| e == exercise} != nil
+  end
   
   def self.new_anonymous
     user = User.new
@@ -52,5 +91,13 @@ class User < ActiveRecord::Base
     user.persistence_token = ''
     user.email = ''
     user
+  end
+
+  protected
+
+  def track_completed_sets(gs)
+    if gs.complete_set?
+      completed_sets.push(gs.exercise.exercise_set)
+    end
   end
 end
