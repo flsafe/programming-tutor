@@ -3,7 +3,7 @@ class ExerciseSet < ActiveRecord::Base
   acts_as_taggable_on :algorithms, :data_structures
  
   has_and_belongs_to_many :completed_users, :class_name=>"User"
-  has_many :exercises, :dependent=>:nullify
+  has_many :exercises, :dependent=>:nullify, :uniq=>true
   
   validates_presence_of :title, :description
   validates_uniqueness_of :title
