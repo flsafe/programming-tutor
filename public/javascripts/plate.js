@@ -181,18 +181,18 @@ function drawText(sceneObject){
 var plate2sceneConverter = function(spec){
   var that = {};
 
-  var startX = spec.startX || 150.5;
-  var startY = spec.startY || 275.5;
-  var width = spec.width  || 100;
-  var height = spec.height || width;
-  var between = spec.between || 5;
-  var currentItem = 0;
   if (spec.plate == undefined){
   throw{ name:"No Plate Specified", message: "Specifiy a plate item array"};
   }
   var plate = spec.plate.sort(function(a, b){
     return a.order - b.order
   });
+  var startX = spec.startX || 150.5;
+  var startY = spec.startY || calcStartY(); 
+  var width = spec.width  || 100;
+  var height = spec.height || width;
+  var between = spec.between || 5;
+  var currentItem = 0;
   var objects = [];
   that.sceneObjects = objects;
 
@@ -216,6 +216,15 @@ var plate2sceneConverter = function(spec){
    startY -= height + between;
   }
   that.nextRow = nextRow;
+
+  function calcStartY(){
+    if (plate.length == 3)
+      return 175.5;
+    else if (plate.lenght == 6)
+      return 275.5;
+    else 
+      return 375.5
+  }
 
   return that;
 }
