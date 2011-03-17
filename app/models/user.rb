@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   end
 
   def make_plate_if_empty(reload = false)
-    if plate.empty?
+    if plate(reload).empty?
       next_plate = ExerciseSet.random_incomplete_set_for(self)
       if next_plate
         plate.push(next_plate.exercises)
@@ -55,9 +55,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  def plate_json
+  def plate_json(reload=false)
     make_plate_if_empty 
-    exercises = plate.map do |ex|
+    exercises = plate(reload).map do |ex|
       { :ex_id => ex.id,
         :order => ex.order,
         :grade => grade_for(ex)
@@ -66,11 +66,11 @@ class User < ActiveRecord::Base
     {:plate => exercises}
   end
 
-  def new_plate
-    if plate.all? {|e| grade_for(e) == 100}
+  def new_plate(reload=false)
+    if plate(reload).all? {|e| grade_for(e) == 100}
       next_plate = ExerciseSet.random_incomplete_set_for(self)
       if next_plate 
-        plate.push(next_plate.exercises)
+        plate.replace(next_plate.exercises)
       else
         plate.replace([])
       end
