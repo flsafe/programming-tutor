@@ -1,0 +1,20 @@
+exercise_sets:
+  getting_coprimes_to_cooperate: 
+    - a_grand_common_divide: 2
+    - lowest_common_multiple: 1
+    - coprime_cooperation: 3
+
+  fizz_buzz_mastery:
+    -fizz_buzz_strikes_again: 1
+    -fizz_buzz_again_and_again:2
+    -last_fizz_buzz: 3
+
+  character_arrays_build_character:
+    -reverse_characters_in_a_character_string: 1
+    -remove_characters_from_a_string: 2
+    -how_to_write_a_sentence_backwards_if_you_must: 3
+
+  data_structure_boot_camp:
+    -implement_a_stack_using_a_linked_list: 1
+    -if_only_i_could_find_my_keys_with_a_BST: 2
+    -nested_linked_lists_stretch_their_legs:3

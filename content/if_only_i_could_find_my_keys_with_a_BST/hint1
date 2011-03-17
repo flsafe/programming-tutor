@@ -1,0 +1,21 @@
+<p>
+   We want an efficient implementation
+   for the <i>pop</i> and <i>push</i> operations.
+   If we append new elements to the end of 
+   the linked list then, <i>push</i> and <i>pop</i>
+   get slower as the list grows.
+</p>
+
+<p>
+  Therefore make sure you pre-append new elements to
+  the front of the linked list! This will make
+  the <i>push</i> and <i>pop</i> operations take
+  the same amount of steps now matter how large the
+  linked list is!
+</p>
+
+<p>
+  Next is the actual linked list insertion and
+  deletion into a linked list. How do you insert/remove an element
+  from the front of a linked list?
+</p>

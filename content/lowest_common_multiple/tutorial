@@ -1,0 +1,100 @@
+<h1 id="getting-started">Getting Started</h1>
+<p>
+Right away the problem description gives an obvious
+solution. Find the largest number that divides both arguments
+evenly. We'll go over the obvious way to solve this exercise first. 
+Then the genius way.
+</p>
+
+<h1 id="how-to-solve">Obvious Way</h1>
+<p>
+Our initial algorithm is straight forward so let's just
+look at the code.
+</p>
+
+[startcode]
+  [[solution1.c]]
+[endcode]
+
+<p>
+The code starts out testing for special cases. The 
+problem text says we should define <i>gcd(0, 0)</i> as
+0, so that's what we test for first. 
+</p>
+
+<p>
+The next special case is when <i>a</i> is zero
+and <i>b</i> is non-zero or vice-versa. In this case, since all numbers divide into zero 
+evenly,
+we return the non-zero argument as the greatest common divisor of both arguments.
+</p>
+
+<p>
+Next comes the meat of our algorithm. The overall strategy is to test the
+integers below <i>a</i> and <i>b</i> and find 
+<i>i</i> such that <i>a % i == 0 && b % i == 0</i>. In other words we say
+that <i>i</i> divides both <i>a</i> and <i>b</i> without leaving a remainder since
+the modulus operator <i>x % y</i> returns the remainder of <i>x / y</i>.
+</p>
+
+<p>
+Initially <i>i = min(a,b)</i> and in a loop
+we test <i>i</i> until <i>i</i> is &lt;= 1 or we find the <i>i</i>
+that divides <i>a</i> and <i>b</i> without a remainder.
+</p>
+
+<p>
+Notice that there are a few simplifications. For example we aren't dealing with 
+negative numbers. In fact this algorithm wouldn't work with negative arguments since it
+assumes that <i>a</i> and <i>b</i> are &gt; 0. What changes would you make
+if we wanted to support negative arguments?
+</p>
+
+<h1 id="getting-started">The Genius Solution</h1>
+<p>
+Alright, I would have never thought of this solution but there is
+a neat method called Euler's algorithm. Here it is:
+</p>
+
+[startcode]
+unsigned int gcd(unsigned int a, unsigned int b){
+  if (b == 0)
+    return a;
+
+  return gcd(b, a % b);
+}
+[endcode]
+
+<p>
+There is a neat description on why this mathematically works on 
+<a href="http://en.wikipedia.org/wiki/Euclidean_algorithm">wikipedia</a>.
+The key observation for why this works is that the greatest common divisor of
+<i>a</i> and <i>b</i> doesn't change if we subtract the smaller integer from the greater
+integer.
+</p>
+
+<p>
+For example <i>gcd(10,4) == 2</i> and <i>gcd(6, 4) == 2</i>, 
+<i>gcd(2, 4) == 2</i>, <i>gcd(2,2) == 2</i>. Thus we don't have to test all
+the numbers below <i>a</i> and <i>b</i>. 
+</p>
+
+
+<h1 id="luxury-vs-racecare">Recursion Is An Elegant But Heavy Luxury Car, 
+Iteration Is A Fast But Spartan Race Car</h1>
+<p>
+The recursive algorithm above is easily expressed iteratively. Although
+not as elegant, in general, the iterative solution runs faster because
+their is no function call overhead.
+</p>
+[startcode]
+  [[solution2.c]]
+[endcode]
+
+<h1 id="getting-started">Why This Should Be Kept In Mind</h1>
+<p>
+Try to keep this algorithm in mind. Not only because finding the GCD of two integers 
+is a typical interview question but because remembering it enables one to come
+up with elegant algorithms to other exercises like finding the least common multiple
+of two integers or determining co-primes!
+</p>
