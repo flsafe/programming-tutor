@@ -50,6 +50,7 @@
   }
 
   function init(){
+    Element.hide('next-link');
     <%= remote_function(:url=>url_for(:action=>:current_plate),
           :success=>"initPlate(document.getElementById('canvas'), request.responseJSON, exerciseClicked, allDone);drawSceneObjects()",
           :failure=>"alert('oops, an error occured')",
