@@ -89,16 +89,6 @@ namespace :gems do
   end
 end
 
-# Install the recondation_engine deps using leiningen
-namespace :jars do
-  task :jars_install, :roles=>:app do
-    if rails_env == 'production'
-     ops = "no-dev" 
-    end
-    run "cd #{release_path}/recomendation-engine && lein deps #{ops || ''}"
-  end
-end
-
 # Start delayed_job in the context of the
 # bundler gems.
 namespace :delayed_job do
@@ -119,27 +109,6 @@ namespace :delayed_job do
   end
 end
 
-# Start the recomendation engine server
-namespace :recomendations do
-  desc "Start the recomendations server"
-  task :start, :roles=> :app do
-    run "cd #{release_path}; env RAILS_ENV=#{rails_env} recomendation-engine/start"
-  end
-  
-  desc "Stop the recomendations server"
-  task :stop, :roles=> :app do
-    # Stop the receomdnation server, but one may not be running
-    # so no need to freak if we try to shut it down we get an error
-    run "cd #{release_path}; env RAILS_ENV=#{rails_env} recomendation-engine/stop || true"
-  end
-
-  desc "Restart the recomendations server"
-  task :restart do
-    recomendations.stop
-    recomendations.start
-  end
-end
-
 namespace :content do
   desc "Push the content to the database"
   task :push, :roles=>:app do
@@ -148,17 +117,13 @@ namespace :content do
 end
 
 after "deploy:start", "delayed_job:start" 
-after "deploy:start", "recomendations:start"
 
 after "deploy:stop", "delayed_job:stop" 
-after "deploy:stop", "recomendations:stop"
 
 after "deploy:restart", "delayed_job:restart" 
-after "deploy:restart", "recomendations:restart" 
 
 after "deploy:update_code", "gems:bundle_install"
 after "deploy:update_code", "deploy:create_tmp"
-after "deploy:update_code", "jars:jars_install"
 after "deploy:update_code", "content:push"
 
 # optional task to reconfigure databases -- Not being used for now
