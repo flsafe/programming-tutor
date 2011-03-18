@@ -127,7 +127,6 @@ def populate_primitives(exercise)
     exercise.problem = read_field('problem')
     exercise.tutorial =  read_field('tutorial')
     exercise.minutes = read_field('minutes').to_i
-    exercise.order = read_field('order').to_i
     exercise.finished = read_field('finished').to_i
     exercise.algorithm_list = read_field('algorithm_list')
     exercise.data_structure_list = read_field('data_structure_list')
