@@ -137,6 +137,7 @@ function drawSceneObjects(){
     drawRect(sceneObjects[i]);
     drawText(sceneObjects[i]);
   }
+  drawBottom()
 }
 
 function drawBorder(sceneObject){
@@ -176,6 +177,18 @@ function drawText(sceneObject){
     ctx.fillText("Exercise "+ sceneObject.order, sceneObject.x + sceneObject.width/2, sceneObject.y + sceneObject.height/2);
   else
     ctx.fillText(sceneObject.grade, sceneObject.x + sceneObject.width/2, sceneObject.y + sceneObject.height/2);
+}
+
+function drawBottom(){
+  var firstObj = sceneObjects[0];
+  var margin = 3.5; 
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = "rgb(200, 200, 200)"
+  if (firstObj != undefined){
+    ctx.moveTo(6, firstObj.y + firstObj.height + margin);
+    ctx.lineTo(700, firstObj.y + firstObj.height + margin);
+  }
+  ctx.stroke();
 }
 
 var plate2sceneConverter = function(spec){

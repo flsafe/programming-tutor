@@ -7,7 +7,9 @@
   <div style="text-align: center;">
     <img id="ex-spinner" src="/images/spinner.gif" style="display: none;"/>
   </div>
-  <div id="plate-exercise"></div>
+  <div id="plate-exercise-wrapper">
+    <div id="plate-exercise"></div>
+  </div>
   <div id="next-link" style="display: none; float: right;">
     <%= content_tag(:button, image_tag('next.png'),:type=>'submit', :style=>"cursor: pointer;", :onClick=>"postNewPlate()")%>
   </div>
