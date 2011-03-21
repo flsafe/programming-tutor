@@ -120,7 +120,7 @@ class TutorController < ApplicationController
   def redirect_regular_user_if_not_recomended_exercise_or_retake
     exercise = Exercise.find_by_id(params[:id])
     unless current_user.anonymous? or current_user.is_admin?
-      current_user.make_plate_if_empty
+      current_user.make_plate_if_empty()
       a_recomended_ex = current_user.in_plate?(exercise)
       a_retake = current_user.grade_for(exercise)
       if not (a_recomended_ex or a_retake)

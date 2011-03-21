@@ -6,9 +6,9 @@ describe TutorController do
     @current_user = Factory.create :user
     controller.stub(:current_user).and_return(@current_user)
 
-    @exercise = Factory.create :exercise
-    @set = Factory.create :exercise_set, :exercises => [@exercise]
-    @exercise.exercise_set = @set
+    @exercise = Factory.build :exercise, :exercise_set_id=>nil
+    @set = Factory.create :exercise_set 
+    @set.exercises.push << @exercise
     @exercise.save
     
     Time.stub(:now).and_return(Time.parse('7:00'))
@@ -43,6 +43,7 @@ describe TutorController do
 
       it "asigns a plate to the current user if they don't have one already" do
         @current_user.plate.replace([])
+        @current_user.save
         get 'show', :id=>@exercise.id
         @current_user.plate.should_not == []
       end
