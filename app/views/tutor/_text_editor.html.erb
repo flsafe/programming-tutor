@@ -19,6 +19,8 @@
 				:condition=>"/checking/.test( $('message').innerHTML )",
 				:complete=>"if( ! /checking/.test($('message').innerHTML) ){ Element.hide('spinner'); $('check_syntax').enable();}"%>
 
+        <%= button_to_function "Ask For Feedback", "checkSolution()", :id=>"feedback-button" %>
+
 	<%= submit_tag "Submit Solution" %>
 
   <%= button_to_function "Quit", "window.location=\"#{url_for :action=>:quit}\"" %>
@@ -27,7 +29,6 @@
 <div id='dummy-unfocus-div'></div>
 
 <script type='text/javascript' language='javascript'>
-
   editAreaLoader.init({
     id : "textarea_1"		       
     ,syntax: "c"			         
@@ -41,6 +42,17 @@
     ,min_height: 400
     ,EA_load_callback: "resizeEditArea"
   });
-
   window.onresize = queuedResize
+
+  function checkSolution(){
+     Element.show('feedback');
+     $('feedback-button').disable()
+     new Ajax.Updater('interviewer-feedback', 
+                        '/tutor/check', 
+                        {method: 'post',
+                         parameters: {code: editAreaLoader.getValue('textarea_1')},
+                         asynchronous:true, 
+                         evalScripts:true,
+                         onComplete: function(){Element.hide('feedback');$('feedback-button').enable();}});
+    }
 </script>

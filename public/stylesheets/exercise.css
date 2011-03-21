@@ -40,14 +40,19 @@ a{
   margin:4px;
 }
 
+#exercise_problem_text_wrap{
+  width: 100px;
+  float: right;
+}
+
 #exercise_problem_text {
-  padding: 5px;
+  padding: 2px;
   border-left: 2px solid #ccc;
   background: rgb(255, 255, 255);
-  float: right;
-  width: 100px;
-  overflow: scroll;
-  padding-left: 8px;
+  overflow: scroll; 
+}
+
+#interviewer-feedback{
 }
 
 #footer{
@@ -73,4 +78,5 @@ a{
   color: rgb(150, 150, 150);
   text-align: center;
   font-size: .80em;
+  margin-top: 150px;
 }

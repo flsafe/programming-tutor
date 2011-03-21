@@ -5,15 +5,23 @@
 <%= render :partial => 'timer', :locals=>{:count_down_to=>@target_end_time} %>
 <p id="time-remaining">Time Remaining: <span id="timer">retrieving time...</span></p>
 
-<div id="exercise_problem_text" class="">
-  <h3><%= @exercise.title %></h3>	
-  <%=@exercise.problem%>
-  <div id="hints"></div>
-  <%= render :partial=>'hint', :collection=>@exercise.hints %>
+<div id="exercise_problem_text_wrap">
+
+  <div id="exercise_problem_text" class="">
+    <h3><%= @exercise.title %></h3>	
+    <%=@exercise.problem%>
+    <div id="hints"></div>
+    <%= render :partial=>'hint', :collection=>@exercise.hints %>
+  </div>
+
+  <div id="interviewer-feedback-wrap">
+    <p id="feedback" style="display: none;">Your interviewer stares at your code... <%= image_tag "spinner.gif"%></p>
+    <p id="interviewer-feedback"></p>
+  </div>
+
 </div>
 
 <% templates = @exercise.solution_templates.written_in('c')
    prototype = templates.first.prototype if templates.first %>
 <%= render :partial => 'text_editor', :locals=>{:editor_content=>prototype} %>
 <span id="message"></span> <%= image_tag 'spinner.gif', :id=>'spinner', :style=>"display:none;" %>
-

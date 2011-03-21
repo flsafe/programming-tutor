@@ -15,14 +15,19 @@ module UnitTestRunner
   end
   
   def run_with_and_expect(input, expected, test_name = nil, points = @points_per_test)
-   output = run_with(input)
+   results = run_with(input)
+   output = results[:output]
    if output.strip.chomp == expected.strip.chomp
      points = @points_per_test
    else
      points = 0
    end
-   test_name = create_auto_test_name() unless test_name
-   add_test_result(test_name, :input=>input, :expected=>expected, :got=>output, :points=>points)
+
+   results = {:input=>input, 
+              :expected=>expected, 
+              :got=>output, 
+              :points=>points}.merge(results)
+   add_test_result(test_name || create_auto_test_name() , results)
   end
   
   private
@@ -62,7 +67,6 @@ module UnitTestRunner
     client = IdeoneClient.new(APP_CONFIG['ideone']['user'], APP_CONFIG['ideone']['password'])
     link = client.run_code(@solution_code, input)
     results = client.get_code_results(link)
-    results[:output] 
   end
 
   def add_test_result(test_name,  info)

@@ -7,7 +7,7 @@ var resizeId;
 //
 function queuedResize(){ 
   window.clearTimeout(resizeId)
-  resizeId = window.setTimeout('resizeEditArea()', 100);
+  resizeId = window.setTimeout('resizeEditArea()', 25);
 }
 
 var resizeEditArea = function(){
@@ -32,6 +32,9 @@ function resizeEditAreaDimensions(){
 
 function resizeExerciseTextDimensions(){
   width_offset = 55 
+  exercise_text = document.getElementById('exercise_problem_text_wrap')
+  exercise_text.style.width = oneThirdWindowWidth(width_offset) 
+
   exercise_text = document.getElementById('exercise_problem_text')
   exercise_text.style.width = oneThirdWindowWidth(width_offset) 
   exercise_text.style.height = calcHeight(); 
@@ -52,6 +55,8 @@ function oneThirdWindowWidth(offset){
 }
 
 function calcHeight(){
-  var height_offset = -175
-  return document.documentElement.clientHeight + height_offset + 'px'
+  var height_offset = 0;
+  var factor = 2.0;
+  var twoThirds = (document.documentElement.clientHeight / 3.0) * 2.0
+  return ((twoThirds + height_offset)) + 'px';
 }

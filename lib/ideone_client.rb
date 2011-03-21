@@ -24,9 +24,9 @@ class IdeoneClient
 
   def get_code_results(link)
     response = wait_for_submission_status_response(link)
-    result = parse(response, :get_submission_status_response, :result)
-    raise "Your solution didn't compile!" unless program_compiled?(result)
-    create_detailed_result(link, result)
+    result_code = parse(response, :get_submission_status_response, :result)
+    raise "Your solution doesn't compile!" unless program_compiled?(result_code)
+    create_detailed_result(link, result_code)
   end
 
   private
@@ -84,7 +84,13 @@ class IdeoneClient
     end
     {:output => output,
      :memory => parse(response, :get_submission_details_response, :memory).to_i,
-     :time   => parse(response, :get_submission_details_response, :time).to_f}
+     :time   => parse(response, :get_submission_details_response, :time).to_f,
+     :compile_error? => compile_error?(result_code),
+     :runtime_error? => runtime_error?(result_code),
+     :timeout_error? => timeout_error?(result_code),
+     :memeory_error? => memory_error?(result_code),
+     :syscall_error?  => syscall_error?(result_code)}
+
   end
 
   def get_submission_details(link)
@@ -108,24 +114,45 @@ class IdeoneClient
     status.to_i == 0
   end
 
+  #
+  # According to the Ideone API 1.1.11 documentation http://ideone.com/files/ideone-api.pdf
+  #
+  # 0 not running – the paste has been created with run parameter set to false
+  # 11 compilation error  – the program could no be executed due to compilation errors
+  # 12 runtime   error   –   the   program   finished because of  the runtime error, for example: division by zero,  array index out of bounds, #uncaught exception
+  # 13 time  limit  exceeded  –  the  program  didn't #stop before the time limit
+  # 15 success – everything went ok
+  # 17 memory limit exceeded – the program tried #to use more memory than it is allowed
+  # 19 illegal system call – the program tried to call #illegal system function
+  # 20 internal error – some problem occurred on #ideone.com; try to submit the paste again #and if that fails too, then please contact us
+  #
+  
   def program_completed_successfully?(result_code)
-    #
-    # According to the Ideone API 1.1.11 documentation http://ideone.com/files/ideone-api.pdf
-    #
-    # 0 not running – the paste has been created with run parameter set to false
-    # 11 compilation error  – the program could no be executed due to compilation errors
-    # 12 runtime   error   –   the   program   finished because of  the runtime error, for example: division by zero,  array index out of bounds, #uncaught exception
-    # 13 time  limit  exceeded  –  the  program  didn't #stop before the time limit
-    # 15 success – everything went ok
-    # 17 memory limit exceeded – the program tried #to use more memory than it is allowed
-    # 19 illegal system call – the program tried to call #illegal system function
-    # 20 internal error – some problem occurred on #ideone.com; try to submit the paste again #and if that fails too, then please contact us
-    #
     result_code.to_i == 15 
   end
   
   def program_compiled?(result_code)
     result_code.to_i != 11
+  end
+
+  def compile_error?(result_code)
+    result_code.to_i == 11
+  end
+
+  def runtime_error?(result_code)
+    result_code.to_i == 12 
+  end
+
+  def timeout_error?(result_code)
+    result_code.to_i == 13
+  end
+
+  def memory_error?(result_code)
+    result_code.to_i == 17 
+  end
+
+  def syscall_error?(result_code)
+    result_code.to_i == 19
   end
 
   def to_id(lang)

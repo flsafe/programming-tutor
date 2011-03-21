@@ -26,6 +26,16 @@ class UnitTest < ActiveRecord::Base
       return {:error=>"#{e.message}"}
     end
   end
+
+  def check_on(solution_code = nil)
+    begin
+      init(solution_code)
+      start
+      feedback(@results.with_indifferent_access)
+    rescue Exception => e
+      e.message
+    end
+  end
   
   protected
 
@@ -45,6 +55,43 @@ class UnitTest < ActiveRecord::Base
   
   def valid_results?(results)
     results && (not results[:grade].blank?) && (not results[:tests].blank?)
+  end
+
+  def feedback(results)
+    error_feedback = give_runtime_error_feedback(results)
+    if error_feedback
+      return error_feedback
+    else
+      return correctness_feedback(results)
+    end
+  end
+
+  def give_runtime_error_feedback(results)
+    results[:tests].each_pair do |test_name, test_result|
+      if test_result[:runtime_error?]
+        return "Are you sure this wouldn't crash at runtime?"
+      elsif test_result[:timeout_error?]
+        return "I think this would go into an infinite loop"
+      elsif test_result[:memory_error?]
+        return "Don't you think this might run out of memory?"
+      elsif test_result[:syscall_error]
+        return "You don't really need to make that system call"
+      end
+    end
+    nil
+  end
+
+  def correctness_feedback(results)
+    results[:tests].each_pair do |test_name, test_result|
+      if test_result[:got].strip.chomp != test_result[:expected].strip.chomp
+        unless test_result[:input].empty?
+          return "Are you sure this works for this input?: #{test_result[:input]}"
+        else
+          return "I'm not sure this is correct. It may have a bug"
+        end
+      end
+    end
+    "This looks like it could work!"
   end
   
   def from_file_field(unit_test_field)

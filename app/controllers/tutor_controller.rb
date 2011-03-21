@@ -51,6 +51,20 @@ class TutorController < ApplicationController
       end
     end
   end
+
+  def check
+    exercise = current_user.current_exercise
+    if exercise
+      ut = UnitTest.for_exercise(exercise.id).first
+      st = SolutionTemplate.for_exercise(exercise.id).first
+      if ut and st
+        msg = ut.check_on(st.fill_in(params[:code]))
+        respond_to do |f|
+          f.html {render :text=>msg}
+        end
+      end
+    end
+  end
   
   def check_syntax
     @exercise = current_user.current_exercise
