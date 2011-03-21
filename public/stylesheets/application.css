@@ -191,6 +191,7 @@ h1, h2, h3, h4, h5{
 .exercise-description{
   padding: 5px;
   font-size: 1.2em;
+  margin: 0px;
 }
 
 .recommendation{
@@ -418,7 +419,7 @@ table.exercise-statistics caption, table.exercise-statistics{
 
 a.tutorial-link{
  color: rgb(120, 120, 120);
- font-weight: normal;
+ font-weight: bold;
 }
 
 /************************
