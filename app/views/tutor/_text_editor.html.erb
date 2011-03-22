@@ -10,15 +10,14 @@
 				:update=>:message,
 				:url=>{:action=>'check_syntax'},
 				:before=>"Element.show('spinner');
-                  $('check_syntax').disable;
+                  $('check_syntax').disable();
 									$('message').innerHTML = 'checking...';
-                  $('textarea_1').setValue(editAreaLoader.getValue('textarea_1'));",
-        :complete=>"$('check_syntax').enable"%>
+                  $('textarea_1').setValue(editAreaLoader.getValue('textarea_1'));"%>
 				
 	<%= periodically_call_remote :update=>:message,
 				:url=>{:action=>'syntax_status'}, 
 				:condition=>"/checking/.test( $('message').innerHTML )",
-				:complete=>"if( ! /checking/.test($('message').innerHTML) ){ Element.hide('spinner'); }"%>
+				:complete=>"if( ! /checking/.test($('message').innerHTML) ){ Element.hide('spinner'); $('check_syntax').enable();}"%>
 
 	<%= submit_tag "Submit Solution" %>
 
