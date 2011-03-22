@@ -6,11 +6,14 @@
 	<%= text_area_tag :textarea_1, editor_content || "", :name=>"code" %><br/>
 	
 	<%= submit_to_remote "check_syntax",'Check Syntax', 
+        :html=>{:id=>'check_syntax'},
 				:update=>:message,
 				:url=>{:action=>'check_syntax'},
 				:before=>"Element.show('spinner');
+                  $('check_syntax').disable;
 									$('message').innerHTML = 'checking...';
-				          $('textarea_1').setValue(editAreaLoader.getValue('textarea_1'));"%>
+                  $('textarea_1').setValue(editAreaLoader.getValue('textarea_1'));",
+        :complete=>"$('check_syntax').enable"%>
 				
 	<%= periodically_call_remote :update=>:message,
 				:url=>{:action=>'syntax_status'}, 
