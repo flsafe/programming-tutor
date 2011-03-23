@@ -26,11 +26,11 @@ exercise_sets:
     - title: how_to_write_a_sentence_backwards_if_you_must
       order: 3
 
-  data_structure_boot_camp:
-    - exercise_set_description: A problem consisting of co primes
+  reverse_a_one_way_street:
+    - exercise_set_description: Throw practicallity out the window. We are going to reverse some linked list data structures. 
     - title: implement_a_stack_using_a_linked_list
       order: 1
-    - title: if_only_i_could_find_my_keys_with_a_BST
+    - title: show_off_your_reverse_linked_list_printing_skills
       order: 2
-    - title: nested_linked_lists_stretch_their_legs
+    - title: reverse_a_one_way_street 
       order: 3

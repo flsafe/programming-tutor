@@ -91,9 +91,9 @@ def save_with_exercise_set_and_order(exercise)
     set.title = exercise_info[:exercise_set_title] 
     set.description = exercise_info[:exercise_set_description] 
     set.save!
-    set.exercises << exercise
+    raise "Couldn't save #{exercise.title}\n#{exercise.errors.full_messages()}" unless set.exercises << exercise 
    else
-     set.exercises << exercise
+     raise "Couldn't save #{exercise.title}\n#{exercise.errors.full_messages()}" unless set.exercises << exercise
    end
 end
 

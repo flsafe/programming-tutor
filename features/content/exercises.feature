@@ -22,3 +22,7 @@ Feature: All Exercises
       | "Fizz Buzz Strikes Again"                  | "solution.c"  |
       | "A Grand Common Divide"                    | "solution.c"  |
       | "A Grand Common Divide"                    | "solution1.c" |
+
+      | "Show Off Your Reverse Linked List Printing Skills" | "solution.c"  |
+      | "Show Off Your Reverse Linked List Printing Skills" | "solution2.c" |
+      | "Show Off Your Reverse Linked List Printing Skills" | "solution3.c" |

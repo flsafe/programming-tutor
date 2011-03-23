@@ -50,15 +50,15 @@ a new thing on top. Popping removes the thing from the top
 of the stack</div>
 
 <p>
-The peek operation informs us on what element
-would be removed were we to do a pop operation. In the example above,
+The peek operation returns the item at the top of the stack 
+but doesn't remove it. In the example above,
 when the lager was at the top of the stack, the peek operation
 would have returned the lager but not remove it form the stack.
 </p>
 
 <p>
 The order of removal is then lager, lambic, stout. Notice that
-the order is in first in, last out (FILO). Pop removes and returns
+the order is first in, last out (FILO) or last in first out (LIFO). Pop removes and returns
 items in the reverse order that they were placed into the stack.
 </p>
 
@@ -183,16 +183,17 @@ is the integer value to insert into the stack.
 </p>
 
 <p>
-The function allocates memory for the new node then assigns its 
-<i>val</i> and <i>next</i> values. Then the head pointer, <i>s</i>, is
-updated to point to the new node. If the memory allocation <i>malloc</i> fails then 
-0 is returned to indicate that the insertion failed.
+The function allocates memory, with <i>malloc</i>, for the new node then assigns its 
+<i>val</i> and <i>next</i> values. If the memory allocation <i>malloc</i> fails then 
+0 is returned to indicate that the insertion failed. Then the head pointer, <i>s</i>, is
+updated to point to the new node. 
 </p>
 
 <p>
 Pop also takes two arguments. The first, <i>s</i>, is the head pointer.
 The second is a pointer to an integer where the poped data value can be stored.
-First the function tests if <i>s</i> is NULL. If it is then it returns 0 to indicate
+First the function tests if <i>s</i> is NULL. This happens
+when the stack is empty. If this is the case then it returns 0 to indicate
 that the <i>pop</i> operation failed. After all we can't <i>pop</i> anything if there
 is nothing to pop. Next it temporarily stores the head pointer <i>s</i> in <i>top</i>,
 updates the head pointer to point to the second node, then frees the
@@ -225,7 +226,8 @@ will be updated and point to the new node. But that doesn't happen.
 <p>
 Remember that <i>head</i> is passed as a function argument by value.
 When <i>push</i> or <i>pop</i> are called, they are given not some kind
-of reference to <i>head</i> but a copy of head. A copy of a memory address. 
+of reference to <i>head</i> but a copy of head. Because head is a pointer,
+a memory address, the function receives a copy of a memory address. 
 </p>
 
 <p>
@@ -300,15 +302,15 @@ Some code snippets to illustrate my point:
 </p>
 
 [startcode]
-stack *head = *s;
+stack *head = *s;         /* head is the pointer to the first element */
 
 /* or */
 
-stack *top_of_stack = *s;
+stack *top_of_stack = *s; /* top_of_stack is a pointer to the first element */
 
 /* or */
 
-stack *first_node = *s;
+stack *first_node = *s;   /* first_node is a pointer to the first element */
 [endcode]
 
 <p>
@@ -329,11 +331,11 @@ are required because the <i>-&gt;</i> precedence is higher than the
 <h1 id="array-stack">An Alternative Implementation</h1>
 
 <p>
-Of course there are other ways to implement a stack. Would could also use an array albeit
-the implementation is more involved. A stack array has to dynamically expand as we push more
-items to the stack and dynamically shrink was we pop items off.
-This could make some stack operations very slow if our array is 
-big. We could get around this by implementing a fixed size stack, say size 100, but
+Of course there are other ways to implement a stack. We could also use an array, albeit
+the implementation is more involved because a stack array has to dynamically expand as we push more
+items and dynamically shrink was we pop items off.
+This could make stack operations very slow if our array were to have
+serveral million items. We could get around this by implementing a fixed size stack, say size 100, but
 what if that is not enough? Or it's too much?
 </p>
 

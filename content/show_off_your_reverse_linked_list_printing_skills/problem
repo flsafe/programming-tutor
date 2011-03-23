@@ -1,0 +1,32 @@
+<p>
+Write a function that takes as an argument a head pointer to a
+linked list and prints the linked list in
+reverse order. The linked list a singly linked list with no tail pointer. Each node
+of the linked list contains a <i>char</i> value type. 
+</p>
+
+<p>
+For example, if the linked list contains the characters:
+<p>
+
+[startcode]
+"a" -> "b" -> "c" -> "d"
+[endcode]
+
+<p>
+Then the function prints out the string:
+</p>
+
+[startcode]
+  dcba
+[endcode]
+
+<p>
+to standard output. Notice that the output is all on one line.
+</p>
+
+<p>
+You can use <i>printf("%c", a_char)</i> to print to a character standard output.
+You can use <i>printf("%s", a_string)</i> to print to a string standard output.
+</p>
+

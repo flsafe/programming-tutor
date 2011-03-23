@@ -1,0 +1,333 @@
+<h1 id="introduction">Introduction</h1>
+
+<p>
+In this exercise we are going to print the contents of a linked list
+backwards. Notice that we don't actually have to reverse the 
+linked list itself, another common interview problem. 
+</p>
+
+<p>
+Let's first go over an obvious but naive solution and then
+look at more efficient solutions.
+</p>
+
+<h1 id="introduction">An Obvious Solution</h1>
+<p>
+A solution that may immediately come to mind goes like this: Go
+to the end of the linked list, print the last node's content. Then
+go to the second to last node and print that nodes content. Then go to the 
+third to last node and print its content and so on until all the nodes are 
+printed.
+</p>
+
+<p>
+Here's one implementation:
+</p>
+[startcode]
+  [[solution4.c]]
+[endcode]
+
+<p>
+The algorithm above begins by declaring two node pointers
+<i>curr</i> and <i>stop</i>. The pointer <i>curr</i>
+will be used to traverse the linked list. We'll use <i>stop</i>
+to determine when to print the contents of the <i>curr</i> node.
+</p>
+
+<p>
+In the <i>for</i> loop the algorithm moves <i>curr</i> forward along the list until 
+<i>curr-&gt;next</i> 
+is equal to the <i>stop</i> pointer. 
+Then we print <i>curr</i> and update our <i>stop</i> pointer
+so that on each iteration of the <i>while</i> loop <i>curr</i> stops
+one node sooner. This continues until the first node of the linked list is printed
+when <i>stop</i> == <i>n</i> 
+</p>
+
+<p>
+That's a fine lookin' algorithm but notice the inefficiency.
+After we print the contents of the last node we can't go backwards in the list and print
+the second to last node. Instead we start 
+from the beginning of the list, traverse all the elements again 
+until we get to the node before <i>stop</i>.
+</p>
+
+<p>
+This algorithm's runtime performance is poor and we can do better.
+The number of steps this algorithm performs is O(n^2) where n is the size
+of linked list. Take a look at figure 1 to see what this looks like. I've
+plotted some run times on my laptop with a Intel Core 2 Duo processor. 
+</p>
+
+<img src="http://images.blueberrytree.ws/reverse-print-linked-list-naive.png">
+<div class="description">
+Figure 1. Because this implementation is O(n^2), when we plot the run times
+for different sized inputs, we see a non-linear plot. For example
+with 20,000 characters this algorithm takes about 0.75 seconds to complete.
+One might expect 40,000 characters to take 1.50 seconds, double the time for 
+20,000 characters. Because the growth isn't linear this isn't the case.
+</div>
+
+<h1 id="introduction">Obvious Doesn't Get The Job. Let's try again.</h1>
+
+<p>
+Notice that our first algorithm traverses the entire length of the linked list. 
+What if we store the characters we see along the way and then print them backwards?
+</p>
+
+<p>
+How do we store the characters so that they can easily be printed
+backwards? We could use a stack. As we traverse the linked list
+we push the characters into our stack. Then we print the stack
+to print the characters backwards. Notice that we only traverse
+the input linked list once. Not over and over again like in our previous solution.
+</p>
+
+<p>
+Here is what this solution looks like:
+</p>
+
+[startcode]
+  [[solution2.c]]
+[endcode]
+
+<p>
+The function <i>reverse_print</i> starts off by declaring the pointers
+<i>curr</i> and <i>stack</i>. We'll use <i>curr</i> to traverse the input
+linked list. We'll use <i>stack</i> as our, well, stack.
+</p>
+
+<p>
+As the algorithm traverses the linked list using the <i>curr</i> 
+pointer, it pushes the characters onto <i>stack</i>.
+</p>
+
+<p>
+Notice that the <i>push</i> function always adds a new element to the front
+of the linked list based stack. It allocates a new node, sets the node's values then 
+updates head pointer to point to the new node.
+</p>
+
+<p>
+I like this solution because it makes the implementation of the function
+<i>reverse_print</i> very simple. However, there is something I don't like about it.
+</p>
+
+
+<h1 id="introduction">But Wait There's More!</h1>
+
+<p>
+In the previous solution we used a linked list based stack and although it
+lead to a clean implementation of the function <i>reverse_print</i> it has some
+overhead that makes me suspicious. 
+</p>
+
+<p>
+Every time the algorithm pushes an item onto the stack, a new node must be allocated
+using <i>malloc</i>.
+When the input
+linked list contains several thousand or million elements then, the cost of this function
+call adds up. 
+</p>
+
+<p>
+Instead of allocating space one character at a time, lets allocate 
+a buffer that is big enough to contain all the characters from the get go.
+</p>
+
+<p>
+That is the gist of our next algorithm but there are some details to overcome. 
+First, how much memory do we allocate for our buffer? The size of the input 
+list can't be determined until runtime, so we need to count the nodes in the linked list 
+to determine how much memory to allocate.
+</p>
+
+<p>
+With a big enough buffer in place, we'll traverse the linked list again and copy the characters
+into our buffer backwards as shown in figure 2.
+</p>
+
+<img src="http://images.blueberrytree.ws/reverse-print-buffer-backwards.png"/>
+<div class="description">
+Figure 2. Filling up the buffer starting with the last index.
+</div>
+
+<p>
+Here is an implementation of the figure above:
+</p>
+
+[startcode]
+  [[solution.c]]
+[endcode]
+
+<p>
+The algorithm begins by counting the number of nodes in the input linked list. Next
+it allocates the memory for the buffer. If the input linked list size is <i>count</i>
+then space for <i>count + 1</i> characters has to be allocated. The </i>+1</i> is for the extra null character
+</i>'\0'</i> that signals the end of a C string. 
+</p>
+
+<p>
+It is common to introduce a bug when dealing with the null character.
+In general there are four numbers that will help you get it right.
+</p>
+
+<br/>
+
+<ol>
+  <li><i>count</i> is the size of the input</i></li>
+  <li><i>count + 1</i> is the number of characters that must be allocated</i></li>
+  <li><i>count - 1</i> is the index of the last character</i></li>
+  <li><i>count</i> is the index of null character</i></li>
+</ol>
+
+<p>
+After the buffer is allocated the algorithm fills backwards. 
+</p>
+
+<p>
+So how does this algorithm compare to using the stack in
+terms of speed? It's actually significantly faster. But before we look at the numbers
+let's take a look at another implementation.
+</p>
+
+
+<h1 id="introduction">Read Now And Get A Fourth Solution Free!</h1>
+
+<p>
+Next up is a neat recursive algorithm and it's the cleanest one yet. 
+Here is a cryptic recersive definition. It is very Zen: to print
+the linked list <i>head</i> in reverse, print <i>head->next</i> in reverse. Actually 
+that definition sucks. Let's look at some code and then a pretty picture.
+</p>
+
+[startcode]
+  [[solution3.c]]
+[endcode]
+
+<p>
+Why does this work? This solution takes advantage of the implicit stack
+that function calls create. For example: function A calls function B calls function C.
+When function C completes, control is returned to
+function B. When B completes, control returns to function A. 
+</p>
+
+<p>
+Did you notice the stack behavior? When a function is called it gets pushed onto the
+stack. The example above can be interpreted as: push(A), push(B), push(C), pop=&gt;C,
+pop=&gt;B, pop=&gt;A.
+</p>
+
+<p>
+We take advantage of this behavior by printing
+right before our function call gets 'poped'.
+</p>
+
+<p>
+Take a look at my adequate drawing skills in figure 3.
+</p>
+
+<img src="http://images.blueberrytree.ws/reverse-print-linked-list-recusive.png"/>
+<div class="description">
+  Figure 3. Every time a function is called a new stack frame is created. These are represented
+  by the boxes labeled 1, 2, 3, 4, 5, 6, 7. Each stack frame contains it's own local function variables.
+  The character at the node is printed before each function call returns.
+</div>
+
+<p>
+Notice that box labeled 1 calls 2, which calls 3, which calls 4. At 4 <i>n==NULL</i>
+so the if statement is not executed and the function returns. Next
+control is returned to the box labeled 5. However this box is just picking up
+where box 3 left off. Right after the call to <i>reverse_print</i> in box 3. 
+Box 3 and 5 are actually the same stack frame. And so are 6 and 2, 7 and 1.
+</p>
+
+<p>
+The boxes labeled 5, 6, 7 show the stack "unwinding". The stack unwinds when 
+all the recursive calls begin to return. Right before returning the functions print
+the character at their node. Thus printing the linked list backwards. Magic.
+</p>
+
+
+<h1 id="introduction">Which One Wins?</h1>
+
+<p>
+Out of all the solutions you've seen which do you think would preform the fastest?
+To make it concrete let's say we'll run the algorithm on a laptop with 4 Gigs of RAM
+and an Intel Duo Core 2 processor (my laptop). I've plotted the run times in
+figure 4 below. Did you guess right?
+</p>
+
+<br/>
+
+<a id="show-link" href="javascript:void(0)", onclick="document.getElementById('hidden-figure').style.display='inline'; document.getElementById('show-link').style.display='none';">Show Figure</a>
+
+<div id="hidden-figure" style="display: none;">
+  <img src="http://images.blueberrytree.ws/reverse-print-linked-list-non-naive.png"/> <div class="description">
+  Figure 4. A plot showing the runtimes of three different implementations. The recursive implementation
+  is shown with "x". The stack based linked list implementation is shown in "+". The buffer
+  based implementation is shown in "*".
+  </div>
+</div>
+
+<p>
+So it turns out the buffer implementation is the fastest solution. On an
+input of 50,000 characters it's 
+about 9 times faster than the stack based implementation, about 6 times faster than the 
+recursive implementation and about 10,000 times faster than the naive solution we first looked at.
+What a difference the right algorithm can make!
+</p>
+
+<p>
+Which is the most efficient in terms of memory? The naive
+solution allocates temporary variables for two node pointers.
+But doesn't allocate any new memory using <i>malloc</i>. Despite
+being the slowest algorithm, it is the most memory efficient.
+</p>
+
+<p>
+The buffer, recursive and stack based algorithms all
+have a somewhat similar memory usage. They all allocate
+memory per linked list node.
+</p>
+
+<p>
+The buffer algorithm allocates a byte for each node's
+character.
+</p>
+
+<p>
+The recursive algorithm allocates one stack frame for each 
+node. Each stack frame includes
+book keeping like function parameters, local variables, return
+addresses and others.
+</p>
+
+<p>
+The stack based implementation allocates a new node per node
+in the input list. 
+Each node contains a next pointer and a character. 
+</p>
+
+<p>
+Between these solutions the buffer implementation is probably the
+most memory efficient when dealing with nodes that contain characters.
+This is because our characters are only 1 byte but our pointers are 4 bytes
+(Assuming 1 bytes characters and 4 byte pointers).
+The buffer based implementation allocates 1 byte per node as opposed
+to a 4 byte pointer per node.
+</p>
+
+<p>
+I'll admit that I think the recursive solution is sexiest. I'd go with that 
+one during an interview and use the buffer solution if the interviewer 
+wants something even faster.
+</p>
+
+<h1 id="introduction">Exercises</h1>
+<p>
+It would be more realistic and a more efficient use of memory 
+if our nodes contained pointers to some structure instead
+of containing a character. Implement these changes and modify the
+algorithms we covered.
+</p>
