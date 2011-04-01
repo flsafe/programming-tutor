@@ -12,7 +12,9 @@ class DemoController < ApplicationController
   end
   
   def find_exercise_by_titles(demo_exercise_titles)
-    exercises = Exercise.find :all, :conditions=>{:title=>demo_exercise_titles}
+    exercises = Exercise.find :all, 
+      :conditions=>{:title=>demo_exercise_titles}, 
+      :select=>'title, id, description'
     exercises
   end
 end

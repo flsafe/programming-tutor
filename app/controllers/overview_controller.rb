@@ -14,7 +14,8 @@ class OverviewController < ApplicationController
   end
 
   def show_plate_exercise
-    @exercise = Exercise.find_by_id(params[:id])
+    @exercise = Exercise.find_by_id(params[:id],
+                                    :select=>'id, title, description')
     respond_to do |f|
       f.html {render :layout=>false, 
              :partial=>'exercises/exercise',
