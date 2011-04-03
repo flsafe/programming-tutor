@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110318200927) do
+ActiveRecord::Schema.define(:version => 20110405193105) do
 
   create_table "app_settings", :force => true do |t|
     t.string  "setting"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20110318200927) do
     t.float    "average_grade"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "push_id"
   end
 
   create_table "exercise_sets_users", :id => false, :force => true do |t|
@@ -74,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20110318200927) do
     t.datetime "updated_at"
     t.boolean  "finished"
     t.integer  "order"
+    t.integer  "push_id"
   end
 
   create_table "exercises_users", :id => false, :force => true do |t|

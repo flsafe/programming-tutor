@@ -1,36 +1,54 @@
-exercise_sets:
-  getting_coprimes_to_cooperate:
-    - exercise_set_description: A problem consisting of co primes
-    - title: a_grand_common_divide
-      order: 1
-    - title: lowest_common_multiple
-      order: 2
-    - title: coprime_cooperation
-      order: 3
-
-  fizz_buzz_mastery:
-    - exercise_set_description: A problem consisting of co primes
-    - title: fizz_buzz_strikes_again
-      order: 1
-    - title: fizz_buzz_strikes_again_and_again
-      order: 2 
-    - title: last_fizz_buzz
-      order: 3
-
-  character_arrays_build_character:
-    - exercise_set_description: A problem consisting of co primes
-    - title: reverse_characters_in_a_character_string
-      order: 1 
-    - title: remove_characters_from_a_string
-      order: 2
-    - title: how_to_write_a_sentence_backwards_if_you_must
-      order: 3
-
-  reverse_a_one_way_street:
-    - exercise_set_description: Throw practicallity out the window. We are going to reverse some linked list data structures. 
-    - title: implement_a_stack_using_a_linked_list
-      order: 1
-    - title: show_off_your_reverse_linked_list_printing_skills
-      order: 2
-    - title: reverse_a_one_way_street 
-      order: 3
+--- 
+:exercise_sets: 
+- !map:HashWithIndifferentAccess 
+  title: getting_coprimes_to_cooperate
+  exercises: 
+  - !map:HashWithIndifferentAccess 
+    title: a_grand_common_divide
+    order: 1
+  - !map:HashWithIndifferentAccess 
+    title: lowest_common_multiple
+    order: 2
+  - !map:HashWithIndifferentAccess 
+    title: coprime_cooperation
+    order: 3
+  description: A problem consisting of co primes
+- !map:HashWithIndifferentAccess 
+  title: fizz_buzz_mastery
+  exercises: 
+  - !map:HashWithIndifferentAccess 
+    title: fizz_buzz_strikes_again
+    order: 1
+  - !map:HashWithIndifferentAccess 
+    title: fizz_buzz_strikes_again_and_again
+    order: 2
+  - !map:HashWithIndifferentAccess 
+    title: last_fizz_buzz
+    order: 3
+  description: A problem consisting of co primes
+- !map:HashWithIndifferentAccess 
+  title: character_arrays_build_character
+  exercises: 
+  - !map:HashWithIndifferentAccess 
+    title: reverse_characters_in_a_character_string
+    order: 1
+  - !map:HashWithIndifferentAccess 
+    title: remove_characters_from_a_string
+    order: 2
+  - !map:HashWithIndifferentAccess 
+    title: how_to_write_a_sentence_backwards_if_you_must
+    order: 3
+  description: A problem consisting of co primes
+- !map:HashWithIndifferentAccess 
+  title: reverse_a_one_way_street
+  exercises: 
+  - !map:HashWithIndifferentAccess 
+    title: implement_a_stack_using_a_linked_list
+    order: 1
+  - !map:HashWithIndifferentAccess 
+    title: reverse_a_one_way_street
+    order: 3
+  - !map:HashWithIndifferentAccess 
+    title: show_off_your_reverse_linked_list_printing_skills
+    order: 3
+  description: Throw practicallity out the window. We are going to reverse some linked list data structures.

@@ -5,6 +5,8 @@ require 'yaml'
 require 'active_record'
 require 'active_support'
 require 'logger'
+require 'easy_roles'
+require 'authlogic'
 require 'pp'
 
 # Assumes this script is called from the project root
@@ -35,10 +37,12 @@ require 'acts-as-taggable-on'
 # Load the exercise model files
 require "#{PROJ_HOME}/lib/cozy_string_utils"
 require "#{PROJ_HOME}/lib/unit_test_runner"
+require "#{PROJ_HOME}/app/models/user"
 require "#{PROJ_HOME}/app/models/exercise_set"
 require "#{PROJ_HOME}/app/models/hint"
 require "#{PROJ_HOME}/app/models/unit_test"
 require "#{PROJ_HOME}/app/models/solution_template"
+require "#{PROJ_HOME}/app/models/grade_sheet"
 require "#{PROJ_HOME}/app/models/exercise"
 
 Dir.chdir(CONTENT_HOME)
@@ -47,22 +51,51 @@ def start
   Dir.foreach(Dir.getwd) do |exercise_title|
     create_or_update_by(exercise_title) if valid_exercise?(exercise_title)
   end
+  delete_unused_content
+end
+
+def delete_unused_content
+  ex_db = ExerciseInfo.new.load("#{CONTENT_HOME}/exercise-sets.yml")
+  
+  # push_id isn't defined in this environment, load
+  # it from the db
+  ExerciseSet.define_attribute_methods
+  Exercise.define_attribute_methods
+
+  @sets = ExerciseSet.find :all
+  @sets.each do |s|
+    unless ex_db.set_exists?(s.push_id)
+      puts " Destroying set: #{s.title}"
+      s.destroy
+    end
+  end
+
+  Exercise.find(:all).each do |e|
+    unless ex_db.exercise_exists?(e.push_id)
+      puts " Destroying exercise: #{e.title}"
+      e.destroy
+    end
+  end
 end
 
 def valid_exercise?(exercise_title)
   if File.directory?(exercise_title)
-    if exercise_title != "." and exercise_title != ".."
-      return true
-    end
+    exercise_title != "." and exercise_title != ".."
   end
 end
 
 def create_or_update_by(exercise_title_dir)
   pcwd = Dir.getwd
   Dir.chdir(exercise_title_dir)
+
+  ex_db = ExerciseInfo.new.load("#{CONTENT_HOME}/exercise-sets.yml")
   exercise_title = exercise_title_dir.titleize
+  exercise_push_id = ex_db.exercise_info(exercise_title)[:push_id]
   begin
-    exercise = Exercise.find_by_title(exercise_title) || Exercise.new
+    exercise = Exercise.find_by_push_id(exercise_push_id) || Exercise.new
+    if not exercise.new_record? and exercise.title != exercise_title
+      puts " Renaming exercise: #{exercise.title} => #{exercise_title}"
+    end
     exercise.title = exercise_title
     populate_and_save_exercise(exercise)
   rescue Exception
@@ -70,6 +103,7 @@ def create_or_update_by(exercise_title_dir)
     puts $!.backtrace
     exit 1
   end
+
   Dir.chdir(pcwd)
 end
 
@@ -77,47 +111,6 @@ def populate_and_save_exercise(exercise)
   populate_primitives(exercise)
   populate_assoc_models(exercise)
   save_with_exercise_set_and_order(exercise)
-end
-
-def save_with_exercise_set_and_order(exercise)
-   exercise_info = load_exercise_yaml()[exercise.title]
-   raise "No exercise info for #{exercise.title} in exercise-sets.yml" unless exercise_info
-
-   exercise.order = exercise_info[:order]
-
-   set = ExerciseSet.find_by_title(exercise_info[:exercise_set_title])
-   unless set
-    set = ExerciseSet.new
-    set.title = exercise_info[:exercise_set_title] 
-    set.description = exercise_info[:exercise_set_description] 
-    set.save!
-    raise "Couldn't save #{exercise.title}\n#{exercise.errors.full_messages()}" unless set.exercises << exercise 
-   else
-     raise "Couldn't save #{exercise.title}\n#{exercise.errors.full_messages()}" unless set.exercises << exercise
-   end
-end
-
-def load_exercise_yaml()
-  @exercise_sets = YAML.load(IO.read("#{CONTENT_HOME}/exercise-sets.yml")).with_indifferent_access()[:exercise_sets]
-
-  exercise_set_info = {}
-  exercise_info = {}
-
-  @exercise_sets.each_pair do |set_title, exercises_array|
-    exercises_array.each do |set| 
-      if set[:exercise_set_description]
-        exercise_set_info = {:exercise_set_title=>set_title.titleize, :exercise_set_description=>set[:exercise_set_description]}
-        break
-      end
-    end
-    exercises_array.each do |exercise| 
-      exercise[:title] = exercise[:title].titleize if exercise[:title]
-      if exercise[:title]
-        exercise_info[exercise[:title]] = exercise_set_info.merge(:order=>exercise[:order])
-      end
-    end
-  end
-  return exercise_info
 end
 
 def populate_primitives(exercise)
@@ -166,8 +159,33 @@ def new_hints
   hints
 end
 
+def save_with_exercise_set_and_order(exercise)
+   exercise_db = ExerciseInfo.new()
+   exercise_db.load("#{CONTENT_HOME}/exercise-sets.yml")
+   exercise_info =  exercise_db.exercise_info(exercise.title)
+   exercise_info or raise "No exercise info found: #{exercise.title}"
+
+   set = ExerciseSet.find_by_push_id(exercise_info[:exercise_set_push_id]) || ExerciseSet.new
+   if not set.new_record? and set.title != exercise_info[:exercise_set_title]
+     puts " Ranaming set: #{set.title} => #{exercise_info[:exercise_set_title]}"
+   end
+   set.title = exercise_info[:exercise_set_title] 
+   set.description = exercise_info[:exercise_set_description] 
+   set.push_id = push_id() if set.new_record?
+   exercise_db.set_exercise_set_info(set.title, :push_id=>set.push_id)
+   set.save!
+
+   exercise.order = exercise_info[:order]
+   exercise.push_id = push_id() if exercise.new_record?
+   exercise_db.set_exercise_info(exercise.title, :push_id=>exercise.push_id)
+   puts "#{' (New) ' if exercise.new_record?}Saving: #{exercise.title}"
+   set.exercises << exercise or raise "Couldn't save #{exercise.title}\n#{exercise.errors.full_messages()}"
+
+   exercise_db.save()
+end
+
 def hint_file?(filename)
-  return true if filename =~ /^hint\d+/
+  filename =~ /^hint\d+/
 end
 
 def read_field(field)
@@ -200,6 +218,80 @@ def sub_start_end_code(text)
    text.gsub(CODE_TAG_REGEX) do |match|
       match.gsub!(/(\[startcode\]|\[endcode\])/, '')
       "<pre><code>" + match.gsub(/</, '&lt;').strip + "</code></pre>"
+  end
+end
+
+def push_id()
+  id = IO.read("#{CONTENT_HOME}/push_ids").to_i
+  next_id = id + 1
+  File.open("#{CONTENT_HOME}/push_ids", 'w') do |f|
+    f.write(next_id.to_s)
+  end
+  id
+end
+
+class ExerciseInfo
+
+  def set_exists?(push_id)
+    @exercise_sets.detect {|s| s[:push_id].to_i == push_id.to_i} != nil
+  end
+
+  def exercise_exists?(push_id)
+    @exercise_sets.detect do |s|
+      s[:exercises].detect {|e| e[:push_id].to_i == push_id.to_i} != nil
+    end
+  end
+
+  def load(file)
+    @file = file
+    @exercise_sets = YAML.load(IO.read(file)).with_indifferent_access()[:exercise_sets]
+    self
+  end
+
+  def save
+    File.open(@file, "w") do |out|
+      YAML.dump({:exercise_sets=>@exercise_sets}, out)
+    end
+  end
+
+  def exercise_info(title)
+    exercise = nil
+    parent_set = @exercise_sets.detect do |s|
+      exercise = s[:exercises].detect {|ex| ex[:title] == title.directorize}
+    end
+    raise "Can't find set for exercise: #{title}" unless parent_set
+    raise "Can't find exercise info for: #{title}" unless exercise
+
+    {:exercise_set_title => parent_set[:title].titleize,
+     :exercise_set_description => parent_set[:description],
+     :exercise_set_push_id => parent_set[:push_id],
+     :title=> exercise[:title].titleize,
+     :order => exercise[:order],
+     :push_id => exercise[:push_id] }
+  end
+
+  def set_exercise_info(title, info_hash = {})
+    exercise = nil
+    @exercise_sets.detect do |s|
+      exercise = s[:exercises].detect {|ex| ex[:title] == title.directorize}
+    end
+    raise "Can't find exercise: #{title}" unless exercise
+
+    info_hash.each_pair do |k, v|
+      exercise[k] = v
+    end
+ end
+
+  def set_exercise_set_info(set_title, info_hash={})
+    set = @exercise_sets.find {|s| s[:title] == set_title.directorize}
+    raise "Can't find set: #{set_title}" unless set
+    info_hash.each_pair {|k,v| set[k] = v}
+  end
+end
+
+class String
+  def directorize
+    self.gsub(/\s+/,"_").downcase
   end
 end
 

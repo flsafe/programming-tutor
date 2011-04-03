@@ -29,9 +29,16 @@ the environment with the command 'env RAILS_ENV=production bundle exec ruby cont
      /*start_prototype*/ /*end_prototype*/ - The code between these two comments is displayed in the text editor
                                              when the user starts and exercise. Only one per file is supported
 
-   - Unit test files have a special place holder that is substitued with the name
-     of the user's compiled solution.
-     TODO: <EXEC_NAME> should probably be changed to [EXEC_NAME] to remain consitent with the other tags.
+-- Exercise/Set maintenance 
 
-     <EXEC_NAME> - In a unit test file will be substitued with something like "tmp/work/exec-1233123-23".
-                   Which would be the path to the user's compiled solution.
+  - Exercise sets are described in content/exercise-sets.yml. 
+    This file is used to the push script to determine what exercises belong to what sets,
+    and to update/delete exercises and sets.
+
+  - To rename and exercise rename the exercise directory and the exercise name in exercise-sets.yml
+  - To delete an exercise remove the exercise directory and remove the exercise name in the
+    exercise-sets.yml file
+
+  - To rename an exercise set rename the exercise set in exercise-sets.yml
+  - To delete and exercise set, remove the exercise set from exercise-sets.yml and
+    remove the exercise directories.
