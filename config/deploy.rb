@@ -109,22 +109,11 @@ namespace :delayed_job do
   end
 end
 
-namespace :content do
-  desc "Push the content to the database"
-  task :push, :roles=>:app do
-    run "cd #{release_path}; env RAILS_ENV=#{rails_env} bundle exec ruby content/push"
-  end
-end
-
 after "deploy:start", "delayed_job:start" 
-
 after "deploy:stop", "delayed_job:stop" 
-
 after "deploy:restart", "delayed_job:restart" 
-
 after "deploy:update_code", "gems:bundle_install"
 after "deploy:update_code", "deploy:create_tmp"
-after "deploy:update_code", "content:push"
 
 # optional task to reconfigure databases -- Not being used for now
  # after "deploy:update_code", :configure_database
