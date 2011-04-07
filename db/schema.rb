@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110405193105) do
+ActiveRecord::Schema.define(:version => 20110408183902) do
 
   create_table "app_settings", :force => true do |t|
     t.string  "setting"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20110405193105) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "push_id"
+    t.boolean  "finished"
   end
 
   create_table "exercise_sets_users", :id => false, :force => true do |t|

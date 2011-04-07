@@ -13,7 +13,7 @@ class ExerciseSet < ActiveRecord::Base
     completed_set_ids << 0 #Query below won't work if completed set ids is empty 
     incomplete_sets = ExerciseSet.find(:all, 
                                         :select=>:id, 
-                                        :conditions=>["id NOT IN (?)", completed_set_ids])
+                                        :conditions=>["id NOT IN (?) and finished = ?", completed_set_ids, 1])
     if not incomplete_sets.empty? 
       random_set_id = incomplete_sets[rand(incomplete_sets.count)].id
       return ExerciseSet.find_by_id(random_set_id) 

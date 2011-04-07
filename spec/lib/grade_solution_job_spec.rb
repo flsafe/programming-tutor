@@ -53,6 +53,11 @@ describe GradeSolutionJob do
       job.perform
     end
 
+    it "scrubs the the user's code to get rid of any user includes" do
+      template.should_receive(:fill_in).with(CozyStringUtils.scrub_all_includes(code))
+      job.perform
+    end
+    
     it "fills in the solution template with the user program code" do
       template.should_receive(:fill_in).with(code)
       job.perform

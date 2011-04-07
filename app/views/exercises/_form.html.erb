@@ -67,14 +67,18 @@
 
 	<p>
 		<%= f.label :exercise_set_id, "Exercise Set" %>
-		<%= f.collection_select :exercise_set_id, ExerciseSet.find(:all), :id, :title, :prompt=>'Select Exercise Set' %>
+    <%= f.collection_select :exercise_set_id, ExerciseSet.find(:all).push(ExerciseSet.new(:title=>"None")), :id, :title, :prompt=>'Select Exercise Set' %>
 	</p>
 	
 	<p>
 		<% #todo: Write cucumber and spec tests for these %>
 		<%= render :partial => 'exercise_set', :object=>@exercise.exercise_set, :locals=>{:exercise_sets=>@exercise_sets} %>
 	</p>
-			
+
+  <p>
+    <%= f.label :order, "Order In Set" %>
+    <%= f.text_field :order %>
+  </p>
   <p>
     <%= f.submit %>
   </p>

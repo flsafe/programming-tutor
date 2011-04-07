@@ -31,7 +31,8 @@ class SolutionTemplate < ActiveRecord::Base
   
   def self.from_file_field(template_field)
     return unless template_field
-    src_language = CozyFileUtils.language(template_field.original_filename)
+    #TODO: Support solution templates in other languages
+    src_language = 'c' 
     src_code     = template_field.read
 
     {:src_language=>src_language, :src_code=>src_code}

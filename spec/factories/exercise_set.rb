@@ -5,6 +5,7 @@ end
 Factory.define :exercise_set do |e|
   e.title {Factory.next :exercise_set_title}
   e.description "Basics description"
+  e.finished true
 end
 
 Factory.define :complete_exercise_set, :parent=>:exercise_set do |e|

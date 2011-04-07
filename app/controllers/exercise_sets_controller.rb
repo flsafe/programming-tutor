@@ -49,7 +49,7 @@ class ExerciseSetsController < ApplicationController
     respond_to do |format|
       if @exercise_set.save
         flash[:notice] = 'ExerciseSet was successfully created.'
-        format.html { redirect_to(@exercise_set) }
+        format.html { redirect_to(:action=>'index') }
         format.xml  { render :xml => @exercise_set, :status => :created, :location => @exercise_set }
       else
         format.html { render :action => "new" }
@@ -66,7 +66,7 @@ class ExerciseSetsController < ApplicationController
     respond_to do |format|
       if @exercise_set.update_attributes(params[:exercise_set])
         flash[:notice] = 'ExerciseSet was successfully updated.'
-        format.html { redirect_to(@exercise_set) }
+        format.html { redirect_to(:action=>'index') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

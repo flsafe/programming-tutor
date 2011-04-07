@@ -13,7 +13,8 @@ class UnitTest < ActiveRecord::Base
   include UnitTestRunner
 
   def unit_test_file=(unit_test_file)
-    attributes = from_file_field(unit_test_file)
+    self.src_language = 'ruby'
+    self.src_code = unit_test_file.read
   end
 
   def run_on(solution_code = nil)
@@ -92,13 +93,5 @@ class UnitTest < ActiveRecord::Base
       end
     end
     "This looks like it could work!"
-  end
-  
-  def from_file_field(unit_test_field)
-    return unless unit_test_field
-    src_language = CozyFileUtils.language(unit_test_field.original_filename)
-    src_code     = unit_test_field.read
-    
-    {:src_language=>src_language, :src_code=>src_code}
   end
 end

@@ -63,7 +63,7 @@ describe ExerciseSetsController do
         stub_exercise_set(:save=>true)
         ExerciseSet.stub(:new).and_return(stub_exercise_set)
         post :create
-        response.should redirect_to(exercise_set_url(stub_exercise_set))
+        response.should redirect_to(:action=>:index)
       end
     end
 
@@ -102,7 +102,7 @@ describe ExerciseSetsController do
       it "redirects to the exercise_set" do
         ExerciseSet.stub(:find).and_return(stub_exercise_set(:update_attributes => true))
         put :update, :id => "1"
-        response.should redirect_to(exercise_set_url(stub_exercise_set))
+        response.should redirect_to(:action=>:index)
       end
     end
 

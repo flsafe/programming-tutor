@@ -1,0 +1,17 @@
+<tr>
+  <td>
+  <%=h exercise.title %>
+  </td>
+
+  <td>
+    <%= exercise.description %>
+  </td>
+
+  <td>
+    <%= link_to "show", exercise%>
+  </td>
+
+  <td>
+    <%= link_to "edit", edit_exercise_path(exercise) %>
+  </td>
+</tr>

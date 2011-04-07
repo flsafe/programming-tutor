@@ -5,11 +5,10 @@ describe ExerciseSet do
   describe "valid exercise set" do
     before(:each) do
       @valid_attributes = {
-        :title=>'LinkedList', :description=>'Implement'
+        :title=>'LinkedList', :description=>'Implement', :finished=>true
       }
       @exercise_set = ExerciseSet.create! @valid_attributes
     end
-
     
     it 'is valid with valid attributes' do
       @exercise_set.should be_valid
@@ -34,6 +33,15 @@ describe ExerciseSet do
       create_grade_sheets_for_complete_exercise_set
 
       ExerciseSet.random_incomplete_set_for(@user).should == @incomplete
+    end
+
+    it "returns only exercise sets that are 'finished' i.e. ready to be displayed" do
+      @user = Factory.create :user
+
+      @in_progress = Factory.build :exercise_set, :finished=>false
+      @in_progress.save!
+
+      ExerciseSet.random_incomplete_set_for(@user).should_not == @in_progress
     end
 
     def create_exercise_sets

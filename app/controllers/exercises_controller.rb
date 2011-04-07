@@ -13,7 +13,7 @@ class ExercisesController < ApplicationController
   # GET /exercises
   # GET /exercises.xml
   def index
-    @exercises = Exercise.all
+    @exercises = Exercise.all :order=>"exercise_sets.title ASC", :include=>"exercise_set"
 
     respond_to do |format|
       format.html # index.html.erb
@@ -48,6 +48,59 @@ class ExercisesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @exercise }
+    end
+  end
+
+  # GET /exercises/new
+  # GET /exercises/new.xml
+  def new
+    @exercise = Exercise.new
+    @exercise.hints.build
+    @exercise.solution_templates.build
+    @exercise.unit_tests.build
+    @exercise_sets = ExerciseSet.find(:all, :select=>"id, title")
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @exercise }
+    end
+  end
+
+  # GET /exercises/1/edit
+  def edit
+    @exercise = Exercise.find(params[:id])
+  end
+
+  # POST /exercises
+  # POST /exercises.xml
+  def create    
+    @exercise = Exercise.new(params[:exercise])
+    respond_to do |format|
+      if @exercise.save
+        flash[:notice] = 'Exercise was successfully created.'
+        format.html { redirect_to exercises_path }
+      else
+        format.html { render :action => "new" }
+      end
+    end
+  end
+
+  # PUT /exercises/1
+  # PUT /exercises/1.xml
+  def update
+    params[:exercise][:existing_hint_attributes] ||= {}
+    params[:exercise][:existing_unit_test_attributes] ||= {}
+    params[:exercise][:existing_solution_template_attributes] ||={}
+    
+    @exercise = Exercise.find(params[:id])
+    respond_to do |format|
+      if @exercise.update_attributes(params[:exercise])
+        flash[:notice] = 'Exercise was successfully updated.'
+        format.html { redirect_to(@exercise) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @exercise.errors, :status => :unprocessable_entity }
+      end
     end
   end
 
