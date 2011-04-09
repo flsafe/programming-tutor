@@ -52,7 +52,15 @@ class Exercise < ActiveRecord::Base
   def existing_unit_test_attributes=(unit_test_attributes)
     existing_attributes_for(:unit_tests, unit_test_attributes)
   end
-  
+
+  def tutorial=(text)
+    self[:tutorial] = text.sub_start_end_code
+  end
+
+  def problem=(text)
+    self[:problem] = text.sub_start_end_code
+  end
+
   def get_stat(name)
     Statistic.get_stat("exercise.#{name}", self.id) || 0
   end
@@ -84,4 +92,12 @@ class Exercise < ActiveRecord::Base
     solution_templates.each {|s| s.save(false)}
     exercise_set.save(false) if exercise_set # Some exercises temporarly don't belong to a set
   end
+
+  def sub_start_end_code(text)
+     text.gsub(CODE_TAG_REGEX) do |match|
+        match.gsub!(/(\[startcode\]|\[endcode\])/, '')
+        "<pre><code>" + match.gsub(/</, '&lt;').strip + "</code></pre>"
+    end
+  end
+
 end

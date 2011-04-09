@@ -61,3 +61,5 @@ APP_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/config.yml")
 ActionView::Base.field_error_proc = Proc.new do |html_tag, instance_tag|
   html_tag
 end
+
+require File.join("#{RAILS_ROOT}", "lib", "string.rb")

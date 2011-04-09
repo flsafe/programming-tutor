@@ -136,7 +136,38 @@ describe Exercise do
       @exercise.exercise_set.description.should == exercise_set.description
     end
   end
-  
+
+  describe "#tutorial" do
+    it "replaces the start/end code segments" do
+      input =<<-END
+        [startcode]
+          for(int i = 0 ; i < 100 ; i++)
+        [endcode]
+      END
+      expected =<<-END
+        <pre><code>for(int i = 0 ; i &lt; 100 ; i++)</code></pre>
+      END
+
+      @exercise.tutorial = input
+      @exercise.tutorial.strip.chomp.should == expected.strip.chomp
+    end
+  end
+
+  describe "#tutorial" do
+    it "replaces the start/end code segments" do
+      input =<<-END
+        [startcode]
+          for(int i = 0 ; i < 100 ; i++)
+        [endcode]
+      END
+      expected =<<-END
+        <pre><code>for(int i = 0 ; i &lt; 100 ; i++)</code></pre>
+      END
+
+      @exercise.problem = input
+      @exercise.problem.strip.chomp.should == expected.strip.chomp
+    end
+  end
   
   def existing(object_sym, n)
     return @existing if @existing
