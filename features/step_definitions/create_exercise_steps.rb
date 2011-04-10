@@ -9,7 +9,7 @@ When /^I fill in the sample exercise$/ do
       And I fill in "Problem" with "sample problem"
       And I fill in "Tutorial" with "sample tutorial"
       And I fill in "Hint" with "sample hint"
-      And I select "60" from "Minutes"
+      And I fill in "Minutes" with "60"
       And I attach the file "content/remove-letter.c" to "Upload Solution Template"
       And I attach the file "content/remove-letter-unit-test.rb" to "Upload Unit Test"
       And I fill in "Set Title" with "sample exercise set title"
@@ -21,7 +21,6 @@ When /^I fill in the sample exercise$/ do
 end
 
 Then /^I should see the sample exercise$/ do 
-  unit_test = IO.read("content/remove-letter-unit-test.rb")
   steps %Q{
     Then I should see "Editing exercise"
     And the "Title" field should contain "sample title"
@@ -31,10 +30,10 @@ Then /^I should see the sample exercise$/ do
     And the "Problem" field should contain "sample problem"
     And the "Tutorial" field should contain "sample tutorial"
     And the "Hint" field should contain "sample hint"
-    And the "Src language" field should contain "c"
-    And the "Src code" field should contain "int main"
-    And the "Src language" field within "#unit_tests" should contain "ruby"
-    And the "Src code" field within "#unit_tests" should contain "def test_all_letters_removed"
+    And the "Solution Template Lang" field should contain "c"
+    And the "Solution Template Code" field should contain "int main"
+    And the "Unit Test Lang" field within "#unit_tests" should contain "ruby"
+    And the "Unit Test Code" field within "#unit_tests" should contain "def test_all_letters_removed"
   }
 end
 
