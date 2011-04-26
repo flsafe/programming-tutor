@@ -45,14 +45,15 @@
   window.onresize = queuedResize
 
   function checkSolution(){
-     Element.show('feedback');
      $('feedback-button').disable()
-     new Ajax.Updater('interviewer-feedback', 
+     $('message').innerHTML = "Your interviewer stares at your code...";
+     Element.show('spinner');
+     new Ajax.Updater('message', 
                         '/tutor/check', 
                         {method: 'post',
                          parameters: {code: editAreaLoader.getValue('textarea_1')},
                          asynchronous:true, 
                          evalScripts:true,
-                         onComplete: function(){Element.hide('feedback');$('feedback-button').enable();}});
+                         onComplete: function(){Element.hide("spinner");$('feedback-button').enable()}});
     }
 </script>

@@ -14,11 +14,6 @@
     <%= render :partial=>'hint', :collection=>@exercise.hints %>
   </div>
 
-  <div id="interviewer-feedback-wrap">
-    <p id="feedback" style="display: none;">Your interviewer stares at your code... <%= image_tag "spinner.gif"%></p>
-    <p id="interviewer-feedback"></p>
-  </div>
-
 </div>
 
 <% templates = @exercise.solution_templates.written_in('c')
