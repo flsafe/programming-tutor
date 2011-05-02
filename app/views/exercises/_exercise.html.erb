@@ -1,21 +1,15 @@
-<div class="column span-16 completed-exercise rounded-corners">
+<div class="exercise">
 	
-  <div class="column span-9"> 
-    <h3 class="completed-exercise-title"><%=h exercise.title %></h3>
-  </div>
-
+  <span class="exercise-title"><%=h exercise.title %></span>
   <% grade = current_user.grade_for(exercise) %>	
-  <div class="column span-6 grade <%= grade_to_class(grade) %> rounded-corners">
-    <%=h current_user.grade_for(exercise) %>
-  </div>
+  <span class="<%= grade_to_class(grade) %>">
+    <em>(<%=h current_user.grade_for(exercise) %>)</em>
+  </span>
 
-  <div class="column span-15">
    <p class="exercise-description">
       <%=h exercise.description %>
-      </p>
-  </div>
+  </p>
 	
-	<div class="column span-15">
 		<%= link_to(current_user.grade_for(exercise) ? "Retake" : "Start Exercise", :controller=>:tutor, :action=>:show, :id=>exercise)  %> 
     <% if current_user.grade_for(exercise) %>
       |
@@ -23,6 +17,5 @@
       <%= link_to "Gradesheet", :controller=>:grade_sheets, :action=>:show_user_grade_sheet, :id=>exercise %> |
       <%= link_to "All Gradesheets", :controller=>:grade_sheets, :action=>:show_all, :id=>exercise  %>
     <% end %>
-	</div>
 	
 </div>

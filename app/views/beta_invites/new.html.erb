@@ -1,16 +1,22 @@
-<h2 class="page-title"> Request An Invite </h2>
+<div id="featured">
+  <h2 class="page-title"> We Are In Beta! </h2>
+</div>
 
-<%= error_messages_for 'beta_invite', :header_message=>nil, :message=>nil %>
+<div id="main-content">
+  <div id="request-beta">
+      <%= error_messages_for 'beta_invite', :header_message=>nil, :message=>nil %>
+      <p>
+        We're constantly adding new
+        exercises and working towards our 1.0 release. If you'd like to
+        be a beta tester leave your email. We'll send you an invite as soon as
+        space opens up.
+      </p>
 
-<div id="register" class="column span-16">
-  <p>
-    BlueberryTree is still a bit rough. But if you'd like to test drive it,
-    I'll send you a beta invite as soon as some space opens up!
-  </p>
-	<% form_for @beta_invite do |f| %>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
+      <% form_for @beta_invite do |f| %>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
 
-	  <%= f.submit "Send!" %>
-	<% end %>
+        <%= f.submit "Send!" %>
+      <% end %>
+    </div>
 </div>

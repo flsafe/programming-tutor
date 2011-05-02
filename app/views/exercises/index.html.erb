@@ -1,5 +1,11 @@
 <h1>Listing exercises</h1>
 
+<div class='column span-24'>
+  <%- flash.each do |name, msg| -%>
+    <%= content_tag :div, msg, :id => "flash_#{name}" %>
+  <%- end -%>
+</div>
+
 <table>
   <tr>
     <th>Title</th>

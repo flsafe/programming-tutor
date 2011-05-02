@@ -1,7 +1,8 @@
 <% if show_menu? %>
-	<ul>
-		<li> <%= link_to "Exercises", :controller=>:overview %> </li>
-		<li> <%= link_to "Grades", :controller=>:exercises, :action=>:user_index%> </li>
-		<li> <%= link_to("Admin", admin_path) if current_user && current_user.has_role?('admin')%> </li>
-	</ul>
+  <div id="menu">
+		<%= link_to "Home", :controller=>:overview %> | 
+		<%= link_to "My Grades", :controller=>:exercises, :action=>:user_index%> |
+    <%= link_to "My Stats", :controller=>:users, :action=>:stats %>
+		<%= link_to(" | Admin", admin_path) if current_user && current_user.has_role?('admin')%>
+  </div>
 <% end %>

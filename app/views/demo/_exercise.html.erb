@@ -1,11 +1,5 @@
-<div class="column span-16 last recommended-exercise rounded-corners">
-	<div class="column span-10">
-		<%= link_to exercise.title, :controller=>:tutor, :action=>:show, :id=>exercise %>
-		<p class="exercise-description">
-			<%=h exercise.description %>
-		</p>
-    <p>
-    <%=link_to "Read Tutorial", {:controller=>:exercises, :action=>:show_tutorial, :id=>exercise}, :class=>'tutorial-link' %>
-    </p>
-	</div>
-</div>
+<li>
+<%= link_to exercise.title, {:controller=>:tutor, :action=>:show, :id=>exercise}, :class=>"demo-exercise-title"%> <br/>
+  <%=h exercise.description %>
+  <%=link_to "Read Tutorial", {:controller=>:exercises, :action=>:show_tutorial, :id=>exercise}, :class=>'tutorial-link' %>
+</li>

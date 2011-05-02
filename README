@@ -14,30 +14,24 @@
           typing './configure; make ; cd .. ; make'.					 
     Then runing 'bundle install' at the project root again.
 
-   *Note: The install script above run 'lein deps' but it throws an exception. 
-          If you move into the recomendation-engine directory and type 'lein deps'
-					manually, then it seem to install the dependencies.
-   *Note: If the server isn't responsive, try running 'lein repl'. This will
-          copy the deps to the project and the server may startup.
-
 
   Create the mysql accounts in config/database.yml
+  Type 'rake db:prepare' ?
   Type 'rake db:migrate'
   Type 'rake db:test:prepare'
 
 	Type 'script/server' to start the server
 	Go to 'localhost:3000' to start the app
 
-	Register your account by going to the 'register' link
+	Register your account by going to the 'Signup' link
 	You are now registered! But you need admin access.
-	Type: 'scrip/console' to bring up the ROR console
+	Type: 'script/console' to bring up the ROR console
 	Type: 'u = User.first'
 	Type: 'u.add_role('admin')'
 	Type: 'u.save'
   You now are an admin and should have access to the admin panel!
 
   Type 'script/delayed_job start' to start the jobs for grading and syntax checks
-  Type 'recomendation-engine/start' to start the recomendation server
   Type 'content/push' to add exercises in content/ to the db
 
 == Blueberry System Design For New Developers

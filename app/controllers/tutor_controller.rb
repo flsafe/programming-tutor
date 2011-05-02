@@ -32,6 +32,7 @@ class TutorController < ApplicationController
     unless job_running? :grade_solution_job
       enqueue_job :grade_solution_job, GradeSolutionJob.new(params[:code], current_user.id, @exercise.id)
     end
+    render :layout=>'application'
   end
   
   def grade_status
@@ -40,13 +41,13 @@ class TutorController < ApplicationController
     respond_to do |f|
       f.html do 
         if result.in_progress
-          render :text=>'Still grading...'
+          render :text=>'<p>Still grading...</p>'
         elsif result.error_message
-          render :text=> "Oops! Error: #{result.error_message}"
+          render :text=> "<p>Oops! Error: #{result.error_message}</p>"
         elsif result.grade_sheet
           render :partial=>'grade_sheets/grade_sheet', :layout=>false, :object=>result.grade_sheet
         else
-          render :text=>"Oh no! This wasn't supposed to happen! We encountered an error, try again a bit later."
+          render :text=>"<p>Oh no! This wasn't supposed to happen! We encountered an error, try again a bit later.</p>"
         end
       end
     end
@@ -95,9 +96,11 @@ class TutorController < ApplicationController
   
   def already_doing_exercise
     @current_exercise = current_user.current_exercise
+    render :layout=>'application' # Don't want this to be inside the tutor layout
   end
   
   def did_not_finish
+    render :layout=>'application' # The tutor layout is ugly, don't want it here
   end
 
   def quit

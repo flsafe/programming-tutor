@@ -64,13 +64,13 @@ Feature: Browse Completed Exercises
 		And there exists an exercise set "Linked List Basics" with "Ex1" and "Ex2"
 		And I have finished "Ex1" with a "90"
 		And I have finished "Ex2" with a "90"
-		And I am on my home page
-		Then I should see "2" within ".user-statistics"
+		And I am on my stats page 
+		Then I should see "2" within "#my-stats"
 
 	Scenario: The user sees how much time they've spent solving exercises in hours
 		Given I am logged in as the user "frank"
 		And there exists an exercise set "Linked List Basics" with "Ex1" and "Ex2"
 		And I have finished "Ex1" with a "90" in "15" minutes
 		And I have finished "Ex2" with a "90" in "45" minutes
-		And I am on my home page
-		Then I should see "1.00 hours" within ".user-statistics"
+		And I am on my stats page
+		Then I should see "1.00 hours" within "#my-stats"

@@ -31,6 +31,9 @@ module NavigationHelpers
 
     when /the beta invite page/
       new_beta_invite_path
+
+    when /my stats page/
+      url_for(:controller=>:users, :action=>:stats)
       
     when /my exercises page/
       url_for :controller=>'exercises', :action=>'user_index', :id=>'done'

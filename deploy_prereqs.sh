@@ -13,10 +13,6 @@ check_if_installed git
 # We are using Ruby on Rails
 check_if_installed ruby
 
-# User solutions must run in SELinux
-# sandbox policy. Fedora 13 has one.
-check_if_installed sandbox
-
 # Dependencies installed view gem
 check_if_installed gem
 
@@ -43,12 +39,3 @@ check_if_installed kill
 
 # Used to highlight syntax solution code
 check_if_installed pygmentize
-
-# Wget is used by the recomendation engine startup scrip
-check_if_installed wget
-
-# Java is used by the recomendation server
-check_if_installed java
-
-# Leinegin is used for the Clojure project managment
-check_if_installed lein

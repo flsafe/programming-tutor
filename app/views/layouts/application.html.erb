@@ -1,44 +1,63 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-  <head>
-    <title><%= h(yield(:title) || "Practice Your Programming Skills") %></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/screen.css" />
-    <!--[if IE]>
-        <link rel="stylesheet" href="/stylesheets/ie.css" type="text/css" media="screen, projection">
-    <![endif]-->
-		<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/forms.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/application.css" />
-   	<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/header.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/app-nav.css"/>
-    <%= yield(:head) %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0042)http://themes.addonbakery.com/coffeebreak/ -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head profile="http://gmpg.org/xfn/11">
+
+  <title>BlueberryTree</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="keywords" content="programming, interview, programming interview, practice, data structures, algorithms">
+  <meta name="description" content="Ace Your Next Programming Intervew">
+
+  <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/landing_default.css">
+  <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/landing.css">
+
+  <!--[if IE 6]>
+  <script type="text/javascript" src="/javascript/pngfix.js"></script>
+  <script type="text/javascript" src="/javascript/menu.js"></script>
+  <![endif]-->
+
+  <meta name="robots" content="noindex,nofollow">
+  <script type="text/javascript" src="/javascripts/jquery.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery.easing.min.js"></script>
+  <script type="text/javascript" src="/javascripts/loopedSlider.js"></script>
+  <script type="text/javascript" src="/javascripts/superfish.js"></script>
+  <script type="text/javascript" src="/javascripts/general.js"></script>
+
+  <script type="text/javascript">
+  jQuery(window).load(function(){
+      jQuery("#loopedSlider").loopedSlider({
+          autoStart: 0*4*1000,
+          slidespeed: 0.6*1000,
+          autoHeight: true
+      });
+  });
+  </script>
+
+  <!--[if lte IE 7]>
+  <script type="text/javascript">
+  jQuery(function() {
+    var zIndexNumber = 1000;
+    jQuery('div').each(function() {
+      jQuery(this).css('zIndex', zIndexNumber);
+      zIndexNumber -= 10;
+    });
+  });
+  </script>
+  <![endif]-->
+
+  <%= yield(:head) %>
+
   </head>
-  <body>
-	
-    <div id="wrap" class="container">
-	
-      <%= render :partial => 'layouts/header' %>
-        
-        <div id="nav" class="column span-24 last">
-          <%= render :partial=>'layouts/menu' %>
-        </div>
+  <body class="custom">
 
-        <div class='column span-24'>
-          <%- flash.each do |name, msg| -%>
-            <%= content_tag :div, msg, :id => "flash_#{name}" %>
-          <%- end -%>
-        </div>
-        
-        <%- if show_title? -%>
-          <h1><%=h yield(:title) %></h1>
-        <%- end -%>
-        
+      <div id="wrap">
+        <%= render :partial=>"layouts/header" %>
+        <%= render :partial=>"layouts/menu" %>
         <%= yield %>
-
-    </div><!-- end wrap -->
-
-    <%= render :partial=>"layouts/footer" %>
+        <%= render :partial=>"layouts/footer" %>
+      </div>
 
   </body>
 </html>
+

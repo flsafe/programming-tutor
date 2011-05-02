@@ -1,85 +1,125 @@
-<% stylesheet 'landing' %>
+	<!-- Featured Slider -->
+    <div id="featured"> 
+        <div id="loopedSlider">
 
-<div id="content" class="column span-24  last">
+            <ul class="nav-buttons">
+                      <li id="p"><a href="#" class="previous"><img src="/images/slider-arrow-left.png" alt="&lt;"></a></li>
+                      <li id="n"><a href="#" class="next"><img src="/images/slider-arrow-right.png" alt="&gt;"></a></li>
+            </ul>    
+                               
+             <div class="container" style="height: 297px; display: block; ">  
 
-	<div id="pitch" class="column span-24">
-		<h2>Ace Your Next Programming Interview</h2>
-		<div class="column span-11 last">
-			<ul>
-				<li><p>Practice solving programming interview puzzles</p></li>
-				<li><p>Get feedback, track your progress</p></li>
-				<li><p>Land your dream job</p></li>
-			</ul>
-      <div id="signup-button"class="column span-13"><a href="<%= url_for :controller=>:beta_invites, :action=>:new %>"> <img alt="sign up free" src="/images/sign-up.png"> </a></div>
-				<p id="signup">Sign up free with a username, password and email!</p>
-	  </div>
-	
-		<div id="screenshot" class="column span-12 last">
-			<img alt="Screen Shot" src="/images/screenshot.png"/>
-			<a id="try-it-button" href="/demo"><img alt="No forms, no BS, just try the software" src="/images/try-it.png"></a>
-		</div>
-	</div><!-- end pitch -->
-	
-	<div id="blurb" class="column span-15 last">
-		
-		<h2>Quickly, Tell Me What Blueberry Tree Is</h2>
+               <div class="slides" style="width: 2580px; ">
+                        
+                  <div id="slide-7" class="slide" style="position: absolute; left: 0px; display: block; ">                
+                    <img src="/images/screenshot.png" alt="" class="alignright slider-image">
+                    <h2>Ace Your Next Tech Interview!</h2>
+                    <p>
+                       BlueberryTree is an programming tutor designed to help you ace 
+                       your next technical interview. Become an expert at reversing linked lists, 
+                       searching, sorting and other timed interview problems.
+                   </p>
 
-    <iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/K5wiIeZKRcs?rel=0" frameborder="0" allowfullscreen></iframe>
+                    <h4>Start Improving Your Skills Right Now</h4>
 
-    <p>
-       Blueberry Tree is a programming practice tool designed to help you
-       ace your next programming interview. Practice solving timed 
-       interview puzzles in the C programming language. Become an expert
-       at reversing linked lists, sorting, searching and other common
-       programming interview problems.
-		</p>
-			 							
-		<p>Sign up is free so you can start improving your skills right now!</p>
-			
-		<hr/>
-			
-		<div id="testimonials">
-			<ul>
-				<li>
-					<div class="column span-4 last testimonial"><img alt="CozySystems LLC Developer" src="/images/frank.jpeg" width="100" height="90"/> </div>
-						<blockquote>
-              Whether you are preparing for your next programming interview or like to practice your
-              data structures and algorithms, you'll find BlueberryTree's exercises and tutorials fun
-              and insightful. Ready to start practicing? Try BlueberryTree out for free!
-            </blockquote> 
-            <p>-Francisco Licea, Developer, CozySystems</p>
+                   <p>
+                     <%= link_to("<span>Sign Up Free</span>", new_beta_invite_path, :class=>"button") %>
+                       <span class="middle">or</span> 
+                       <%= link_to("<span>Try It Now</span>", demo_path, :title=>"try-it-now", :class=>"button") %>
+                   </p>
+                    <p>&nbsp;</p>               				    	
+                  </div> <!-- end slide -->
+                
+                  <div id="slide-8" class="slide" style="position: absolute; left: 860px; display: block; ">                
+                   <h2>Increase Your Programming Skills</h2>
+                   <h4> 
+                     Are You Ready To Start Practicing? Sign Up Free!
+                   </h4>
+                   <p>
+                     <em>
+                       Whether you are preparing for your next programming 
+                       interview or like to practice your data structures and 
+                       algorithms, you'll find BlueberryTree's exercises and 
+                       tutorials fun and insightful. Ready to start practicing? 
+                       Sign up in just a few seconds! 
+                     </em>
+                   </p>
+                 </div> <!-- end slide -->
+             </div>    <!-- slides ends -->
+            </div><!-- .container ends -->   
+          </div><!-- .content ends -->
+        </div><!-- #featured ends -->
+      <!-- Featured Slider end -->
+
+    <div id="main-content" class="home">           
+      <div class="content">
+        <div class="col-left">
+          <div id="main">
+                                                                                      
+            <!-- Post Starts -->
+            <div class="post wrap">
+
+                <img src="/images/12-8-ico-users.jpg" alt="Lots Of Exercises" class="home-icon">	
+                <div class="feature"> 
+                  <h3>Lots Of Exercises For You To Practice</h3>
+                  <p>
+                     We add new exercises regularly, 
+                     allowing you to get skilled at solving 
+                     all kinds of interview problems from linked lists to depth-first search.
+                  </p>
+               </div> 
+               <div class="hr"></div> 	
+
+              <img src="/images/13-7-ico-chart.jpg" alt="Track Your Progress" class="home-icon">	
+              <div class="feature"> 
+                <h3>Get Feedback, Track Your Progress</h3> 
+                <p>
+                  BlueberryTree grades your solutions and tracks your progress automatically,
+                  giving you the feedback you need to increase your programing skills.
+                </p>
+             </div> 
+             <div class="hr"></div> 	
+
+            <img src="/images/10-6-ico-ring.jpg" alt="Friendly Tutorials" class="home-icon">	
+            <div class="feature"> 
+              <h3>Gain Insight With Friendly Tutorials</h3> 
+              <p>
+                Each exercise comes with tutorials and video lectures
+                that will walk you through how to solve an exercise like a pro. 
+               </p>
+            </div> 
+            <div class="hr"></div> 	
+        </div>
+        <!-- Post Ends -->
+      </div><!-- main ends -->
+  </div><!-- .col-left ends -->
+
+  <!-- Sidebar Starts -->
+    <div id="sidebar" class="col-right">
+    
+    <!-- Widgetized Sidebar -->	
+    <div id="news" class="widget block">            
+      <h3>Latest News</h3>
+        <ul>
+          <li>
+            <strong><a href="#">BlueberryTree Launches A Beta!</a></strong>
+            <span class="meta">May, 2011</span>
+          </li>
+        </ul>
+    </div> <!-- /news -->		
+    
+    <!-- <div class="block widget widget_twitter">
+      <h3 class="hl">Twitter</h3>
+      <ul id="twitter_update_list">
+        <li>
         </li>
-			</ul>
-		</div> <!-- end testimonials-->
-		
-	</div> <!-- end blurb -->
-	
-	<div id="sidebar" class="column span-8 rounded-corners">
-		<h3>How Is Blueberry Tree Going To Help Me?</h3>
-		<ul>
-      <li>
-        <h5>Lots Of Exercises</h5>
-        <p>
-          I add new exercises regularly, allowing you to get
-          comfortable with all kinds of interview problems from
-          linked lists to depth first search.
-        </p>
-      </li>
-      <li>
-        <h5>Insightful Tutorials</h5>
-        <p>
-          Each exercise comes with a tutorial that will walk you through the data structures and algorithms
-          used to solve the exercise and how they can be used to solve related interview puzzles. 
-        </p>
-      </li>
-      <li>
-        <h5>Immediate Feedback</h5>
-        <p>
-          BlueberryTree grades your solutions automatically,
-          giving you the feedback you need to increase you programing skills. 
-        </p>
-      </li>
-		</ul>
-	</div><!-- end sidebar -->
- </div><!-- end content-->
+      </ul>
+        <p class="follow"><a href="http://www.twitter.com/">Follow us on Twitter</a></p>
+      </div> -->
 
+      <script type="text/javascript" src="/javascript/blogger.js"></script>
+    </div><!-- Sidebar Ends -->	
+  </div><!-- .content Ends -->
+  </div><!-- #main-content ends -->
+
+	<div class="fix"></div>

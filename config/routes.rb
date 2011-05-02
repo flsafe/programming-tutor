@@ -4,10 +4,12 @@ ActionController::Routing::Routes.draw do |map|
   map.login 'login', :controller=>'user_sessions', :action=>'new'
   map.logout 'logout', :controller=>'user_sessions', :action=>'destroy'
   map.admin 'admin', :controller=>'admin'
+  map.demo 'demo', :controller=>'demo'
   
   map.resources :user_sessions
 
   map.connect 'users/show_me', :controller=>'users', :action=>'show_me'
+  map.connect 'users/stats', :controller=>'users', :action=>'stats'
   map.resources :users
   
   map.resources :exercise_sets

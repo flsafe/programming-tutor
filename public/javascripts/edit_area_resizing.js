@@ -3,11 +3,10 @@ var resizeId;
 
 // The window.onresize event fires too quickly and causes
 // EditArea to crash. This queued resize function limits the
-// calls to once every 100 ms.
-//
+// function calls.
 function queuedResize(){ 
   window.clearTimeout(resizeId)
-  resizeId = window.setTimeout('resizeEditArea()', 25);
+  resizeId = window.setTimeout('resizeEditArea()', 10);
 }
 
 var resizeEditArea = function(){

@@ -1,7 +1,14 @@
 <%= javascript_include_tag 'prototype' %>
 
-<div id="tutorial">
+<% if current_user == nil or current_user.anonymous?%>
+  <div id="featured">
+    <h2>
+      Sample Tutorial
+    </h2>
+  </div>
+<% end %>
 
+<div id="tutorial">
   <%= link_to("Edit", edit_exercise_path(@exercise)) if current_user.has_role?("admin") %>
 
   <div id="exercise-problem-text">
@@ -12,7 +19,6 @@
   <div id="tutorial-text">
     <%= @tutorial_html %>
   </div>
-
 </div>
 
 <a id="feedback-link" href="" 

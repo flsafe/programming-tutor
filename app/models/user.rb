@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   acts_as_authentic
   
   has_many :grade_sheets, :dependent=>:destroy, :after_add=>:track_completed_sets
-  has_many :completed_exercises, :through=>:grade_sheets, :source=>:exercise, :select=>'exercises.id, exercises.title, exercises.description', :uniq=>true 
+  has_many :completed_exercises, :through=>:grade_sheets, :source=>:exercise, :group=>:id, :select=>'exercises.id, exercises.title, exercises.description', :order=>'exercises.created_at DESC'
   has_and_belongs_to_many :completed_sets, :class_name=>"ExerciseSet"
   has_and_belongs_to_many :plate, :class_name=>"Exercise"
   has_one :exercise_session, :dependent=>:destroy

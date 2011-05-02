@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   
   before_filter :require_user, :except=>[:new, :create]
-  before_filter :require_admin, :except=>[:new, :create, :show_me]
+  before_filter :require_admin, :except=>[:new, :create, :show_me, :stats]
   before_filter :destroy_anonymous, :only=>:create
   before_filter :require_beta_invite, :only=>[:create, :new]
   
@@ -35,13 +35,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def stats 
+    @user = current_user
+  end
+
   # GET /users/new
   # GET /users/new.xml
   def new
     @user = User.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html # html 
       format.xml  { render :xml => @user }
     end
   end
@@ -63,7 +67,7 @@ class UsersController < ApplicationController
         format.html { redirect_to :controller=>'overview' }
         #format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
-        format.html { render :action => "new" }
+        format.html  {render :controller=>:users, :action=>:new}
         #format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end

@@ -12,7 +12,7 @@ class GradeSheetsController < ApplicationController
   
   def show_all
     @exercise     = Exercise.find(params[:id])
-    @grade_sheets = GradeSheet.find(:all, :conditions=>['exercise_id=?', @exercise.id], :order=>'grade DESC', :group=>'username', :joins=>:user, :limit=>100)
+    @grade_sheets = GradeSheet.find(:all, :conditions=>['exercise_id=?', @exercise.id], :order=>'grade DESC', :group=>'username', :joins=>:user, :limit=>50)
   end
   
 end

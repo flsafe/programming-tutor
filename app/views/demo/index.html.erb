@@ -1,2 +1,14 @@
-<h2 class="page-title">Sample Exercises</h2>
-<%= render :partial=>'exercise', :collection=>@demo_exercises %>
+<div id="featured">
+    <h2>Sample Exercises</h2>
+</div>
+
+<div id="main-content" >
+
+  <div id="demo-exercises" class="col-left">
+    <ul>
+      <%= render :partial=>'exercise', :collection=>@demo_exercises %>
+    </ul>
+     <iframe width="480" height="390" src="http://www.youtube.com/embed/K5wiIeZKRcs?rel=0" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
+<div class="fix"></div>

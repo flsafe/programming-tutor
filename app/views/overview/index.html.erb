@@ -1,29 +1,39 @@
 <% javascript 'prototype' %>
 <% javascript 'plate'%>
 
-<h3 class="column span-16 last page-title">Exercises To Help You Practice</h3>
+<div id="overview">
 
-<div id="recommended-exercises" class="column span-16 colborder last">
-  <div style="text-align: center;">
-    <img id="ex-spinner" src="/images/spinner.gif" style="display: none;"/>
-  </div>
-  <div id="plate-exercise-wrapper">
-    <div id="plate-exercise"></div>
-  </div>
-  <div id="next-link" style="display: none; float: right;">
-    <%= content_tag(:button, image_tag('next.png'),:type=>'submit', :style=>"cursor: pointer;", :onClick=>"postNewPlate()")%>
-  </div>
-  <img id="plate-spinner" src="/images/spinner.gif" style="display: none;"/>
-  <canvas id="canvas" width="600" height="450"></canvas> 
-</div>
+  <div id="exercise-set-description">
+    <% if @exercise_set %>
 
-<div class="column span-6 last user-statistics">
-	<table>
-		<caption>Your Statistics</caption>
-		<tr><td>Exercises Completed:</td><td> <%=h current_user.completed_exercises.count %></td></tr>
-		<tr><td>Total Practice Time:</td><td><%=h "%.2f hours" % (current_user.get_stat('total_time_taken') / 3600)%></td></tr>
-		<tr><td>Average Grade:</td><td><%=h "%.2f" % current_user.get_stat('average_grade') %></td></tr>
-	</table>
+      <h2><%=h @exercise_set.title %></h2>
+      <p><%=h @exercise_set.description %></p>
+
+    <% else %>
+
+      Youv'e finished all the exercises for now. Why don't you try a retake?
+
+    <% end %>
+  </div>
+
+  <div id="recommended-exercises">
+
+    <div style="text-align: center;">
+      <img id="ex-spinner" src="/images/spinner.gif" style="display: none;"/>
+    </div>
+
+    <div id="plate-exercise-wrapper">
+      <div id="plate-exercise"></div>
+    </div>
+
+    <div id="next-link" style="display: none; float: right;">
+      <%= content_tag(:button, image_tag('next.png'),:type=>'submit', :style=>"cursor: pointer;", :onClick=>"postNewPlate()")%>
+    </div>
+
+    <img id="plate-spinner" src="/images/spinner.gif" style="display: none;"/>
+    <canvas id="canvas" width="600" height="450"></canvas> 
+  </div>
+
 </div>
 
 <script type="text/javascript">

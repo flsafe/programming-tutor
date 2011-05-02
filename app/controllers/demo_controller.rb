@@ -1,5 +1,5 @@
 class DemoController < ApplicationController
-  
+
   def index
     @exercises = get_demo_exercises
   end

@@ -2,11 +2,7 @@
 
 <% results = grade_sheet.unit_test_results_hash %>
 
-<%= render :partial=>"grade_sheets/recommendation", :locals=>{:grade_sheet=>grade_sheet} %>
-
 <div class="gradesheet">
-	
-	<div class="column span-22">
 			<table class="tests">
         <caption><%=h grade_sheet.exercise.title %></caption>
 				<tr>
@@ -31,7 +27,7 @@
 					</tr>
 			</table>
 
-     <table class="column span-22 exercise-statistics">
+     <table class="exercise-statistics">
              <caption>Exercise Stats</caption>
              <tr>
                <td>Average Grade:</td>
@@ -47,10 +43,7 @@
              </tr>
      </table>
 			
-			<h3>Source Code</h3>
 			<pre class="solution-code">
 				<%= highlight_code(:c, grade_sheet.src_code) %>
 			</pre>
-
-	</div><!-- End span-22 wrapper -->
-</div><!-- End gradesheet -->
+</div>

@@ -11,7 +11,7 @@ Feature: Try it now
 		And the exercise "RemoveChar" has the solution template "remove-letter.c" and the unit test "remove-letter-unit-test.rb"
 		And the exercises "RemoveChar" are the demo exercises
 		And I am on the home page
-		When I follow "try-it-button"
+		When I follow "try-it-now"
 		And I follow "RemoveChar"
 		And I fill in the text editor with the solution "remove-letter-solution.c"
 		And I press "Submit"

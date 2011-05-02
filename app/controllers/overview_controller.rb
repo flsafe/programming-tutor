@@ -1,8 +1,17 @@
+# A user has a 'dinner plate' of exercises
+# that must be finished before a new set of exercsises
+# is given. The exercises in a plate make up an exercise set.
+
 class OverviewController < ApplicationController
   
   before_filter :require_user
   
   def index
+    # Creates a new plate if the user doesn't have one
+    current_user.plate_json
+    if not current_user.plate.empty?
+      @exercise_set = current_user.plate.first.exercise_set
+    end
   end
 
   def current_plate

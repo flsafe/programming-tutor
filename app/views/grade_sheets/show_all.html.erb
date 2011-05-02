@@ -1,10 +1,11 @@
-<h2 class="page-title">All Grade Sheets</h2>
-<table class="all-grade-sheets">
-	<caption>Grades</caption>
-	<tr>
-		<th>Username</th>
-		<th>Grade</th>
-		<th>Time</th>
-	</tr>
-		<%= render :partial=>'grade_sheet_li', :collection=>@grade_sheets %>
-</table>
+<div id="all-grades">
+  <table class="all-grade-sheets">
+    <caption>Grades</caption>
+    <tr>
+      <th>Username</th>
+      <th>Grade</th>
+      <th>Time</th>
+    </tr>
+      <%= render :partial=>'grade_sheet_li', :collection=>@grade_sheets %>
+  </table>
+</div>

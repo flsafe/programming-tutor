@@ -1,18 +1,22 @@
-<div id="login" class="column span-24 last">
-	
-	<% form_for @user_session do |f| %>
-		
-	    <%= f.label :username %><br/>
-	    <%= f.text_field :username %><br/>
+<div id="featured">
+  <h2>Login</h2>
+</div>
 
-	    <%= f.label :password %><br/>
-	    <%= f.password_field :password %></br>
-		<br/>
-	  <%= f.submit "Login" %> <br/>
-	
-		<div class="errors">
-  		<%= error_messages_for('user_session', :header_message=>nil, :message=>nil) %>
-		</div>
-	<% end %>
-	
+<div id="main-content">
+      <div id="login" class="login">
+        <% form_for @user_session do |f| %>
+          
+            <%= f.label :username %><br/>
+            <%= f.text_field :username, :class=>'field' %><br/>
+
+            <%= f.label :password %><br/>
+            <%= f.password_field :password, :class=>'field' %></br>
+          <br/>
+          <%= f.submit "Login" %> <br/>
+        
+          <div class="errors">
+            <%= error_messages_for('user_session', :header_message=>nil, :message=>nil) %>
+          </div>
+        <% end %>
+      </div>
 </div>

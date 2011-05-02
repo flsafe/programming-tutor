@@ -7,7 +7,7 @@ Feature: Beta Invite
 
 	Scenario: User requests a beta invite 
     Given I am on the home page
-    When I follow "Pricing and Sign Up" 
+    When I follow "signup" 
 		When I fill in "Email" with "test-user@mail.com" 
     And I press "beta_invite_submit"
     Then there should be a new invite for "test-user@mail.com" 

@@ -1,35 +1,21 @@
 <% javascript 'prototype' %>
-<% stylesheet 'screen.css' %>
-<% stylesheet 'ie.css' %>
-<% stylesheet 'application.css' %>
-<% stylesheet 'grading.css' %>
 <% stylesheet 'highlight.css' %>
+<% stylesheet 'landing' %>
 
-<div  id="center" class="column span-24">
+<div id="grading">
 
-	<h3 class="page-title">Unit Test Results</h3>
+  <div id="message">
+    <p>grading...</p>
+  </div>
+  <div id="progress-bar"><%=image_tag 'bar.gif', :id=>'bar' %></div>
 
-  <%= link_to "Read The Tutorial", 
-              {:controller=>:exercises,
-                :action=>:show_tutorial,
-                :id=>@exercise},
-              :id=>'tutorial',
-              :style=>'display: none;' %> &nbsp;
-
-	<%= link_to "Home", current_user_home %>
-  <hr/>
-
-	<div id="message"><p>grading...</p></div>
-
-	<%= image_tag 'bar.gif', :id=>'bar' %><br/>
+  <% unless Rating.has_rated?(current_user, @exercise) or current_user.anonymous?%>
+    <%= render(:partial=>'rating_overlay', 
+               :locals=>{:exercise=>@exercise}) %> 
+  <% end %>
 </div>
-
-<% unless Rating.has_rated?(current_user, @exercise) or current_user.anonymous?%>
-  <%= render(:partial=>'rating_overlay', 
-             :locals=>{:exercise=>@exercise}) %> 
-<% end %>
 
 <%= periodically_call_remote :update=>:message,
       :url=>{:action=>'grade_status', :id=>@exercise.id}, 
       :condition=>"/grading/i.test($('message').innerHTML)",
-      :complete=>"if( ! /grading/i.test($('message').innerHTML )){ Element.hide('bar');Element.show('tutorial'); }"%>
+      :complete=>"if( ! /grading/i.test($('message').innerHTML )){ Element.hide('bar');}"%>

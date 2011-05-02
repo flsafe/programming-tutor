@@ -1,19 +1,27 @@
-<div id="header" class="column span-24">
-	
-	<div class="column span-8 last">
-		<h2 id="app-name"><%= link_to "Blueberry Tree (beta)", show_menu? ? current_user_home : root_url %></h2>
-	</div>
-	
-	<div id="header-nav" class="column span-16 last">
-		<ul>
-			<% if current_user_session_and_not_anonymous and show_menu?%>
-					<li><%= link_to("#{current_user.username}", :controller=>:users, :action=>:show_me)%></li>
-					<li><%= link_to("Logout", logout_path)%></li>
-				<% else%>
-          <li> <%= link_to 'Pricing and Sign Up', new_beta_invite_path %> </li>
-					<li> <%= link_to 'Login', login_path %> </li>
-			<% end %>
-		</ul>
-	</div>
-	
+<div id="top">
+  <div class="content">
+      <div id="header">
+
+        <%= link_to(image_tag('logo.png', :id=>'logo'), show_menu? ? current_user_home : root_url) %>
+
+        <div id="nav">
+
+          <% if current_user_session_and_not_anonymous  %>
+            <li class="cat_item"><%= link_to("Logout", logout_path)%></li>
+            <li class="cat_item"><%= link_to(current_user.username, :controller=>:users, :action=>:show_me)%></li>
+         <% else %>
+            <li class="cat_item"><%= link_to("Login", login_path)%></li>
+            <li class="cat_item"><%= link_to("Signup", new_beta_invite_path, :title=>"signup")%></li>
+         <%end %>
+
+          <li class="cat_item">
+            <a href=""><span>About</span></a>
+            <ul class="sf-js-enabled sf-shadow">
+              <li class="cat_item"><%= link_to("Blog", "http://www.cozysystems.com/blog")%></li>
+            </ul>
+          </li>
+
+        </div>
+      </div>
+  </div>
 </div>
