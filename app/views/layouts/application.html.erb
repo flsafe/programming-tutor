@@ -8,31 +8,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="keywords" content="programming, interview, programming interview, practice, data structures, algorithms">
   <meta name="description" content="Ace Your Next Programming Intervew">
+  <meta name="robots" content="noindex,nofollow">
 
   <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/landing_default.css">
   <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/landing.css">
-
-  <!--[if IE 6]>
-  <script type="text/javascript" src="/javascript/pngfix.js"></script>
-  <script type="text/javascript" src="/javascript/menu.js"></script>
-  <![endif]-->
-
-  <meta name="robots" content="noindex,nofollow">
-  <script type="text/javascript" src="/javascripts/jquery.js"></script>
-  <script type="text/javascript" src="/javascripts/jquery.easing.min.js"></script>
-  <script type="text/javascript" src="/javascripts/loopedSlider.js"></script>
-  <script type="text/javascript" src="/javascripts/superfish.js"></script>
-  <script type="text/javascript" src="/javascripts/general.js"></script>
-
-  <script type="text/javascript">
-  jQuery(window).load(function(){
-      jQuery("#loopedSlider").loopedSlider({
-          autoStart: 0*4*1000,
-          slidespeed: 0.6*1000,
-          autoHeight: true
-      });
-  });
-  </script>
 
   <!--[if lte IE 7]>
   <script type="text/javascript">
@@ -58,6 +37,26 @@
         <%= render :partial=>"layouts/footer" %>
       </div>
 
+    <!--[if IE 6]>
+    <script type="text/javascript" src="/javascript/pngfix.js"></script>
+    <script type="text/javascript" src="/javascript/menu.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="/javascripts/loopedSlider.min.js"></script>
+    <script type="text/javascript" src="/javascripts/superfish.min.js"></script>
+    <script type="text/javascript" src="/javascripts/general.min.js"></script>
+
+    <script type="text/javascript">
+    jQuery(window).load(function(){
+        jQuery("#loopedSlider").loopedSlider({
+            autoStart: 0*4*1000,
+            slidespeed: 0.6*1000,
+            autoHeight: true
+        });
+    });
+  </script>
   </body>
 </html>
 
